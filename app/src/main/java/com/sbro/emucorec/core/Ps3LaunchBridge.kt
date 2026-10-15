@@ -8,6 +8,20 @@ import com.sbro.emucorec.data.InstalledGameRepository
 object Ps3LaunchBridge {
     enum class LaunchResult { Success, MissingFirmware, Failure }
 
+    fun launchSaveState(context: Context, titleId: String, slot: Int): LaunchResult {
+        if (!EmulatorStorage.hasInstalledFirmware(context)) return LaunchResult.MissingFirmware
+        return runCatching {
+            val file = SaveStateRepository(context).stateFile(titleId, slot) ?: return LaunchResult.Failure
+            context.startActivity(Intent(context, Emulator::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                putExtra(Emulator.EXTRA_TITLE_ID, titleId)
+                putExtra(Emulator.EXTRA_GAME_PATH, file.absolutePath)
+                action = ACTION_LAUNCH
+            })
+            LaunchResult.Success
+        }.getOrDefault(LaunchResult.Failure)
+    }
+
     fun launchInstalledTitle(context: Context, titleId: String): LaunchResult {
         if (!EmulatorStorage.hasInstalledFirmware(context)) return LaunchResult.MissingFirmware
         val game = InstalledGameRepository().findByTitleId(context, titleId) ?: return LaunchResult.Failure

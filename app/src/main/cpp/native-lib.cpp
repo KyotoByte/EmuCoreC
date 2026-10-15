@@ -28,6 +28,7 @@ struct RPCSXApi {
   int (*boot)(std::string_view path_);
   int (*getState)();
   void (*kill)();
+  void (*pause)();
   void (*resume)();
   void (*openHomeMenu)();
   std::string (*getTitleId)();
@@ -50,6 +51,10 @@ struct RPCSXApi {
   bool (*settingsSet)(std::string_view path, std::string_view valueString);
   std::string (*getVersion)();
   std::string (*probeDiscInfo)(std::string_view path, std::string_view iconOut);
+  bool (*requestSaveState)(unsigned slot, long progressId);
+  bool (*saveStateBusy)();
+  bool (*requestLoadState)(unsigned slot, long progressId);
+  std::string (*getSaveStateSlots)();
   void (*setAppInfo)(std::string_view version, std::string_view build,
                      std::string_view device);
   void *(*setCustomDriver)(void *driverHandle);
@@ -104,6 +109,7 @@ struct RPCSXLibrary : RPCSXApi {
     result.boot = reinterpret_cast<decltype(boot)>(dlsym(handle, "_rpcsx_boot"));
     result.getState = reinterpret_cast<decltype(getState)>(dlsym(handle, "_rpcsx_getState"));
     result.kill = reinterpret_cast<decltype(kill)>(dlsym(handle, "_rpcsx_kill"));
+    result.pause = reinterpret_cast<decltype(pause)>(dlsym(handle, "_rpcsx_pause"));
     result.resume = reinterpret_cast<decltype(resume)>(dlsym(handle, "_rpcsx_resume"));
     result.openHomeMenu = reinterpret_cast<decltype(openHomeMenu)>(dlsym(handle, "_rpcsx_openHomeMenu"));
     result.getTitleId = reinterpret_cast<decltype(getTitleId)>(dlsym(handle, "_rpcsx_getTitleId"));
@@ -124,6 +130,10 @@ struct RPCSXLibrary : RPCSXApi {
     result.settingsSet = reinterpret_cast<decltype(settingsSet)>(dlsym(handle, "_rpcsx_settingsSet"));
     result.getVersion = reinterpret_cast<decltype(getVersion)>(dlsym(handle, "_rpcsx_getVersion"));
     result.probeDiscInfo = reinterpret_cast<decltype(probeDiscInfo)>(dlsym(handle, "_rpcsx_probeDiscInfo"));
+    result.requestSaveState = reinterpret_cast<decltype(requestSaveState)>(dlsym(handle, "_rpcsx_requestSaveState"));
+    result.saveStateBusy = reinterpret_cast<decltype(saveStateBusy)>(dlsym(handle, "_rpcsx_saveStateBusy"));
+    result.requestLoadState = reinterpret_cast<decltype(requestLoadState)>(dlsym(handle, "_rpcsx_requestLoadState"));
+    result.getSaveStateSlots = reinterpret_cast<decltype(getSaveStateSlots)>(dlsym(handle, "_rpcsx_getSaveStateSlots"));
     result.setAppInfo = reinterpret_cast<decltype(setAppInfo)>(dlsym(handle, "_rpcsx_setAppInfo"));
     result.setCustomDriver = reinterpret_cast<decltype(setCustomDriver)>(dlsym(handle, "_rpcsx_setCustomDriver"));
     result.patchEngineVersion = reinterpret_cast<decltype(patchEngineVersion)>(dlsym(handle, "_rpcsx_patchEngineVersion"));
@@ -137,6 +147,31 @@ struct RPCSXLibrary : RPCSXApi {
 };
 
 static RPCSXLibrary rpcsxLib;
+
+extern "C" JNIEXPORT void JNICALL Java_net_rpcsx_RPCSX_pause(JNIEnv*, jobject) {
+  if (rpcsxLib.pause) rpcsxLib.pause();
+}
+
+extern "C" JNIEXPORT jboolean JNICALL Java_net_rpcsx_RPCSX_saveStatesSupported(JNIEnv*, jobject) {
+  return rpcsxLib.requestSaveState && rpcsxLib.requestLoadState && rpcsxLib.getSaveStateSlots && rpcsxLib.saveStateBusy;
+}
+
+extern "C" JNIEXPORT jboolean JNICALL Java_net_rpcsx_RPCSX_saveStateBusy(JNIEnv*, jobject) {
+  return rpcsxLib.saveStateBusy && rpcsxLib.saveStateBusy();
+}
+
+extern "C" JNIEXPORT jboolean JNICALL Java_net_rpcsx_RPCSX_requestSaveState(JNIEnv*, jobject, jint slot, jlong progressId) {
+  return slot >= 0 && slot < 10 && rpcsxLib.requestSaveState && rpcsxLib.requestSaveState(slot, progressId);
+}
+
+extern "C" JNIEXPORT jboolean JNICALL Java_net_rpcsx_RPCSX_requestLoadState(JNIEnv*, jobject, jint slot, jlong progressId) {
+  return slot >= 0 && slot < 10 && rpcsxLib.requestLoadState && rpcsxLib.requestLoadState(slot, progressId);
+}
+
+extern "C" JNIEXPORT jstring JNICALL Java_net_rpcsx_RPCSX_saveStateSlots(JNIEnv* env, jobject) {
+  const auto result = rpcsxLib.getSaveStateSlots ? rpcsxLib.getSaveStateSlots() : "[]";
+  return env->NewStringUTF(result.c_str());
+}
 
 static std::string unwrap(JNIEnv *env, jstring string) {
   auto resultBuffer = env->GetStringUTFChars(string, nullptr);

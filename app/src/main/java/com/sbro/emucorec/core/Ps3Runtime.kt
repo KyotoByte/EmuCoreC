@@ -246,9 +246,8 @@ object Ps3Runtime {
         currentSurface = null
     }
 
-    /** No-op: the official RPCS3 core has no pause, only kill/resume.
-     *  Kept as a call site so the emulation UI state machine stays unchanged. */
     fun pause() {
+        if (RPCSX.initialized) runCatching { RPCSX.instance.pause() }
     }
 
     fun resume() {
@@ -257,9 +256,13 @@ object Ps3Runtime {
 
     fun stop() {
         detachSurface()
-        if (RPCSX.initialized) runCatching { RPCSX.instance.kill() }
+        requestStop()
         // Both JNI processors are process-lifetime loops. Retain their handles
         // so initialization after an install or game stop cannot duplicate them.
+    }
+
+    fun requestStop() {
+        if (RPCSX.initialized) runCatching { RPCSX.instance.kill() }
     }
 
     fun state(): EmulatorState =

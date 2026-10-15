@@ -81,6 +81,7 @@ class Emulator final
 	atomic_t<u64> m_pause_amend_time{0}; // increased when resumed
 	atomic_t<u64> m_stop_ctr{1}; // Increments when emulation is stopped
 	atomic_t<bool> m_emu_state_close_pending = false;
+	atomic_t<bool> m_resume_after_failed_savestate = false;
 	atomic_t<u64> m_restrict_emu_state_change{0};
 
 	games_config m_games_config;
@@ -404,6 +405,7 @@ public:
 	bool IsPaused() const { system_state state = m_state; return state >= system_state::paused && state <= system_state::frozen; }
 	bool IsPausedOrReady() const { return m_state >= system_state::paused; }
 	bool IsStopped(bool test_fully = false) const { return test_fully ? m_state == system_state::stopped : m_state <= system_state::stopping; }
+	bool IsStateChangePending() const { return m_emu_state_close_pending; }
 	bool IsReady()   const { return m_state == system_state::ready; }
 	bool IsStarting() const { return m_state == system_state::starting; }
 	void WaitReady() const { m_state.wait(system_state::ready); }

@@ -443,6 +443,7 @@ VKGSRender::VKGSRender(utils::serial* ar) noexcept : GSRender(ar)
 	bool gpu_found = false;
 	std::string adapter_name = g_cfg.video.vk.adapter;
 
+	m_surface_generation = m_frame->surface_generation();
 	display_handle_t display = m_frame->handle();
 
 #ifdef HAVE_X11

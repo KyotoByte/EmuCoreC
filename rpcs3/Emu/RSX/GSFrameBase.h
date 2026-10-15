@@ -29,6 +29,7 @@ public:
 	virtual bool has_alpha() = 0;
 
 	virtual display_handle_t handle() const = 0;
+	virtual u64 surface_generation() const { return 0; }
 
 	virtual bool can_consume_frame() const = 0;
 	virtual void present_frame(std::vector<u8>&& data, u32 pitch, u32 width, u32 height, bool is_bgra) const = 0;

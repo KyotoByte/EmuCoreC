@@ -1,0 +1,1712 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="emulation_quickbar_home_menu">منوی اصلی RPCS3</string>
+    <string name="onboarding_storage_title">حافظه شبیه‌ساز</string>
+    <string name="onboarding_storage_choose_title">انتخاب حافظه شبیه‌ساز</string>
+    <string name="onboarding_storage_only_default">اندروید در حال حاضر فقط یک مکان حافظه برنامه را در دسترس قرار می‌دهد. اگر پوشه سفارشی برای فایل‌های شبیه‌ساز در دسترس باشد، می‌توانید آن را نیز انتخاب کنید.</string>
+    <string name="onboarding_status_install_firmware">نرم‌افزار رسمی سیستم PS3 را از Sony نصب کنید.</string>
+    <string name="onboarding_status_ready">راه‌اندازی کامل شد.</string>
+    <string name="onboarding_firmware_download">دانلود</string>
+    <string name="onboarding_firmware_cancel_download">لغو</string>
+    <string name="onboarding_firmware_downloading">در حال دانلود %1$d%%</string>
+    <string name="onboarding_firmware_download_failed">دانلود ناموفق بود. دوباره تلاش کنید.</string>
+    <string name="onboarding_back">بازگشت</string>
+    <string name="onboarding_next">بعدی</string>
+    <string name="onboarding_get_started">شروع کنید</string>
+    <string name="nav_setup">بازی‌ها</string>
+    <string name="nav_library">کتابخانه</string>
+    <string name="nav_game_manager">مدیر بازی</string>
+    <string name="nav_patches">وصله‌ها</string>
+    <string name="nav_play_time">زمان بازی</string>
+    <string name="nav_achievements">دستاوردها</string>
+    <string name="nav_save_manager">ذخیره‌ها</string>
+    <string name="nav_catalog">فهرست</string>
+    <string name="nav_settings">تنظیمات</string>
+    <string name="nav_profile">پروفایل</string>
+    <string name="library_refresh">بازخوانی</string>
+    <string name="library_search_hint">جستجوی بازی‌های نصب‌شده</string>
+    <string name="library_empty_title">بازی‌ای یافت نشد</string>
+    <string name="library_empty_body">بازی‌ها را در صفحه بازی‌ها نصب کنید، سپس کتابخانه را بازآوری کنید.</string>
+    <string name="library_add_shortcut">افزودن میانبر</string>
+    <string name="library_shortcut_requested">درخواست میانبر ارسال شد.</string>
+    <string name="library_shortcut_unsupported">این لانچر از میانبرهای سنجاق‌شده پشتیبانی نمی‌کند.</string>
+    <string name="library_shortcut_failed">ایجاد میانبر ناموفق بود.</string>
+    <string name="detail_launch">اجرای بازی</string>
+    <string name="detail_delete_game">حذف بازی</string>
+    <string name="detail_delete_game_confirm_title">بازی نصب‌شده حذف شود؟</string>
+    <string name="detail_delete_game_confirm_body">این کار فایل‌های بازی نصب‌شده را از کتابخانه شما حذف می‌کند.</string>
+    <string name="detail_delete_game_failed">حذف بازی ناموفق بود.</string>
+    <string name="save_manager_title">ذخیره‌ها</string>
+    <string name="save_manager_open_for_game">ذخیره‌ها</string>
+    <string name="save_manager_search_hint">جستجوی ذخیره‌ها</string>
+    <string name="save_manager_export">برون‌بری</string>
+    <string name="save_manager_import">درون‌بری</string>
+    <string name="save_manager_delete">حذف ذخیره</string>
+    <string name="save_manager_delete_confirm_title">داده ذخیره حذف شود؟</string>
+    <string name="save_manager_delete_confirm_body">این کار داده ذخیره %1$s را حذف می‌کند.</string>
+    <string name="save_manager_delete_failed">حذف داده ذخیره ناموفق بود.</string>
+    <string name="save_manager_export_success">داده ذخیره برون‌بری شد.</string>
+    <string name="save_manager_export_failed">برون‌بری داده ذخیره ناموفق بود.</string>
+    <string name="save_manager_import_success">داده ذخیره درون‌بری شد: %1$s.</string>
+    <string name="save_manager_import_failed">درون‌بری داده ذخیره ناموفق بود.</string>
+    <string name="save_manager_import_empty">آرشیو حاوی فایل‌های ذخیره نیست.</string>
+    <string name="save_manager_import_unsafe">آرشیو حاوی مسیرهای ناامن است.</string>
+    <string name="save_manager_import_unknown_target">پیش از درون‌بری این آرشیو، یک کارت ذخیره بازی انتخاب کنید یا از آرشیوی با یک پوشه ذخیره واحد استفاده کنید.</string>
+    <string name="save_manager_backup_all_title">پشتیبان‌گیری از همه ذخیره‌ها</string>
+    <string name="save_manager_backup_all_body">یک پشتیبان ZIP شامل همه پوشه‌های ذخیره بسازید، یا پوشه‌های ذخیره را از یک پشتیبان کامل قبلی بازیابی کنید.</string>
+    <string name="save_manager_backup_all">پشتیبان‌گیری</string>
+    <string name="save_manager_restore_all">بازیابی همه</string>
+    <string name="save_manager_backup_all_success">از %1$d پوشه ذخیره پشتیبان‌گیری شد.</string>
+    <string name="save_manager_backup_all_failed">پشتیبان‌گیری از همه ذخیره‌ها ناموفق بود.</string>
+    <string name="save_manager_restore_all_success">%1$d پوشه ذخیره بازیابی شد.</string>
+    <string name="save_manager_restore_all_failed">بازیابی همه ذخیره‌ها ناموفق بود.</string>
+    <string name="save_manager_restore_all_confirm_title">همه ذخیره‌ها بازیابی شوند؟</string>
+    <string name="save_manager_restore_all_confirm_body">پوشه‌های ذخیره از پشتیبان انتخاب‌شده جایگزین پوشه‌های ذخیره متناظر روی این دستگاه می‌شوند. ذخیره‌های موجود تنها زمانی نگه داشته می‌شوند که پشتیبان شامل آن شناسه ذخیره نباشد.</string>
+    <string name="save_manager_restore_all_confirm">بازیابی ذخیره‌ها</string>
+    <string name="save_manager_empty_title">داده ذخیره‌ای یافت نشد</string>
+    <string name="save_manager_empty_body">برای ایجاد داده ذخیره یک بازی را اجرا کنید، یا یک آرشیو ذخیره درون‌بری کنید.</string>
+    <string name="save_manager_empty_game_title">داده ذخیره‌ای برای %1$s وجود ندارد</string>
+    <string name="save_manager_empty_game_body">برای ایجاد داده ذخیره این بازی را اجرا کنید، یا یک آرشیو ذخیره برای آن درون‌بری کنید.</string>
+    <string name="save_manager_orphan_save">بازی نصب نشده است</string>
+    <string name="game_manager_title">مدیر بازی</string>
+    <string name="game_manager_open_for_game">تنظیمات بازی</string>
+    <string name="game_manager_empty_title">بازی نصب‌شده‌ای وجود ندارد</string>
+    <string name="game_manager_empty_body">ابتدا یک بازی نصب کنید، سپس در اینجا یک پروفایل سفارشی برای آن بسازید.</string>
+    <string name="game_manager_choose_game">انتخاب بازی</string>
+    <string name="game_manager_reset_global">استفاده از پیش‌فرض‌های کلی</string>
+    <string name="game_manager_invert_left_x">معکوس کردن محور X آنالوگ چپ</string>
+    <string name="game_manager_invert_right_x">معکوس کردن محور X آنالوگ راست</string>
+    <string name="patches_title">وصله‌ها</string>
+    <string name="patches_open_for_game">وصله‌ها</string>
+    <string name="patches_choose_game">انتخاب بازی</string>
+    <string name="patches_empty_title">وصله‌ای در دسترس نیست</string>
+    <string name="patches_empty_body">ابتدا بازی‌ها را نصب کنید، سپس وصله‌های آن‌ها را از اینجا دریافت کنید.</string>
+    <string name="patches_no_patches_for_game">وصله‌ای برای این بازی پیدا نشد.</string>
+    <string name="patches_update">به‌روزرسانی وصله‌ها</string>
+    <string name="patches_up_to_date">وصله‌ها از قبل به‌روز هستند.</string>
+    <string name="patches_import_success">تعداد وصله‌های واردشده با موفقیت: %1$d.</string>
+    <string name="patches_import_error">خطا: %1$s</string>
+    <string name="patches_hint_update">برای دریافت وصله‌های این بازی، دکمهٔ دانلود بالا را بزنید.</string>
+    <string name="patches_version">v%1$s</string>
+    <string name="patches_app_version">برنامه %1$s</string>
+    <string name="play_time_title">زمان بازی</string>
+    <string name="play_time_open_for_game">زمان بازی</string>
+    <string name="play_time_current_session">نوبت بازی فعلی</string>
+    <string name="play_time_filter_game">انتخاب بازی</string>
+    <string name="play_time_all_games">همه بازی‌ها</string>
+    <string name="play_time_total_time">زمان کل</string>
+    <string name="play_time_sessions">نشست‌ها</string>
+    <string name="play_time_games_played">بازی‌های انجام‌شده</string>
+    <string name="play_time_daily_chart">۱۴ روز اخیر</string>
+    <string name="play_time_games_chart">زمان بر اساس بازی</string>
+    <string name="play_time_recent_sessions">نشست‌ها</string>
+    <string name="play_time_no_sessions_title">هنوز نشست بازی‌ای وجود ندارد</string>
+    <string name="play_time_no_sessions_body">یک بازی را اجرا کنید تا نشست‌های بازی شما اینجا نمایش داده شوند.</string>
+    <string name="play_time_no_game_sessions_body">این بازی هنوز انجام نشده است. آن را اجرا کنید تا نشست‌های بازی آن اینجا نمایش داده شوند.</string>
+    <string name="play_time_today">امروز</string>
+    <string name="play_time_yesterday">دیروز</string>
+    <string name="achievements_title">دستاوردها</string>
+    <string name="achievements_open_for_game">دستاوردها</string>
+    <string name="achievements_how_to_unlock">چگونه باز می‌شود؟</string>
+    <string name="achievements_translate">ترجمه</string>
+    <string name="achievements_hint_title">روش باز کردن</string>
+    <string name="achievements_translation_title">ترجمه‌شده</string>
+    <string name="achievements_assist_error">بارگذاری نشد. دوباره تلاش کنید.</string>
+    <string name="achievements_progress_count">%1$d/%2$d</string>
+    <string name="achievements_choose_game">انتخاب بازی</string>
+    <string name="achievements_trophy">جام</string>
+    <string name="achievements_hidden_trophy">جام پنهان</string>
+    <string name="achievements_hidden_trophy_body">برای نمایش جزئیات، این جام را باز کنید.</string>
+    <string name="achievements_unlocked_at">باز شد در %1$s</string>
+    <string name="achievements_empty_title">جامی یافت نشد</string>
+    <string name="achievements_empty_body">یک بازی دارای پشتیبانی جام را اجرا کنید یا پس از نصب بازی‌ها بازآوری کنید.</string>
+    <string name="detail_title_id">شناسه عنوان</string>
+    <string name="detail_content_id">شناسه محتوا</string>
+    <string name="detail_version">نسخه</string>
+    <string name="detail_category">دسته‌بندی</string>
+    <string name="detail_overview_title">نمای کلی</string>
+    <string name="detail_catalog_meta_title">جزئیات فهرست</string>
+    <string name="detail_installed_section">بازی نصب‌شده</string>
+    <string name="detail_screenshots_title">تصاویر</string>
+    <string name="detail_videos_title">ویدئوها</string>
+    <string name="detail_release_year">سال انتشار</string>
+    <string name="detail_rating">امتیاز</string>
+    <string name="detail_genres">ژانرها</string>
+    <string name="detail_empty_title">جزئیاتی موجود نیست</string>
+    <string name="detail_empty_body">در حال حاضر هیچ داده نصب‌شده یا داده‌ای از فهرست برای این بازی موجود نیست.</string>
+    <string name="detail_catalog_missing_body">جزئیات فهرست موقتاً در دسترس نیست.</string>
+    <string name="detail_igdb_source_note">برخی توضیحات و داده‌های بازی در این صفحه از IGDB می‌آیند.</string>
+    <string name="detail_compatibility_title">سازگاری</string>
+    <string name="detail_compatibility_status">وضعیت</string>
+    <string name="detail_compatibility_issue">مشکل</string>
+    <string name="detail_compatibility_title_id_label">شناسه عنوان منطبق</string>
+    <string name="detail_compatibility_known_serials">شناسه‌های عنوان شناخته‌شده</string>
+    <string name="detail_compatibility_updated">به‌روزرسانی شده</string>
+    <string name="detail_compatibility_unavailable">پایگاه دادهٔ رسمی سازگاری RPCS3 فعلاً در دسترس نیست.</string>
+    <string name="detail_compatibility_unmapped">این مدخل فهرست هنوز شناسه عنوان نگاشت‌شده‌ای در فهرست محلی ندارد.</string>
+    <string name="detail_compatibility_missing_entry">RPCS3 در حال حاضر مدخلی برای سازگاری این شناسه‌های عنوان ندارد.</string>
+    <string name="detail_compatibility_source_note">داده‌های سازگاری از فهرست رسمی RPCS3 گرفته شده‌اند. گزارش شمارهٔ %1$d.</string>
+    <string name="detail_show_more">نمایش بیشتر</string>
+    <string name="detail_show_less">نمایش کمتر</string>
+    <string name="detail_screenshot_saved">تصویر ذخیره شد</string>
+    <string name="detail_screenshot_save_failed">ذخیره تصویر ممکن نشد</string>
+    <string name="detail_save_screenshot">ذخیره تصویر</string>
+    <string name="compatibility_unknown">نامشخص</string>
+    <string name="compatibility_nothing">هیچ</string>
+    <string name="compatibility_bootable">قابل بوت</string>
+    <string name="compatibility_intro">اینترو</string>
+    <string name="compatibility_menu">منو</string>
+    <string name="compatibility_ingame_less">درون بازی -</string>
+    <string name="compatibility_ingame_more">درون بازی +</string>
+    <string name="compatibility_playable">قابل بازی</string>
+    <string name="catalog_title">فهرست PS3</string>
+    <string name="catalog_search_hint">جستجوی بازی‌ها</string>
+    <string name="catalog_search_clear">پاک کردن جستجو</string>
+    <string name="catalog_toggle_search">تغییر نمایش جستجوی فهرست</string>
+    <string name="catalog_toggle_filters">تغییر نمایش فیلترهای فهرست</string>
+    <string name="catalog_filters_title">فیلترها</string>
+    <string name="catalog_filter_genre">ژانر</string>
+    <string name="catalog_filter_year">سال</string>
+    <string name="catalog_filter_rating">امتیاز</string>
+    <string name="catalog_filter_all_genres">همه ژانرها</string>
+    <string name="catalog_filter_all_years">همه سال‌ها</string>
+    <string name="catalog_filter_any_rating">هر امتیازی</string>
+    <string name="catalog_filters_clear">پاک کردن فیلترها</string>
+    <string name="catalog_empty_title">پایگاه داده فهرست یافت نشد</string>
+    <string name="catalog_empty_body">برای فعال‌سازی فهرست محلی PS3، فایل games.db را اضافه کنید.</string>
+    <string name="catalog_no_results_title">نتیجه‌ای یافت نشد</string>
+    <string name="catalog_no_results_body">عنوان، سال یا املای دیگری را امتحان کنید.</string>
+    <string name="catalog_profile_menu">فهرست پروفایل</string>
+    <string name="catalog_profile_remove">حذف از پروفایل</string>
+    <string name="catalog_profile_status_title">وضعیت بازی</string>
+    <string name="catalog_profile_clear_status">پاک کردن وضعیت بازی</string>
+    <string name="profile_title">پروفایل</string>
+    <string name="profile_game_count">%1$d بازی ذخیره شده</string>
+    <string name="profile_refresh">بازآوری پروفایل</string>
+    <string name="profile_toggle_layout">تغییر چیدمان پروفایل</string>
+    <string name="profile_section_count">%1$d</string>
+    <string name="profile_status_playing">در حال بازی</string>
+    <string name="profile_status_want_to_play">می‌خواهم بازی کنم</string>
+    <string name="profile_status_completed">تکمیل‌شده</string>
+    <string name="profile_status_dropped">رها شده</string>
+    <string name="profile_status_favorites">علاقه‌مندی‌ها</string>
+    <string name="profile_account_title">پروفایل محلی</string>
+    <string name="profile_account_body">نام، آواتار، علاقه‌مندی‌ها و فهرست‌های بازی شما فقط روی این دستگاه ذخیره می‌شوند.</string>
+    <string name="profile_hide_backup">پنهان کردن پروفایل محلی</string>
+    <string name="profile_show_backup">نمایش پروفایل محلی</string>
+    <string name="profile_user_name">نام نمایشی</string>
+    <string name="profile_default_name">بازیکن</string>
+    <string name="profile_change_avatar">تغییر آواتار</string>
+    <string name="profile_backup">ذخیره</string>
+    <string name="profile_empty_title">هنوز بازی‌ای در پروفایل نیست</string>
+    <string name="profile_empty_body">فهرست را باز کنید، روی منوی سه‌نقطه یک بازی ضربه بزنید و آن را به یکی از فهرست‌های پروفایل خود اضافه کنید.</string>
+    <string name="settings_title">تنظیمات</string>
+    <string name="settings_options_content_description">گزینه‌های تنظیمات</string>
+    <string name="settings_reset_defaults_menu">بازیابی تنظیمات پیش‌فرض</string>
+    <string name="settings_reset_defaults_title">تنظیمات پیش‌فرض بازیابی شوند؟</string>
+    <string name="settings_reset_defaults_message">این کار تنظیمات شبیه‌ساز را به پیش‌فرض‌های پیشنهادی بازنشانی می‌کند. بازی‌ها، ذخیره‌ها، زبان برنامه و پوشه‌های انتخاب‌شده شما بدون تغییر باقی می‌مانند.</string>
+    <string name="settings_reset_defaults_confirm">بازیابی</string>
+    <string name="settings_reset_defaults_cancel">لغو</string>
+    <string name="settings_tab_general">عمومی</string>
+    <string name="settings_tab_graphics">گرافیک</string>
+    <string name="settings_tab_overlay">اورلی</string>
+    <string name="settings_tab_controls">کنترل‌ها</string>
+    <string name="settings_tab_storage">حافظه</string>
+    <string name="settings_tab_about">درباره</string>
+    <string name="settings_tab_updates">به‌روزرسانی‌ها</string>
+    <string name="settings_core_overlay_opacity_label">شفافیت اورلی</string>
+    <string name="settings_core_overlay_opacity_value">%1$d%%</string>
+    <string name="settings_core_gamepad_overlay">نمایش اورلی دسته‌بازی</string>
+    <string name="settings_core_overlay_scale_label">مقیاس اورلی</string>
+    <string name="settings_core_overlay_scale_value">%1$.1fx</string>
+    <string name="settings_core_analog_multiplier_label">ضریب آنالوگ</string>
+    <string name="settings_core_analog_multiplier_value">%1$.1fx</string>
+    <string name="settings_gamepad_section">دسته‌بازی فیزیکی</string>
+    <string name="settings_gamepad_connected">دسته‌بازی متصل شد. این تنظیمات به‌صورت زنده هنگام بازی اعمال می‌شوند.</string>
+    <string name="settings_gamepad_disconnected">برای فعال کردن این تنظیمات، یک دسته‌بازی فیزیکی متصل کنید.</string>
+    <string name="settings_gamepad_deadzone">ناحیه مرده آنالوگ</string>
+    <string name="settings_gamepad_trigger_threshold">آستانه ماشه</string>
+    <string name="settings_gamepad_percent_value">%1$d%%</string>
+    <string name="settings_gamepad_button_profile">بازنگاشت دکمه‌ها</string>
+    <string name="settings_gamepad_profile_standard">استاندارد</string>
+    <string name="settings_gamepad_profile_swap_cross_circle">جابه‌جایی ضربدر/دایره</string>
+    <string name="settings_gamepad_profile_nintendo_face">دکمه‌های چهره نینتندو</string>
+    <string name="settings_vibration_section">لرزش</string>
+    <string name="settings_vibration_enable">لرزش</string>
+    <string name="settings_vibration_strength">شدت لرزش</string>
+    <string name="settings_edit_touch_controls">ویرایش کنترل‌ها</string>
+    <string name="settings_help_edit_touch_controls">دکمه‌های دستهٔ روی صفحه را جابه‌جا کنید و اندازه‌شان را تغییر دهید. تغییرات برای تمام بازی‌هایی اعمال می‌شوند که چیدمان اختصاصی ندارند.</string>
+    <string name="settings_test_vibration">آزمایش لرزش</string>
+    <string name="settings_test_vibration_button">آزمایش</string>
+    <string name="settings_device_vibration_fallback">استفاده از لرزش دستگاه به عنوان جایگزین</string>
+    <string name="settings_gamepad_swap_sticks">جابه‌جایی آنالوگ‌ها</string>
+    <string name="settings_gamepad_invert_left_y">معکوس کردن محور Y آنالوگ چپ</string>
+    <string name="settings_gamepad_invert_right_y">معکوس کردن محور Y آنالوگ راست</string>
+    <string name="settings_storage_title">حافظه</string>
+    <string name="settings_storage_body">داده‌های شبیه‌ساز در پوشهٔ ریشهٔ انتخاب‌شدهٔ PS3 ذخیره می‌شوند. بازی‌های نصب‌شده در config/dev_hdd0/game، ذخیره‌ها و تروفی‌ها در config/dev_hdd0/home و حافظهٔ نهان شیدرها و فایل‌های موقت در cache قرار دارند.</string>
+    <string name="settings_change_storage">تغییر حافظه</string>
+    <string name="settings_storage_location_internal">حافظه دستگاه</string>
+    <string name="settings_storage_location_sd">کارت SD</string>
+    <string name="settings_storage_location_external">حافظه خارجی</string>
+    <string name="settings_storage_change_note">تغییر حافظه، داده‌های شبیه‌ساز را که در مقصد موجود نیستند به مکان انتخاب‌شده منتقل می‌کند. فایل‌های موجود در مقصد نگه داشته می‌شوند.</string>
+    <string name="settings_storage_migrating">در حال انتقال داده‌های شبیه‌ساز…</string>
+    <string name="settings_storage_confirm_title">حافظه شبیه‌ساز تغییر کند؟</string>
+    <string name="settings_storage_confirm_body">EmuCoreC کل فایل‌سیستم مجازی PS3، شامل میان‌افزار، بازی‌ها، ذخیره‌ها، تروفی‌ها و تنظیمات هسته را به %1$s کپی می‌کند. فایل‌های موجود در مقصد حفظ می‌شوند. حافظه‌های نهان قابل بازسازی و وصله‌ها در محل ثابت ذخیره‌سازی برنامه باقی می‌مانند.</string>
+    <string name="settings_storage_confirm_action">انتقال داده‌ها</string>
+    <string name="settings_storage_migration_title">انتقال داده‌های شبیه‌ساز</string>
+    <string name="settings_storage_migration_body">هنگام کپی شدن فایل‌سیستم مجازی PS3 به فضای ذخیره‌سازی انتخاب‌شده، EmuCoreC را باز نگه دارید.</string>
+    <string name="settings_storage_migration_count">%1$d/%2$d فایل بررسی شد</string>
+    <string name="settings_storage_migration_failed">انتقال حافظه ممکن نشد</string>
+    <string name="settings_backup_title">پشتیبان‌گیری تنظیمات</string>
+    <string name="settings_backup_body">تنظیمات برنامه و شبیه‌ساز را در یک فایل پشتیبان‌گیری کنید، یا آن‌ها را از پشتیبان قبلی بازیابی کنید.</string>
+    <string name="settings_backup_create">پشتیبان‌گیری از تنظیمات</string>
+    <string name="settings_backup_restore">بازیابی پشتیبان</string>
+    <string name="settings_backup_created">پشتیبان تنظیمات ساخته شد.</string>
+    <string name="settings_backup_failed">ایجاد پشتیبان تنظیمات ناموفق بود.</string>
+    <string name="settings_backup_restored">تنظیمات از پشتیبان بازیابی شد.</string>
+    <string name="settings_backup_restore_failed">بازیابی پشتیبان تنظیمات ناموفق بود.</string>
+    <string name="settings_backup_restore_title">پشتیبان تنظیمات بازیابی شود؟</string>
+    <string name="settings_backup_restore_message">تنظیمات فعلی برنامه و شبیه‌ساز با پشتیبان انتخاب‌شده جایگزین می‌شوند.</string>
+    <string name="settings_backup_restore_confirm">بازیابی</string>
+    <string name="settings_clear_cache_title">پاک کردن حافظه نهان</string>
+    <string name="settings_clear_cache_body">مخزن شیدر، مخزن بافت، گزارش‌ها و فایل‌های موقت نصب را حذف می‌کند. تنظیمات، ذخیره‌ها، بازی‌های نصب‌شده و فریمور شما تحت تأثیر قرار نمی‌گیرند.</string>
+    <string name="settings_clear_cache_action">پاک کردن حافظه نهان</string>
+    <string name="settings_clear_cache_size">اندازه حافظه نهان: %1$s</string>
+    <string name="settings_clear_cache_empty">داده‌ای در حافظه نهان برای حذف وجود ندارد.</string>
+    <string name="settings_clear_cache_confirm_title">حافظه نهان پاک شود؟</string>
+    <string name="settings_clear_cache_confirm_message">این کار %1$s را آزاد می‌کند. ممکن است بازی‌ها در اولین اجرا مدت کوتاهی بیشتر طول بکشند تا شیدرها دوباره ساخته شوند.</string>
+    <string name="settings_clear_cache_confirm_action">پاک کردن</string>
+    <string name="settings_clear_cache_done">حافظه نهان پاک شد، %1$s آزاد شد.</string>
+    <string name="settings_clear_cache_failed">پاک کردن حافظه نهان ناموفق بود.</string>
+    <string name="settings_clear_cover_cache_title">پاک کردن حافظهٔ نهان جلدها</string>
+    <string name="settings_clear_cover_cache_body">جلدهای بازی، تصاویر صفحه و پیش‌نمایش‌های دانلودشده را حذف می‌کند. در صورت نیاز دوباره دریافت می‌شوند.</string>
+    <string name="settings_clear_cover_cache_action">پاک کردن حافظهٔ نهان جلدها</string>
+    <string name="settings_clear_cover_cache_size">حجم حافظهٔ نهان جلدها: %1$s</string>
+    <string name="settings_clear_cover_cache_empty">حافظهٔ نهان جلدها خالی است.</string>
+    <string name="settings_clear_cover_cache_confirm_title">حافظهٔ نهان جلدها پاک شود؟</string>
+    <string name="settings_clear_cover_cache_confirm_message">با این کار، جلدهای بازی و تصاویر صفحهٔ ذخیره‌شده در حافظهٔ نهان حذف می‌شوند و %1$s فضا آزاد می‌شود. تصاویر هنگام مشاهده دوباره دریافت می‌شوند.</string>
+    <string name="settings_clear_cover_cache_confirm_action">پاک کردن</string>
+    <string name="settings_clear_cover_cache_done">حافظهٔ نهان جلدها پاک شد و %1$s فضا آزاد شد.</string>
+    <string name="settings_clear_cover_cache_failed">پاک کردن حافظهٔ نهان جلدها انجام نشد.</string>
+    <string name="settings_keep_screen_on">روشن نگه داشتن صفحه</string>
+    <string name="settings_keep_screen_on_summary">از خاموش شدن صفحه هنگام استفاده از برنامه یا بازی جلوگیری می‌کند</string>
+    <string name="settings_about_title">درباره EmuCoreC</string>
+    <string name="settings_help_content_description">باز کردن راهنمای تنظیم</string>
+    <string name="settings_help_dialog_label">راهنمای تنظیمات</string>
+    <string name="settings_help_dialog_tip">هر بار یک گزینه را تغییر دهید، سپس همان صحنه بازی را آزمایش کنید تا ببینید واقعاً چه چیزی بهتر شده است.</string>
+    <string name="settings_help_gamepad_overlay">وقتی از دسته فیزیکی استفاده نمی‌کنید، کنترل‌های روی صفحه را نمایش می‌دهد.\n\nاز این گزینه برای نزدیک‌تر کردن حس ورودی لمسی یا دسته به روش بازی خود استفاده کنید. وقتی کنترل‌ها از قبل درست حس می‌شوند از تغییر آن پرهیز کنید، زیرا مقادیر افراطی می‌توانند نشانه‌گیری، منوها یا ویژگی‌های لمسی را سخت‌تر کنند.</string>
+    <string name="settings_help_overlay_scale">اندازه کنترل‌های روی صفحه را تغییر می‌دهد.\n\nاز این گزینه برای نزدیک‌تر کردن حس ورودی لمسی یا دسته به روش بازی خود استفاده کنید. وقتی کنترل‌ها از قبل درست حس می‌شوند از تغییر آن پرهیز کنید، زیرا مقادیر افراطی می‌توانند نشانه‌گیری، منوها یا ویژگی‌های لمسی را سخت‌تر کنند.</string>
+    <string name="settings_help_overlay_opacity">میزان شفافیت کنترل‌های روی صفحه را تغییر می‌دهد.\n\nاز این گزینه برای نزدیک‌تر کردن حس ورودی لمسی یا دسته به روش بازی خود استفاده کنید. وقتی کنترل‌ها از قبل درست حس می‌شوند از تغییر آن پرهیز کنید، زیرا مقادیر افراطی می‌توانند نشانه‌گیری، منوها یا ویژگی‌های لمسی را سخت‌تر کنند.</string>
+    <string name="settings_help_analog_multiplier">حساسیت آنالوگ را تغییر می‌دهد.\n\nاز این گزینه برای نزدیک‌تر کردن حس ورودی لمسی یا دسته به روش بازی خود استفاده کنید. وقتی کنترل‌ها از قبل درست حس می‌شوند از تغییر آن پرهیز کنید، زیرا مقادیر افراطی می‌توانند نشانه‌گیری، منوها یا ویژگی‌های لمسی را سخت‌تر کنند.</string>
+    <string name="settings_help_gamepad_deadzone">حرکات کوچک آنالوگ نزدیک مرکز را برای کاهش دریفت فیلتر می‌کند. اگر دوربین یا شخصیت خودبه‌خود حرکت می‌کند آن را افزایش دهید؛ اگر نشانه‌گیری کند پاسخ می‌دهد آن را کاهش دهید.</string>
+    <string name="settings_help_gamepad_trigger_threshold">تعیین می‌کند ماشه‌های آنالوگ چقدر باید حرکت کنند تا ورودی ارسال شود. برای ماشه‌های نویزی آن را افزایش دهید؛ برای کنترل‌های مسابقه‌ای یا حساس به فشار آن را کاهش دهید.</string>
+    <string name="settings_help_gamepad_button_profile">ورودی دکمه‌های جلوی دستهٔ فیزیکی را پیش از رسیدن به شبیه‌ساز بازنگاشت می‌کند. اگر چیدمان دستهٔ شما با جای دکمه‌های ضربدر، دایره، مربع و مثلث PS3 مطابقت ندارد، از این گزینه استفاده کنید.</string>
+    <string name="settings_help_vibration_enable">به بازی‌های پشتیبانی‌شده اجازه می‌دهد لرزش را به دسته فیزیکی یا در صورت فعال بودن جایگزین، به بدنه دستگاه اندروید ارسال کنند.</string>
+    <string name="settings_help_vibration_strength">شدت لرزش را برای ویبره دسته و جایگزین دستگاه مقیاس‌دهی می‌کند.</string>
+    <string name="settings_help_test_vibration">یک پالس کوتاه با شدت و مسیریابی فعلی لرزش پخش می‌کند.</string>
+    <string name="settings_help_device_vibration_fallback">وقتی دسته فیزیکی وجود ندارد یا موتور لرزش ندارد، گوشی یا بدنه دستگاه دستی را می‌لرزاند.</string>
+    <string name="settings_help_gamepad_swap_sticks">محورهای آنالوگ چپ و راست را جابه‌جا می‌کند. برای بازی‌ها یا دسته‌هایی با مسیریابی غیرمعمول آنالوگ مفید است.</string>
+    <string name="settings_help_gamepad_invert_x">جهت حرکت افقی آنالوگ را برای هدایت یا کنترل دوربین معکوس می‌کند.</string>
+    <string name="settings_help_gamepad_invert_y">حرکت عمودی آنالوگ را برای کنترل دوربین یا نشانه‌گیری وارونه می‌کند.</string>
+    <string name="settings_reset_toast">%1$s به پیش‌فرض بازنشانی شد</string>
+    <string name="settings_app_language">زبان برنامه</string>
+    <string name="settings_app_language_system">پیش‌فرض سیستم</string>
+    <string name="settings_app_language_english">انگلیسی</string>
+    <string name="settings_app_language_russian">روسی</string>
+    <string name="settings_app_language_ukrainian">اوکراینی</string>
+    <string name="settings_app_language_spanish">اسپانیایی</string>
+    <string name="settings_app_language_french">فرانسوی</string>
+    <string name="settings_app_language_german">آلمانی</string>
+    <string name="settings_app_language_portuguese">پرتغالی</string>
+    <string name="settings_app_language_chinese_traditional">چینی سنتی</string>
+    <string name="settings_app_language_hindi">هندی</string>
+    <string name="settings_app_language_italian">ایتالیایی</string>
+    <string name="settings_app_language_turkish">ترکی</string>
+    <string name="settings_app_language_arabic">عربی</string>
+    <string name="settings_language_picker_title">زبان</string>
+    <string name="settings_gpu_driver">درایور GPU</string>
+    <string name="settings_gpu_driver_global">استفاده از عمومی</string>
+    <string name="settings_gpu_driver_system">سیستم</string>
+    <string name="settings_gpu_driver_custom">سفارشی</string>
+    <string name="settings_gpu_driver_installed">درایورهای نصب‌شده</string>
+    <string name="settings_help_gpu_driver">بین درایور Vulkan سیستم و یک درایور سفارشی انتخاب کنید.\n\nاز درایور سفارشی عمدتاً روی دستگاه‌های Adreno سازگار استفاده کنید، زمانی که درایور Vulkan سیستم اشکالات گرافیکی یا عملکرد ضعیفی دارد. روی Mali، PowerVR، GPUهای ناشناخته یا هر زمان که درایور سفارشی باعث خرابی می‌شود، با درایور سیستم بمانید.</string>
+    <string name="settings_gpu_driver_manage">مدیریت درایورها</string>
+    <string name="settings_gpu_driver_manager_title">درایورهای GPU</string>
+    <string name="settings_gpu_driver_game_title">درایور GPU بازی</string>
+    <string name="settings_gpu_driver_manager_subtitle">نصب، دانلود، اعمال یا حذف درایورهای Adreno.</string>
+    <string name="settings_gpu_driver_active_title">درایور فعال</string>
+    <string name="settings_gpu_driver_install_from_file">نصب از فایل</string>
+    <string name="settings_gpu_driver_catalog">فهرست درایورها</string>
+    <string name="settings_gpu_driver_refresh">بازخوانی</string>
+    <string name="settings_gpu_driver_catalog_loading">در حال بارگذاری فهرست درایورها…</string>
+    <string name="settings_gpu_driver_catalog_failed">فهرست درایورها بارگذاری نشد</string>
+    <string name="settings_gpu_driver_catalog_empty">هنوز هیچ درایور آنلاینی در دسترس نیست.</string>
+    <string name="settings_gpu_driver_download_apply">دانلود و اعمال</string>
+    <string name="settings_gpu_driver_downloaded">دانلودشده</string>
+    <string name="settings_gpu_driver_apply">اعمال</string>
+    <string name="settings_gpu_driver_applied">اعمال‌شده</string>
+    <string name="settings_gpu_driver_remove_short">حذف</string>
+    <string name="settings_gpu_driver_recommended">توصیه‌شده</string>
+    <string name="settings_gpu_driver_source">منبع</string>
+    <string name="settings_gpu_driver_search">جست‌وجوی درایورها</string>
+    <string name="settings_gpu_driver_filter_all">همه</string>
+    <string name="settings_gpu_driver_no_matches">درایوری مطابق پیدا نشد</string>
+    <string name="settings_gpu_driver_no_matches_desc">متن جست‌وجو یا فیلترهای انتخابی را تغییر دهید.</string>
+    <string name="settings_gpu_driver_remove">حذف درایور</string>
+    <string name="settings_gpu_driver_none_installed">هنوز هیچ درایور GPU سفارشی نصب نشده است.</string>
+    <string name="settings_gpu_driver_install_failed">نصب درایور GPU ناموفق بود.</string>
+    <string name="settings_gpu_driver_install_success">درایور GPU نصب شد: %1$s</string>
+    <string name="settings_gpu_driver_status_system">درایور Vulkan سیستم فعال است</string>
+    <string name="settings_gpu_driver_status_global">استفاده از درایور GPU عمومی: %1$s</string>
+    <string name="settings_gpu_driver_status_global_system">استفاده از درایور GPU عمومی: Vulkan سیستم</string>
+    <string name="settings_gpu_driver_status_global_desc">این بازی از انتخاب درایور GPU عمومی پیروی می‌کند.</string>
+    <string name="settings_gpu_driver_status_game_system">بازنویسی بازی: درایور Vulkan سیستم</string>
+    <string name="settings_gpu_driver_status_game_active">بازنویسی بازی: %1$s</string>
+    <string name="settings_gpu_driver_status_system_desc">هیچ درایور سفارشی انتخاب نشده است، بنابراین از درایور Vulkan سیستم استفاده می‌شود.</string>
+    <string name="settings_gpu_driver_status_active">درایور سفارشی فعال: %1$s</string>
+    <string name="settings_gpu_driver_status_active_desc">این درایور آماده استفاده با Vulkan است. پشتیبانی واقعی همچنان به سازگاری دستگاه بستگی دارد.</string>
+    <string name="settings_gpu_driver_status_renderer">درایور سفارشی انتخاب شده است، اما رندرکننده %1$s است</string>
+    <string name="settings_gpu_driver_status_renderer_desc">درایورهای GPU سفارشی فقط با Vulkan کار می‌کنند. برای استفاده از این درایور، رندرکننده را به Vulkan تغییر دهید.</string>
+    <string name="settings_gpu_driver_status_broken">آرشیو درایور ناقص است: %1$s پیدا نشد</string>
+    <string name="settings_gpu_driver_status_broken_desc">فراداده درایور وجود دارد، اما کتابخانه Vulkan در دسترس نیست. درایور را دوباره نصب کنید.</string>
+    <string name="settings_about_version">نسخه برنامه</string>
+    <string name="settings_about_version_value">نسخه %1$s</string>
+    <string name="settings_about_body_extended">EmuCoreC شبیه‌سازی PS3 را با رابطی مناسب موبایل، مدیریت کتابخانهٔ محلی و هسته‌ای مبتنی بر RPCS3 به Android می‌آورد.</string>
+    <string name="settings_about_community_title">انجمن و پشتیبانی</string>
+    <string name="settings_about_website">وب‌سایت رسمی</string>
+    <string name="settings_about_website_desc">وب‌سایت EmuCoreC را برای دانلودها، اخبار و پیوندهای پروژه باز کنید.</string>
+    <string name="settings_about_repository">مخزن EmuCoreC</string>
+    <string name="settings_about_repository_desc">کد منبع را در گیت‌هاب ببینید، مشکلات را گزارش دهید و توسعه را دنبال کنید.</string>
+    <string name="settings_about_discord">به Discord ما بپیوندید</string>
+    <string name="settings_about_discord_desc">با انجمن گفت‌وگو کنید، بازخورد بدهید و به‌روزرسانی‌های پروژه را دریافت کنید.</string>
+    <string name="settings_about_support">حمایت از EmuCoreC</string>
+    <string name="settings_about_support_desc">با عضویت در Patreon به ادامه توسعه کمک کنید.</string>
+    <string name="settings_emulation_core">هسته شبیه‌سازی</string>
+    <string name="settings_based_on_rpcsx">بر پایه RPCS3</string>
+    <string name="settings_developer">توسعه‌دهنده</string>
+    <string name="settings_created_by_sbro">ساخته‌شده توسط Sashkin Apps</string>
+    <string name="settings_play_store_profile">پروفایل فروشگاه Play</string>
+    <string name="settings_play_store_profile_desc">برنامه‌های اندرویدی بیشتری از توسعه‌دهنده ببینید.</string>
+    <string name="settings_core_source_code">کد منبع هسته</string>
+    <string name="settings_core_source_description">EmuCoreC از رابط اندرویدی اختصاصی خود استفاده می‌کند. فقط هسته شبیه‌سازی بر پایه RPCS3 است.</string>
+    <string name="settings_rpcsx_repository_desc">مخزن اصلی پروژه RPCS3 را باز کنید.</string>
+    <string name="settings_updates_version_label">نسخه</string>
+    <string name="settings_updates_open_release">باز کردن صفحه انتشار</string>
+    <string name="settings_updates_release_notes_title">موارد جدید</string>
+    <string name="settings_updates_release_notes_empty">این انتشار یادداشت نسخه ندارد.</string>
+    <string name="settings_updates_history_title">تاریخچه به‌روزرسانی</string>
+    <string name="settings_updates_history_body">نسخه‌های منتشرشده در گیت‌هاب، تاریخ انتشار و فهرست تغییرات را مرور کنید.</string>
+    <string name="settings_updates_history_loading">در حال بارگذاری تاریخچه انتشار</string>
+    <string name="settings_updates_history_empty">هیچ نسخه‌ای پیدا نشد.</string>
+    <string name="settings_updates_published_label">منتشرشده</string>
+    <string name="settings_updates_parallel_title">نسخه‌های موازی</string>
+    <string name="settings_updates_parallel_body">اندروید تنها زمانی می‌تواند چند نسخه EmuCoreC را نصب کند که یک انتشار شامل بسته نصب ویژه‌ای با نام بسته و برچسب برنامه یکتا باشد، مانند EmuCoreC (0.1.1). بسته‌های نصب قدیمی‌تر معمولی، برنامه فعلی را جایگزین یا تنزل می‌دهند.</string>
+    <string name="settings_updates_parallel_package">بسته برنامه جداگانه</string>
+    <string name="settings_updates_parallel_download">دانلود</string>
+    <string name="settings_updates_parallel_unavailable">بسته نصب جداگانه برای این انتشار در دسترس نیست.</string>
+    <string name="settings_updates_cancel">لغو</string>
+    <string name="shell_setup_section">نصب</string>
+    <string name="shell_library_section">کتابخانه</string>
+    <string name="shell_tools_section">ابزارها</string>
+    <string name="shell_install_content">نصب بسته‌ها و DLC</string>
+    <string name="game_launch_failed">اجرای این بازی ناموفق بود.</string>
+    <string name="folder_picker_failed">استفاده از پوشه انتخاب‌شده ناموفق بود.</string>
+    <string name="core_install_firmware_failed">شروع نصب فریمور ناموفق بود.</string>
+    <string name="core_install_firmware_unsupported">یک فایل فریمور پشتیبانی‌شده مانند .PUP انتخاب کنید.</string>
+    <string name="core_install_pkg_failed">شروع نصب محتوای PS3 انجام نشد.</string>
+    <string name="game_launch_requires_firmware">پیش از اجرای بازی، فریمور پایه را نصب کنید.</string>
+    <string name="install_dialog_title_generic">نصب</string>
+    <string name="install_dialog_title_firmware">در حال نصب فریمور</string>
+    <string name="install_dialog_title_license">در حال نصب مجوز</string>
+    <string name="install_dialog_title_pkg">در حال نصب محتوای PS3</string>
+    <string name="install_dialog_success">نصب کامل شد.</string>
+    <string name="install_dialog_error">نصب ناموفق بود.</string>
+    <string name="install_dialog_percent">%1$d%% کامل شد</string>
+    <string name="install_dialog_close">بستن</string>
+    <string name="install_dialog_unexpected_error">در حین نصب مشکلی پیش آمد.</string>
+    <string name="install_dialog_firmware_failed">نصب فریمور ناموفق بود.</string>
+    <string name="install_dialog_license_failed">نصب مجوز ناموفق بود.</string>
+    <string name="install_dialog_pkg_failed">نصب محتوای PS3 انجام نشد.</string>
+    <string name="install_dialog_firmware_done">بسته فریمور با موفقیت نصب شد.</string>
+    <string name="install_dialog_license_done">مجوز با موفقیت نصب شد.</string>
+    <string name="install_dialog_pkg_done">محتوای PS3 با موفقیت نصب شد.</string>
+    <string name="install_dialog_extracting_archive">در حال استخراج %1$s…</string>
+    <string name="install_archive_missing_volume">یک یا چند بخش از بایگانی موجود نیست. همهٔ بخش‌ها، از جمله اولین و آخرین بخش را انتخاب کنید.</string>
+    <string name="install_archive_password_protected">بایگانی‌های دارای رمز عبور هنوز پشتیبانی نمی‌شوند. ابتدا بایگانی را استخراج کنید یا رمز عبور آن را بردارید.</string>
+    <string name="install_archive_unsafe">بایگانی حاوی یک مسیر یا پیوند ناامن است و رد شد.</string>
+    <string name="install_archive_not_enough_space">فضای خالی کافی برای استخراج و نصب ایمن این محتوا وجود ندارد.</string>
+    <string name="install_archive_no_content">هیچ فایل پشتیبانی‌شدهٔ PS3 با قالب PKG، ISO، RAP یا EDAT پیدا نشد.</string>
+    <string name="install_archive_failed">آرشیو آسیب دیده، ناقص است یا از فرمت پشتیبانی نشده استفاده می کند.</string>
+    <string name="setup_title">نصب بازی‌ها</string>
+    <string name="common_back">بازگشت</string>
+    <string name="common_not_available">در دسترس نیست</string>
+    <string name="common_unknown">نامشخص</string>
+    <string name="common_close">بستن</string>
+    <string name="common_cancel">لغو</string>
+    <string name="emulation_pause">مکث</string>
+    <string name="emulation_resume">ادامه</string>
+    <string name="emulation_menu_title">منوی بازی</string>
+    <string name="emulation_menu_unknown_game">بازی در حال اجرا</string>
+    <string name="emulation_tab_game">بازی</string>
+    <string name="emulation_tab_controls">کنترل‌ها</string>
+    <string name="emulation_tab_achievements">دستاوردها</string>
+    <string name="emulation_tab_gamepad">دسته‌بازی</string>
+    <string name="emulation_quickbar_open_menu">باز کردن منو</string>
+    <string name="emulation_menu_paused_badge">متوقف‌شده</string>
+    <string name="emulation_menu_badge_live">زنده</string>
+    <string name="emulation_menu_badge_restart">نیاز به راه‌اندازی مجدد</string>
+    <string name="emulation_menu_section_now">فوری</string>
+    <string name="emulation_menu_section_now_desc">تغییرات فوراً روی بازی در حال اجرا اعمال می‌شوند.</string>
+    <string name="emulation_menu_section_touch">کنترل‌های لمسی</string>
+    <string name="emulation_menu_section_touch_desc">دسته‌بازی روی صفحه. تغییرات فوراً اعمال می‌شوند.</string>
+    <string name="emulation_menu_section_gamepad">دسته‌بازی فیزیکی</string>
+    <string name="emulation_menu_section_gamepad_desc">ناحیه مرده، بازنگاشت، لرزش و رفتار آنالوگ برای دسته متصل.</string>
+    <string name="emulation_menu_section_gamepad_disconnected">برای تغییر این کنترل‌ها، یک دسته‌بازی فیزیکی متصل کنید.</string>
+    <string name="emulation_achievements_loading">در حال بارگذاری جام‌های بازی در حال اجرا.</string>
+    <string name="emulation_achievements_empty">جامی برای بازی در حال اجرا پیدا نشد.</string>
+    <string name="emulation_achievements_empty_body">بازی‌ای با پشتیبانی از جام نصب کنید یا جام‌های بازی را از کتابخانه بازخوانی کنید.</string>
+    <string name="emulation_menu_controls_desc">نمایش یا پنهان کردن کنترل‌های روی صفحه.</string>
+    <string name="emulation_menu_hide_controls">پنهان کردن کنترل‌ها</string>
+    <string name="emulation_menu_show_controls">نمایش کنترل‌ها</string>
+    <string name="emulation_menu_edit_controls">ویرایش کنترل‌ها</string>
+    <string name="emulation_menu_edit_controls_desc">هر کنترل روی صفحه را جابه‌جا، تغییر اندازه، نمایش یا پنهان کنید.</string>
+    <string name="emulation_menu_reset_overlay">بازنشانی چیدمان کنترل‌ها</string>
+    <string name="emulation_menu_reset_overlay_desc">مقیاس، شفافیت و چیدمان پیش‌فرض کنترل‌های لمسی را بازیابی کنید.</string>
+    <string name="emulation_controls_editor_title">ویرایشگر کنترل‌ها</string>
+    <string name="emulation_controls_editor_percent">%1$d%%</string>
+    <string name="emulation_controls_editor_touch_area_mode">ناحیه لمسی</string>
+    <string name="emulation_controls_editor_width">عرض</string>
+    <string name="emulation_controls_editor_height">ارتفاع</string>
+    <string name="emulation_controls_editor_done">انجام شد</string>
+    <string name="emulation_menu_exit_game">خروج از بازی</string>
+    <string name="emulation_exit_confirm_title">از بازی خارج شوید؟</string>
+    <string name="emulation_exit_confirm_body">نشست فعلی بسته می‌شود و به کتابخانه بازمی‌گردید.</string>
+    <string name="emulation_exit_confirm_action">خروج</string>
+    <string name="emulation_exit_cancel_action">لغو</string>
+    <string name="settings_tab_customization">شخصی‌سازی</string>
+    <string name="customization_preview_title">پیش‌نمایش</string>
+    <string name="customization_preview_subtitle">کتابخانه شما، متناسب با شما</string>
+    <plurals name="customization_games_per_row">
+        <item quantity="one">%1$d بازی در هر ردیف</item>
+        <item quantity="other">%1$d بازی در هر ردیف</item>
+    </plurals>
+    <string name="customization_home_background">پس‌زمینه صفحه اصلی</string>
+    <string name="customization_background_select">انتخاب تصویر، گیف یا ویدئو</string>
+    <string name="customization_background_default">پس‌زمینه پیش‌فرض</string>
+    <string name="customization_background_selected">پس‌زمینه سفارشی انتخاب شد</string>
+    <string name="customization_background_imported">پس‌زمینه به‌روزرسانی شد</string>
+    <string name="customization_background_failed">استفاده از این فایل پس‌زمینه ممکن نشد</string>
+    <string name="customization_library_layout">چیدمان کتابخانه</string>
+    <string name="customization_cover_size">اندازه کاور بازی</string>
+    <string name="customization_percent_value">%1$d%%</string>
+    <string name="customization_text_and_fonts">متن و فونت‌ها</string>
+    <string name="customization_app_font">فونت برنامه</string>
+    <string name="customization_font_system">پیش‌فرض سیستم</string>
+    <string name="customization_font_custom">سفارشی</string>
+    <string name="customization_import_font">درون‌بری فونت سفارشی</string>
+    <string name="customization_import_font_hint">انتخاب فایل TTF یا OTF</string>
+    <string name="customization_font_imported">فونت درون‌بری شد</string>
+    <string name="customization_font_failed">استفاده از این فایل فونت ممکن نشد</string>
+    <string name="customization_text_size">اندازه متن</string>
+    <string name="customization_reset_section">بازنشانی</string>
+    <string name="customization_reset">بازنشانی شخصی‌سازی</string>
+    <string name="customization_reset_description">بازگرداندن پس‌زمینه، اندازه کاور، فونت و اندازه متن پیش‌فرض</string>
+    <string name="customization_reset_confirm_title">شخصی‌سازی بازنشانی شود؟</string>
+    <string name="customization_reset_confirm_body">پس‌زمینه سفارشی و فونت درون‌بری‌شده شما حذف می‌شوند.</string>
+    <string name="customization_reset_action">بازنشانی</string>
+    <string name="settings_theme">تم</string>
+    <string name="settings_theme_system">سیستم</string>
+    <string name="settings_theme_light">روشن</string>
+    <string name="settings_theme_dark">تیره</string>
+    <string name="settings_theme_neon">نئون</string>
+    <string name="settings_about_privacy_policy">سیاست حفظ حریم خصوصی</string>
+    <string name="settings_about_privacy_policy_desc">سیاست حفظ حریم خصوصی EmuCoreC را باز کنید.</string>
+    <string name="shell_discord_server">سرور Discord</string>
+    <string name="settings_customization_drawer_section">کشوی ناوبری</string>
+    <string name="settings_customization_touch_controls_section">کنترل‌های روی صفحه</string>
+    <string name="settings_customization_touch_controls_style">سبک کنترل‌ها</string>
+    <string name="settings_customization_touch_controls_help">طراحی کامل کنترل‌ها را تغییر می‌دهد: پوسته دکمه‌ها، دی‌پد، حلقه‌های آنالوگ، کلاهک‌های آنالوگ، خطوط دور و حالت‌های فشرده. مکان‌ها، نواحی لمس، چندلمسی و رفتار ورودی بدون تغییر می‌مانند.</string>
+    <string name="settings_customization_touch_press_effect">جلوه فشردن</string>
+    <string name="settings_customization_touch_press_effect_help">انتخاب کنید هر دکمه روی صفحه، جهت دی‌پد و آنالوگ هنگام فشرده شدن چگونه واکنش نشان دهد. این گزینه فقط انیمیشن را تغییر می‌دهد؛ اندازه کنترل‌ها و نواحی لمس بدون تغییر می‌مانند.</string>
+    <string name="settings_customization_touch_press_effect_grow">بزرگ‌نمایی</string>
+    <string name="settings_customization_touch_press_effect_shrink">فشرده‌سازی</string>
+    <string name="settings_customization_touch_press_effect_spring">فنری</string>
+    <string name="settings_customization_touch_press_effect_glow">درخشش</string>
+    <string name="settings_customization_touch_style_classic">کلاسیک</string>
+    <string name="settings_customization_touch_style_glass">قدیمی</string>
+    <string name="settings_customization_touch_style_neon">مدرن</string>
+    <string name="settings_customization_touch_style_arcade">آرکید</string>
+    <string name="settings_customization_touch_style_minimal">مینیمال</string>
+    <string name="settings_game_menu_tab">منوی بازی</string>
+    <string name="settings_game_menu_layout_help">ساختار و پیمایش منوی درون‌بازی را تغییر می‌دهد. زبانه‌ها، نمایش محتوا، اقدامات ایمنی و کنترل‌های دسته‌بازی در همه چیدمان‌ها مشترک می‌مانند.</string>
+    <string name="settings_game_menu_layout_sidebar">نوار کناری</string>
+    <string name="settings_game_menu_layout_dashboard">داشبورد</string>
+    <string name="settings_game_menu_layout_command_center">مرکز فرمان</string>
+    <string name="settings_game_menu_layout_compact">فشرده</string>
+    <string name="settings_drawer_style_classic">کلاسیک</string>
+    <string name="settings_drawer_style_compact">فشرده</string>
+    <string name="settings_drawer_style_glass">شیشه‌ای</string>
+    <string name="settings_drawer_style_console">کنسولی</string>
+    <string name="feedback_title">بازخورد</string>
+    <string name="feedback_subtitle">ارسال بازخورد مستقیماً به تیم EmuCoreC</string>
+    <string name="feedback_category_title">موضوع چیست؟</string>
+    <string name="feedback_category_compatibility">سازگاری بازی</string>
+    <string name="feedback_category_performance">عملکرد یا لگ‌زدگی</string>
+    <string name="feedback_category_graphics">گرافیک یا رندر</string>
+    <string name="feedback_category_audio">صدا</string>
+    <string name="feedback_category_controls">کنترل‌ها یا دسته‌بازی</string>
+    <string name="feedback_category_crash">کرش یا فریز</string>
+    <string name="feedback_category_feature">درخواست قابلیت</string>
+    <string name="feedback_category_ui">رابط کاربری یا کاربردپذیری</string>
+    <string name="feedback_category_other">سایر</string>
+    <string name="feedback_details_title">جزئیات</string>
+    <string name="feedback_game_label">بازی از کتابخانه شما (اختیاری)</string>
+    <string name="feedback_game_placeholder">بر اساس عنوان یا سریال جست‌وجو کنید، یا بازی را دستی وارد کنید</string>
+    <string name="feedback_game_library_empty">هیچ بازی‌ای در حافظه نهان یافت نشد. می‌توانید عنوان یا سریال بازی را دستی وارد کنید.</string>
+    <string name="feedback_game_clear_selection">پاک کردن انتخاب بازی</string>
+    <string name="feedback_message_label">بازخورد شما</string>
+    <string name="feedback_message_placeholder">بگویید چه اتفاقی افتاد، چه انتظاری داشتید و چگونه می‌توانیم آن را بازتولید کنیم.</string>
+    <string name="feedback_character_counter">%1$d / %2$d</string>
+    <string name="feedback_attachments_title">پیوست‌ها</string>
+    <string name="feedback_attachments_help">حداکثر %1$d عکس، ویدیو، گزارش، فایل ذخیره یا فایل‌های دیگر اضافه کنید. حداکثر %2$d MB برای هر فایل و %3$d MB در مجموع.</string>
+    <string name="feedback_add_attachment">افزودن پیوست</string>
+    <string name="feedback_attachment_source_title">انتخاب نوع پیوست</string>
+    <string name="feedback_add_media">عکس یا ویدیو</string>
+    <string name="feedback_add_files">فایل</string>
+    <string name="feedback_attachment_counter">%1$d از %2$d فایل انتخاب شد</string>
+    <string name="feedback_tip_title">نکاتی برای بازخورد بهتر</string>
+    <string name="feedback_tip_body">مراحل کوتاهی برای بازتولید مشکل اضافه کنید و اسکرین‌شات، ویدیو، گزارش، سیو یا سایر فایل‌های مفید را پیوست کنید.</string>
+    <string name="feedback_remove_attachment">حذف پیوست</string>
+    <string name="feedback_send">ارسال بازخورد</string>
+    <string name="feedback_queueing">در حال آماده‌سازی…</string>
+    <string name="feedback_queued">بازخورد در صف قرار گرفت. هنگام در دسترس بودن شبکه به‌صورت خودکار ارسال می‌شود.</string>
+    <string name="feedback_error_message_required">لطفاً ابتدا بازخورد خود را توضیح دهید.</string>
+    <string name="feedback_error_too_many_files">فایل‌های زیادی انتخاب کرده‌اید.</string>
+    <string name="feedback_error_file_too_large">یکی از فایل‌ها بزرگ‌تر از 49 MB است.</string>
+    <string name="feedback_error_total_too_large">حجم کل فایل‌های انتخاب‌شده بیشتر از 90 MB است.</string>
+    <string name="feedback_error_file_unreadable">یکی از فایل‌های انتخاب‌شده قابل خواندن نیست.</string>
+    <string name="feedback_error_queue_failed">آماده‌سازی بازخورد ممکن نشد. فایل‌های انتخاب‌شده را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="feedback_not_configured">ارسال بازخورد در این نسخه پیکربندی نشده است. Worker URL و کلید API را به local.properties اضافه کنید.</string>
+    <string name="feedback_discard_title">بازخورد دور انداخته شود؟</string>
+    <string name="feedback_discard_message">پیام و پیوست‌های انتخاب‌شده شما از بین می‌روند.</string>
+    <string name="feedback_discard_action">دور انداختن</string>
+    <string name="settings_customization_drawer_style">ظاهر منوی کشویی</string>
+    <string name="settings_touch_haptics">ویبره کنترل لمسی</string>
+    <string name="settings_help_touch_haptics">هنگام نخستین فشردن یک دکمه روی صفحه، جهت D-pad یا استیک آنالوگ، بازخورد لمسی سبک اندروید را اضافه می‌کند. این گزینه فقط بر حس کنترل تأثیر می‌گذارد و لرزش درون‌بازی را تغییر نمی‌دهد.</string>
+    <string name="settings_touch_haptics_strength">شدت ویبره لمسی</string>
+    <string name="settings_help_touch_haptics_strength">میزان شدت لرزش دستگاه را برای ویبره کنترل لمسی تعیین می‌کند. اگر ویبره بیش از حد ضعیف است آن را افزایش دهید یا برای بازی بی‌صداتر در حالت دستی کاهش دهید.</string>
+    <string name="settings_touch_haptics_test">آزمایش ویبره لمسی</string>
+    <string name="settings_help_touch_haptics_test">همان جفت ویبره فشردن و رهاسازی مورد استفاده در کنترل‌های روی صفحه را پخش می‌کند تا بتوانید پیش‌تنظیم‌ها را مقایسه و شدت را پیش از اجرای بازی تنظیم کنید.</string>
+    <string name="settings_touch_haptics_preset">حس ویبره</string>
+    <string name="settings_touch_haptics_preset_soft">ملایم</string>
+    <string name="settings_touch_haptics_preset_balanced">متعادل</string>
+    <string name="settings_touch_haptics_preset_crisp">تیز</string>
+    <string name="settings_touch_haptics_preset_strong">قوی</string>
+    <string name="settings_help_touch_haptics_preset">ملایم از فشردن آرام و رهاسازی بسیار سبک استفاده می‌کند. متعادل فشردن واضح با رهاسازی سبک‌تر ارائه می‌دهد و پیش‌فرض است. تیز از کوتاه‌ترین و واضح‌ترین جفت برای ضربه‌های دقیق استفاده می‌کند. قوی پالس‌های عمیق‌تر و طولانی‌تر را برای گوشی‌هایی با موتور لرزش ضعیف‌تر به کار می‌برد. نوار لغزنده شدت، حس انتخاب‌شده را مقیاس می‌کند.</string>
+    <string name="settings_gyro_mode">کنترل ژیروسکوپ</string>
+    <string name="settings_gyro_off">خاموش</string>
+    <string name="settings_gyro_aim">نشانه‌گیری — استیک راست</string>
+    <string name="settings_gyro_steering">فرمان — استیک چپ</string>
+    <string name="settings_gyro_sensitivity">حساسیت ژیروسکوپ</string>
+    <string name="settings_gyro_smoothing">نرم‌سازی ژیروسکوپ</string>
+    <string name="settings_gyro_invert_x">معکوس کردن ژیروسکوپ افقی</string>
+    <string name="settings_gyro_invert_x_desc">حرکت چپ و راست را معکوس می‌کند.</string>
+    <string name="settings_gyro_invert_y">معکوس کردن ژیروسکوپ عمودی</string>
+    <string name="settings_gyro_invert_y_desc">حرکت نشانه‌گیری بالا و پایین را معکوس می‌کند.</string>
+    <string name="settings_help_gyro_mode">حالت نشانه‌گیری سرعت چرخش گوشی را به استیک آنالوگ راست برای کنترل دوربین در بازی‌های تیراندازی تبدیل می‌کند و وقتی گوشی متوقف شود به‌صورت خودکار به مرکز بازمی‌گردد. حالت فرمان شیب نگه‌داشته‌شده گوشی را به استیک آنالوگ چپ برای بازی‌های مسابقه‌ای تبدیل می‌کند و زاویه فعلی را هنگام شروع بازی به‌عنوان مرکز کالیبره می‌کند. حالت انتخاب‌شده فقط هنگام اجرای بازی استفاده می‌شود و به سنسور حرکتی مربوطه نیاز دارد.</string>
+    <string name="settings_help_gyro_sensitivity">کنترل می‌کند که حرکت گوشی با چه شدتی استیک آنالوگ شبیه‌سازی‌شده را منحرف کند. بازنویسی برای هر بازی توصیه می‌شود، زیرا بازی‌ها از منحنی‌های پاسخ دوربین و فرمان متفاوتی استفاده می‌کنند.</string>
+    <string name="settings_help_gyro_smoothing">نویز سنسور و لرزش دست را فیلتر می‌کند. مقادیر کمتر سریع‌تر واکنش می‌دهند؛ مقادیر بیشتر ثابت‌تر حس می‌شوند اما تأخیر کمی اضافه می‌کنند.</string>
+    <string name="settings_gyro_unavailable">این دستگاه سنسور حرکتی مورد نیاز حالت انتخاب‌شده را ارائه نمی‌دهد.</string>
+    <string name="settings_touch_controls_section">کنترل‌های لمسی</string>
+    <string name="settings_gpu_driver_detected_device">شناسایی‌شده: %1$s · %2$s</string>
+    <string name="settings_gpu_driver_device_hint">درایورهای سازگار ابتدا نمایش داده می‌شوند. برای مشاهده تراشه‌های Snapdragon پشتیبانی‌شده، روی کارت درایور ضربه بزنید.</string>
+    <string name="settings_gpu_driver_compatibility">سازگاری Snapdragon</string>
+    <string name="settings_gpu_driver_best_match">بهترین تطابق</string>
+    <string name="settings_gpu_driver_compatible">سازگار</string>
+    <string name="settings_gpu_driver_other_family">خانواده Adreno متفاوت</string>
+    <string name="settings_gpu_driver_compatibility_a6xx">Adreno 6xx: Snapdragon 845/855/865/888 و بسیاری از سری‌های Snapdragon 6/7</string>
+    <string name="settings_gpu_driver_compatibility_a7xx">Adreno 7xx: Snapdragon 8 Gen 1/2/3، 8s Gen 3، سری‌های اخیر Snapdragon 7 و 6 Gen 1/3</string>
+    <string name="settings_gpu_driver_compatibility_a8xx">Adreno 8xx: Snapdragon 8 Elite Gen 5، 8 Gen 5، 8 Elite، 8s Gen 4 و 6 Gen 4</string>
+    <string name="app_name_emucorec">EmuCoreC</string>
+    <string name="home_title">PlayStation 3</string>
+    <string name="home_subtitle">شبیه‌ساز PS3 برای اندروید</string>
+    <string name="home_installed_count">بازی‌های نصب‌شده: %1$d</string>
+    <string name="home_catalog_count">بازی‌های فهرست: %1$d</string>
+    <string name="home_storage_short">آماده</string>
+    <string name="home_storage_path">حافظه: %1$s</string>
+    <string name="home_open_setup">باز کردن بازی‌ها</string>
+    <string name="home_open_library">باز کردن کتابخانه</string>
+    <string name="home_open_catalog">مرور فهرست</string>
+    <string name="home_empty_library_title">هنوز بازی‌ای نصب نشده است</string>
+    <string name="home_recent_titles_title">اخیراً بازی شده</string>
+    <string name="onboarding_page_1_title">PlayStation 3 روی اندروید</string>
+    <string name="onboarding_page_1_body">بازی‌های PS3 خود را با هسته RPCS3 روی اندروید بازی کنید.</string>
+    <string name="onboarding_page_2_title">کتابخانه بازی‌های شما</string>
+    <string name="onboarding_page_2_body">بازی‌های نصب‌شده شما در یک کتابخانه گردآوری می‌شوند.</string>
+    <string name="onboarding_page_3_title">فهرست داخلی</string>
+    <string name="onboarding_page_3_body">کاورها، تصاویر، ویدئوها و جزئیات بازی‌ها را در یک مکان مرور کنید.</string>
+    <string name="onboarding_page_4_title">تقریباً آماده</string>
+    <string name="home_empty_library_body">میان‌افزار رسمی PS3 را نصب کنید، سپس بازی‌های PKG یا مجوزهای RAP را از صفحه بازی‌ها اضافه کنید.</string>
+    <string name="onboarding_page_4_body">پیش از اجرای بازی‌ها، میان‌افزار رسمی PS3 را نصب کنید.</string>
+    <string name="onboarding_firmware_title">میان‌افزار PS3</string>
+    <string name="onboarding_firmware_desc">فایل رسمی نرم‌افزار سیستم PS3 با نام PS3UPDAT.PUP را دریافت یا انتخاب کنید.</string>
+    <string name="onboarding_firmware_info_title">میان‌افزار رسمی PS3</string>
+    <string name="onboarding_firmware_info_body">میان‌افزار مستقیماً از سرورهای رسمی به‌روزرسانی Sony دریافت می‌شود. EmuCoreC آن را میزبانی، آینه‌سازی، تغییر یا بازتوزیع نمی‌کند.</string>
+    <string name="core_install_pkg_unsupported">فایل های PS3 PKG/ISO را انتخاب کنید یا حجم های آرشیو ZIP/RAR را کامل کنید.</string>
+    <string name="core_install_license_unsupported">یک فایل مجوز PS3 RAP را انتخاب کنید.</string>
+    <string name="setup_pkg_title">محتوای PS3 را نصب کنید</string>
+    <string name="setup_pkg_body">PKG/ISO را مستقیماً نصب کنید یا یک یا چند بخش از بایگانی ZIP/RAR را انتخاب کنید. فایل‌های PKG، ISO، RAP و EDAT داخل آن‌ها خودکار شناسایی می‌شوند.</string>
+    <string name="setup_pkg_license_step_title">نصب مجوز RAP</string>
+    <string name="setup_pkg_license_step_body">مجوز RAP مربوط به بازی دیجیتال PS3 خود را انتخاب کنید.</string>
+    <string name="setup_pkg_license_button">فایل RAP را انتخاب کنید</string>
+    <string name="setup_pkg_button">محتوا یا آرشیو را انتخاب کنید</string>
+    <string name="setup_pkg_order_note">برخی بازی‌های دیجیتال به مجوز RAP متناسب با همان بازی نیاز دارند. ترتیب نصب PKG و RAP اهمیتی ندارد.</string>
+    <string name="install_choice_title">محتوای PS3 را نصب کنید</string>
+    <string name="install_choice_body">فایل‌های PKG/ISO، بایگانی‌های ZIP/RAR را انتخاب کنید یا مجوز RAP را نصب کنید.</string>
+    <string name="install_choice_pkg_without_license_note">می‌توانید همهٔ بخش‌های بایگانی چندبخشی ZIP/RAR را با هم انتخاب کنید. EmuCoreC آن را به‌صورت ایمن استخراج می‌کند، محتوای PS3 را پیدا می‌کند، بسته‌های چندبخشی را به ترتیب طبیعی نصب می‌کند و فایل‌های موقت را حذف می‌کند.</string>
+    <string name="ps3_core_settings_unavailable">هسته RPCS3 نمی تواند بارگیری یا مقداردهی اولیه شود.</string>
+    <string name="ps3_core_setting_rejected">هسته RPCS3 \"%1$s\" را رد کرد.</string>
+    <string name="ps3_core_setting_default">مقدار پیش‌فرض هسته: %1$s</string>
+    <string name="ps3_core_setting_reset_game">بازنشانی این گزینه به مقدار سراسری</string>
+    <string name="catalog_open_for_game">باز کردن در کاتالوگ</string>
+    <string name="catalog_serial_not_found">این شناسهٔ بازی PS3 در فهرست محلی پیدا نشد.</string>
+    <string name="settings_rpcs3_repository_desc">مخزن اصلی شبیه‌ساز PlayStation 3 با نام RPCS3. از تمام مشارکت‌کنندگان RPCS3 برای هسته‌ای که این پروژه بر آن تکیه دارد، سپاسگزاریم.</string>
+    <string name="settings_tab_audio">صدا</string>
+    <string name="settings_tab_network">شبکه</string>
+    <string name="settings_tab_advanced">پیشرفته</string>
+    <string name="shell_launch_system_menu">اجرای PS3</string>
+    <string name="system_menu_launch_failed">اجرای منوی سیستم PS3 انجام نشد.</string>
+    <string name="core_setting_edit">ویرایش مقدار</string>
+    <string name="core_setting_value">ارزش</string>
+    <string name="core_setting_apply">اعمال</string>
+    <string name="core_setting_cancel">لغو</string>
+    <string name="core_setting_default_value">پیش‌فرض: %1$s</string>
+    <string name="core_setting_no_options">هیچ تنظیمات پشتیبانی شده ای در این بخش موجود نیست.</string>
+    <string name="core_label_1_controller">۱ دسته</string>
+    <string name="core_label_120">120</string>
+    <string name="core_label_1280x1080">1280x1080</string>
+    <string name="core_label_1280x720">1280x720</string>
+    <string name="core_label_1440x1080">1440x1080</string>
+    <string name="core_label_16_9">16:9</string>
+    <string name="core_label_1600x1080">1600x1080</string>
+    <string name="core_label_1920x1080">1920x1080</string>
+    <string name="core_label_1920x1080i">1920x1080i</string>
+    <string name="core_label_2_controllers">۲ دسته</string>
+    <string name="core_label_30">30</string>
+    <string name="core_label_3d_display_enabled">نمایش سه بعدی فعال شد</string>
+    <string name="core_label_3d_display_mode">حالت نمایش سه بعدی</string>
+    <string name="core_label_4_3">4:3</string>
+    <string name="core_label_50">50</string>
+    <string name="core_label_60">60</string>
+    <string name="core_label_720x480">720x480</string>
+    <string name="core_label_720x480i">720x480i</string>
+    <string name="core_label_720x576">720x576</string>
+    <string name="core_label_720x576i">720x576i</string>
+    <string name="core_label_960x1080">960x1080</string>
+    <string name="core_label_accurate">دقیق</string>
+    <string name="core_label_accurate_cache_line_stores">نوشتن دقیق خط‌های حافظهٔ نهان</string>
+    <string name="core_label_accurate_ppu_128_byte_reservation_op_max_length">حداکثر طول دقیق عملیات رزرو ۱۲۸بایتی PPU</string>
+    <string name="core_label_accurate_rsx_reservation_access">دسترسی دقیق به رزروهای RSX</string>
+    <string name="core_label_accurate_spu_dma">DMA دقیق SPU</string>
+    <string name="core_label_accurate_spu_reservations">رزرو دقیق SPU</string>
+    <string name="core_label_accurate_zcull_stats">آمار دقیق ZCULL</string>
+    <string name="core_label_adapter">آداپتور</string>
+    <string name="core_label_adaptive">تطبیقی</string>
+    <string name="core_label_all">همه</string>
+    <string name="core_label_all_timers">همهٔ زمان‌سنج‌ها</string>
+    <string name="core_label_allow_custom_background">اجازهٔ پس‌زمینهٔ سفارشی</string>
+    <string name="core_label_allow_host_gpu_labels">اجازهٔ برچسب‌های GPU میزبان</string>
+    <string name="core_label_allow_move_hue_set_by_game">اجازه به بازی برای تعیین رنگ PS Move</string>
+    <string name="core_label_allow_rsx_cpu_preemptions">اجازهٔ وقفهٔ زمان‌بندی CPU برای RSX</string>
+    <string name="core_label_anaglyph_amber_blue">آناگلیف کهربایی–آبی</string>
+    <string name="core_label_anaglyph_custom">آناگلیف سفارشی</string>
+    <string name="core_label_anaglyph_magenta_cyan">آناگلیف سرخابی–فیروزه‌ای</string>
+    <string name="core_label_anaglyph_red_blue">آناگلیف قرمز–آبی</string>
+    <string name="core_label_anaglyph_red_cyan">آناگلیف قرمز–فیروزه‌ای</string>
+    <string name="core_label_anaglyph_red_green">آناگلیف قرمز–سبز</string>
+    <string name="core_label_anaglyph_trioscopic">آناگلیف سه‌دیدی</string>
+    <string name="core_label_anisotropic_filter_override">جایگزینی فیلتر ناهمسانگرد</string>
+    <string name="core_label_approximate">تقریبی</string>
+    <string name="core_label_as_host">مانند سیستم میزبان</string>
+    <string name="core_label_aspect_ratio">نسبت تصویر</string>
+    <string name="core_label_assume_external_debugger">فرض وجود اشکال‌زدای خارجی</string>
+    <string name="core_label_async_recompiler_multi_threaded">بازکامپایلر ناهمگام (چندرشته‌ای)</string>
+    <string name="core_label_async_recompiler_with_shader_interpreter">بازکامپایلر ناهمگام با مفسر شیدر</string>
+    <string name="core_label_asynchronous_queue_scheduler">زمان‌بند صف ناهمگام</string>
+    <string name="core_label_asynchronous_texture_streaming">جریان‌دهی ناهمگام بافت‌ها</string>
+    <string name="core_label_atomic">اتمی</string>
+    <string name="core_label_audio">صدا</string>
+    <string name="core_label_audio_channel_layout">چیدمان کانال‌های صوتی</string>
+    <string name="core_label_audio_device">دستگاه صوتی</string>
+    <string name="core_label_audio_format">قالب صوتی</string>
+    <string name="core_label_audio_formats">قالب‌های صوتی</string>
+    <string name="core_label_audio_provider">ارائه‌دهندهٔ صوت</string>
+    <string name="core_label_auto">خودکار</string>
+    <string name="core_label_automatic">خودکار</string>
+    <string name="core_label_automatically_start_games_after_boot">شروع خودکار بازی ها پس از بوت شدن</string>
+    <string name="core_label_av_multiout">خروجی چندگانهٔ AV</string>
+    <string name="core_label_background_input_enabled">فعال بودن ورودی در پس‌زمینه</string>
+    <string name="core_label_basic">پایه</string>
+    <string name="core_label_bilinear">دوخطی</string>
+    <string name="core_label_bind_address">نشانی اتصال</string>
+    <string name="core_label_blur_effect_strength">شدت تاری</string>
+    <string name="core_label_body_background_hex">رنگ پس‌زمینهٔ محتوا (hex)</string>
+    <string name="core_label_body_color_hex">رنگ متن محتوا (hex)</string>
+    <string name="core_label_both">هر دو</string>
+    <string name="core_label_bottom_left">پایین سمت چپ</string>
+    <string name="core_label_bottom_right">پایین سمت راست</string>
+    <string name="core_label_buzz_emulated_controller">دستهٔ شبیه‌سازی‌شدهٔ Buzz</string>
+    <string name="core_label_camera">دوربین</string>
+    <string name="core_label_camera_flip">وارونه کردن تصویر دوربین</string>
+    <string name="core_label_camera_id">شناسهٔ دوربین</string>
+    <string name="core_label_camera_type">نوع دوربین</string>
+    <string name="core_label_cellaudio">CellAudio</string>
+    <string name="core_label_center_horizontally">تراز افقی در مرکز</string>
+    <string name="core_label_center_vertically">تراز عمودی در مرکز</string>
+    <string name="core_label_clans_enabled">فعال بودن کلن‌ها</string>
+    <string name="core_label_clock12">قالب ۱۲ساعته</string>
+    <string name="core_label_clock24">قالب ۲۴ساعته</string>
+    <string name="core_label_clocks_scale">ضریب ساعت</string>
+    <string name="core_label_compatible_savestate_mode">حالت سازگار ذخیرهٔ وضعیت</string>
+    <string name="core_label_connected">متصل</string>
+    <string name="core_label_consecutive_frames_to_draw">تعداد فریم‌های متوالی برای رسم</string>
+    <string name="core_label_consecutive_frames_to_skip">تعداد فریم‌های متوالی برای رد کردن</string>
+    <string name="core_label_console_psid">PSID کنسول</string>
+    <string name="core_label_console_time_offset_s">اختلاف زمان کنسول (ثانیه)</string>
+    <string name="core_label_convert_to_16_bit">تبدیل به ۱۶ بیت</string>
+    <string name="core_label_core">هستهٔ شبیه‌ساز</string>
+    <string name="core_label_cubeb">Cubeb</string>
+    <string name="core_label_custom_anaglyph_matrices">ماتریس‌های سفارشی آناگلیف</string>
+    <string name="core_label_darkening_effect_strength">شدت تاریک‌سازی</string>
+    <string name="core_label_date_format">فرمت تاریخ</string>
+    <string name="core_label_ddmmyyyy">روز/ماه/سال</string>
+    <string name="core_label_debug_console_mode">حالت کنسول اشکال‌زدایی</string>
+    <string name="core_label_debug_output">خروجی اشکال‌زدایی</string>
+    <string name="core_label_debug_overlay">لایهٔ اشکال‌زدایی</string>
+    <string name="core_label_debug_program_analyser">اشکال‌زدایی تحلیل‌گر برنامه</string>
+    <string name="core_label_decr_memory_layout">چیدمان حافظهٔ DECR</string>
+    <string name="core_label_derive_mac_from_psid">استخراج MAC از PSID</string>
+    <string name="core_label_desired_audio_buffer_duration">مدت مطلوب بافر صوتی</string>
+    <string name="core_label_detail_level">سطح جزئیات</string>
+    <string name="core_label_disable">غیر فعال کنید</string>
+    <string name="core_label_disable_asynchronous_memory_manager">غیرفعال کردن مدیر حافظهٔ ناهمگام</string>
+    <string name="core_label_disable_fifo_reordering">غیرفعال کردن تغییر ترتیب FIFO</string>
+    <string name="core_label_disable_hardware_colorspace_remapping">غیرفعال کردن بازنگاشت سخت‌افزاری فضای رنگ</string>
+    <string name="core_label_disable_msl_fast_math">غیرفعال کردن محاسبات سریع MSL</string>
+    <string name="core_label_disable_on_disk_shader_cache">غیرفعال کردن حافظهٔ نهان شیدر روی دیسک</string>
+    <string name="core_label_disable_sampling_skip">غیرفعال کردن رد کردن نمونه‌ها</string>
+    <string name="core_label_disable_spu_getllar_spin_optimization">غیرفعال کردن بهینه‌سازی انتظار فعال SPU GETLLAR</string>
+    <string name="core_label_disable_vertex_cache">غیرفعال کردن حافظهٔ نهان رأس‌ها</string>
+    <string name="core_label_disable_video_output">غیرفعال کردن خروجی تصویر</string>
+    <string name="core_label_disable_vulkan_memory_allocator">غیرفعال کردن تخصیص‌دهندهٔ حافظهٔ Vulkan</string>
+    <string name="core_label_disable_zcull_occlusion_queries">غیرفعال کردن پرس‌وجوهای پوشیدگی ZCull</string>
+    <string name="core_label_disabled">غیرفعال</string>
+    <string name="core_label_disconnected">قطع شد</string>
+    <string name="core_label_disk_cache_maximum_size_mb">حداکثر اندازه کش دیسک (MB)</string>
+    <string name="core_label_display">نمایش</string>
+    <string name="core_label_display_aspect_override">جایگزینی نسبت تصویر نمایشگر</string>
+    <string name="core_label_dns_address">نشانی DNS</string>
+    <string name="core_label_driver_recovery_timeout">مهلت بازیابی درایور</string>
+    <string name="core_label_driver_wake_up_delay">تأخیر بیدار شدن درایور</string>
+    <string name="core_label_dump_to_file">تخلیه در فایل</string>
+    <string name="core_label_empty_dev_hdd0_tmp">خالی کردن /dev_hdd0/tmp/</string>
+    <string name="core_label_emulate_special_depth_comparison">شبیه‌سازی مقایسهٔ ویژهٔ عمق</string>
+    <string name="core_label_emulated_midi_devices">دستگاه‌های MIDI شبیه‌سازی‌شده</string>
+    <string name="core_label_enable">فعال کردن</string>
+    <string name="core_label_enable_host_root">/host_root/ را فعال کنید</string>
+    <string name="core_label_enable_buffering">فعال کردن بافر</string>
+    <string name="core_label_enable_frame_skip">فعال کردن رد کردن فریم</string>
+    <string name="core_label_enable_framerate_graph">فعال کردن نمودار نرخ فریم</string>
+    <string name="core_label_enable_frametime_graph">فعال کردن نمودار زمان فریم</string>
+    <string name="core_label_enable_gamemode">فعال کردن GameMode</string>
+    <string name="core_label_enable_performance_report">فعال کردن گزارش عملکرد</string>
+    <string name="core_label_enable_time_stretching">فعال کردن کشش زمانی صدا</string>
+    <string name="core_label_enabled">فعال شد</string>
+    <string name="core_label_enter_button_assignment">تعیین دکمهٔ تأیید</string>
+    <string name="core_label_enter_with_circle">تأیید با دایره</string>
+    <string name="core_label_enter_with_cross">تأیید با ضربدر</string>
+    <string name="core_label_exclusive_fullscreen_mode">حالت انحصاری تمام صفحه</string>
+    <string name="core_label_exit_rpcs3_when_process_finishes">پس از پایان فرآیند از RPCS3 خارج شوید</string>
+    <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
+    <string name="core_label_fake">شبیه‌سازی‌شده</string>
+    <string name="core_label_fake_move_rotation_cone">مخروط چرخش شبیه‌سازی‌شدهٔ PS Move</string>
+    <string name="core_label_fake_move_rotation_cone_vertical">مخروط چرخش شبیه‌سازی‌شدهٔ PS Move (عمودی)</string>
+    <string name="core_label_fast">سریع</string>
+    <string name="core_label_faudio">FAudio</string>
+    <string name="core_label_fidelityfx_cas_sharpening_intensity">شدت وضوح‌بخشی FidelityFX CAS</string>
+    <string name="core_label_fidelityfx_super_resolution">FidelityFX Super Resolution</string>
+    <string name="core_label_font">قلم</string>
+    <string name="core_label_font_size_px">اندازهٔ قلم (پیکسل)</string>
+    <string name="core_label_force_cpu_blit">اجبار کپی تصویر با CPU</string>
+    <string name="core_label_force_hardware_msaa_resolve">اجبار ادغام سخت‌افزاری نمونه‌های MSAA</string>
+    <string name="core_label_force_high_precision_z_buffer">اجبار دقت بالای بافر Z</string>
+    <string name="core_label_frame_limit">محدودیت نرخ فریم</string>
+    <string name="core_label_framebuffer_aliasing_heuristic_bias">سوگیری اکتشافی هم‌پوشانی بافر فریم</string>
+    <string name="core_label_framerate_datapoints">نقاط دادهٔ نرخ فریم</string>
+    <string name="core_label_framerate_graph_detail_level">سطح جزئیات نمودار نرخ فریم</string>
+    <string name="core_label_frametime_datapoints">نقاط دادهٔ زمان فریم</string>
+    <string name="core_label_frametime_graph_detail_level">سطح جزئیات نمودار زمان فریم</string>
+    <string name="core_label_full">کامل</string>
+    <string name="core_label_gdb_server">سرور GDB</string>
+    <string name="core_label_ghltar_emulated_controller">دستهٔ شبیه‌سازی‌شدهٔ GHLtar</string>
+    <string name="core_label_giga">Giga</string>
+    <string name="core_label_gun">تفنگ نوری</string>
+    <string name="core_label_handle_rsx_memory_tiling">پردازش چیدمان کاشی‌وار حافظهٔ RSX</string>
+    <string name="core_label_hdd_model_name">نام مدل HDD</string>
+    <string name="core_label_hdd_serial_number">شمارهٔ سریال HDD</string>
+    <string name="core_label_hdmi_0">HDMI 0</string>
+    <string name="core_label_hdmi_1">HDMI 1</string>
+    <string name="core_label_high">بالا</string>
+    <string name="core_label_hle_lwmutex">HLE lwmutex</string>
+    <string name="core_label_hook_static_functions">رهگیری توابع ایستا</string>
+    <string name="core_label_horizontal">افقی</string>
+    <string name="core_label_horizontal_margin" formatted="false">حاشیه افقی (%)</string>
+    <string name="core_label_inaccurate">کم‌دقت</string>
+    <string name="core_label_infinite">بی نهایت</string>
+    <string name="core_label_initialize_directories">راه اندازی دایرکتوری ها</string>
+    <string name="core_label_input_output">ورودی/خروجی</string>
+    <string name="core_label_inspection_mode_savestates">ذخیره‌های وضعیت در حالت بررسی</string>
+    <string name="core_label_interlaced">درهم‌بافته</string>
+    <string name="core_label_internet_enabled">اینترنت فعال است</string>
+    <string name="core_label_interpreter_dynamic">مفسر (پویا)</string>
+    <string name="core_label_interpreter_static">مفسر (ایستا)</string>
+    <string name="core_label_io_debug_overlay">لایهٔ اشکال‌زدایی ورودی/خروجی</string>
+    <string name="core_label_ip_address">نشانی IP</string>
+    <string name="core_label_ip_swap_list">فهرست جایگزینی IP</string>
+    <string name="core_label_keep_pads_connected">متصل نگه داشتن دسته‌ها</string>
+    <string name="core_label_keyboard">صفحه‌کلید</string>
+    <string name="core_label_keyboard_type">نوع صفحه‌کلید</string>
+    <string name="core_label_language">زبان</string>
+    <string name="core_label_legacy_recompiler_single_threaded">بازکامپایلر قدیمی (تک‌رشته‌ای)</string>
+    <string name="core_label_libraries_control">کنترل کتابخانه‌ها</string>
+    <string name="core_label_license_area">منطقهٔ مجوز</string>
+    <string name="core_label_limit_disk_cache_size">محدود کردن حجم حافظهٔ نهان دیسک</string>
+    <string name="core_label_llvm_precompilation">پیش‌کامپایل LLVM</string>
+    <string name="core_label_load_sdl_gamecontroller_mappings">بارگذاری نگاشت‌های دستهٔ SDL</string>
+    <string name="core_label_lock_overlay_input_to_player_one">محدود کردن ورودی لایه به بازیکن اول</string>
+    <string name="core_label_log">گزارش</string>
+    <string name="core_label_log_shader_programs">ثبت برنامه‌های شیدر</string>
+    <string name="core_label_low">کم</string>
+    <string name="core_label_manual">دستی</string>
+    <string name="core_label_master_volume">بلندی کلی صدا</string>
+    <string name="core_label_matrix_left">ماتریس چپ</string>
+    <string name="core_label_matrix_right">ماتریس راست</string>
+    <string name="core_label_max_cpu_preempt_count">حداکثر تعداد وقفهٔ زمان‌بندی CPU</string>
+    <string name="core_label_max_llvm_compile_threads">حداکثر رشته‌های کامپایل LLVM</string>
+    <string name="core_label_max_spurs_threads">حداکثر رشته‌های SPURS</string>
+    <string name="core_label_maximum_savestate_files">حداکثر تعداد فایل‌های ذخیرهٔ وضعیت</string>
+    <string name="core_label_maximum_savestate_files_space_mib">حداکثر فضای ذخیره‌های وضعیت (MiB)</string>
+    <string name="core_label_medium">متوسط</string>
+    <string name="core_label_mega">Mega</string>
+    <string name="core_label_metrics_update_interval_ms">فاصلهٔ به‌روزرسانی معیارها (میلی‌ثانیه)</string>
+    <string name="core_label_mfc_commands_shuffling_in_steps">جابه‌جایی مرحله‌ای ترتیب فرمان‌های MFC</string>
+    <string name="core_label_mfc_commands_shuffling_limit">محدودیت جابه‌جایی ترتیب فرمان‌های MFC</string>
+    <string name="core_label_mfc_commands_timeout">مهلت فرمان‌های MFC</string>
+    <string name="core_label_mfc_debug">اشکال‌زدایی MFC</string>
+    <string name="core_label_microphone_devices">دستگاه‌های میکروفون</string>
+    <string name="core_label_microphone_type">نوع میکروفون</string>
+    <string name="core_label_minimal">مینیمال</string>
+    <string name="core_label_minimum_scalable_dimension">حداقل ابعاد قابل تغییر اندازه</string>
+    <string name="core_label_miscellaneous">متفرقه</string>
+    <string name="core_label_mmddyyyy">ماه/روز/سال</string>
+    <string name="core_label_mono">مونو</string>
+    <string name="core_label_mouse">ماوس</string>
+    <string name="core_label_mouse_debug_overlay">لایهٔ اشکال‌زدایی ماوس</string>
+    <string name="core_label_mouse_based_gyro_enabled">فعال بودن ژیروسکوپ مبتنی بر ماوس</string>
+    <string name="core_label_move">PS Move</string>
+    <string name="core_label_msaa">MSAA</string>
+    <string name="core_label_multi_threaded">چندرشته‌ای</string>
+    <string name="core_label_multithreaded_rsx">RSX چندرشته‌ای</string>
+    <string name="core_label_music_handler">پردازشگر موسیقی</string>
+    <string name="core_label_nearest">نزدیک‌ترین</string>
+    <string name="core_label_net">شبکه</string>
+    <string name="core_label_none">هیچ‌کدام</string>
+    <string name="core_label_null">هیچ‌کدام</string>
+    <string name="core_label_off">خاموش</string>
+    <string name="core_label_opacity" formatted="false">میزان کدری (%)</string>
+    <string name="core_label_opengl">OpenGL</string>
+    <string name="core_label_operating_system">سیستم‌عامل</string>
+    <string name="core_label_ordered_atomic">ترتیبی و اتمی</string>
+    <string name="core_label_output_scaling_mode">حالت تغییر اندازهٔ خروجی</string>
+    <string name="core_label_over_under">بالا و پایین</string>
+    <string name="core_label_pad_handler_mode">حالت پردازش دسته</string>
+    <string name="core_label_pad_handler_sleep_microseconds">وقفهٔ پردازش دسته (میکروثانیه)</string>
+    <string name="core_label_paint_move_spheres">رسم گوی‌های PS Move</string>
+    <string name="core_label_pause_emulation_during_home_menu">توقف شبیه‌سازی هنگام نمایش منوی اصلی</string>
+    <string name="core_label_pause_emulation_on_rpcs3_focus_loss">توقف شبیه‌سازی هنگام خروج از تمرکز RPCS3</string>
+    <string name="core_label_performance_overlay">پایش عملکرد</string>
+    <string name="core_label_performance_report_threshold">آستانهٔ گزارش عملکرد</string>
+    <string name="core_label_play_music_during_boot_sequence">پخش موسیقی هنگام راه‌اندازی</string>
+    <string name="core_label_position">موقعیت</string>
+    <string name="core_label_ppu_accurate_non_java_mode">حالت دقیق غیرجاوای PPU</string>
+    <string name="core_label_ppu_accurate_vector_nan_values">مقادیر دقیق NaN برداری PPU</string>
+    <string name="core_label_ppu_calling_history">تاریخچهٔ فراخوانی‌های PPU</string>
+    <string name="core_label_ppu_debug">اشکال‌زدایی PPU</string>
+    <string name="core_label_ppu_decoder">رمزگشای PPU</string>
+    <string name="core_label_ppu_profiler">پروفایلر PPU</string>
+    <string name="core_label_ppu_reservation_priority_over_spus">اولویت رزرو PPU نسبت به SPU</string>
+    <string name="core_label_ppu_set_fpcc_bits">تنظیم بیت‌های FPCC در PPU</string>
+    <string name="core_label_ppu_set_saturation_bit">تنظیم بیت اشباع PPU</string>
+    <string name="core_label_ppu_threads">رشته‌های PPU</string>
+    <string name="core_label_ppu_vector_nan_handling">پردازش NaN برداری PPU</string>
+    <string name="core_label_precise_spu_verification">راستی‌آزمایی دقیق SPU</string>
+    <string name="core_label_prefer_color">ترجیح رنگ</string>
+    <string name="core_label_prefer_depth">ترجیح عمق</string>
+    <string name="core_label_preferred_spu_threads">تعداد ترجیحی رشته‌های SPU</string>
+    <string name="core_label_prevent_display_sleep_while_running_games">جلوگیری از خاموش شدن نمایشگر هنگام بازی</string>
+    <string name="core_label_process_argv">آرگومان‌های فرایند ARGV</string>
+    <string name="core_label_ps_eye">PS Eye</string>
+    <string name="core_label_ps3">PS3</string>
+    <string name="core_label_ps3_native">بومی PS3</string>
+    <string name="core_label_psn_country">کشور PSN</string>
+    <string name="core_label_psn_status">وضعیت PSN</string>
+    <string name="core_label_qt">Qt</string>
+    <string name="core_label_quadraphonic">چهارکاناله</string>
+    <string name="core_label_quadraphonic_lfe">چهارکاناله با LFE</string>
+    <string name="core_label_raw">پردازش نشده</string>
+    <string name="core_label_raw_mouse">ورودی مستقیم ماوس</string>
+    <string name="core_label_read_color_buffers">خواندن بافرهای رنگ</string>
+    <string name="core_label_read_depth_buffer">خواندن بافر عمق</string>
+    <string name="core_label_real">فیزیکی</string>
+    <string name="core_label_real_singstar">SingStar فیزیکی</string>
+    <string name="core_label_recompiler_asmjit">بازکامپایلر (ASMJIT)</string>
+    <string name="core_label_recompiler_llvm">بازکامپایلر (LLVM)</string>
+    <string name="core_label_record_with_overlays">ضبط همراه با لایه‌ها</string>
+    <string name="core_label_relaxed">آسان‌گیر</string>
+    <string name="core_label_relaxed_zcull_sync">همگام‌سازی آسان‌گیر ZCULL</string>
+    <string name="core_label_renderdoc_compatibility_mode">حالت سازگاری RenderDoc</string>
+    <string name="core_label_renderer">رندرکننده</string>
+    <string name="core_label_resolution">وضوح تصویر</string>
+    <string name="core_label_resolution_scale">ضریب وضوح تصویر</string>
+    <string name="core_label_rocksmith">Rocksmith</string>
+    <string name="core_label_rpcn">RPCN</string>
+    <string name="core_label_rpcs3_alternative_scheduler">زمان‌بند جایگزین RPCS3</string>
+    <string name="core_label_rpcs3_scheduler">زمان‌بند RPCS3</string>
+    <string name="core_label_rsx_fifo_fetch_accuracy">دقت واکشی FIFO در RSX</string>
+    <string name="core_label_rsx_profiler">پروفایلر RSX</string>
+    <string name="core_label_rsxaudio">RSXAudio</string>
+    <string name="core_label_rsxaudio_avport">RSXAudio Avport</string>
+    <string name="core_label_safe">ایمن</string>
+    <string name="core_label_save_disc_game_data">ذخیرهٔ داده‌های بازی دیسکی</string>
+    <string name="core_label_save_llvm_logs">ذخیرهٔ گزارش‌های LLVM</string>
+    <string name="core_label_savestate">ذخیرهٔ وضعیت</string>
+    <string name="core_label_screen_size_in_inches">اندازه صفحه نمایش بر حسب اینچ</string>
+    <string name="core_label_sdl">SDL</string>
+    <string name="core_label_sdl_camera_id">شناسهٔ دوربین SDL</string>
+    <string name="core_label_second_frame_limit">محدودیت دوم نرخ فریم</string>
+    <string name="core_label_set_daz_and_ftz">تنظیم DAZ و FTZ</string>
+    <string name="core_label_shader_chain_librashader">زنجیرهٔ شیدر (librashader)</string>
+    <string name="core_label_shader_compiler_threads">رشته‌های کامپایل شیدر</string>
+    <string name="core_label_shader_interpreter_only">فقط مفسر شیدر</string>
+    <string name="core_label_shader_loading_dialog">پنجرهٔ بارگذاری شیدر</string>
+    <string name="core_label_shader_mode">حالت شیدر</string>
+    <string name="core_label_shader_precision">دقت شیدر</string>
+    <string name="core_label_shader_preset_path">مسیر پیش‌تنظیم شیدر</string>
+    <string name="core_label_show_1_and_average" formatted="false">نمایش کمترین ۱٪ و میانگین</string>
+    <string name="core_label_show_analog_limiter_toggle_hint">نمایش راهنمای تغییر محدودکنندهٔ آنالوگ</string>
+    <string name="core_label_show_autosave_autoload_hint">نمایش راهنمای ذخیره و بارگذاری خودکار</string>
+    <string name="core_label_show_capture_hints">نمایش راهنمای تصویربرداری و ضبط</string>
+    <string name="core_label_show_fatal_error_hints">نمایش راهنمای خطاهای بحرانی</string>
+    <string name="core_label_show_header">نمایش سربرگ</string>
+    <string name="core_label_show_min_and_max">نمایش حداقل و حداکثر</string>
+    <string name="core_label_show_mouse_and_keyboard_toggle_hint">نمایش راهنمای تغییر ماوس و صفحه‌کلید</string>
+    <string name="core_label_show_move_cursor">نمایش نشانگر PS Move</string>
+    <string name="core_label_show_ppu_compilation_hint">نمایش پیام کامپایل PPU</string>
+    <string name="core_label_show_pressure_intensity_toggle_hint">نمایش راهنمای تغییر شدت فشار</string>
+    <string name="core_label_show_rpcn_popups">نمایش اعلان‌های RPCN</string>
+    <string name="core_label_show_shader_compilation_hint">نمایش پیام کامپایل شیدر</string>
+    <string name="core_label_show_trophy_popups">نمایش اعلان‌های تروفی</string>
+    <string name="core_label_side_by_side">کنار هم</string>
+    <string name="core_label_silence_all_logs">توقف ثبت همهٔ گزارش‌ها</string>
+    <string name="core_label_simulated">شبیه سازی شده</string>
+    <string name="core_label_single_threaded">تک‌رشته‌ای</string>
+    <string name="core_label_singstar">SingStar</string>
+    <string name="core_label_sleep_timers_accuracy">دقت زمان‌سنج‌های وقفه</string>
+    <string name="core_label_spdif_0">SPDIF 0</string>
+    <string name="core_label_spdif_1">SPDIF 1</string>
+    <string name="core_label_spu_block_size">اندازهٔ بلوک SPU</string>
+    <string name="core_label_spu_cache">حافظهٔ نهان SPU</string>
+    <string name="core_label_spu_debug">اشکال زدایی SPU</string>
+    <string name="core_label_spu_decoder">رمزگشای SPU</string>
+    <string name="core_label_spu_delay_penalty">جریمهٔ تأخیر SPU</string>
+    <string name="core_label_spu_getllar_busy_waiting_percentage">درصد انتظار فعال SPU GETLLAR</string>
+    <string name="core_label_spu_llvm_lower_bound">کران پایین SPU LLVM</string>
+    <string name="core_label_spu_llvm_upper_bound">کران بالای SPU LLVM</string>
+    <string name="core_label_spu_loop_detection">تشخیص حلقه‌های SPU</string>
+    <string name="core_label_spu_profiler">پروفایلر SPU</string>
+    <string name="core_label_spu_reservation_busy_waiting_enabled">فعال کردن انتظار فعال رزرو SPU</string>
+    <string name="core_label_spu_reservation_busy_waiting_percentage_1">درصد انتظار فعال رزرو SPU ۱</string>
+    <string name="core_label_spu_verification">تأیید SPU</string>
+    <string name="core_label_spu_wake_up_delay">تأخیر بیدار شدن SPU</string>
+    <string name="core_label_spu_wake_up_delay_thread_mask">ماسک رشتهٔ تأخیر بیدار شدن SPU</string>
+    <string name="core_label_spu_xfloat_accuracy">دقت XFloat در SPU</string>
+    <string name="core_label_standard">استاندارد</string>
+    <string name="core_label_start_games_in_fullscreen_mode">اجرای بازی‌ها به‌صورت تمام‌صفحه</string>
+    <string name="core_label_start_paused">شروع در حالت توقف</string>
+    <string name="core_label_stereo">استریو</string>
+    <string name="core_label_stereo_lfe">استریو LFE</string>
+    <string name="core_label_stretch_to_display_area">کشیدن تصویر تا محدودهٔ نمایش</string>
+    <string name="core_label_strict_rendering_mode">حالت رندر سخت‌گیرانه</string>
+    <string name="core_label_strict_texture_flushing">تخلیهٔ سخت‌گیرانهٔ بافت‌ها</string>
+    <string name="core_label_stub_ppu_traps">جایگزینی تله‌های PPU با کد خالی</string>
+    <string name="core_label_surround_5_1">صدای فراگیر ۵٫۱</string>
+    <string name="core_label_surround_7_1">صدای فراگیر ۷٫۱</string>
+    <string name="core_label_suspend_emulation_savestate_mode">حالت ذخیرهٔ وضعیت با تعلیق شبیه‌سازی</string>
+    <string name="core_label_system">سیستم</string>
+    <string name="core_label_system_name">نام سیستم</string>
+    <string name="core_label_texture_lod_bias_addend">مقدار افزوده به سوگیری LOD بافت</string>
+    <string name="core_label_thread_scheduler_mode">حالت زمان‌بندی رشته‌ها</string>
+    <string name="core_label_time_format">قالب زمان</string>
+    <string name="core_label_time_stretching_threshold">آستانهٔ کشش زمانی صدا</string>
+    <string name="core_label_title_background_hex">رنگ پس‌زمینهٔ عنوان (hex)</string>
+    <string name="core_label_title_color_hex">رنگ متن عنوان (hex)</string>
+    <string name="core_label_top_left">بالا سمت چپ</string>
+    <string name="core_label_top_right">بالا سمت راست</string>
+    <string name="core_label_turntable_emulated_controller">دستهٔ صفحه‌گردان شبیه‌سازی‌شده</string>
+    <string name="core_label_ultra">Ultra</string>
+    <string name="core_label_unknown">نامشخص</string>
+    <string name="core_label_upnp_enabled">فعال بودن UPnP</string>
+    <string name="core_label_use_accurate_dfma">استفاده از DFMA دقیق</string>
+    <string name="core_label_use_full_rgb_output_range">از محدوده خروجی کامل RGB استفاده کنید</string>
+    <string name="core_label_use_gpu_texture_scaling">تغییر اندازهٔ بافت با GPU</string>
+    <string name="core_label_use_llvm_cpu">استفاده از CPU برای LLVM</string>
+    <string name="core_label_use_native_user_interface">استفاده از رابط کاربری بومی</string>
+    <string name="core_label_use_re_bar_for_gpu_uploads">استفاده از Re-BAR برای انتقال به GPU</string>
+    <string name="core_label_use_recursive_scan">استفاده از جست‌وجوی بازگشتی</string>
+    <string name="core_label_use_window_space">استفاده از فضای پنجره</string>
+    <string name="core_label_usleep_only">فقط usleep</string>
+    <string name="core_label_usleep_time_addend">زمان افزوده به usleep</string>
+    <string name="core_label_uvc_1_1">UVC 1.1</string>
+    <string name="core_label_vblank_ntsc_fixup">رفع مشکل Vblank NTSC</string>
+    <string name="core_label_vblank_rate">نرخ Vblank</string>
+    <string name="core_label_vertical">عمودی</string>
+    <string name="core_label_vertical_margin" formatted="false">حاشیه عمودی (%)</string>
+    <string name="core_label_vfs">VFS</string>
+    <string name="core_label_video">تصویر</string>
+    <string name="core_label_vram_allocation_limit_mb">حداکثر تخصیص VRAM (MB)</string>
+    <string name="core_label_vsync_mode">حالت VSync</string>
+    <string name="core_label_vulkan">Vulkan</string>
+    <string name="core_label_window_title_format">قالب عنوان پنجره</string>
+    <string name="core_label_write_color_buffers">نوشتن بافرهای رنگ</string>
+    <string name="core_label_write_depth_buffer">نوشتن بافر عمق</string>
+    <string name="core_label_xaudio2">XAudio2</string>
+    <string name="core_label_yyyymmdd">سال/ماه/روز</string>
+    <string name="core_help_core_accurate_cache_line_stores" formatted="false">دستور PPU DCBZ را دقیق پردازش می‌کند. همراه با گزینهٔ DMA دقیق SPU، دسترسی‌های SPU PUT به خط‌های حافظهٔ نهان نیز به‌صورت اتمی پردازش می‌شوند.</string>
+    <string name="core_help_core_use_accurate_dfma" formatted="false">از دستورالعمل های دقیق FMA با دقت دوگانه در بخش اجرایی PPU و SPU استفاده کنید. در حالی که غیرفعال کردن آن ممکن است عملکرد مناسبی را در صورتی که CPU شما از FMA پشتیبانی نمی کند افزایش دهد، ممکن است اشکالات ظریفی را نیز ایجاد کند که در غیر این صورت رخ نمی دهند. اگر CPU شما از FMA پشتیبانی می کند، نباید آن را غیرفعال کنید.</string>
+    <string name="core_help_core_accurate_ppu_128_byte_reservation_op_max_length" formatted="false">در حالت فعال، عملیات اتمی PPU روی تمام داده‌های یک خط حافظهٔ نهان انجام می‌شوند؛ در حالت غیرفعال، فقط روی یک بلوک ۶۴بیتی حافظه. مقدار عددی تعیین می‌کند که بر اساس طول عملیات اتمی، نسخهٔ دقیق فعال شود یا نه.</string>
+    <string name="core_help_core_ppu_set_fpcc_bits" formatted="false">بیت های FPCC را به طور دقیق در بخش اجرایی PPU تنظیم کنید. اگر مطمئن نیستید، این تنظیم را تغییر ندهید.</string>
+    <string name="core_help_core_ppu_accurate_non_java_mode" formatted="false">مقادیر بیت حالت غیرجاوا را برای عملیات برداری بخش اجرایی PPU رعایت می‌کند. اگر مطمئن نیستید، این تنظیم را تغییر ندهید.</string>
+    <string name="core_help_core_ppu_set_saturation_bit" formatted="false">مقادیر بیت اشباع را به طور دقیق در بخش اجرایی PPU تنظیم کنید. اگر مطمئن نیستید، این تنظیم را تغییر ندهید.</string>
+    <string name="core_help_core_ppu_accurate_vector_nan_values" formatted="false">نتایج NaN را به طور دقیق در دستورالعمل‌های برداری در بخش اجرایی PPU تنظیم کنید. اگر مطمئن نیستید، این تنظیم را تغییر ندهید.</string>
+    <string name="core_help_core_accurate_rsx_reservation_access" formatted="false">RSX را در عملیات SPU MFC_GETLLAR و SPU MFC_PUTLLUC مکث می کند.</string>
+    <string name="core_help_core_accurate_spu_dma" formatted="false">عملیات SPU DMA را به دقت پردازش می کند.</string>
+    <string name="core_help_video_allow_host_gpu_labels" formatted="false">به GPU میزبان اجازه می دهد تا مستقیماً با CELL همگام شود. این باعث جریمه عملکرد می شود، اما وضعیت واقعی اشیاء GPU را در معرض CPU مهمان قرار می دهد. می تواند به از بین بردن نویز بصری و اشکال در هزینه عملکرد کمک کند. با احتیاط استفاده کنید.</string>
+    <string name="core_help_video_anisotropic_filter_override" formatted="false">مقادیر بالاتر وضوح بافت ها را در سطوح شیب دار به قیمت منابع GPU افزایش می دهد. پردازنده‌های گرافیکی مدرن می‌توانند این تنظیمات را حتی در ۱۶ برابر به خوبی انجام دهند. اگر می‌خواهید از تنظیمات اصلی استفاده شده توسط یک PS3 واقعی استفاده کنید، آن را روی خودکار نگه دارید.</string>
+    <string name="core_help_video_aspect_ratio" formatted="false">این را 16:9 بگذارید مگر اینکه مانیتور 4:3 داشته باشید.</string>
+    <string name="core_help_audio_rsxaudio_avport" formatted="false">کنترل می کند که کدام avport برای نمونه برداری از داده های صوتی استفاده می شود.</string>
+    <string name="core_help_audio_desired_audio_buffer_duration" formatted="false">مدت بافر هدف را بر حسب میلی ثانیه تعیین کنید. مقادیر بالاتر کار الگوریتم بافر را آسان تر می کند، اما ممکن است تاخیر صوتی قابل توجهی را ایجاد کند.</string>
+    <string name="core_help_audio_audio_channel_layout" formatted="false">فرمت صدای RPCS3 را تعیین می کند. از «خودکار» استفاده کنید تا RPCS3 بهترین قالب را بر اساس دستگاه صوتی و فرمت صوتی شبیه‌سازی شده انتخاب کند.</string>
+    <string name="core_help_audio_audio_device" formatted="false">دستگاهی را تعیین می‌کند که بخش خروجی صدا از آن استفاده می‌کند.</string>
+    <string name="core_help_audio_audio_format" formatted="false">فرمت صدای شبیه سازی را تعیین می کند. اگر می‌خواهید بین صدای استریو و فراگیر جابجا شوید، این تنظیم را پیکربندی کنید. تغییر این مقادیر نیاز به راه اندازی مجدد بازی دارد. تنظیمات دستی از فرمت‌های انتخابی شما استفاده می‌کند در حالی که تنظیم خودکار به بازی اجازه می‌دهد از بین تمام فرمت‌های موجود انتخاب کند.</string>
+    <string name="core_help_audio_audio_formats" formatted="false">فرمت صدای شبیه سازی را تعیین می کند. اگر می‌خواهید بین صدای استریو و فراگیر جابجا شوید، این تنظیم را پیکربندی کنید. تغییر این مقادیر نیاز به راه اندازی مجدد بازی دارد. تنظیمات دستی از فرمت‌های انتخابی شما استفاده می‌کند در حالی که تنظیم خودکار به بازی اجازه می‌دهد از بین تمام فرمت‌های موجود انتخاب کند.</string>
+    <string name="core_help_audio_audio_provider" formatted="false">کنترل می کند که کدام API صوتی PS3 استفاده می شود. بازی ها از CellAudio استفاده می کنند، در حالی که VSH به RSXAudio نیاز دارد.</string>
+    <string name="core_help_audio_renderer" formatted="false">Cubeb از رویکرد چند پلتفرمی استفاده می کند و از بافر صوتی پشتیبانی می کند، بنابراین گزینه پیشنهادی است. اگر در دسترس نیست، FAudio می تواند به جای آن استفاده شود.</string>
+    <string name="core_help_input_output_background_input_enabled" formatted="false">ورود پد و صفحه کلید را در حالی که پنجره بازی فوکوس نشده است اجازه می دهد.</string>
+    <string name="core_help_net_bind_address" formatted="false">نشانی IP رابط شبکه برای اتصال. فقط در پیکربندی‌های سفارشی در دسترس است.</string>
+    <string name="core_help_input_output_buzz_emulated_controller" formatted="false">پشتیبانی از دسته‌های Buzz!. اگر بازی به این دسته‌ها نیاز دارد و دستهٔ فیزیکی ندارید، ۱ یا ۲ دسته را انتخاب کنید. اگر بازی از DualShock پشتیبانی می‌کند یا دستهٔ فیزیکی Buzz! دارید، «هیچ‌کدام» را انتخاب کنید.</string>
+    <string name="core_help_input_output_camera" formatted="false">دوربین Qt را برای استفاده از دستگاه دوربین پیش فرض سیستم عامل خود انتخاب کنید.</string>
+    <string name="core_help_input_output_camera_flip" formatted="false">تصویر دوربین را به صورت افقی، عمودی یا در هر دو محور بر می گرداند.</string>
+    <string name="core_help_input_output_camera_id" formatted="false">دوربینی را که می خواهید در طول بازی استفاده کنید انتخاب کنید.</string>
+    <string name="core_help_input_output_camera_type" formatted="false">بسته به بازی، ممکن است لازم باشد نوع دوربین خاصی را انتخاب کنید.</string>
+    <string name="core_help_core_clocks_scale" formatted="false">مقیاس زمان سیستم شبیه سازی شده را تغییر می دهد. بر نرم افزاری که از زمان سیستم برای محاسبه مواردی مانند گام های زمانی پویا استفاده می کند، تأثیر می گذارد.</string>
+    <string name="core_help_savestate_compatible_savestate_mode" formatted="false">در این حالت، شبیه‌سازی SPU سازگاری ذخیره‌های وضعیت را در اولویت می‌گذارد، اما ممکن است عملکرد کمی کاهش یابد. با خاموش بودن آن، ممکن است برخی بازی‌ها اجازهٔ ذخیرهٔ وضعیت ندهند و خطای توقف SPU در گزارش ثبت شود.</string>
+    <string name="core_help_system_console_time_offset_s" formatted="false">زمان کنسول را به‌صورت اختلاف با زمان واقعی تنظیم می‌کند. با زدن «تنظیم روی اکنون» می‌توانید آن را به زمان فعلی سیستم بازگردانید.</string>
+    <string name="core_help_audio_convert_to_16_bit" formatted="false">به‌جای نمونه‌های پیش‌فرض ۳۲بیتی ممیز شناور، از نمونه‌های صوتی ۱۶بیتی استفاده می‌کند. اگر درایور صوتی مشکل دارد و صدا قطع یا کاملاً خراب است، از این گزینه استفاده کنید.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_left" formatted="false">حالت رندر سه‌بعدی استریو را تنظیم می‌کند؛ فقط در پیکربندی سفارشی با وضوح پیش‌فرض 720p در دسترس است. آناگلیف برای هر چشم رنگ متفاوتی به کار می‌برد که با عینک مخصوص فیلتر می‌شود. حالت «کنار هم» در برنامه‌های نمایش VR رایج‌تر است. حالت «بالا و پایین» به خروجی استریوی بومی نزدیک‌تر است، اما پشتیبانی کمتری دارد.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_right" formatted="false">حالت رندر سه‌بعدی استریو را تنظیم می‌کند؛ فقط در پیکربندی سفارشی با وضوح پیش‌فرض 720p در دسترس است. آناگلیف برای هر چشم رنگ متفاوتی به کار می‌برد که با عینک مخصوص فیلتر می‌شود. حالت «کنار هم» در برنامه‌های نمایش VR رایج‌تر است. حالت «بالا و پایین» به خروجی استریوی بومی نزدیک‌تر است، اما پشتیبانی کمتری دارد.</string>
+    <string name="core_help_system_date_format" formatted="false">قالب تاریخ PS3 را انتخاب کنید.</string>
+    <string name="core_help_core_debug_console_mode" formatted="false">حافظهٔ قابل استفادهٔ سیستم را به اندازهٔ کنسول DECR یا بیشتر افزایش می‌دهد. ممکن است برخی نرم‌افزارها نسبت به کنسول‌های معمولی رفتار متفاوتی داشته باشند.</string>
+    <string name="core_help_video_debug_output" formatted="false">عملکرد اشکال زدایی داخلی API انتخاب شده را فعال می کند. به خصوص با Vulkan باعث کاهش شدید عملکرد می شود. فقط برای توسعه دهندگان مفید است. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_video_debug_overlay" formatted="false">یک پوشش گرافیکی از اطلاعات اشکال زدایی مختلف ارائه می دهد. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_net_derive_mac_from_psid" formatted="false">آدرس MAC را از PSID استخراج کنید.</string>
+    <string name="core_help_video_disable_asynchronous_memory_manager" formatted="false">فراخوانی‌های مدیریت حافظهٔ میزبان را به‌جای پردازش ناهمگام، مستقیماً در همان مسیر اجرا می‌کند. ممکن است باعث افت شدید عملکرد و مکث در بعضی بازی‌ها شود. فقط برای اشکال‌زدایی مشکلات حفاظت حافظهٔ نهان بافت توسط توسعه‌دهندگان لازم است.</string>
+    <string name="core_help_video_disable_fifo_reordering" formatted="false">بهینه‌سازی‌های RSX FIFO را کاملاً غیرفعال می‌کند. فرمان‌های رسم به همان ترتیب دریافت از واحد DMA پردازش می‌شوند.</string>
+    <string name="core_help_video_disable_hardware_colorspace_remapping" formatted="false">استفاده از فرمت های نگاشت مجدد فضای رنگی سخت افزاری مانند پسوندهای _sRGB و _SNORM را غیرفعال می کند. غیرفعال کردن این گزینه دقت را در مقایسه با PS3 افزایش می دهد، اما می تواند به دلیل نحوه عملکرد شبیه سازی نرم افزار مقداری نویز ایجاد کند.</string>
+    <string name="core_help_video_disable_msl_fast_math" formatted="false">سریع Math را برای شیدر های MSL غیرفعال می کند، که ممکن است استاندارد IEEE 754 را نقض کند. غیرفعال کردن آن ممکن است برخی از مصنوعات را، به ویژه در پردازنده‌های گرافیکی اپل، به بهای عملکرد برطرف کند.</string>
+    <string name="core_help_video_disable_zcull_occlusion_queries" formatted="false">پرس‌وجوهای پوشیدگی را غیرفعال می‌کند و عملکرد را کمی تا متوسط بهبود می‌دهد. ممکن است تشخیص پوشیدگی را مختل کند و باعث ناپدید شدن اجسام یا ظاهر شدن ناگهانی شدید آن‌ها شود.</string>
+    <string name="core_help_video_disable_on_disk_shader_cache" formatted="false">بارگیری و ذخیره شیدر ها را از و به کش شیدر در فهرست داده ها غیرفعال می کند.</string>
+    <string name="core_help_core_disable_spu_getllar_spin_optimization" formatted="false">بهینه‌سازی انتظار فعال SPU GETLLAR را غیرفعال می‌کند. ممکن است باعث افت شدید عملکرد و مکث در بسیاری از بازی‌ها شود. فقط برای چند بازی خاص لازم است.</string>
+    <string name="core_help_video_disable_vertex_cache" formatted="false">حافظه نهان راس را غیرفعال می کند. ممکن است خروجی گرافیکی از دست رفته یا سوسو زدن را برطرف کند. ممکن است عملکرد را کاهش دهد.</string>
+    <string name="core_help_video_disable_video_output" formatted="false">تمام خروجی تصویر و رندر گرافیکی PS3 را غیرفعال می‌کند. تنها کاربرد آن، ارزیابی عملکرد CELL در فرایند توسعه است.</string>
+    <string name="core_help_video_disable_vulkan_memory_allocator" formatted="false">تخصیص‌دهندهٔ سفارشی حافظهٔ Vulkan را غیرفعال می‌کند و به فراخوانی مستقیم VkAllocateMemory/VkFreeMemory برمی‌گردد.</string>
+    <string name="core_help_net_dns_address" formatted="false">DNS برای حل نام هاست توسط برنامه ها استفاده می شود.</string>
+    <string name="core_help_video_driver_wake_up_delay" formatted="false">مدت زمان لازم برای شروع پردازش RSX را پس از بیدار شدن توسط پردازنده Cell کنترل می کند. افزایش تاخیر بیدار شدن، ثبات را بهبود می بخشد، اما مقادیر بسیار بالا می تواند عملکرد RSX/GPU را کاهش دهد. توصیه می شود که این را در گام های 20 میکروثانیه تا 40 میکروثانیه تنظیم کنید تا زمانی که به بهترین مقدار برای پایداری مطلوب برسد.</string>
+    <string name="core_help_audio_dump_to_file" formatted="false">تمام صدا را به عنوان یک فایل موج خام ذخیره می کند. اگر مطمئن نیستید، این را علامت نزنید.</string>
+    <string name="core_help_vfs_empty_dev_hdd0_tmp" formatted="false">برای برخی از حالت‌های Homebrew یا Game مورد نیاز است. اگر مطمئن نیستید، از این گزینه استفاده نکنید</string>
+    <string name="core_help_video_emulate_special_depth_comparison" formatted="false">عملیات مقایسه عمق را شبیه سازی کنید که در آن رفتار سخت افزار دسکتاپ با PS3 متفاوت است، معمولاً حالت های مقایسه برابر. لرزش بیش از حد سایه و تداخل عمق (Z-fighting) را در برخی بازی ها رفع می کند. این در برخی بازی‌ها که فرمت عمق پیش‌گذر Z با قالب عمق شطرنجی متفاوت است، آشکارتر است، سناریویی که هرگز به درستی روی سخت‌افزار دسکتاپ سازگار انجام نمی‌شود.</string>
+    <string name="core_help_audio_enable_buffering" formatted="false">بافر صوتی را فعال می‌کند؛ خش‌خش و قطع‌ووصلی را کاهش می‌دهد، اما تأخیر صدا را بیشتر می‌کند.</string>
+    <string name="core_help_net_clans_enabled" formatted="false">اتصال به سرور Clans را فعال کنید. فقط روی بازی هایی که از ویژگی Clans پشتیبانی می کنند تأثیر می گذارد.</string>
+    <string name="core_help_core_spu_reservation_busy_waiting_enabled" formatted="false">انتظار فعال SPU RdEventStat را فعال می‌کند. مصرف CPU را افزایش می‌دهد و در بعضی بازی‌ها برای پردازنده‌های دارای ۱۲ رشته یا بیشتر مفید است.</string>
+    <string name="core_help_miscellaneous_enable_gamemode" formatted="false">حالت بازی Feral Interactive را فعال کنید. این یک سری از بهینه‌سازی‌های CPU و GPU است و به طور بالقوه می‌تواند برای عملکرد بازی در برخی سیستم‌ها مفید باشد.</string>
+    <string name="core_help_vfs_enable_host_root" formatted="false">برای برخی از Homebrew مورد نیاز است. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_audio_enable_time_stretching" formatted="false">کشش زمانی صدا را فعال می‌کند و به بافر فعال نیاز دارد. خش‌خش و قطع‌ووصلی را بیشتر کاهش می‌دهد، اما در پردازنده‌های کندتر ممکن است کیفیت صدا به‌وضوح افت کند.</string>
+    <string name="core_help_net_upnp_enabled" formatted="false">UPNP را فعال کنید. در صورتی که روتر شما UPNP را فعال کرده باشد، این به طور خودکار پورت های متصل به 0.0.0.0 را فوروارد می کند.</string>
+    <string name="core_help_system_enter_button_assignment" formatted="false">دکمه مورد استفاده برای enter/accept/confirm در گفتگوهای سیستم. این را تغییر دهید تا به جای آن از دکمه Circle استفاده کنید، که پیکربندی پیش فرض در سیستم های ژاپنی و در بسیاری از بازی های ژاپنی است. در این موارد تخصیص دکمه ضربدر اغلب می تواند منجر به سردرگمی شود.</string>
+    <string name="core_help_video_vulkan_exclusive_fullscreen_mode" formatted="false">حالت تمام‌صفحه‌ای را تعیین می‌کند که RPCS3 هنگام استفاده از Vulkan از درایور درخواست می‌کند. حالت خودکار انتخاب را به درایور می‌سپارد؛ گزینه‌های دیگر حالت انحصاری یا بدون حاشیه را پیشنهاد می‌کنند. ترجیح تمام‌صفحهٔ بدون حاشیه می‌تواند مشکلات پخش زندهٔ بازی یا فعال شدن اشتباه HDR توسط سیستم را برطرف کند.</string>
+    <string name="core_help_miscellaneous_exit_rpcs3_when_process_finishes" formatted="false">به طور خودکار RPCS3 را هنگام بستن یک بازی یا زمانی که یک بازی خودش بسته می شود، ببندد.</string>
+    <string name="core_help_core_rsx_fifo_fetch_accuracy" formatted="false">\"سریع\" کم دقت ترین تنظیم است، RSX بافر اتمی FIFO را تقلید نمی کند. \"اتمی\" در بسیاری از بازی‌ها با جریمه عملکردی کم به شدت از ثبات بهره می‌برد. \"اتمی &amp; Ordered\" دقیق ترین است، اما کندترین و بدون مزیت پایداری زیادی در بازی ها است.</string>
+    <string name="core_help_video_force_cpu_blit" formatted="false">تمامی عملیات های blit و دستکاری تصویر در CPU را شبیه سازی می کند. برای جلوگیری از از دست رفتن گرافیک، در اکثر موارد باید گزینه \"نوشتن بافرهای رنگ\" نیز فعال باشد. به طور قابل توجهی عملکرد را کاهش می دهد، اما در برخی موارد دقیق تر است. این تنظیم گزینه «مقیاس‌سازی بافت GPU» را لغو می‌کند.</string>
+    <string name="core_help_video_force_high_precision_z_buffer" formatted="false">فقط برای اشکال زدایی تفاوت ها در سخت افزار GPU مفید است. برای کاربران متوسط ​​ضروری نیست. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_video_force_hardware_msaa_resolve" formatted="false">MSAA را وادار می‌کند در همهٔ عملیات نمونه‌برداری از قابلیت ادغام نمونه‌های GPU میزبان استفاده کند. عملکرد را کاهش می‌دهد و خطر خطاهای تصویری دارد، اما با MSAA فعال می‌تواند تصویر واضح‌تری بدهد.</string>
+    <string name="core_help_video_framebuffer_aliasing_heuristic_bias" formatted="false">نحوه رندر اهداف RPCS3 را کنترل می کند که در آن رنگ و عمق مستعار همان حافظه است. خودکار برای اکثر بازی ها توصیه می شود. · خودکار رفتار موجود است که نسبت به عمق تعصب دارد. · ترجیح رنگ زمانی که رنگ-نوشتن فعال است و نوشتن عمقی فعال نیست، رنگ را صحافی نگه می دارد. هندسه از دست رفته را در برخی از رندرهای معوق (مانند Starhawk) با هزینه رد شدن از آزمایش عمق برای آن ترسیم برطرف می کند. · ترجیح عمق فعلاً همان خودکار است.</string>
+    <string name="core_help_video_frame_limit" formatted="false">خاموش سریعترین گزینه است. استفاده از محدود کننده فریم باعث اضافه شدن سربار اضافی و کاهش سرعت بازی می شود. با این حال، اگر نرخ فریم خیلی بالا باشد، برخی از بازی‌ها از کار می‌افتند. PS3 بومی فقط در صورتی باید استفاده شود که خودکار به درستی کار نمی کند زیرا می تواند مشکلات مربوط به سرعت فریم را ایجاد کند. بی نهایت یک حلقه بازخورد مثبت اضافه می کند که سیگنال vblank دیگری را در هر فریم اضافه می کند و به بازی های بیشتری اجازه می دهد فریم در ثانیه بی حد و حصر باشند. کاربران باتجربه ای که به محدودیت های فریم دیگر نیاز دارند باید از تنظیم \"محدودیت فریم دوم\" در فایل پیکربندی استفاده کنند.</string>
+    <string name="core_help_video_fidelityfx_cas_sharpening_intensity" formatted="false">شدت وضوح‌بخشی FidelityFX Super وضوح تصویر را تعیین می‌کند. مقدار بالاتر تصویر واضح‌تری می‌دهد، اما ممکن است خطاهای تصویری ایجاد کند.</string>
+    <string name="core_help_input_output_ghltar_emulated_controller" formatted="false">پشتیبانی از کنترلر گیتار Guitar Hero Live (GHL). اگر بازی به کنترلرهای گیتار GHL نیاز دارد و کنترلرهای گیتار واقعی ندارید، 1 یا 2 کنترلر را انتخاب کنید. اگر بازی از DualShock پشتیبانی می کند یا اگر کنترلرهای واقعی گیتار دارید، هیچ‌کدام را انتخاب کنید. یک کنترلر واقعی گیتار را می توان همزمان با یک کنترلر گیتار شبیه سازی شده استفاده کرد.</string>
+    <string name="core_help_video_use_gpu_texture_scaling" formatted="false">کلیه عملیات انتقال بافت، مقیاس‌بندی و تبدیل را در GPU اجباری می‌کند. ممکن است در برخی موارد باعث فساد بافت شود.</string>
+    <string name="core_help_video_handle_rsx_memory_tiling" formatted="false">از پیکربندی کاشی کاری حافظه RSX هنگام نوشتن داده های GPU در حافظه vm پیروی کنید. این می تواند خرابی های گرافیکی مشاهده شده در هنگام فعال بودن گزینه های Read Color یا Read Depth را برطرف کند.</string>
+    <string name="core_help_core_hook_static_functions" formatted="false">برخی توابع مانند memcpy را رهگیری و با پیاده‌سازی سطح‌بالا جایگزین می‌کند. آزمایشی است؛ ممکن است بی‌اثر باشد یا عملکرد بازی را مختل کند.</string>
+    <string name="core_help_net_internet_enabled" formatted="false">اگر روی متصل تنظیم شود، RPCS3 به برنامه ها اجازه می دهد از اتصال اینترنت شما استفاده کنند.</string>
+    <string name="core_help_input_output_io_debug_overlay" formatted="false">لایه‌ای گرافیکی با مقادیر ورودی دستهٔ بازیکن اول نشان می‌دهد. فقط وقتی لایهٔ اشکال‌زدایی خاموش باشد، نمایش داده می‌شود. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_net_ip_swap_list" formatted="false">لیست تعویض DNS . فقط در تنظیمات سفارشی موجود است.</string>
+    <string name="core_help_input_output_keyboard" formatted="false">برخی از بازی ها از ورودی صفحه کلید بومی پشتیبانی می کنند. پایه در این موارد کار خواهد کرد.</string>
+    <string name="core_help_system_keyboard_type" formatted="false">چیدمان صفحه کلید استفاده شده را تنظیم می کند. در حال حاضر فقط طرح‌بندی‌های آمریکایی، ژاپنی و آلمانی به طور کامل در حال حاضر پشتیبانی می‌شوند.</string>
+    <string name="core_help_system_language" formatted="false">اگر زبان سیستم در خود بازی موجود نباشد، ممکن است برخی از بازی‌ها بوت نشوند. سایر بازی‌ها به طور خودکار زبان را به آنچه در اینجا انتخاب شده است تغییر می‌دهند. توصیه می شود این را روی زبانی که بازی پشتیبانی می کند بگذارید.</string>
+    <string name="core_help_system_license_area" formatted="false">ناحیه کنسول، ناحیه مجوز PS3 را مشخص می کند. بسته به منطقه مجوز، برخی از بازی ها ممکن است کار نکنند.</string>
+    <string name="core_help_vfs_limit_disk_cache_size" formatted="false">اگر از مقدار مشخص شده بزرگتر شود، به طور خودکار فایل های قدیمی تر را از کش دیسک هنگام بوت حذف می کند. بازی ها می توانند از پوشه کش برای ذخیره موقت داده ها خارج از حافظه سیستم استفاده کنند. برای نگهداری طولانی مدت استفاده نمی شود.  این تنظیم فقط در پیکربندی جهانی موجود است.</string>
+    <string name="core_help_core_llvm_precompilation" formatted="false">پوشهٔ بازی را جست‌وجو و هنگام راه‌اندازی، ماژول‌های اضافی PPU و SPU را پیش‌کامپایل می‌کند. اگر غیرفعال باشد، این ماژول‌ها فقط هنگام نیاز کامپایل می‌شوند و ممکن است بازی را ناگهان و مکرر متوقف کنند. فقط برای ورود سریع‌تر به بازی آن را خاموش کنید.</string>
+    <string name="core_help_input_output_lock_overlay_input_to_player_one" formatted="false">ورودی لایهٔ بومی را به بازیکن اول محدود می‌کند.</string>
+    <string name="core_help_video_log_shader_programs" formatted="false">شیدرهای بازی را در فایل تخلیه می‌کند. فقط برای توسعه‌دهندگان مفید است. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_audio_master_volume" formatted="false">بلندی کلی صدای شبیه‌ساز را تعیین می‌کند. مقادیر بالاتر از ۱۰۰٪ ممکن است کیفیت صدا را کاهش دهند.</string>
+    <string name="core_help_vfs_disk_cache_maximum_size_mb" formatted="false">اگر از مقدار مشخص شده بزرگتر شود، به طور خودکار فایل های قدیمی تر را از کش دیسک هنگام بوت حذف می کند. بازی ها می توانند از پوشه کش برای ذخیره موقت داده ها خارج از حافظه سیستم استفاده کنند. برای نگهداری طولانی مدت استفاده نمی شود.  این تنظیم فقط در پیکربندی جهانی موجود است.</string>
+    <string name="core_help_core_max_llvm_compile_threads" formatted="false">حداکثر تعداد رشته های مورد استفاده برای کامپایل اولیه ماژول PPU و SPU را محدود می کند. برای افزایش عملکرد سایر برنامه های باز، این را کاهش دهید. پیش فرض از تمام رشته های موجود استفاده می کند.</string>
+    <string name="core_help_core_max_cpu_preempt_count" formatted="false">مصرف CPU و مصرف انرژی را کاهش می دهد و عمر باتری دستگاه های تلفن همراه را بهبود می بخشد. (0 به معنای غیرفعال است) مقادیر بالاتر باعث ایجاد جلوه واضح تر می شود، اما ممکن است باعث مشکلات صوتی یا عملکرد شود. مقدار 50 یا کمتر توصیه می شود. این گزینه محدودیت FPS را تحمیل می کند زیرا زمانی که نرخ فریم ثابت است فعال است. هرچه بازی بر روی سخت افزار سبک تر باشد، انرژی بیشتری توسط آن ذخیره می شود. (تا زمانی که به مانع شمارش پیش دستی نرسیده باشد)</string>
+    <string name="core_help_core_max_spurs_threads" formatted="false">حداکثر تعداد رشته های SPURS را در هر گروه رشته محدود می کند. ممکن است در برخی موارد عملکرد را بهبود بخشد، به خصوص در سیستم‌هایی با تعداد رشته‌های سخت‌افزاری محدود. محدود کردن تعداد رشته ها احتمالاً باعث خرابی می شود. توصیه می شود این را در مقدار پیش فرض نگه دارید.</string>
+    <string name="core_help_core_mfc_commands_shuffling_limit" formatted="false">هر فرمان فرد MFC را به تأخیر می‌اندازد و منتظر حداقل دو فرمان در صف می‌ماند تا آن‌ها را با ترتیب تصادفی اجرا کند. فعلاً باید با یکی از مفسرهای SPU استفاده شود. عملکرد را به‌شدت کاهش می‌دهد! اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_core_mfc_debug" formatted="false">گزارش‌های MFC را ایجاد می کند. فقط برای توسعه دهندگان مفید است. هرگز از این استفاده نکنید.</string>
+    <string name="core_help_audio_microphone_devices" formatted="false">استاندارد باید برای اکثر بازی ها استفاده شود. SingStar دستگاه SingStar را شبیه سازی می کند و باید با بازی های SingStar استفاده شود. SingStar فیزیکی فقط باید با دستگاه REAL SingStar با بازی های SingStar استفاده شود. Rocksmith باید با دانگل Rocksmith استفاده شود.</string>
+    <string name="core_help_audio_microphone_type" formatted="false">استاندارد باید برای اکثر بازی ها استفاده شود. SingStar دستگاه SingStar را شبیه سازی می کند و باید با بازی های SingStar استفاده شود. SingStar فیزیکی فقط باید با دستگاه REAL SingStar با بازی های SingStar استفاده شود. Rocksmith باید با دانگل Rocksmith استفاده شود.</string>
+    <string name="core_help_input_output_emulated_midi_devices" formatted="false">حداکثر 3 دستگاه MIDI شبیه سازی شده و انواع آنها را انتخاب کنید.</string>
+    <string name="core_help_video_minimum_scalable_dimension" formatted="false">فقط فریم بافرهای بزرگتر از این اندازه ارتقاء خواهند یافت. افزایش این مقدار ممکن است مشکلات مربوط به گرافیک های از دست رفته را در هنگام ارتقاء مقیاس، به ویژه هنگامی که نوشتن بافرهای رنگ فعال است، برطرف کند. اگر مطمئن نیستید، این گزینه را تغییر ندهید.</string>
+    <string name="core_help_input_output_mouse_based_gyro_enabled" formatted="false">شبیه‌سازی ژیروسکوپ با ماوس را هنگام شروع بازی فعال می‌کند. هر زمان می‌توانید با میانبر مربوط آن را تغییر دهید. دکمهٔ راست ماوس را نگه دارید: حرکت ماوس به محورهای X و Z و چرخ ماوس به محور Y نگاشت می‌شود. با رها کردن دکمه، مقادیر حرکت بازنشانی می‌شوند.</string>
+    <string name="core_help_input_output_mouse_debug_overlay" formatted="false">یک پوشش گرافیکی با مقادیر ورودی ماوس فراهم می کند. این فقط در صورتی نشان داده می‌شود که دیگر لایه‌های اشکال‌زدایی غیرفعال باشند. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_input_output_mouse" formatted="false">برخی از بازی ها از ورودی بومی ماوس پشتیبانی می کنند. پایه یا Raw در این موارد کار خواهد کرد.</string>
+    <string name="core_help_input_output_move" formatted="false">هندلر PS PS Move برای کنترلرهای رسمی PS PS Move توصیه می شود.</string>
+    <string name="core_help_video_msaa" formatted="false">چیدمان چندنمونه‌گیری PS3 را شبیه‌سازی می‌کند و می‌تواند خطاهای گرافیکی دشوار را برطرف کند. بسته به GPU، افت عملکرد کم تا متوسط دارد.</string>
+    <string name="core_help_video_multithreaded_rsx" formatted="false">بعضی عملیات RSX را به رشته‌ای دیگر منتقل می‌کند. عملکرد پردازنده‌های چند‌هسته‌ای قوی را بهبود می‌دهد، اما بار رشتهٔ اضافی ممکن است پردازنده‌های ضعیف‌تر را کند کند.</string>
+    <string name="core_help_audio_music_handler" formatted="false">در حال حاضر فقط برای شبیه سازی cellMusic استفاده می شود. Qt را برای استفاده از دستگاه خروجی پیش فرض سیستم عامل خود انتخاب کنید. این ممکن است نتواند همه فرمت های صوتی را پخش کند.</string>
+    <string name="core_help_core_ppu_threads" formatted="false">بر حداکثر تعداد رشته های PPU که همزمان اجرا می شوند تأثیر می گذارد، مقدار 1 سازگاری بسیار کمی با بازی ها دارد. 2 پیش فرض است، اگر مطمئن نیستید این تنظیم را تغییر ندهید. هشدار: تغییر این مقدار حافظه پنهان PPU/SPU کامپایل شده را باطل می کند. مجموعه کامل ماژول در راه اندازی بعدی تکرار خواهد شد.</string>
+    <string name="core_help_video_output_scaling_mode" formatted="false">فیلتر تصویر نهایی را تعیین می‌کند. «نزدیک‌ترین» بدون فیلتر است، «دوخطی» تصویر را نرم می‌کند و FidelityFX Super وضوح تصویر تصویر بزرگ‌شده را بهبود می‌دهد. اگر وضوح داخلی بازی کمتر از پنجره باشد، FidelityFX بزرگ‌نمایی را انجام می‌دهد. ممکن است خطاهای تصویری ایجاد کند و فعلاً خروجی سه‌بعدی استریو را پشتیبانی نمی‌کند.</string>
+    <string name="core_help_input_output_keep_pads_connected" formatted="false">همه پدهای پیکربندی شده را مانند بازی همیشه متصل نشان می دهد، حتی اگر از نظر فیزیکی قطع شده باشند.</string>
+    <string name="core_help_input_output_pad_handler_mode" formatted="false">تک‌رشته‌ای: تمام پردازشگرهای دسته به‌ترتیب در یک رشته اجرا می‌شوند. چندرشته‌ای: هر پردازشگر دسته رشتهٔ جداگانه دارد. فقط اگر رشته‌های پردازشی کافی در اختیار دارید، حالت چندرشته‌ای را انتخاب کنید.</string>
+    <string name="core_help_miscellaneous_pause_emulation_during_home_menu" formatted="false">وقتی فعال باشد، باز کردن منوی اصلی شبیه سازی را نیز متوقف می کند. در حالی که بیشتر بازی‌ها در حالی که منوی اصلی نشان داده می‌شود، خود را مکث می‌کنند، برخی این کار را نمی‌کنند. در این صورت، متوقف کردن شبیه‌سازی هر زمان که منوی اصلی باز است، می‌تواند مفید باشد.</string>
+    <string name="core_help_miscellaneous_pause_emulation_on_rpcs3_focus_loss" formatted="false">هنگامی که RPCS3 فوکوس خود را از دست می دهد یا برنامه غیرفعال است، شبیه سازی را به صورت خودکار متوقف می کند تا در مصرف انرژی صرفه جویی شود و مصرف CPU کاهش یابد. توجه داشته باشید که مکث شبیه سازی به طور کلی کامل نیست و ممکن است با همه بازی ها سازگار نباشد. اگرچه در حال حاضر گیم پلی را نیز متوقف می کند، اما توصیه نمی شود به آن اعتماد کنید زیرا ممکن است این رفتار در آینده تغییر کند و هدف از این تنظیم نیست.</string>
+    <string name="core_help_core_enable_performance_report" formatted="false">رویدادهای خاصی را اندازه گیری کنید و پس از توقف شبیه ساز نموداری را چاپ کنید. اگر از شما خواسته نشد فعال نکنید.</string>
+    <string name="core_help_video_performance_overlay_center_horizontally" formatted="false">لایهٔ عملکرد را به صورت افقی متمرکز می کند و حاشیه افقی را لغو می کند.</string>
+    <string name="core_help_video_performance_overlay_center_vertically" formatted="false">لایهٔ عملکرد را به صورت عمودی متمرکز می کند و حاشیه عمودی را لغو می کند.</string>
+    <string name="core_help_video_performance_overlay_detail_level" formatted="false">مقدار اطلاعات نمایش داده شده روی لایه عملکرد را کنترل می کند.</string>
+    <string name="core_help_video_performance_overlay_enabled" formatted="false">لایهٔ عملکرد را فعال یا غیرفعال می کند.</string>
+    <string name="core_help_video_performance_overlay_show_header" formatted="false">نام برنامه، شمارهٔ ساخت و نسخهٔ هسته را بالای لایهٔ عملکرد و ردیف‌های CPU و GPU را پایین آن نشان می‌دهد.</string>
+    <string name="core_help_video_performance_overlay_font_size_px" formatted="false">اندازه فونت لایهٔ عملکرد را تنظیم می کند (اندازه گیری شده در پیکسل).</string>
+    <string name="core_help_video_performance_overlay_framerate_datapoints" formatted="false">مقدار نقاط داده استفاده شده در نمودار نرخ فریم را تنظیم می کند.</string>
+    <string name="core_help_video_performance_overlay_framerate_graph_detail_level" formatted="false">مقدار اطلاعات نمایش داده شده روی لایه عملکرد را کنترل می کند.</string>
+    <string name="core_help_video_performance_overlay_enable_framerate_graph" formatted="false">نمودار نرخ فریم را فعال یا غیرفعال می کند.</string>
+    <string name="core_help_video_performance_overlay_frametime_datapoints" formatted="false">مقدار نقاط داده استفاده شده در نمودار فریم تایم را تنظیم می کند.</string>
+    <string name="core_help_video_performance_overlay_frametime_graph_detail_level" formatted="false">مقدار اطلاعات نمایش داده شده روی لایه عملکرد را کنترل می کند.</string>
+    <string name="core_help_video_performance_overlay_enable_frametime_graph" formatted="false">نمودار فریم تایم را فعال یا غیرفعال می کند.</string>
+    <string name="core_help_video_performance_overlay_horizontal_margin" formatted="false">فاصله افقی را از حاشیه صفحه نسبت به ربع صفحه تنظیم می کند (اندازه گیری شده بر حسب درصد).</string>
+    <string name="core_help_video_performance_overlay_vertical_margin" formatted="false">فاصله عمودی حاشیه صفحه را نسبت به ربع صفحه تنظیم می کند (اندازه گیری شده بر حسب درصد).</string>
+    <string name="core_help_video_performance_overlay_opacity" formatted="false">کدورت لایه عملکرد را تنظیم می کند (اندازه گیری شده بر حسب درصد).</string>
+    <string name="core_help_video_performance_overlay_position" formatted="false">موقعیت روی صفحه نمایش (ربع) لایهٔ عملکرد را تنظیم می کند.</string>
+    <string name="core_help_video_performance_overlay_metrics_update_interval_ms" formatted="false">بازه زمانی را تنظیم می کند که در آن لایهٔ عملکرد به روز می شود (اندازه گیری شده در میلی ثانیه). تنظیم این روی 16 میلی ثانیه، لایه عملکرد را تقریباً در 60 هرتز تازه می کند. نرخ تازه‌سازی لایه عملکرد بر آمار نمودار فریم تأثیر نمی‌گذارد و فقط می‌تواند تا آنجایی که بازی فعلی اجازه می‌دهد سریع باشد.</string>
+    <string name="core_help_video_performance_overlay_use_window_space" formatted="false">لایه را نسبت به سطح پنجره کامل قرار دهید، که امکان قرارگیری در خارج از منطقه رندر بازی را فراهم می کند.</string>
+    <string name="core_help_miscellaneous_play_music_during_boot_sequence" formatted="false">در صورت موجود بودن، موسیقی را در حین راه‌اندازی پخش کنید.</string>
+    <string name="core_help_core_ppu_debug" formatted="false">گزارش‌های PPU را ایجاد می کند. فقط برای توسعه دهندگان مفید است. هرگز از این استفاده نکنید.</string>
+    <string name="core_help_core_ppu_decoder" formatted="false">کد PPU بازی را یک بار قبل از اجرای اولین بار با استفاده از بازکامپایلر LLVM دوباره کامپایل و ذخیره می کند. این سریعترین گزینه است و همیشه باید استفاده شود. اگر با مشکلات سازگاری مواجه شدید، به یکی از مترجمان بازگردید و دوباره امتحان کنید. اگر مطمئن نیستید، از این گزینه استفاده کنید.</string>
+    <string name="core_help_core_ppu_reservation_priority_over_spus" formatted="false">هنگامی که SPU ها از رزرو استفاده می کنند به PPU ها یک مزیت اجرایی بدهید. این تنظیم فقط برای چند بازی برای بهبود عملکرد توصیه می شود. به دلیل کاهش بالقوه عملکرد، بدون توصیه از آن استفاده نکنید.</string>
+    <string name="core_help_core_ppu_vector_nan_handling" formatted="false">نتایج NaN را در دستورهای برداری بخش اجرایی PPU اصلاح می‌کند. اگر مطمئن نیستید، این تنظیم را تغییر ندهید.</string>
+    <string name="core_help_video_accurate_zcull_stats" formatted="false">رفتار همگام سازی گزارش ZCULL را تغییر می دهد. برای پیدا کردن بهترین گزینه برای بازی خود آزمایش کنید. حالت تقریبی برای اکثر بازی ها توصیه می شود. · دقیق ترین دقیق برای رفتار PS3 است. برای تصاویری دقیق در برخی از عناوین مانند Demon\'s Souls و The Darkness مورد نیاز است. · تقریبی روشی بسیار سریعتر برای تولید داده های انسداد است که ممکن است همیشه با آنچه که PS3 تولید می کند مطابقت نداشته باشد. با اکثر بازی های PS3 به خوبی کار می کند. · آسان‌گیر روش همگام سازی را به طور کامل تغییر می دهد و می تواند عملکرد را در برخی از بازی ها تا حد زیادی بهبود بخشد یا برخی دیگر را کاملاً از بین ببرد.</string>
+    <string name="core_help_core_preferred_spu_threads" formatted="false">بعضی مراحل SPU به رقابت هم‌زمان رشته‌ها حساس‌اند. محدود کردن تعداد اجراهای هم‌زمان می‌تواند توقف‌های پردازشی را کاهش دهد. مقدار کمتر ممکن است عملکرد را بهتر و مکث را کمتر کند؛ اگر نتیجه برعکس بود، روی خودکار بگذارید.</string>
+    <string name="core_help_miscellaneous_prevent_display_sleep_while_running_games" formatted="false">از خوابیدن نمایشگر در حین اجرای بازی جلوگیری کنید. این به سرویس org.freedesktop.ScreenSaver D-Bus در لینوکس نیاز دارد. اگر پلتفرم فعلی از کنترل خواب نمایشگر پشتیبانی نکند، این گزینه غیرفعال خواهد شد.</string>
+    <string name="core_help_net_psn_country" formatted="false">کشور RPCN را تغییر می دهد.</string>
+    <string name="core_help_net_psn_status" formatted="false">اگر روی RPCN تنظیم شود، اگر بازی پشتیبانی شود، RPCS3 از سرور RPCN به عنوان اتصال PSN استفاده می کند. اگر روی شبیه‌سازی تنظیم شود، RPCS3 سعی می‌کند اتصال PSN را جعل کند، اما هرگونه تلاش واقعی برای استفاده از عملکرد PSN ممکن است منجر به خطا یا خرابی شود. شبیه سازی شده فقط در تنظیمات سفارشی موجود است.</string>
+    <string name="core_help_video_read_color_buffers" formatted="false">حافظهٔ هدف رندر را با استفاده از حافظهٔ vm مقداردهی اولیه می‌کند.</string>
+    <string name="core_help_video_read_depth_buffer" formatted="false">حافظهٔ هدف رندر را با استفاده از حافظهٔ vm مقداردهی اولیه می‌کند.</string>
+    <string name="core_help_video_record_with_overlays" formatted="false">ضبط با پوشش را فعال می کند. این روی اسکرین شات ها نیز تاثیر می گذارد.</string>
+    <string name="core_help_video_relaxed_zcull_sync" formatted="false">رفتار همگام سازی گزارش ZCULL را تغییر می دهد. برای پیدا کردن بهترین گزینه برای بازی خود آزمایش کنید. حالت تقریبی برای اکثر بازی ها توصیه می شود. · دقیق ترین دقیق برای رفتار PS3 است. برای تصاویری دقیق در برخی از عناوین مانند Demon\'s Souls و The Darkness مورد نیاز است. · تقریبی روشی بسیار سریعتر برای تولید داده های انسداد است که ممکن است همیشه با آنچه که PS3 تولید می کند مطابقت نداشته باشد. با اکثر بازی های PS3 به خوبی کار می کند. · آسان‌گیر روش همگام سازی را به طور کامل تغییر می دهد و می تواند عملکرد را در برخی از بازی ها تا حد زیادی بهبود بخشد یا برخی دیگر را کاملاً از بین ببرد.</string>
+    <string name="core_help_video_renderdoc_compatibility_mode" formatted="false">استفاده از بافرهای کلاسیک OpenGL را فعال می کند که به ابزارهای ضبط اجازه می دهد تا با RPCS3 مانند RenderDoc کار کنند. همچنین به Vulkan اجازه می دهد تا از نشانگرهای اشکال زدایی برای عکس های زیباتر Renderdoc استفاده کند. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_video_renderer" formatted="false">Vulkan در اندروید توصیه می شود. OpenGL از باطن سازگاری OpenGL ES استفاده می کند و می تواند به مشکلات گرافیکی بازی کمک کند.</string>
+    <string name="core_help_video_resolution" formatted="false">اگر مقیاس وضوح روی هر چیزی غیر از 100٪ تنظیم شود، این تنظیم نادیده گرفته می شود! این را روی 1280x720 بگذارید. هر بازی PS3 با این وضوح سازگار است. فقط در صورتی که بازی از آن پشتیبانی می کند از 1920x1080 استفاده کنید. به ندرت به دلیل اشکالات شبیه سازی، برخی از بازی ها فقط با وضوح پایین مانند 480p رندر می شوند.</string>
+    <string name="core_help_video_resolution_scale" formatted="false">وضوح بازی را با درصد معین مقیاس می‌دهد. وضوح پایه همیشه 1280x720 است. اگر می خواهید از گزینه های وضوح تصویر معمولی استفاده کنید، این مقدار را روی 100% تنظیم کنید. مقادیر کمتر از 100% معمولاً عملکرد را بهبود نمی بخشد.</string>
+    <string name="core_help_video_screen_size_in_inches" formatted="false">حالت رندر سه‌بعدی استریو را تنظیم می‌کند؛ فقط در پیکربندی سفارشی با وضوح پیش‌فرض 720p در دسترس است. آناگلیف برای هر چشم رنگ متفاوتی به کار می‌برد که با عینک مخصوص فیلتر می‌شود. حالت «کنار هم» در برنامه‌های نمایش VR رایج‌تر است. حالت «بالا و پایین» به خروجی استریوی بومی نزدیک‌تر است، اما پشتیبانی کمتری دارد.</string>
+    <string name="core_help_input_output_load_sdl_gamecontroller_mappings" formatted="false">پایگاه دادهٔ SDL GameController را برای بهبود سازگاری دسته بارگذاری می‌کند. فقط در پردازشگر دستهٔ SDL استفاده می‌شود.</string>
+    <string name="core_help_core_set_daz_and_ftz" formatted="false">پرچم های ویژه MXCSR را برای اشکال زدایی خطاها در عملیات SSE تنظیم می کند. عملکرد PPU را با هزینه دقت تسریع می کند.</string>
+    <string name="core_help_video_shader_compiler_threads" formatted="false">تعداد رشته هایی که باید برای کامپایلر شیدر استفاده شود. تنها زمانی تأثیر می گذارد که حالت شیدر روی یکی از حالت های ناهمزمان تنظیم شود.</string>
+    <string name="core_help_video_shader_loading_dialog_blur_effect_strength" formatted="false">شدت تاری تصویر پس‌زمینهٔ پنجرهٔ بومی بارگذاری شیدر را تغییر می‌دهد تا خوانایی یا ظاهر بهتر شود.</string>
+    <string name="core_help_video_shader_loading_dialog_darkening_effect_strength" formatted="false">شدت تاریک‌سازی تصویر پس‌زمینهٔ پنجرهٔ بومی بارگذاری شیدر را تغییر می‌دهد تا خوانایی یا ظاهر بهتر شود.</string>
+    <string name="core_help_video_shader_loading_dialog_allow_custom_background" formatted="false">تصویر پس‌زمینه را در پنجره یا صفحهٔ بومی بارگذاری شیدر نشان می‌دهد. تصویر پیش‌فرض /PS3_GAME/PIC1.PNG است.</string>
+    <string name="core_help_video_shader_mode" formatted="false">این گزینه توصیه می‌شود. اگر شیدری در حافظهٔ نهان نباشد، تا پایان کامپایل آن چیزی با آن رسم نمی‌شود. ممکن است بخشی از تصویر با تأخیر ناگهان ظاهر شود.</string>
+    <string name="core_help_video_shader_precision" formatted="false">سطح دقت شیدر های تولید شده را کنترل می کند. دقت پایین بسته به سخت افزار کد بسیار سریع تری تولید می کند، اما گاهی اوقات می تواند اشکالات بصری جزئی یا سوسو زدن ایجاد کند.</string>
+    <string name="core_help_miscellaneous_show_analog_limiter_toggle_hint" formatted="false">با استفاده از لایه بومی، راهنمایی جابجایی محدود کننده آنالوگ را نشان می دهد.</string>
+    <string name="core_help_miscellaneous_show_autosave_autoload_hint" formatted="false">راهنمای ذخیره و بارگذاری خودکار را در لایهٔ بومی نشان می‌دهد.</string>
+    <string name="core_help_miscellaneous_show_capture_hints" formatted="false">راهنمای گرفتن تصویر صفحه و ضبط را در لایهٔ بومی نشان می‌دهد.</string>
+    <string name="core_help_miscellaneous_show_fatal_error_hints" formatted="false">با استفاده از لایه اصلی، نکات خطای کشنده را نشان می دهد.</string>
+    <string name="core_help_miscellaneous_show_mouse_and_keyboard_toggle_hint" formatted="false">با استفاده از لایه اصلی، راهنمایی تغییر ماوس و صفحه کلید را نشان می دهد.</string>
+    <string name="core_help_input_output_show_move_cursor" formatted="false">موقعیت خام ورودی PS PS Move را نشان می دهد. این می تواند در طول صفحه های کالیبراسیون بسیار مفید باشد.</string>
+    <string name="core_help_miscellaneous_show_ppu_compilation_hint" formatted="false">راهنمایی «کامپایل کردن ماژول‌های PPU» را با استفاده از لایه اصلی نشان می‌دهد.</string>
+    <string name="core_help_miscellaneous_show_pressure_intensity_toggle_hint" formatted="false">با استفاده از لایه اصلی، راهنمایی تغییر شدت فشار را نشان می دهد.</string>
+    <string name="core_help_miscellaneous_show_rpcn_popups" formatted="false">نمایش پاپ آپ لیست دوستان RPCN.</string>
+    <string name="core_help_miscellaneous_show_shader_compilation_hint" formatted="false">با استفاده از لایه بومی، راهنمایی \"کامپایل شیدر\" را نشان می دهد.</string>
+    <string name="core_help_miscellaneous_show_trophy_popups" formatted="false">هنگام کسب تروفی، اعلان آن را نشان می‌دهد.</string>
+    <string name="core_help_miscellaneous_silence_all_logs" formatted="false">نوشتن هر گونه گزارش را پس از راه اندازی بازی متوقف کنید. استفاده نکنید مگر اینکه فکر می کنید ضروری است.</string>
+    <string name="core_help_core_sleep_timers_accuracy" formatted="false">دقت مدت وقفه را تغییر می‌دهد. «مانند سیستم میزبان» از دقت پیش‌فرض سیستم‌عامل استفاده می‌کند و «همهٔ زمان‌سنج‌ها» سعی در بهبود آن دارد. «فقط usleep» تغییرات را به فراخوانی سیستمی usleep محدود می‌کند. ممکن است عملکرد را به‌طور غیرمنتظره تغییر دهد.</string>
+    <string name="core_help_core_spu_block_size" formatted="false">تحلیل‌گر SPU، به‌ویژه اندازهٔ واحدهای کامپایل‌شده را کنترل می‌کند. حالت‌های Mega و Giga با ادغام واحدهای کوچک‌تر ممکن است عملکرد را بهبود دهند؛ تعداد واحدها کمتر و اندازه‌شان بزرگ‌تر می‌شود. برای بیشترین سازگاری، حالت ایمن را انتخاب کنید.</string>
+    <string name="core_help_core_spu_cache" formatted="false">کد SPU بازی را قبل از اجرا با استفاده از کامپایلر LLVM مجدداً کامپایل و ذخیره می کند که به زمان راه اندازی اضافی اضافه می کند. این سریعترین گزینه با سازگاری بسیار خوب است. اگر مشکلی دارید، از کامپایلر ASMJIT استفاده کنید.</string>
+    <string name="core_help_core_spu_debug" formatted="false">گزارش‌های SPU را ایجاد می کند. فقط برای توسعه دهندگان مفید است. هرگز از این استفاده نکنید.</string>
+    <string name="core_help_core_spu_decoder" formatted="false">کد SPU بازی را قبل از اجرا با استفاده از کامپایلر LLVM مجدداً کامپایل و ذخیره می کند که به زمان راه اندازی اضافی اضافه می کند. این سریعترین گزینه با سازگاری بسیار خوب است. اگر مشکلی دارید، از کامپایلر ASMJIT استفاده کنید.</string>
+    <string name="core_help_core_spu_loop_detection" formatted="false">سعی کنید شرایط حلقه را در هسته های SPU شناسایی کنید و از آنها به عنوان نکات زمان بندی استفاده کنید. عملکرد را بهبود می بخشد و استفاده از CPU را کاهش می دهد. ممکن است در موارد نادر باعث مکث صوتی شدید شود.</string>
+    <string name="core_help_core_spu_profiler" formatted="false">وقتی فعال باشد، عملکرد SPU در زمان اجرا اندازه گیری می شود. فقط به درخواست توسعه‌دهنده فعال شود، زیرا وقتی فعال باشد، عملکرد را به خودی خود کمی کاهش می‌دهد.</string>
+    <string name="core_help_miscellaneous_start_games_in_fullscreen_mode" formatted="false">به طور خودکار پنجره بازی را در حالت تمام صفحه قرار می دهد. روی پنجره بازی دوبار کلیک کنید یا Alt+Enter را فشار دهید تا حالت تمام صفحه و حالت پنجره را تغییر دهید.</string>
+    <string name="core_help_miscellaneous_automatically_start_games_after_boot" formatted="false">این را فعال بگذارید مگر اینکه توسعه دهنده باشید.</string>
+    <string name="core_help_savestate_start_paused" formatted="false">ذخیرهٔ وضعیت را بارگذاری و در اولین فریم متوقف می‌کند تا بازیکن پیش از ادامهٔ بازی فرصت آماده شدن داشته باشد.</string>
+    <string name="core_help_video_3d_display_enabled" formatted="false">حالت رندر سه‌بعدی استریو را تنظیم می‌کند؛ فقط در پیکربندی سفارشی با وضوح پیش‌فرض 720p در دسترس است. آناگلیف برای هر چشم رنگ متفاوتی به کار می‌برد که با عینک مخصوص فیلتر می‌شود. حالت «کنار هم» در برنامه‌های نمایش VR رایج‌تر است. حالت «بالا و پایین» به خروجی استریوی بومی نزدیک‌تر است، اما پشتیبانی کمتری دارد.</string>
+    <string name="core_help_video_3d_display_mode" formatted="false">حالت رندر سه‌بعدی استریو را تنظیم می‌کند؛ فقط در پیکربندی سفارشی با وضوح پیش‌فرض 720p در دسترس است. آناگلیف برای هر چشم رنگ متفاوتی به کار می‌برد که با عینک مخصوص فیلتر می‌شود. حالت «کنار هم» در برنامه‌های نمایش VR رایج‌تر است. حالت «بالا و پایین» به خروجی استریوی بومی نزدیک‌تر است، اما پشتیبانی کمتری دارد.</string>
+    <string name="core_help_video_stretch_to_display_area" formatted="false">نسبت تصویر را نادیده می گیرد و تصویر را تا ناحیه نمایش کامل گسترش می دهد.</string>
+    <string name="core_help_video_strict_rendering_mode" formatted="false">انطباق دقیق با مشخصات API را اعمال می کند. ممکن است باعث کاهش عملکرد در برخی بازی ها شود. می تواند موارد نادر گرافیک از دست رفته و سوسو زدن را برطرف کند. اگر مطمئن نیستید، از این گزینه استفاده نکنید.</string>
+    <string name="core_help_video_strict_texture_flushing" formatted="false">تخلیهٔ بافت‌ها را حتی زمانی که لازم یا درست نیست، اجباری می‌کند. ممکن است خطاهای تصویری ایجاد کند، اما برای اشکال‌زدایی بعضی مشکلات حافظهٔ نهان بافت مفید است.</string>
+    <string name="core_help_savestate_suspend_emulation_savestate_mode" formatted="false">هنگامی که این حالت روشن است، شبیه سازی هنگام ذخیره کردن خارج می شود و فایل savestate پس از بارگذاری پنهان می شود و از استفاده مجدد توسط RPCS3 جلوگیری می کند. این حالت مانند خواب زمستانی شبیه‌سازی است: اگر نمی‌خواهید هنگام بازی با استفاده از savestates تقلب کنید، از این حالت استفاده کنید. توجه داشته باشید که فایل savestate به طور کامل از بین نمی رود، فقط توسط RPCS3 نادیده گرفته شده است. در صورت نیاز می توانید آن را مجدداً راه اندازی کنید.</string>
+    <string name="core_help_video_texture_lod_bias_addend" formatted="false">دقت نمونه برداری بافت را تغییر می دهد. (تغییرات کوچک تاثیر زیادی دارند.) اگر مطمئن نیستید از استفاده از مقادیر خارج از محدوده -12 تا +12 خودداری کنید. -3 تا +3 برای بیشتر موارد استفاده کافی است</string>
+    <string name="core_help_core_thread_scheduler_mode" formatted="false">نحوه استفاده RPCS3 از رشته های سیستم شما را کنترل کنید. هر گزینه به شدت به بازی و CPU شما بستگی دارد. توصیه می شود هر گزینه را امتحان کنید تا ببینید کدامیک بهترین عملکرد را دارد. تغییر زمانبندی رشته در CPUهایی با کمتر از 12 رشته پشتیبانی نمی شود.</string>
+    <string name="core_help_system_time_format" formatted="false">قالب زمان PS3 را انتخاب کنید.</string>
+    <string name="core_help_audio_time_stretching_threshold" formatted="false">درصد پر بودن بافر که با پایین‌تر رفتن از آن، کشش زمانی صدا شروع می‌شود.</string>
+    <string name="core_help_input_output_turntable_emulated_controller" formatted="false">پشتیبانی از دستهٔ صفحه‌گردان DJ Hero. اگر بازی به آن نیاز دارد و دستهٔ فیزیکی ندارید، ۱ یا ۲ دسته را انتخاب کنید. اگر بازی از DualShock پشتیبانی می‌کند یا دستهٔ صفحه‌گردان فیزیکی دارید، «هیچ‌کدام» را انتخاب کنید. دستهٔ فیزیکی و شبیه‌سازی‌شده می‌توانند هم‌زمان استفاده شوند.</string>
+    <string name="core_help_miscellaneous_use_native_user_interface" formatted="false">استفاده از HUD بومی را در پنجره بازی فعال می کند که می تواند با کنترلرهای بازی تعامل داشته باشد. هنگامی که غیرفعال است، به جای آن از گفتگوهای معمولی Qt استفاده می شود. در حال حاضر، صفحه کلید روی صفحه فقط از طرح کلید انگلیسی پشتیبانی می کند.</string>
+    <string name="core_help_video_vulkan_use_re_bar_for_gpu_uploads" formatted="false">Vulkan تلاش می‌کند برای انتقال داده‌های حساس به زمان‌بندی به GPU از فضای نشانی PCI-e Resizable BAR استفاده کند. در نرخ فریم پایهٔ پایین، عملکرد کارت‌های NVIDIA را بسیار بهبود می‌دهد. در بازی‌های با نرخ فریم بسیار بالا، ممکن است عملکرد GPU همهٔ سازندگان را کاهش دهد.</string>
+    <string name="core_help_miscellaneous_use_recursive_scan" formatted="false">استفاده از اسکن بازگشتی را در زیرپوشه ها هنگام اسکن بازی ها از پوشه انتخاب شده فعال می کند. هنگامی که غیرفعال است، بازی ها فقط در پوشه انتخاب شده اسکن می شوند.</string>
+    <string name="core_help_video_vblank_ntsc_fixup" formatted="false">نرخ VBLANK را در 1000/1001 برای مقادیری مانند 59.94 هرتز ضرب می کند. شناخته شده برای رفع ریتم بازی Space Channel 5 Part 2</string>
+    <string name="core_help_video_vblank_rate" formatted="false">فرکانس سیگنال های خالی عمودی را که شبیه ساز ارسال می کند تنظیم می کند. بر زمان بندی رویدادهایی که به این سیگنال ها متکی هستند تأثیر می گذارد.</string>
+    <string name="core_help_video_vsync_mode" formatted="false">همگام سازی عمودی را برای از بین بردن پارگی فعال می کند. حالت تطبیقی ​​- حفظ عملکرد را ترجیح می دهد. ممکن است برای جلوگیری از کاهش نرخ فریم بازی، از فریم ها رد شود یا حتی پاره شود. حالت کامل - حتی در صورت کاهش عملکرد، پارگی مجاز نیست. این حالت به طور پیش‌فرض نرخ فریم شما را به نرخ تازه‌سازی نمایشگر محدود می‌کند، مگر اینکه در کنترل پنل درایور لغو شود.</string>
+    <string name="core_help_video_vulkan_adapter" formatted="false">در سیستم‌های چند GPU، انتخاب کنید که از کدام GPU در RPCS3 هنگام استفاده از Vulkan استفاده شود. هنگام استفاده از OpenGL به این مورد نیاز نیست.</string>
+    <string name="core_help_video_vulkan_asynchronous_queue_scheduler" formatted="false">زمان‌بندی محاسبات ناهمگام GPU را هنگام جریان‌دهی ناهمگام تعیین می‌کند. حالت ایمن با کمی بار بیشتر CPU، مشخصات را دقیق‌تر رعایت می‌کند و روی همهٔ دستگاه‌ها کار می‌کند. حالت سریع از روشی سریع‌تر اما غیراستاندارد استفاده می‌کند. این حالت برای GPUهای NVIDIA در داخل غیرفعال است، چون باعث هنگ کردن GPU می‌شود.</string>
+    <string name="core_help_video_vulkan_asynchronous_texture_streaming" formatted="false">با محاسبات ناهمگام، بافت‌ها را هم‌زمان با رندر سه‌بعدی به GPU منتقل می‌کند. ممکن است عملکرد GPUهای قوی‌تر با ظرفیت آزاد را بهتر کند. فقط با Vulkan کار می‌کند و با CPU مناسب، فعال بودن MTRSX بسیار مفید است.</string>
+    <string name="core_help_miscellaneous_window_title_format" formatted="false">عنوان پنجرهٔ بازی را تنظیم می‌کند. تغییر عنوان یا افزودن نرخ فریم ممکن است باعث شود نرم‌افزار ضبط معیوب یا قدیمی، RPCS3 را تشخیص ندهد.</string>
+    <string name="core_help_video_write_color_buffers" formatted="false">اگر بخشی از گرافیک دیده نمی‌شود یا نورپردازی بازی خراب است، این گزینه را فعال کنید. ممکن است عملکرد را کاهش دهد و مکث ایجاد کند. برای Demon’s Souls لازم است.</string>
+    <string name="core_help_video_write_depth_buffer" formatted="false">مقادیر بافر عمق را در حافظه vm می نویسد.</string>
+    <string name="core_help_core_spu_xfloat_accuracy" formatted="false">دقت پردازش بردارهای ممیز شناور SPU را تعیین می‌کند. خطاهای بازی‌های مختلف را به بهای کاهش عملکرد برطرف می‌کند. فقط وقتی رمزگشای SPU روی پویا یا LLVM باشد اعمال می‌شود.</string>
+    <string name="core_label_chinese_simplified">چینی (ساده‌شده)</string>
+    <string name="core_label_chinese_traditional">چینی (سنتی)</string>
+    <string name="core_label_chinese_keyboard_simplified">صفحه‌کلید چینی (ساده‌شده)</string>
+    <string name="core_label_chinese_keyboard_traditional">صفحه‌کلید چینی (سنتی)</string>
+    <string name="core_label_danish">دانمارکی</string>
+    <string name="core_label_danish_keyboard">صفحه‌کلید دانمارکی</string>
+    <string name="core_label_dutch">هلندی</string>
+    <string name="core_label_dutch_keyboard">صفحه‌کلید هلندی</string>
+    <string name="core_label_english_uk">انگلیسی (بریتانیا)</string>
+    <string name="core_label_english_us">انگلیسی (آمریکا)</string>
+    <string name="core_label_english_keyboard_uk_standard">صفحه‌کلید انگلیسی (استاندارد بریتانیا)</string>
+    <string name="core_label_english_keyboard_us_standard">صفحه‌کلید انگلیسی (استاندارد آمریکا)</string>
+    <string name="core_label_finnish">فنلاندی</string>
+    <string name="core_label_finnish_keyboard">صفحه‌کلید فنلاندی</string>
+    <string name="core_label_french">فرانسوی</string>
+    <string name="core_label_french_keyboard">صفحه‌کلید فرانسوی</string>
+    <string name="core_label_french_keyboard_belgium">صفحه‌کلید فرانسوی (بلژیک)</string>
+    <string name="core_label_french_keyboard_canada">صفحه‌کلید فرانسوی (کانادا)</string>
+    <string name="core_label_french_keyboard_switzerland">صفحه‌کلید فرانسوی (سوئیس)</string>
+    <string name="core_label_german">آلمانی</string>
+    <string name="core_label_german_keyboard">صفحه‌کلید آلمانی</string>
+    <string name="core_label_german_keyboard_switzerland">صفحه‌کلید آلمانی (سوئیس)</string>
+    <string name="core_label_italian">ایتالیایی</string>
+    <string name="core_label_italian_keyboard">صفحه‌کلید ایتالیایی</string>
+    <string name="core_label_japanese">ژاپنی</string>
+    <string name="core_label_japanese_keyboard">صفحه‌کلید ژاپنی</string>
+    <string name="core_label_japanese_keyboard_kana_state">صفحه‌کلید ژاپنی (حالت کانا)</string>
+    <string name="core_label_korean">کره‌ای</string>
+    <string name="core_label_korean_keyboard">صفحه‌کلید کره‌ای</string>
+    <string name="core_label_norwegian">نروژی</string>
+    <string name="core_label_norwegian_keyboard">صفحه‌کلید نروژی</string>
+    <string name="core_label_other">سایر</string>
+    <string name="core_label_polish">لهستانی</string>
+    <string name="core_label_polish_keyboard">صفحه‌کلید لهستانی</string>
+    <string name="core_label_portuguese_brazil">پرتغالی (برزیل)</string>
+    <string name="core_label_portuguese_portugal">پرتغالی (پرتغال)</string>
+    <string name="core_label_portuguese_keyboard_brazil">صفحه‌کلید پرتغالی (برزیل)</string>
+    <string name="core_label_portuguese_keyboard_portugal">صفحه‌کلید پرتغالی (پرتغال)</string>
+    <string name="core_label_russian">روسی</string>
+    <string name="core_label_russian_keyboard">صفحه‌کلید روسی</string>
+    <string name="core_label_scea">SCEA</string>
+    <string name="core_label_scee">SCEE</string>
+    <string name="core_label_sceh">SCEH</string>
+    <string name="core_label_scej">SCEJ</string>
+    <string name="core_label_scek">SCEK</string>
+    <string name="core_label_sch">SCH</string>
+    <string name="core_label_spanish">اسپانیایی</string>
+    <string name="core_label_spanish_keyboard">صفحه‌کلید اسپانیایی</string>
+    <string name="core_label_swedish">سوئدی</string>
+    <string name="core_label_swedish_keyboard">صفحه‌کلید سوئدی</string>
+    <string name="core_label_turkish">ترکی</string>
+    <string name="core_label_turkish_keyboard">صفحه‌کلید ترکی</string>
+    <string name="core_help_video_display_aspect_override" formatted="false">نسبت تصویر نهایی نمایشگر را در هزارم لغو می کند (1778 = 16:9، 1333 = 4:3). برای استفاده از نسبت بازی، آن را روی 0 تنظیم کنید. از این فقط برای تناسب با نمایشگرهای غیرمعمول گوشی یا تبلت استفاده کنید. یک مقدار نادرست تصویر را گسترش می دهد.</string>
+    <string name="core_help_video_shader_preset_path" formatted="false">مسیر مطلق پیش‌تنظیم شیدر RetroArch با پسوند .slangp که در حالت خروجی «زنجیرهٔ شیدر» استفاده می‌شود. برای خروجی معمولی خالی بگذارید. فقط پیش‌تنظیم سازگار به کار ببرید؛ مسیر نامعتبر باعث بازگشت به تصویر ساده می‌شود.</string>
+    <string name="core_label_async_shader_recompiler">بازکامپایلر ناهمگام شیدر</string>
+    <string name="core_label_async_with_shader_interpreter">ناهمگام با مفسر شیدر</string>
+    <string name="core_label_forced">اجباری</string>
+    <string name="core_label_interpreter">مفسر</string>
+    <string name="core_label_interpreter_legacy">مفسر (قدیمی)</string>
+    <string name="core_label_llvm_recompiler_legacy">بازکامپایلر LLVM (قدیمی)</string>
+    <string name="core_label_shader_recompiler">بازکامپایلر شیدر</string>
+    <string name="core_setting_search">گزینه های جستجو</string>
+    <string name="core_setting_no_results">هیچ گزینه منطبقی وجود ندارد</string>
+    <plurals name="library_game_count">
+        <item quantity="one">در مجموع %1$d بازی</item>
+        <item quantity="other">در مجموع %1$d بازی</item>
+    </plurals>
+    <plurals name="install_dialog_items_progress">
+        <item quantity="one">%1$d از %2$d مورد تکمیل شد</item>
+        <item quantity="other">%1$d از %2$d مورد تکمیل شد</item>
+    </plurals>
+    <string name="direct_boot_add_game">بازی را از پوشه اضافه کنید</string>
+    <string name="direct_boot_added_success">بازی \"%1$s\" با موفقیت اضافه شد</string>
+    <string name="direct_boot_folder_resolve_failed">تشخیص مسیر پوشه انجام نشد</string>
+    <string name="direct_boot_no_param_sfo">PARAM.SFO در پوشه انتخابی یافت نشد</string>
+    <string name="direct_boot_invalid_title_id">شناسهٔ بازی نامعتبر است</string>
+    <string name="direct_boot_link_failed">ساخت پیوند اجرای مستقیم انجام نشد</string>
+    <string name="onboarding_games_folder_title">پوشهٔ بازی‌ها</string>
+    <string name="onboarding_games_folder_desc">پوشه ای را با بازی های PS3 خود انتخاب کنید (JB Folder، PS3_GAME، ISO، دیسک)</string>
+    <string name="onboarding_status_choose_folder">انتخاب پوشه</string>
+    <string name="settings_tab_library">کتابخانه</string>
+    <string name="settings_library_folders_title">پوشه‌های بازی</string>
+    <string name="settings_library_folders_desc">بازی‌های این پوشه‌ها در کتابخانه نمایش داده می‌شوند و بدون کپی شدن فایل‌ها به حافظهٔ داخلی، مستقیماً اجرا می‌شوند.</string>
+    <string name="settings_library_add_folder">افزودن پوشهٔ بازی</string>
+    <string name="settings_library_remove_folder">پوشه را حذف کنید</string>
+    <string name="settings_library_no_folders">هنوز پوشهٔ بازی اضافه نشده است</string>
+    <string name="settings_library_folder_removed">پوشه از کتابخانه حذف شد</string>
+    <string name="onboarding_permission_storage_title">مجوز دسترسی به فضای ذخیره‌سازی</string>
+    <string name="onboarding_permission_storage_desc">دسترسی به حافظه دستگاه برای خواندن مستقیم فایل های بازی بدون کپی</string>
+    <string name="onboarding_permission_storage_grant">اعطای مجوز</string>
+    <string name="onboarding_permission_storage_granted">مجوز داده شد</string>
+    <string name="settings_discord_rich_presence">حضور غنی Discord</string>
+    <string name="discord_title">Discord</string>
+    <string name="discord_rich_presence_title">Discord Rich Presence</string>
+    <string name="discord_intro">Discord را متصل کنید تا نشان دهید در EmuCoreC بازی می‌کنید. شما دقیقاً کنترل می‌کنید که کدام جزئیات بازی به اشتراک گذاشته شود.</string>
+    <string name="discord_connected_account">حساب متصل‌شده</string>
+    <string name="discord_connect">اتصال Discord</string>
+    <string name="discord_disconnect">قطع اتصال</string>
+    <string name="discord_open_server">باز کردن سرور Discord ما</string>
+    <string name="discord_privacy_title">فعالیت و حریم خصوصی</string>
+    <string name="discord_enabled">یکپارچه‌سازی Discord</string>
+    <string name="discord_enabled_desc">به EmuCoreC اجازه دهید فعالیت بازی شما را منتشر کند</string>
+    <string name="discord_share_title">نمایش عنوان بازی</string>
+    <string name="discord_share_title_desc">بازی فعلی و کاور آن را در وضعیت Discord شما نمایش دهید</string>
+    <string name="discord_share_serial">نمایش شناسه عنوان</string>
+    <string name="discord_share_serial_desc">شامل شناسه عنوان PS3، مانند BLES00001</string>
+    <string name="discord_preview_title">پیش‌نمایش وضعیت</string>
+    <string name="discord_preview_game_title">عنوان بازی</string>
+    <string name="discord_preview_serial">شناسه عنوان</string>
+    <string name="discord_privacy_note">ورود از Discord OAuth با PKCE استفاده می‌کند. توکن دسترسی توسط Keystore اندروید رمزنگاری می‌شود و هرگز به سرورهای EmuCoreC ارسال نمی‌شود.</string>
+    <string name="discord_status_disabled">غیرفعال</string>
+    <string name="discord_status_unavailable">SDK در این نسخه در دسترس نیست</string>
+    <string name="discord_status_disconnected">متصل نیست</string>
+    <string name="discord_status_authorizing">در انتظار مجوز</string>
+    <string name="discord_status_connecting">در حال اتصال…</string>
+    <string name="discord_status_connected">متصل</string>
+    <string name="discord_status_failed">اتصال ناموفق بود</string>
+    <string name="discord_friends_title">دوستان در EmuCoreC</string>
+    <string name="discord_friends_empty">هیچ دوست Discordی در حال حاضر از EmuCoreC استفاده نمی‌کند.</string>
+    <string name="discord_presence_library">در حال مرور کتابخانه بازی‌ها</string>
+    <string name="discord_presence_private_game">در حال بازی یک بازی PS3</string>
+    <string name="discord_presence_paused">متوقف‌شده</string>
+    <string name="discord_presence_playing">در حال بازی %1$s</string>
+    <string name="settings_discord_sdk_unavailable">Discord Social SDK در این نسخه گنجانده نشده است.</string>
+    <string name="settings_discord_service_error">راه‌اندازی سرویس کمکی Discord ممکن نشد.</string>
+    <string name="settings_discord_token_error">محافظت از توکن ورود Discord ممکن نشد.</string>
+    <string name="drive_after_game">پس از بستن بازی</string>
+    <string name="drive_backup_now">پشتیبان‌گیری اکنون</string>
+    <string name="drive_cancel">لغو</string>
+    <string name="drive_category_cheats">کدهای تقلب</string>
+    <string name="drive_category_patches">تنظیمات هر بازی</string>
+    <string name="drive_category_save_data">داده‌های ذخیره</string>
+    <string name="drive_category_settings">تنظیمات و کنترل‌ها</string>
+    <string name="drive_category_states">جام‌ها</string>
+    <string name="drive_category_style">ظاهر</string>
+    <string name="drive_charging">فقط هنگام شارژ</string>
+    <string name="drive_connect">اتصال Google Drive</string>
+    <string name="drive_core_warning">این پشتیبان از نسخه هسته متفاوتی استفاده می‌کند. ممکن است برخی داده‌ها ناسازگار باشند.</string>
+    <string name="drive_delete">حذف</string>
+    <string name="drive_delete_warning">این پشتیبان به سطل زباله Google Drive منتقل شود؟ ذخیره‌های محلی تحت تأثیر قرار نمی‌گیرند.</string>
+    <string name="drive_description">تنظیمات، داده‌های ذخیره، جام‌ها، کدهای تقلب و ظاهر را در Drive خودتان پشتیبان‌گیری کنید. بازی‌ها، فریمور، حافظه نهان و داده‌های ورود مستثنی هستند.</string>
+    <string name="drive_disconnect">قطع اتصال</string>
+    <string name="drive_disconnect_warning">پشتیبان‌گیری خودکار متوقف می‌شود. نسخه‌های موجود در Google Drive باقی می‌مانند. این کار شما را از پروفایل EmuCoreC خارج نمی‌کند.</string>
+    <string name="drive_downloading">در حال دانلود پشتیبان…</string>
+    <string name="drive_empty">هنوز پشتیبان کامل‌شده‌ای وجود ندارد.</string>
+    <string name="drive_empty_description">پشتیبان‌های کامل‌شده شما اینجا نمایش داده می‌شوند. اولین نسخه را ایجاد کنید تا ذخیره‌ها و تنظیمات خود را در Google Drive نگه دارید.</string>
+    <string name="drive_error_auth">دسترسی به Google Drive در دسترس نیست. حساب خود را دوباره متصل کنید.</string>
+    <string name="drive_error_busy">بازی در حال اجرا یا شروع است. پشتیبان‌گیری صبر می‌کند؛ بازیابی را فقط زمانی انجام دهید که بازی بسته است.</string>
+    <string name="drive_error_configuration">Google Drive موقتاً در دسترس نیست. لطفاً بعداً دوباره تلاش کنید.</string>
+    <string name="drive_error_failed">عملیات تکمیل نشد. اتصال و حساب Google خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="drive_error_invalid">این پشتیبان خراب است یا پشتیبانی نمی‌شود. بازیابی نشد.</string>
+    <string name="drive_error_missing">این پشتیبان حذف شده یا دیگر در دسترس نیست.</string>
+    <string name="drive_error_network">اتصال قطع شد. بارگذاری می‌تواند هنگام در دسترس بودن شبکه ادامه یابد.</string>
+    <string name="drive_error_quota">Google Drive شما پر است. کمی فضا آزاد کنید و دوباره تلاش کنید.</string>
+    <string name="drive_error_space">حافظه قابل نوشتن کافی در این دستگاه وجود ندارد. کمی فضا آزاد کنید یا حافظه انتخاب‌شده را بررسی کنید.</string>
+    <string name="drive_history">تاریخچه پشتیبان‌گیری</string>
+    <string name="drive_hours">هر %1$d ساعت</string>
+    <string name="drive_include_save_data">شامل داده‌های ذخیره و جام‌ها</string>
+    <string name="drive_last_backup">آخرین پشتیبان‌گیری موفق</string>
+    <string name="drive_manual">دستی</string>
+    <string name="drive_open">باز کردن Google Drive</string>
+    <string name="drive_preparing">در حال آماده‌سازی نسخه امن…</string>
+    <string name="drive_private">پشتیبان‌های خصوصی در حساب Google شما</string>
+    <string name="drive_reconnect">اتصال مجدد Google Drive</string>
+    <string name="drive_refresh">بازخوانی</string>
+    <string name="drive_restore">بازیابی</string>
+    <string name="drive_restore_warning">داده‌های انتخاب‌شده جایگزین فایل‌های محلی متناظر می‌شوند. ابتدا یک نسخه بازیابی ساخته می‌شود. پیش از بازیابی بازی را متوقف کنید. در دستگاه دیگر، بازی‌های خود را دوباره انتخاب کنید.</string>
+    <string name="drive_restored">بازیابی کامل شد. برای بارگذاری مجدد تنظیمات بازیابی‌شده، صفحه‌ها را دوباره باز کنید.</string>
+    <string name="drive_restoring">در حال بازیابی داده‌ها…</string>
+    <string name="drive_retention">نگهداری %1$d نسخه اخیر برای هر دستگاه</string>
+    <string name="drive_schedule">پشتیبان‌گیری خودکار</string>
+    <string name="drive_schedule_note">اندروید ممکن است پشتیبان‌گیری‌های زمان‌بندی‌شده را به تأخیر بیندازد. بازی‌ها اولویت دارند. پشتیبان‌گیری خودکار داده‌های بدون تغییر را نادیده می‌گیرد.</string>
+    <string name="drive_settings_tab">تنظیمات</string>
+    <string name="drive_title">Google Drive</string>
+    <string name="drive_transfer_amount">%1$s از %2$s</string>
+    <string name="drive_transfer_remaining">حدود %1$s باقی مانده است</string>
+    <string name="drive_transfer_speed">%1$s/ث</string>
+    <string name="drive_uploading">در حال بارگذاری پشتیبان…</string>
+    <string name="drive_verifying">در حال بررسی یکپارچگی پشتیبان…</string>
+    <string name="drive_waiting">در انتظار شبکه، باتری یا عملیات دیگر…</string>
+    <string name="drive_wifi">فقط شبکه بدون سهمیه</string>
+    <string name="drive_working">در حال کار…</string>
+    <string name="my_lists_cloud_failed">پشتیبان‌گیری ناموفق بود. اتصال خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="my_lists_cloud_hint">برای پشتیبان‌گیری از فهرست‌های خود، وارد پروفایل شوید.</string>
+    <string name="my_lists_cloud_synced">فهرست‌های شما در حساب شما ذخیره می‌شوند و می‌توانند در دستگاه دیگری بازیابی شوند.</string>
+    <string name="my_lists_cloud_title">پشتیبان‌گیری ابری</string>
+    <string name="my_lists_empty_body">فهرست را باز کنید، روی منوی سه‌نقطه یک بازی ضربه بزنید و آن را به یکی از فهرست‌های خود اضافه کنید.</string>
+    <string name="my_lists_empty_title">هنوز بازی‌ای وجود ندارد</string>
+    <string name="my_lists_subtitle">وضعیت‌ها، موردعلاقه‌ها و مجموعه بازی‌های شما</string>
+    <string name="my_lists_title">فهرست‌های من</string>
+    <string name="profile_accent_blue">آبی</string>
+    <string name="profile_accent_crimson">زرشکی</string>
+    <string name="profile_accent_emerald">زمردی</string>
+    <string name="profile_accent_gold">طلایی</string>
+    <string name="profile_accent_violet">بنفش</string>
+    <string name="profile_account_created">حساب ساخته شد.</string>
+    <string name="profile_action_failed">مشکلی پیش آمد. لطفاً دوباره تلاش کنید.</string>
+    <string name="profile_auth_title">حساب EmuCoreC شما</string>
+    <string name="profile_backup_done">فهرست‌ها پشتیبان‌گیری شدند</string>
+    <string name="profile_block_player">مسدود کردن بازیکن</string>
+    <string name="profile_blocked_empty">بازیکن مسدودی وجود ندارد.</string>
+    <string name="profile_blocked_title">بازیکنان مسدودشده</string>
+    <string name="profile_catalog_game_not_found">%1$s هنوز در فهرست بازی‌ها موجود نیست.</string>
+    <string name="profile_cloud_confirm_restore">تأیید بازیابی</string>
+    <string name="profile_cloud_count">ابری · %1$d</string>
+    <string name="profile_cloud_delete">حذف پروفایل ابری</string>
+    <string name="profile_cloud_deleted">پروفایل ابری حذف شد.</string>
+    <string name="profile_cloud_description">حداکثر 5 پروفایل نام‌دار ذخیره کنید. فقط تنظیمات شبیه‌ساز و تنظیمات هر بازی همگام‌سازی می‌شوند. بازی‌ها، فریمور، داده‌های ذخیره، جام‌ها و درایورهای سفارشی فقط روی این دستگاه می‌مانند و همگام‌سازی نمی‌شوند.</string>
+    <string name="profile_cloud_name">نام پروفایل</string>
+    <string name="profile_cloud_restore">بازیابی</string>
+    <string name="profile_cloud_restore_warning">این کار تنظیمات شبیه‌ساز و تنظیمات هر بازی را در این دستگاه جایگزین می‌کند. بازی‌ها، فریمور، داده‌های ذخیره و جام‌های شما تغییر نمی‌کنند.</string>
+    <string name="profile_cloud_restored">تنظیمات شبیه‌ساز بازیابی شد. برای اعمال آن‌ها، بازی در حال اجرا را دوباره راه‌اندازی کنید.</string>
+    <string name="profile_cloud_save_current">ذخیره تنظیمات فعلی</string>
+    <string name="profile_cloud_saved">تنظیمات شبیه‌ساز در پروفایل شما ذخیره شد.</string>
+    <string name="profile_cloud_title">تنظیمات شبیه‌ساز در فضای ابری</string>
+    <string name="profile_cloud_version">برنامه %1$s · هسته %2$s</string>
+    <string name="profile_create_account">ساخت حساب</string>
+    <string name="profile_device_android">سیستم</string>
+    <string name="profile_device_app_core">برنامه · هسته</string>
+    <string name="profile_device_current">این دستگاه</string>
+    <string name="profile_device_delete">حذف دستگاه</string>
+    <string name="profile_device_deleted">دستگاه حذف شد</string>
+    <string name="profile_device_gpu">گرافیک</string>
+    <string name="profile_device_make_private">پنهان کردن از پروفایل</string>
+    <string name="profile_device_make_public">نمایش در پروفایل</string>
+    <string name="profile_device_private_done">دستگاه از پروفایل شما پنهان شد.</string>
+    <string name="profile_device_public_done">دستگاه در پروفایل شما قابل مشاهده است.</string>
+    <string name="profile_device_ram">حافظه</string>
+    <string name="profile_device_show">نمایش دستگاه</string>
+    <string name="profile_device_soc">پردازنده</string>
+    <string name="profile_devices_count">دستگاه‌ها · %1$d</string>
+    <string name="profile_devices_description">جزئیات دستگاه از یک شناسه تصادفی برنامه استفاده می‌کند و هرگز از شناسه سخت‌افزاری. شما تعیین می‌کنید که آیا یک دستگاه در پروفایل عمومی شما قابل مشاهده باشد.</string>
+    <string name="profile_devices_empty">هنوز دستگاهی ثبت نشده است.</string>
+    <string name="profile_devices_title">دستگاه‌های شما</string>
+    <string name="profile_display_name">نام نمایشی</string>
+    <string name="profile_done">انجام شد.</string>
+    <string name="profile_edit_name">ویرایش</string>
+    <string name="profile_edit_name_description">نامی را انتخاب کنید که سایر بازیکنان در جست‌وجو و جدول‌های امتیاز می‌بینند.</string>
+    <string name="profile_email">ایمیل</string>
+    <string name="profile_event_achievement">جام در %1$s باز شد</string>
+    <string name="profile_features_title">ویژگی‌های پروفایل</string>
+    <string name="profile_friend_accept">پذیرش درخواست</string>
+    <string name="profile_friend_add">افزودن دوست</string>
+    <string name="profile_friend_added">دوست اضافه شد.</string>
+    <string name="profile_friend_pending">درخواست ارسال شد</string>
+    <string name="profile_friend_remove">دوستان</string>
+    <string name="profile_friend_remove_action">حذف</string>
+    <string name="profile_friend_remove_confirm">%1$s از دوستان حذف شود؟</string>
+    <string name="profile_friend_remove_title">دوست حذف شود؟</string>
+    <string name="profile_friend_removed">دوستی حذف شد.</string>
+    <string name="profile_friend_request_sent">درخواست دوستی ارسال شد.</string>
+    <string name="profile_friend_requests">درخواست‌های دوستی</string>
+    <string name="profile_friend_requests_empty">درخواست دریافتی وجود ندارد.</string>
+    <string name="profile_friends_empty">هنوز دوستی اضافه نشده است.</string>
+    <string name="profile_friends_title">دوستان</string>
+    <string name="profile_game_last_played_format">آخرین بازی %1$s</string>
+    <string name="profile_game_sessions_format">%1$d جلسه</string>
+    <string name="profile_games_empty">هنوز بازی‌ای وجود ندارد</string>
+    <string name="profile_games_played">بازی‌های انجام‌شده</string>
+    <string name="profile_google_failed">ورود با Google ناموفق بود.</string>
+    <string name="profile_google_sign_in">ادامه با Google</string>
+    <string name="profile_have_account">از قبل حساب دارم</string>
+    <string name="profile_leaderboard_empty">هنوز بازیکنی وجود ندارد</string>
+    <string name="profile_leaderboard_games_format">%1$d بازی</string>
+    <string name="profile_leaderboard_load_failed">بارگذاری جدول امتیازات ممکن نشد.</string>
+    <string name="profile_leaderboard_no_results">بازیکن مطابقی یافت نشد.</string>
+    <string name="profile_leaderboard_refresh">بازخوانی رتبه‌بندی</string>
+    <string name="profile_leaderboard_search_help">حداقل 2 نویسه یا یک شناسه کامل مانند EX-A7K4P2 وارد کنید.</string>
+    <string name="profile_leaderboard_search_hint">نام یا شناسه</string>
+    <string name="profile_more_games_failed">بارگذاری بازی‌های بیشتر ممکن نشد.</string>
+    <string name="profile_name_character_count">%1$d/32 نویسه</string>
+    <string name="profile_name_updated">نام نمایشی به‌روزرسانی شد.</string>
+    <string name="profile_need_account">ساخت حساب</string>
+    <string name="profile_password">گذرواژه</string>
+    <string name="profile_password_reset_sent">ایمیل بازنشانی گذرواژه ارسال شد. صندوق ورودی خود را بررسی کنید.</string>
+    <string name="profile_player">بازیکن</string>
+    <string name="profile_player_blocked">بازیکن مسدود شد.</string>
+    <string name="profile_player_card_brand">کارت بازیکن EmuCoreC</string>
+    <string name="profile_player_card_footer">خاطرات PS3، ثبت‌شده توسط EmuCoreC</string>
+    <string name="profile_player_card_share">اشتراک‌گذاری کارت بازیکن</string>
+    <string name="profile_player_card_share_text">من را در EmuCoreC پیدا کنید: %1$s</string>
+    <string name="profile_player_id_format">شناسه بازیکن: %1$s</string>
+    <string name="profile_player_not_found">بازیکن یافت نشد</string>
+    <string name="profile_player_search_failed">جست‌وجوی بازیکنان ممکن نشد.</string>
+    <string name="profile_player_unblocked">مسدودیت بازیکن برداشته شد.</string>
+    <string name="profile_pro_badge">PRO</string>
+    <string name="profile_pro_updated">پروفایل Pro به‌روزرسانی شد.</string>
+    <string name="profile_rank">رتبه</string>
+    <string name="profile_rank_insights">رتبه #%1$d از %2$d · %3$d%% برتر</string>
+    <string name="profile_recent_events">رویدادهای اخیر</string>
+    <string name="profile_recently_played">اخیراً بازی شده</string>
+    <string name="profile_reset_password">بازنشانی رمز عبور</string>
+    <string name="profile_restore">بازیابی</string>
+    <string name="profile_restore_done">فهرست‌ها بازیابی شدند</string>
+    <string name="profile_showcase_title">ویترین بازی</string>
+    <string name="profile_sign_in">ورود</string>
+    <string name="profile_sign_out">خروج</string>
+    <string name="profile_signed_in">وارد شدید.</string>
+    <string name="profile_signed_out">خارج شدید.</string>
+    <string name="profile_social_center_title">دوستان و اعلان‌ها</string>
+    <string name="profile_stats_activity">فعالیت</string>
+    <string name="profile_stats_best_streak">بهترین زنجیره</string>
+    <string name="profile_stats_current_streak">زنجیره فعلی</string>
+    <string name="profile_stats_days_format">%1$d روز</string>
+    <string name="profile_stats_empty">تاریخچه فعالیت با جلسات بازی ثبت‌شده توسط این نسخه آغاز می‌شود.</string>
+    <string name="profile_stats_history_empty_title">تاریخچه آماده است</string>
+    <string name="profile_stats_lifetime_body">مجموع کل، جلسات و جایگاه جهانی شما همیشه اینجا در دسترس است.</string>
+    <string name="profile_stats_lifetime_title">نمای کلی کل دوران</string>
+    <string name="profile_stats_load_failed">بارگذاری تاریخچه فعالیت ممکن نشد. لطفاً دوباره تلاش کنید.</string>
+    <string name="profile_stats_locked_body">تاریخچه فعالیت، زنجیره‌ها، نمودارهای هفتگی و ماهانه، بینش‌های درصدی و کارت‌های بازیکن را در تنظیمات &gt; Pro باز کنید.</string>
+    <string name="profile_stats_locked_title">آمار پیشرفته همراه با Pro ارائه می‌شود</string>
+    <string name="profile_stats_refresh">بازخوانی فعالیت</string>
+    <string name="profile_stats_this_month">30 روز اخیر</string>
+    <string name="profile_stats_this_week">7 روز اخیر</string>
+    <string name="profile_stats_total_sessions">کل جلسات</string>
+    <string name="profile_stats_weekly_chart">زمان بازی اخیر</string>
+    <string name="profile_tab_achievements">جام‌ها</string>
+    <string name="profile_tab_games">بازی‌ها</string>
+    <string name="profile_tab_leaderboard">1000 برتر</string>
+    <string name="profile_tab_overview">نمای کلی</string>
+    <string name="profile_tab_stats">آمار</string>
+    <string name="profile_total_time">زمان کل</string>
+    <string name="profile_trophies_empty">هنوز جامی وجود ندارد. برای مشاهده پیشرفت خود در اینجا، بازی‌ای با جام بازی کنید.</string>
+    <string name="profile_trophies_load_failed">بارگذاری جام‌ها ممکن نشد.</string>
+    <string name="profile_trophies_points_format">%1$d/%2$d امتیاز</string>
+    <string name="profile_trophies_summary_format">%1$d از %2$d جام · %3$d امتیاز</string>
+    <string name="profile_trophy_filter_all">همه</string>
+    <string name="profile_trophy_filter_completed">تکمیل‌شده</string>
+    <string name="profile_trophy_filter_in_progress">در حال پیشرفت</string>
+    <string name="profile_trophy_progress_format">%1$d از %2$d باز شد</string>
+    <string name="profile_unblock_player">رفع مسدودی</string>
+    <string name="save">ذخیره</string>
+    <string name="settings_ra_points_label">امتیاز</string>
+    <string name="core_update_reset_title">به‌روزرسانی هسته</string>
+    <string name="core_update_reset_body">این به‌روزرسانی شامل تغییراتی در هسته شبیه‌ساز است. حافظه نهان و پیکربندی شبیه‌ساز را بازنشانی کنید تا هسته جدید بدون مشکل اجرا شود.</string>
+    <string name="core_update_reset_kept">میان‌افزار PS3، پوشه‌های بازی، کنترل‌ها، ذخیره‌ها و جلدها حفظ می‌شوند.</string>
+    <string name="core_update_reset_action">بازنشانی تنظیمات</string>
+    <string name="core_update_reset_keep">نگهداری تنظیمات فعلی</string>
+    <string name="core_update_reset_done">تنظیمات بازنشانی شدند</string>
+    <string name="core_label_fighting_games">بازی‌های مبارزه‌ای</string>
+    <string name="core_label_shooter_games">بازی‌های تیراندازی</string>
+    <string name="nav_save_states">ذخیره‌های سریع</string>
+    <string name="savestate_manager_subtitle">عکس‌های لحظه‌ای شبیه‌ساز، جدا از ذخیره‌های درون‌بازی</string>
+    <string name="emulation_savestate_slot_label">اسلات %1$d</string>
+    <string name="emulation_savestate_empty">خالی</string>
+    <string name="emulation_savestate_saved_at">ذخیره‌شده %1$s</string>
+    <string name="emulation_savestate_save_action">ذخیره استیت</string>
+    <string name="emulation_savestate_load_action">بارگذاری</string>
+    <string name="emulation_savestate_saved_toast">سیو استیت ایجاد شد</string>
+    <string name="emulation_savestate_loaded_toast">سیو استیت بارگذاری شد</string>
+    <string name="emulation_savestate_failed_toast">عملیات سیو استیت ناموفق بود</string>
+    <string name="emulation_savestate_confirm_save_title">سیو استیت بازنویسی شود؟</string>
+    <string name="emulation_savestate_confirm_save_body">%1$s از قبل حاوی یک استیت است. با وضعیت فعلی جایگزین می‌شود.</string>
+    <string name="emulation_savestate_confirm_load_title">سیو استیت بارگذاری شود؟</string>
+    <string name="emulation_savestate_confirm_load_body">پیشرفت پس از این عکس لحظه‌ای در %1$s از بین می‌رود.</string>
+    <string name="emulation_savestate_startup_loading">در حال بارگذاری سیو استیت…</string>
+    <string name="emulation_savestate_saving">در حال ذخیرهٔ سیو استیت…</string>
+    <string name="emulation_savestate_unavailable">ذخیره و بارگذاری وضعیت در این هسته در دسترس نیست.</string>
+    <string name="settings_app_language_czech">چکی</string>
+    <string name="settings_app_language_polish">لهستانی</string>
+    <string name="settings_app_language_japanese">ژاپنی</string>
+    <string name="settings_app_language_korean">کره‌ای</string>
+    <string name="settings_app_language_indonesian">اندونزیایی</string>
+    <string name="settings_app_language_persian">فارسی</string>
+
+    <string name="controls_button_circle">دایره</string>
+    <string name="controls_button_cross">ضربدر</string>
+    <string name="controls_button_down">پایین</string>
+    <string name="controls_button_l1">L1</string>
+    <string name="controls_button_l2">L2</string>
+    <string name="controls_button_l3">L3</string>
+    <string name="controls_button_left">چپ</string>
+    <string name="controls_button_left_stick">استیک چپ</string>
+    <string name="controls_button_r1">R1</string>
+    <string name="controls_button_r2">R2</string>
+    <string name="controls_button_r3">R3</string>
+    <string name="controls_button_right">راست</string>
+    <string name="controls_button_right_stick">استیک راست</string>
+    <string name="controls_button_select">SELECT</string>
+    <string name="controls_button_square">مربع</string>
+    <string name="controls_button_start">START</string>
+    <string name="controls_button_triangle">مثلث</string>
+    <string name="controls_button_up">بالا</string>
+    <string name="controls_editor_combo">ترکیب دکمه‌ها</string>
+    <string name="controls_editor_combo_description">با نگه داشتن این دکمه، هر دو عمل هم‌زمان فعال می‌شوند.</string>
+    <string name="controls_editor_create_combo">افزودن دکمه</string>
+    <string name="controls_editor_delete">حذف</string>
+    <string name="controls_editor_duplicate">تکثیر</string>
+    <string name="controls_editor_grid">شبکه</string>
+    <string name="controls_editor_group_buttons">دکمه‌های عملکرد</string>
+    <string name="controls_editor_group_dpad">دکمه‌های جهت</string>
+    <string name="controls_editor_none">هیچ‌کدام</string>
+    <string name="controls_editor_opacity_value">میزان کدری %1$d%%</string>
+    <string name="controls_editor_primary_action">عمل اصلی</string>
+    <string name="controls_editor_reset_selected">بازنشانی مورد انتخاب‌شده</string>
+    <string name="controls_editor_secondary_action">عمل دوم</string>
+    <string name="controls_editor_snap">چسباندن به شبکه</string>
+    <string name="emulation_controls_editor_reset">بازنشانی</string>
+    <string name="emulation_controls_editor_size">اندازه</string>
+    <string name="emulation_controls_editor_visible">نمایان</string>
+
+    <string name="common_next">بعدی</string>
+    <string name="common_previous">قبلی</string>
+    <string name="emulation_menu_section_savestates">ذخیره‌های وضعیت</string>
+    <string name="emulation_quickbar_quick_load">بارگذاری سریع وضعیت</string>
+    <string name="emulation_quickbar_quick_save">ذخیرهٔ سریع وضعیت</string>
+    <string name="emulation_savestate_confirm_delete_body">%1$s برای همیشه حذف می‌شود.</string>
+    <string name="emulation_savestate_confirm_delete_title">ذخیرهٔ وضعیت حذف شود؟</string>
+    <string name="emulation_savestate_delete_action">حذف</string>
+    <string name="emulation_savestate_deleted_toast">ذخیرهٔ وضعیت حذف شد</string>
+    <string name="emulation_savestate_load_starts_game">بازی اجرا می‌شود و از این وضعیت ذخیره‌شده ادامه می‌یابد.</string>
+    <string name="emulation_savestate_quick_label">سریع</string>
+    <string name="emulation_tab_savestates">ذخیره‌های وضعیت</string>
+    <string name="savestate_manager_empty_body">از منوی شبیه‌ساز هنگام بازی یا با دکمهٔ ذخیرهٔ سریع، یک وضعیت ذخیره کنید.</string>
+    <string name="savestate_manager_empty_title">هنوز وضعیت ذخیره‌شده‌ای وجود ندارد</string>
+    <string name="savestate_manager_refresh">بازخوانی</string>
+</resources>

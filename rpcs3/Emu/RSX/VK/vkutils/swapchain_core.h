@@ -188,6 +188,7 @@ namespace vk
 		{}
 
 		void destroy(bool = true) override;
+		void reset_surface(VkSurfaceKHR surface);
 
 		std::pair<VkSurfaceCapabilitiesKHR, bool> init_surface_capabilities();
 

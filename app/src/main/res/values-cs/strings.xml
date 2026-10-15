@@ -1,0 +1,1816 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="emulation_quickbar_home_menu">Hlavní nabídka RPCS3</string>
+    <string name="onboarding_storage_title">Úložiště emulátoru</string>
+    <string name="onboarding_storage_choose_title">Vybrat úložiště emulátoru</string>
+    <string name="onboarding_storage_only_default">Android nyní zpřístupňuje pouze jedno umístění úložiště aplikace. Můžete také vybrat vlastní složku, pokud je pro soubory emulátoru dostupná.</string>
+    <string name="onboarding_status_install_firmware">Nainstalujte oficiální systémový software PS3 od Sony.</string>
+    <string name="onboarding_status_ready">Nastavení dokončeno.</string>
+    <string name="onboarding_firmware_download">Stáhnout</string>
+    <string name="onboarding_firmware_cancel_download">Zrušit</string>
+    <string name="onboarding_firmware_downloading">Stahování %1$d%%</string>
+    <string name="onboarding_firmware_download_failed">Stahování se nezdařilo. Zkuste to znovu.</string>
+    <string name="onboarding_back">Zpět</string>
+    <string name="onboarding_next">Další</string>
+    <string name="onboarding_get_started">Začít</string>
+    <string name="nav_setup">Hry</string>
+    <string name="nav_library">Knihovna</string>
+    <string name="nav_game_manager">Správce her</string>
+    <string name="nav_patches">Záplaty</string>
+    <string name="nav_play_time">Doba hraní</string>
+    <string name="nav_achievements">Trofeje</string>
+    <string name="nav_save_manager">Uložené hry</string>
+    <string name="nav_catalog">Katalog</string>
+    <string name="nav_settings">Nastavení</string>
+    <string name="nav_profile">Profil</string>
+    <string name="library_refresh">Aktualizovat</string>
+    <string name="library_search_hint">Hledat nainstalované hry</string>
+    <string name="library_empty_title">Nenalezeny žádné hry</string>
+    <string name="library_empty_body">Nainstalujte hry na obrazovce Hry a poté obnovte knihovnu.</string>
+    <string name="library_add_shortcut">Přidat zástupce</string>
+    <string name="library_shortcut_requested">Požadavek na zástupce byl odeslán.</string>
+    <string name="library_shortcut_unsupported">Tento launcher nepodporuje připnuté zástupce.</string>
+    <string name="library_shortcut_failed">Zástupce se nepodařilo vytvořit.</string>
+    <string name="detail_launch">Spustit hru</string>
+    <string name="detail_delete_game">Smazat hru</string>
+    <string name="detail_delete_game_confirm_title">Smazat nainstalovanou hru?</string>
+    <string name="detail_delete_game_confirm_body">Tím se z knihovny odstraní nainstalované soubory hry.</string>
+    <string name="detail_delete_game_failed">Hru se nepodařilo smazat.</string>
+    <string name="save_manager_title">Uložené hry</string>
+    <string name="save_manager_open_for_game">Uložené hry</string>
+    <string name="save_manager_search_hint">Hledat uložená data</string>
+    <string name="save_manager_export">Exportovat</string>
+    <string name="save_manager_import">Importovat</string>
+    <string name="save_manager_delete">Smazat uložená data</string>
+    <string name="save_manager_delete_confirm_title">Smazat uložená data?</string>
+    <string name="save_manager_delete_confirm_body">Tím se odstraní uložená data pro %1$s.</string>
+    <string name="save_manager_delete_failed">Uložená data se nepodařilo smazat.</string>
+    <string name="save_manager_export_success">Uložená data byla exportována.</string>
+    <string name="save_manager_export_failed">Uložená data se nepodařilo exportovat.</string>
+    <string name="save_manager_import_success">Uložená data byla importována: %1$s.</string>
+    <string name="save_manager_import_failed">Uložená data se nepodařilo importovat.</string>
+    <string name="save_manager_import_empty">Archiv neobsahuje soubory uložení.</string>
+    <string name="save_manager_import_unsafe">Archiv obsahuje nebezpečné cesty.</string>
+    <string name="save_manager_import_unknown_target">Před importem tohoto archivu vyberte kartu uložení hry, nebo použijte archiv s jedinou složkou uložení.</string>
+    <string name="save_manager_backup_all_title">Záloha všech uložení</string>
+    <string name="save_manager_backup_all_body">Vytvořte jednu záložku ZIP se všemi složkami uložení, nebo obnovte složky uložení z předchozí úplné zálohy.</string>
+    <string name="save_manager_backup_all">Zálohovat</string>
+    <string name="save_manager_restore_all">Obnovit vše</string>
+    <string name="save_manager_backup_all_success">Zálohováno %1$d složek uložení.</string>
+    <string name="save_manager_backup_all_failed">Nepodařilo se zálohovat všechna uložení.</string>
+    <string name="save_manager_restore_all_success">Obnoveno %1$d složek uložení.</string>
+    <string name="save_manager_restore_all_failed">Nepodařilo se obnovit všechna uložení.</string>
+    <string name="save_manager_restore_all_confirm_title">Obnovit všechna uložení?</string>
+    <string name="save_manager_restore_all_confirm_body">Složky uložení z vybrané zálohy nahradí odpovídající složky uložení v tomto zařízení. Stávající uložení zůstanou zachována jen tehdy, když záloha dané ID uložení neobsahuje.</string>
+    <string name="save_manager_restore_all_confirm">Obnovit uložení</string>
+    <string name="save_manager_empty_title">Nenalezena žádná uložená data</string>
+    <string name="save_manager_empty_body">Spusťte hru pro vytvoření uložených dat nebo importujte archiv uložení.</string>
+    <string name="save_manager_empty_game_title">Žádná uložená data pro %1$s</string>
+    <string name="save_manager_empty_game_body">Spusťte tuto hru pro vytvoření uložených dat nebo pro ni importujte archiv uložení.</string>
+    <string name="save_manager_orphan_save">Hra není nainstalována</string>
+    <string name="game_manager_title">Správce her</string>
+    <string name="game_manager_open_for_game">Nastavení hry</string>
+    <string name="game_manager_empty_title">Žádné nainstalované hry</string>
+    <string name="game_manager_empty_body">Nejprve nainstalujte hru a poté pro ni zde vytvořte vlastní profil.</string>
+    <string name="game_manager_choose_game">Vybrat hru</string>
+    <string name="game_manager_reset_global">Použít globální výchozí</string>
+    <string name="game_manager_invert_left_x">Invertovat osu X levé páčky</string>
+    <string name="game_manager_invert_right_x">Invertovat osu X pravé páčky</string>
+    <string name="patches_title">Záplaty</string>
+    <string name="patches_open_for_game">Záplaty</string>
+    <string name="patches_choose_game">Vybrat hru</string>
+    <string name="patches_empty_title">Nejsou dostupné žádné záplaty</string>
+    <string name="patches_empty_body">Nejprve nainstalujte hry. Zde pak můžete stáhnout jejich záplaty.</string>
+    <string name="patches_no_patches_for_game">Pro tuto hru nebyly nalezeny žádné záplaty.</string>
+    <string name="patches_update">Aktualizovat záplaty</string>
+    <string name="patches_up_to_date">Záplaty jsou již aktuální.</string>
+    <string name="patches_import_success">Počet úspěšně importovaných záplat: %1$d.</string>
+    <string name="patches_import_error">Chyba: %1$s</string>
+    <string name="patches_hint_update">Záplaty pro tuto hru stáhnete tlačítkem pro stahování výše.</string>
+    <string name="patches_version">v%1$s</string>
+    <string name="patches_app_version">Aplikace %1$s</string>
+    <string name="play_time_title">Doba hraní</string>
+    <string name="play_time_open_for_game">Doba hraní</string>
+    <string name="play_time_current_session">Aktuální relace</string>
+    <string name="play_time_filter_game">Vybrat hru</string>
+    <string name="play_time_all_games">Všechny hry</string>
+    <string name="play_time_total_time">Celkový čas</string>
+    <string name="play_time_sessions">Relace</string>
+    <string name="play_time_games_played">Odehrané hry</string>
+    <string name="play_time_daily_chart">Posledních 14 dní</string>
+    <string name="play_time_games_chart">Čas podle hry</string>
+    <string name="play_time_recent_sessions">Relace</string>
+    <string name="play_time_no_sessions_title">Zatím žádné relace hraní</string>
+    <string name="play_time_no_sessions_body">Spusťte hru a vaše relace hraní se zobrazí zde.</string>
+    <string name="play_time_no_game_sessions_body">Tato hra ještě nebyla hrána. Spusťte ji a její relace hraní se zobrazí zde.</string>
+    <string name="play_time_today">Dnes</string>
+    <string name="play_time_yesterday">Včera</string>
+    <string name="achievements_title">Trofeje</string>
+    <string name="achievements_open_for_game">Trofeje</string>
+    <string name="achievements_how_to_unlock">Jak odemknout?</string>
+    <string name="achievements_translate">Přeložit</string>
+    <string name="achievements_hint_title">Jak odemknout</string>
+    <string name="achievements_translation_title">Přeloženo</string>
+    <string name="achievements_assist_error">Načtení se nezdařilo. Zkuste to znovu.</string>
+    <string name="achievements_progress_count">%1$d/%2$d</string>
+    <string name="achievements_choose_game">Vybrat hru</string>
+    <string name="achievements_trophy">Trofej</string>
+    <string name="achievements_hidden_trophy">Skrytá trofej</string>
+    <string name="achievements_hidden_trophy_body">Odemkněte tuto trofej a zobrazí se její podrobnosti.</string>
+    <string name="achievements_unlocked_at">Odemknuto %1$s</string>
+    <string name="achievements_empty_title">Nenalezeny žádné trofeje</string>
+    <string name="achievements_empty_body">Spusťte hru s podporou trofejí nebo po instalaci her obnovte seznam.</string>
+    <string name="detail_title_id">ID titulu</string>
+    <string name="detail_content_id">ID obsahu</string>
+    <string name="detail_version">Verze</string>
+    <string name="detail_category">Kategorie</string>
+    <string name="detail_overview_title">Přehled</string>
+    <string name="detail_catalog_meta_title">Podrobnosti katalogu</string>
+    <string name="detail_installed_section">Nainstalovaná hra</string>
+    <string name="detail_screenshots_title">Snímky obrazovky</string>
+    <string name="detail_videos_title">Videa</string>
+    <string name="detail_release_year">Rok vydání</string>
+    <string name="detail_rating">Hodnocení</string>
+    <string name="detail_genres">Žánry</string>
+    <string name="detail_empty_title">Nejsou k dispozici žádné podrobnosti</string>
+    <string name="detail_empty_body">Pro tuto hru momentálně nejsou k dispozici žádná data o instalaci ani data z katalogu.</string>
+    <string name="detail_catalog_missing_body">Podrobnosti katalogu jsou dočasně nedostupné.</string>
+    <string name="detail_igdb_source_note">Některé popisy a údaje o hrách na této obrazovce pocházejí z IGDB.</string>
+    <string name="detail_compatibility_title">Kompatibilita</string>
+    <string name="detail_compatibility_status">Stav</string>
+    <string name="detail_compatibility_issue">Problém</string>
+    <string name="detail_compatibility_title_id_label">Odpovídající ID titulu</string>
+    <string name="detail_compatibility_known_serials">Známá ID titulů</string>
+    <string name="detail_compatibility_updated">Aktualizováno</string>
+    <string name="detail_compatibility_unavailable">Oficiální databáze kompatibility RPCS3 je momentálně nedostupná.</string>
+    <string name="detail_compatibility_unmapped">Tento záznam katalogu zatím nemá v místním katalogu přiřazené ID titulu.</string>
+    <string name="detail_compatibility_missing_entry">RPCS3 momentálně nemá záznam o kompatibilitě pro tato ID titulů.</string>
+    <string name="detail_compatibility_source_note">Údaje o kompatibilitě pocházejí z oficiálního seznamu RPCS3. Hlášení č. %1$d.</string>
+    <string name="detail_show_more">Zobrazit více</string>
+    <string name="detail_show_less">Zobrazit méně</string>
+    <string name="detail_screenshot_saved">Snímek obrazovky uložen</string>
+    <string name="detail_screenshot_save_failed">Snímek obrazovky se nepodařilo uložit</string>
+    <string name="detail_save_screenshot">Uložit snímek obrazovky</string>
+    <string name="compatibility_unknown">Neznámá</string>
+    <string name="compatibility_nothing">Nic</string>
+    <string name="compatibility_bootable">Spustitelné</string>
+    <string name="compatibility_intro">Úvod</string>
+    <string name="compatibility_menu">Menu</string>
+    <string name="compatibility_ingame_less">Ve hře -</string>
+    <string name="compatibility_ingame_more">Ve hře +</string>
+    <string name="compatibility_playable">Hratelné</string>
+    <string name="catalog_title">Katalog PS3</string>
+    <string name="catalog_search_hint">Hledat hry</string>
+    <string name="catalog_search_clear">Vymazat hledání</string>
+    <string name="catalog_toggle_search">Přepnout hledání v katalogu</string>
+    <string name="catalog_toggle_filters">Přepnout filtry katalogu</string>
+    <string name="catalog_filters_title">Filtry</string>
+    <string name="catalog_filter_genre">Žánr</string>
+    <string name="catalog_filter_year">Rok</string>
+    <string name="catalog_filter_rating">Hodnocení</string>
+    <string name="catalog_filter_all_genres">Všechny žánry</string>
+    <string name="catalog_filter_all_years">Všechny roky</string>
+    <string name="catalog_filter_any_rating">Jakékoli hodnocení</string>
+    <string name="catalog_filters_clear">Vymazat filtry</string>
+    <string name="catalog_empty_title">Databáze katalogu nenalezena</string>
+    <string name="catalog_empty_body">Místní katalog PS3 zpřístupníte přidáním souboru games.db.</string>
+    <string name="catalog_no_results_title">Nenalezeny žádné shody</string>
+    <string name="catalog_no_results_body">Zkuste jiný název, rok nebo pravopis.</string>
+    <string name="catalog_profile_menu">Seznam profilu</string>
+    <string name="catalog_profile_remove">Odebrat z profilu</string>
+    <string name="catalog_profile_status_title">Stav hraní</string>
+    <string name="catalog_profile_clear_status">Vymazat stav hraní</string>
+    <string name="profile_title">Profil</string>
+    <string name="profile_game_count">Uloženo %1$d her</string>
+    <string name="profile_refresh">Obnovit profil</string>
+    <string name="profile_toggle_layout">Přepnout rozložení profilu</string>
+    <string name="profile_section_count">%1$d</string>
+    <string name="profile_status_playing">Právě hraji</string>
+    <string name="profile_status_want_to_play">Chci hrát</string>
+    <string name="profile_status_completed">Dokončeno</string>
+    <string name="profile_status_dropped">Opuštěno</string>
+    <string name="profile_status_favorites">Oblíbené</string>
+    <string name="profile_account_title">Místní profil</string>
+    <string name="profile_account_body">Vaše jméno, avatar, oblíbené hry a seznamy her se ukládají pouze do tohoto zařízení.</string>
+    <string name="profile_hide_backup">Skrýt místní profil</string>
+    <string name="profile_show_backup">Zobrazit místní profil</string>
+    <string name="profile_user_name">Zobrazované jméno</string>
+    <string name="profile_default_name">Hráč</string>
+    <string name="profile_change_avatar">Změnit avatar</string>
+    <string name="profile_backup">Uložit</string>
+    <string name="profile_empty_title">V profilu zatím nejsou žádné hry</string>
+    <string name="profile_empty_body">Otevřete katalog, klepněte na nabídku se třemi tečkami u hry a přidejte ji do některého seznamu svého profilu.</string>
+    <string name="settings_title">Nastavení</string>
+    <string name="settings_options_content_description">Možnosti nastavení</string>
+    <string name="settings_reset_defaults_menu">Obnovit výchozí nastavení</string>
+    <string name="settings_reset_defaults_title">Obnovit výchozí nastavení?</string>
+    <string name="settings_reset_defaults_message">Tím se obnoví nastavení emulátoru na doporučené výchozí hodnoty. Vaše hry, uložení, jazyk aplikace a vybrané složky zůstanou nezměněny.</string>
+    <string name="settings_reset_defaults_confirm">Obnovit</string>
+    <string name="settings_reset_defaults_cancel">Zrušit</string>
+    <string name="settings_tab_general">Obecné</string>
+    <string name="settings_tab_graphics">Grafika</string>
+    <string name="settings_tab_overlay">Overlay</string>
+    <string name="settings_tab_controls">Ovládání</string>
+    <string name="settings_tab_storage">Úložiště</string>
+    <string name="settings_tab_about">O aplikaci</string>
+    <string name="settings_tab_updates">Aktualizace</string>
+    <string name="settings_core_overlay_opacity_label">Průhlednost overlaye</string>
+    <string name="settings_core_overlay_opacity_value">%1$d%%</string>
+    <string name="settings_core_gamepad_overlay">Zobrazit overlay gamepadu</string>
+    <string name="settings_core_overlay_scale_label">Měřítko overlaye</string>
+    <string name="settings_core_overlay_scale_value">%1$.1fx</string>
+    <string name="settings_core_analog_multiplier_label">Násobitel analogu</string>
+    <string name="settings_core_analog_multiplier_value">%1$.1fx</string>
+    <string name="settings_gamepad_section">Fyzický gamepad</string>
+    <string name="settings_gamepad_connected">Gamepad je připojen. Tato nastavení se použijí okamžitě během hraní.</string>
+    <string name="settings_gamepad_disconnected">Připojte fyzický gamepad pro povolení těchto nastavení.</string>
+    <string name="settings_gamepad_deadzone">Mrtvá zóna páčky</string>
+    <string name="settings_gamepad_trigger_threshold">Prahová hodnota spouště</string>
+    <string name="settings_gamepad_percent_value">%1$d%%</string>
+    <string name="settings_gamepad_button_profile">Přemapování tlačítek</string>
+    <string name="settings_gamepad_profile_standard">Standardní</string>
+    <string name="settings_gamepad_profile_swap_cross_circle">Prohodit křížek/kolečko</string>
+    <string name="settings_gamepad_profile_nintendo_face">Tlačítka Nintendo</string>
+    <string name="settings_vibration_section">Vibrace</string>
+    <string name="settings_vibration_enable">Vibrace</string>
+    <string name="settings_vibration_strength">Síla vibrací</string>
+    <string name="settings_edit_touch_controls">Upravit ovládání</string>
+    <string name="settings_help_edit_touch_controls">Přesouvejte tlačítka ovladače na obrazovce a měňte jejich velikost. Změny platí pro všechny hry bez vlastního rozložení ovládání.</string>
+    <string name="settings_test_vibration">Otestovat vibrace</string>
+    <string name="settings_test_vibration_button">Vyzkoušet</string>
+    <string name="settings_device_vibration_fallback">Použít vibrace zařízení jako náhradní</string>
+    <string name="settings_gamepad_swap_sticks">Prohodit páčky</string>
+    <string name="settings_gamepad_invert_left_y">Invertovat osu Y levé páčky</string>
+    <string name="settings_gamepad_invert_right_y">Invertovat osu Y pravé páčky</string>
+    <string name="settings_storage_title">Úložiště</string>
+    <string name="settings_storage_body">Data emulátoru se ukládají do vybraného kořenového adresáře PS3. Nainstalované hry jsou v config/dev_hdd0/game, uložené pozice a trofeje v config/dev_hdd0/home a mezipaměť shaderů a dočasné soubory v cache.</string>
+    <string name="settings_change_storage">Změnit úložiště</string>
+    <string name="settings_storage_location_internal">Úložiště zařízení</string>
+    <string name="settings_storage_location_sd">Karta SD</string>
+    <string name="settings_storage_location_external">Externí úložiště</string>
+    <string name="settings_storage_change_note">Změna úložiště přesune chybějící data emulátoru do vybraného umístění. Stávající soubory v cíli zůstanou zachovány.</string>
+    <string name="settings_storage_migrating">Přesouvání dat emulátoru…</string>
+    <string name="settings_storage_confirm_title">Změnit úložiště emulátoru?</string>
+    <string name="settings_storage_confirm_body">EmuCoreC zkopíruje celý virtuální souborový systém PS3 včetně firmwaru, her, uložených pozic, trofejí a nastavení jádra do %1$s. Existující soubory v cíli se zachovají. Obnovitelné mezipaměti a záplaty zůstanou v trvalém úložišti aplikace.</string>
+    <string name="settings_storage_confirm_action">Přesunout data</string>
+    <string name="settings_storage_migration_title">Přesouvání dat emulátoru</string>
+    <string name="settings_storage_migration_body">Během kopírování virtuálního souborového systému PS3 do vybraného úložiště nechte EmuCoreC otevřený.</string>
+    <string name="settings_storage_migration_count">Zkontrolováno %1$d/%2$d souborů</string>
+    <string name="settings_storage_migration_failed">Úložiště se nepodařilo přesunout</string>
+    <string name="settings_backup_title">Záloha nastavení</string>
+    <string name="settings_backup_body">Zálohujte předvolby aplikace a nastavení emulátoru do souboru nebo je obnovte z předchozí zálohy.</string>
+    <string name="settings_backup_create">Zálohovat nastavení</string>
+    <string name="settings_backup_restore">Obnovit zálohu</string>
+    <string name="settings_backup_created">Záloha nastavení byla vytvořena.</string>
+    <string name="settings_backup_failed">Zálohu nastavení se nepodařilo vytvořit.</string>
+    <string name="settings_backup_restored">Nastavení bylo obnoveno ze zálohy.</string>
+    <string name="settings_backup_restore_failed">Zálohu nastavení se nepodařilo obnovit.</string>
+    <string name="settings_backup_restore_title">Obnovit zálohu nastavení?</string>
+    <string name="settings_backup_restore_message">Současné předvolby aplikace a nastavení emulátoru budou nahrazeny vybranou zálohou.</string>
+    <string name="settings_backup_restore_confirm">Obnovit</string>
+    <string name="settings_clear_cache_title">Vymazat mezipaměť</string>
+    <string name="settings_clear_cache_body">Odstraní mezipaměť shaderů, mezipaměť textur, protokoly a dočasné instalační soubory. Vaše nastavení, uložení, nainstalované hry a firmware zůstanou nedotčeny.</string>
+    <string name="settings_clear_cache_action">Vymazat mezipaměť</string>
+    <string name="settings_clear_cache_size">Velikost mezipaměti: %1$s</string>
+    <string name="settings_clear_cache_empty">Žádná data v mezipaměti k odstranění.</string>
+    <string name="settings_clear_cache_confirm_title">Vymazat mezipaměť?</string>
+    <string name="settings_clear_cache_confirm_message">Uvolní se %1$s. Při prvním spuštění se hry mohou spouštět o něco déle, protože se znovu sestavují shadery.</string>
+    <string name="settings_clear_cache_confirm_action">Vymazat</string>
+    <string name="settings_clear_cache_done">Mezipaměť vymazána, uvolněno %1$s.</string>
+    <string name="settings_clear_cache_failed">Mezipaměť se nepodařilo vymazat.</string>
+    <string name="settings_clear_cover_cache_title">Vymazat mezipaměť obalů</string>
+    <string name="settings_clear_cover_cache_body">Odstraní stažené obaly her, snímky obrazovky a náhledy médií. V případě potřeby se stáhnou znovu.</string>
+    <string name="settings_clear_cover_cache_action">Vymazat mezipaměť obalů</string>
+    <string name="settings_clear_cover_cache_size">Velikost mezipaměti obalů: %1$s</string>
+    <string name="settings_clear_cover_cache_empty">Mezipaměť obalů je prázdná.</string>
+    <string name="settings_clear_cover_cache_confirm_title">Vymazat mezipaměť obalů?</string>
+    <string name="settings_clear_cover_cache_confirm_message">Tímto odstraníte uložené obaly her a snímky obrazovky a uvolníte %1$s. Při zobrazení se obrázky stáhnou znovu.</string>
+    <string name="settings_clear_cover_cache_confirm_action">Vymazat</string>
+    <string name="settings_clear_cover_cache_done">Mezipaměť obalů vymazána. Uvolněné místo: %1$s.</string>
+    <string name="settings_clear_cover_cache_failed">Mezipaměť obalů se nepodařilo vymazat.</string>
+    <string name="settings_keep_screen_on">Ponechat obrazovku zapnutou</string>
+    <string name="settings_keep_screen_on_summary">Zabrání vypnutí obrazovky během používání aplikace nebo hraní her</string>
+    <string name="settings_about_title">O aplikaci EmuCoreC</string>
+    <string name="settings_help_content_description">Otevřít nápovědu k nastavení</string>
+    <string name="settings_help_dialog_label">Průvodce nastavením</string>
+    <string name="settings_help_dialog_tip">Měňte vždy jen jednu možnost a poté otestujte stejnou scénu ve hře, ať vidíte, co se skutečně zlepšilo.</string>
+    <string name="settings_help_gamepad_overlay">Zobrazuje ovládání na obrazovce, když nepoužíváte fyzický ovladač.\n\nPoužijte, aby dotykové ovládání nebo ovladač působily blíže způsobu, jakým hrajete. Neměňte, pokud ovládání již působí správně, protože extrémní hodnoty mohou ztížit míření, nabídky nebo funkce dotykové obrazovky.</string>
+    <string name="settings_help_overlay_scale">Mění velikost ovládání na obrazovce.\n\nPoužijte, aby dotykové ovládání nebo ovladač působily blíže způsobu, jakým hrajete. Neměňte, pokud ovládání již působí správně, protože extrémní hodnoty mohou ztížit míření, nabídky nebo funkce dotykové obrazovky.</string>
+    <string name="settings_help_overlay_opacity">Mění průhlednost ovládání na obrazovce.\n\nPoužijte, aby dotykové ovládání nebo ovladač působily blíže způsobu, jakým hrajete. Neměňte, pokud ovládání již působí správně, protože extrémní hodnoty mohou ztížit míření, nabídky nebo funkce dotykové obrazovky.</string>
+    <string name="settings_help_analog_multiplier">Mění citlivost analogové páčky.\n\nPoužijte, aby dotykové ovládání nebo ovladač působily blíže způsobu, jakým hrajete. Neměňte, pokud ovládání již působí správně, protože extrémní hodnoty mohou ztížit míření, nabídky nebo funkce dotykové obrazovky.</string>
+    <string name="settings_help_gamepad_deadzone">Filtruje drobné pohyby páčky blízko středu, aby se omezilo driftování. Zvyšte ji, pokud se kamera nebo postava pohybuje sama; snižte ji, pokud míření nereaguje.</string>
+    <string name="settings_help_gamepad_trigger_threshold">Nastavuje, jak daleko se musí analogové spouště posunout, než se odešle vstup. Zvyšte ji u nespolehlivých spouští; snižte ji pro závodní hry nebo tlakově citlivé ovládání.</string>
+    <string name="settings_help_gamepad_button_profile">Změní přiřazení čelních tlačítek fyzického ovladače před předáním vstupu emulátoru. Použijte, pokud rozmístění tlačítek ovladače neodpovídá křížku, kolečku, čtverci a trojúhelníku na PS3.</string>
+    <string name="settings_help_vibration_enable">Umožňuje podporovaným hrám odesílat vibrace do fyzického ovladače nebo, když je povoleno náhradní řešení, do těla zařízení s Androidem.</string>
+    <string name="settings_help_vibration_strength">Mění intenzitu vibrací pro chvění gamepadu a náhradní vibrace zařízení.</string>
+    <string name="settings_help_test_vibration">Přehraje krátký impulz s aktuální silou a směrováním vibrací.</string>
+    <string name="settings_help_device_vibration_fallback">Rozvibruje telefon nebo přenosné zařízení, když chybí fyzický ovladač nebo nemá motorek pro chvění.</string>
+    <string name="settings_help_gamepad_swap_sticks">Prohazuje osy levé a pravé páčky. Užitečné pro hry nebo ovladače s neobvyklým směrováním páček.</string>
+    <string name="settings_help_gamepad_invert_x">Obrátí vodorovný směr páčky pro řízení nebo ovládání kamery.</string>
+    <string name="settings_help_gamepad_invert_y">Obrátí vertikální pohyb páčky pro ovládání kamery nebo míření.</string>
+    <string name="settings_reset_toast">%1$s obnoveno na výchozí hodnotu</string>
+    <string name="settings_app_language">Jazyk aplikace</string>
+    <string name="settings_app_language_system">Výchozí systémové</string>
+    <string name="settings_app_language_english">Angličtina</string>
+    <string name="settings_app_language_russian">Ruština</string>
+    <string name="settings_app_language_ukrainian">Ukrajinština</string>
+    <string name="settings_app_language_spanish">Španělština</string>
+    <string name="settings_app_language_french">Francouzština</string>
+    <string name="settings_app_language_german">Němčina</string>
+    <string name="settings_app_language_portuguese">Portugalština</string>
+    <string name="settings_app_language_chinese_traditional">Čínština (tradiční)</string>
+    <string name="settings_app_language_hindi">Hindština</string>
+    <string name="settings_app_language_italian">Italština</string>
+    <string name="settings_app_language_turkish">Turečtina</string>
+    <string name="settings_app_language_arabic">Arabština</string>
+    <string name="settings_language_picker_title">Jazyk</string>
+    <string name="settings_gpu_driver">Ovladač GPU</string>
+    <string name="settings_gpu_driver_global">Použít globální</string>
+    <string name="settings_gpu_driver_system">Systém</string>
+    <string name="settings_gpu_driver_custom">Vlastní</string>
+    <string name="settings_gpu_driver_installed">Nainstalované ovladače</string>
+    <string name="settings_help_gpu_driver">Zvolte mezi systémovým ovladačem Vulkan a vlastním ovladačem.\n\nVlastní ovladač používejte hlavně na kompatibilních zařízeních Adreno, když má systémový ovladač Vulkan grafické chyby nebo slabý výkon. Na Mali, PowerVR, neznámých GPU nebo vždy, když vlastní ovladač způsobuje pády, zůstaňte u systémového ovladače.</string>
+    <string name="settings_gpu_driver_manage">Spravovat ovladače</string>
+    <string name="settings_gpu_driver_manager_title">Ovladače GPU</string>
+    <string name="settings_gpu_driver_game_title">Ovladač GPU pro hru</string>
+    <string name="settings_gpu_driver_manager_subtitle">Nainstalujte, stáhněte, použijte nebo odeberte ovladače Adreno.</string>
+    <string name="settings_gpu_driver_active_title">Aktivní ovladač</string>
+    <string name="settings_gpu_driver_install_from_file">Nainstalovat ze souboru</string>
+    <string name="settings_gpu_driver_catalog">Katalog ovladačů</string>
+    <string name="settings_gpu_driver_refresh">Aktualizovat</string>
+    <string name="settings_gpu_driver_catalog_loading">Načítání katalogu ovladačů…</string>
+    <string name="settings_gpu_driver_catalog_failed">Katalog ovladačů se nepodařilo načíst</string>
+    <string name="settings_gpu_driver_catalog_empty">Zatím nejsou k dispozici žádné online ovladače.</string>
+    <string name="settings_gpu_driver_download_apply">Stáhnout &amp; použít</string>
+    <string name="settings_gpu_driver_downloaded">Staženo</string>
+    <string name="settings_gpu_driver_apply">Použít</string>
+    <string name="settings_gpu_driver_applied">Použito</string>
+    <string name="settings_gpu_driver_remove_short">Odebrat</string>
+    <string name="settings_gpu_driver_recommended">Doporučeno</string>
+    <string name="settings_gpu_driver_source">Zdroj</string>
+    <string name="settings_gpu_driver_search">Hledat ovladače</string>
+    <string name="settings_gpu_driver_filter_all">Vše</string>
+    <string name="settings_gpu_driver_no_matches">Žádné odpovídající ovladače</string>
+    <string name="settings_gpu_driver_no_matches_desc">Změňte hledaný text nebo vybrané filtry.</string>
+    <string name="settings_gpu_driver_remove">Odebrat ovladač</string>
+    <string name="settings_gpu_driver_none_installed">Zatím nejsou nainstalovány žádné vlastní ovladače GPU.</string>
+    <string name="settings_gpu_driver_install_failed">Instalace ovladače GPU se nezdařila.</string>
+    <string name="settings_gpu_driver_install_success">Nainstalován ovladač GPU: %1$s</string>
+    <string name="settings_gpu_driver_status_system">Je aktivní systémový ovladač Vulkan</string>
+    <string name="settings_gpu_driver_status_global">Používá se globální ovladač GPU: %1$s</string>
+    <string name="settings_gpu_driver_status_global_system">Používá se globální ovladač GPU: Systémový Vulkan</string>
+    <string name="settings_gpu_driver_status_global_desc">Tato hra používá globální volbu ovladače GPU.</string>
+    <string name="settings_gpu_driver_status_game_system">Přepis hry: systémový ovladač Vulkan</string>
+    <string name="settings_gpu_driver_status_game_active">Přepis hry: %1$s</string>
+    <string name="settings_gpu_driver_status_system_desc">Není vybrán žádný vlastní ovladač, proto se používá systémový ovladač Vulkan.</string>
+    <string name="settings_gpu_driver_status_active">Aktivní vlastní ovladač: %1$s</string>
+    <string name="settings_gpu_driver_status_active_desc">Tento ovladač je připraven k použití s Vulkanem. Skutečná podpora stále závisí na kompatibilitě zařízení.</string>
+    <string name="settings_gpu_driver_status_renderer">Je vybrán vlastní ovladač, ale renderer je %1$s</string>
+    <string name="settings_gpu_driver_status_renderer_desc">Vlastní ovladače GPU fungují pouze s Vulkanem. Chcete-li tento ovladač použít, přepněte renderer na Vulkan.</string>
+    <string name="settings_gpu_driver_status_broken">Archiv ovladače je neúplný: %1$s nebyl nalezen</string>
+    <string name="settings_gpu_driver_status_broken_desc">Metadata ovladače existují, ale chybí knihovna Vulkan. Přeinstalujte ovladač.</string>
+    <string name="settings_about_version">Verze aplikace</string>
+    <string name="settings_about_version_value">Verze %1$s</string>
+    <string name="settings_about_body_extended">EmuCoreC přináší emulaci PS3 na Android s přehledným mobilním rozhraním, správou místní knihovny a emulačním jádrem založeným na RPCS3.</string>
+    <string name="settings_about_community_title">Komunita a podpora</string>
+    <string name="settings_about_website">Oficiální web</string>
+    <string name="settings_about_website_desc">Otevřete web EmuCoreC pro stažení, novinky a odkazy k projektu.</string>
+    <string name="settings_about_repository">Repozitář EmuCoreC</string>
+    <string name="settings_about_repository_desc">Prohlédněte si zdrojový kód, nahlaste problémy a sledujte vývoj na GitHubu.</string>
+    <string name="settings_about_discord">Přidejte se na náš Discord</string>
+    <string name="settings_about_discord_desc">Chatujte s komunitou, sdílejte zpětnou vazbu a získávejte novinky o projektu.</string>
+    <string name="settings_about_support">Podpořte EmuCoreC</string>
+    <string name="settings_about_support_desc">Pomozte pokračovat vývoji členstvím na Patreonu.</string>
+    <string name="settings_emulation_core">Emulační jádro</string>
+    <string name="settings_based_on_rpcsx">Založeno na RPCS3</string>
+    <string name="settings_developer">Vývojář</string>
+    <string name="settings_created_by_sbro">Vytvořil Sashkin Apps</string>
+    <string name="settings_play_store_profile">Profil na Play Store</string>
+    <string name="settings_play_store_profile_desc">Zobrazte další aplikace pro Android od vývojáře.</string>
+    <string name="settings_core_source_code">Zdrojový kód jádra</string>
+    <string name="settings_core_source_description">EmuCoreC používá vlastní rozhraní pro Android. Na RPCS3 je založeno pouze emulační jádro.</string>
+    <string name="settings_rpcsx_repository_desc">Otevřete původní úložiště projektu RPCS3.</string>
+    <string name="settings_updates_version_label">Verze</string>
+    <string name="settings_updates_open_release">Otevřít stránku vydání</string>
+    <string name="settings_updates_release_notes_title">Co je nového</string>
+    <string name="settings_updates_release_notes_empty">Toto vydání neobsahuje poznámky k vydání.</string>
+    <string name="settings_updates_history_title">Historie aktualizací</string>
+    <string name="settings_updates_history_body">Procházejte vydání na GitHubu, data vydání a seznamy změn.</string>
+    <string name="settings_updates_history_loading">Načítání historie vydání</string>
+    <string name="settings_updates_history_empty">Nebyla nalezena žádná vydání.</string>
+    <string name="settings_updates_published_label">Zveřejněno</string>
+    <string name="settings_updates_parallel_title">Paralelní verze</string>
+    <string name="settings_updates_parallel_body">Android může nainstalovat více verzí EmuCoreC jen tehdy, když vydání obsahuje speciální APK sestavené s jedinečným názvem balíčku a označením aplikace, například EmuCoreC (0.1.1). Běžné starší APK nahradí nebo downgradují současnou aplikaci.</string>
+    <string name="settings_updates_parallel_package">Samostatný balíček aplikace</string>
+    <string name="settings_updates_parallel_download">Stáhnout</string>
+    <string name="settings_updates_parallel_unavailable">Pro toto vydání není k dispozici samostatné APK.</string>
+    <string name="settings_updates_cancel">Zrušit</string>
+    <string name="shell_setup_section">Instalace</string>
+    <string name="shell_library_section">Knihovna</string>
+    <string name="shell_tools_section">Nástroje</string>
+    <string name="shell_install_content">Instalovat balíčky a DLC</string>
+    <string name="game_launch_failed">Tuto hru se nepodařilo spustit.</string>
+    <string name="folder_picker_failed">Vybranou složku se nepodařilo použít.</string>
+    <string name="core_install_firmware_failed">Instalaci firmwaru se nepodařilo spustit.</string>
+    <string name="core_install_firmware_unsupported">Zvolte podporovaný soubor firmwaru, například .PUP.</string>
+    <string name="core_install_pkg_failed">Instalaci obsahu PS3 se nepodařilo zahájit.</string>
+    <string name="game_launch_requires_firmware">Před spuštěním hry nainstalujte základní firmware.</string>
+    <string name="install_dialog_title_generic">Instalace</string>
+    <string name="install_dialog_title_firmware">Instalace firmwaru</string>
+    <string name="install_dialog_title_license">Instalace licence</string>
+    <string name="install_dialog_title_pkg">Instalace obsahu PS3</string>
+    <string name="install_dialog_success">Instalace dokončena.</string>
+    <string name="install_dialog_error">Instalace se nezdařila.</string>
+    <string name="install_dialog_percent">%1$d%% dokončeno</string>
+    <string name="install_dialog_close">Zavřít</string>
+    <string name="install_dialog_unexpected_error">Během instalace se něco pokazilo.</string>
+    <string name="install_dialog_firmware_failed">Instalace firmwaru se nezdařila.</string>
+    <string name="install_dialog_license_failed">Instalace licence se nezdařila.</string>
+    <string name="install_dialog_pkg_failed">Instalace obsahu PS3 se nezdařila.</string>
+    <string name="install_dialog_firmware_done">Balíček firmwaru byl úspěšně nainstalován.</string>
+    <string name="install_dialog_license_done">Licence byla úspěšně nainstalována.</string>
+    <string name="install_dialog_pkg_done">Obsah PS3 byl úspěšně nainstalován.</string>
+    <string name="install_dialog_extracting_archive">Rozbalování %1$s…</string>
+    <string name="install_archive_missing_volume">Chybí jedna nebo více částí archivu. Vyberte všechny části včetně první a poslední.</string>
+    <string name="install_archive_password_protected">Archivy chráněné heslem zatím nejsou podporovány. Nejprve archiv rozbalte nebo odstraňte jeho heslo.</string>
+    <string name="install_archive_unsafe">Archiv obsahuje nebezpečnou cestu nebo odkaz a byl odmítnut.</string>
+    <string name="install_archive_not_enough_space">K bezpečnému rozbalení a instalaci tohoto obsahu není dostatek volného místa.</string>
+    <string name="install_archive_no_content">Nebyly nalezeny žádné podporované soubory PS3 ve formátu PKG, ISO, RAP nebo EDAT.</string>
+    <string name="install_archive_failed">Archiv je poškozený, neúplný nebo používá nepodporovaný formát.</string>
+    <string name="setup_title">Instalovat hry</string>
+    <string name="common_back">Zpět</string>
+    <string name="common_not_available">Není k dispozici</string>
+    <string name="common_unknown">Neznámá</string>
+    <string name="common_close">Zavřít</string>
+    <string name="common_cancel">Zrušit</string>
+    <string name="emulation_pause">Pozastavit</string>
+    <string name="emulation_resume">Pokračovat</string>
+    <string name="emulation_menu_title">Nabídka hry</string>
+    <string name="emulation_menu_unknown_game">Spuštěná hra</string>
+    <string name="emulation_tab_game">Hra</string>
+    <string name="emulation_tab_controls">Ovládání</string>
+    <string name="emulation_tab_achievements">Trofeje</string>
+    <string name="emulation_tab_gamepad">Gamepad</string>
+    <string name="emulation_quickbar_open_menu">Otevřít nabídku</string>
+    <string name="emulation_menu_paused_badge">Pozastaveno</string>
+    <string name="emulation_menu_badge_live">Živě</string>
+    <string name="emulation_menu_badge_restart">Vyžaduje restart</string>
+    <string name="emulation_menu_section_now">Nyní</string>
+    <string name="emulation_menu_section_now_desc">Změny se projeví ve spuštěné hře okamžitě.</string>
+    <string name="emulation_menu_section_touch">Dotykové ovládání</string>
+    <string name="emulation_menu_section_touch_desc">Gamepad na obrazovce. Změny se projeví okamžitě.</string>
+    <string name="emulation_menu_section_gamepad">Fyzický gamepad</string>
+    <string name="emulation_menu_section_gamepad_desc">Mrtvá zóna, přemapování, vibrace a chování páček připojeného ovladače.</string>
+    <string name="emulation_menu_section_gamepad_disconnected">Chcete-li tato ovládání změnit, připojte fyzický gamepad.</string>
+    <string name="emulation_achievements_loading">Načítání trofejí pro spuštěnou hru.</string>
+    <string name="emulation_achievements_empty">Pro spuštěnou hru nebyly nalezeny žádné trofeje.</string>
+    <string name="emulation_achievements_empty_body">Nainstalujte hru s podporou trofejí nebo aktualizujte trofeje hry v knihovně.</string>
+    <string name="emulation_menu_controls_desc">Zobrazí nebo skryje ovládání na obrazovce.</string>
+    <string name="emulation_menu_hide_controls">Skrýt ovládání</string>
+    <string name="emulation_menu_show_controls">Zobrazit ovládání</string>
+    <string name="emulation_menu_edit_controls">Upravit ovládání</string>
+    <string name="emulation_menu_edit_controls_desc">Přesouvejte, měňte velikost, zobrazujte nebo skrývejte jednotlivé prvky ovládání na obrazovce.</string>
+    <string name="emulation_menu_reset_overlay">Obnovit výchozí rozvržení ovládání</string>
+    <string name="emulation_menu_reset_overlay_desc">Obnoví výchozí měřítko, průhlednost a rozvržení dotykového ovládání.</string>
+    <string name="emulation_controls_editor_title">Editor ovládání</string>
+    <string name="emulation_controls_editor_percent">%1$d%%</string>
+    <string name="emulation_controls_editor_touch_area_mode">Dotyková oblast</string>
+    <string name="emulation_controls_editor_width">Šířka</string>
+    <string name="emulation_controls_editor_height">Výška</string>
+    <string name="emulation_controls_editor_done">Hotovo</string>
+    <string name="emulation_menu_exit_game">Ukončit hru</string>
+    <string name="emulation_exit_confirm_title">Ukončit hru?</string>
+    <string name="emulation_exit_confirm_body">Aktuální relace bude uzavřena a vrátíte se do knihovny.</string>
+    <string name="emulation_exit_confirm_action">Ukončit</string>
+    <string name="emulation_exit_cancel_action">Zrušit</string>
+    <string name="settings_tab_customization">Přizpůsobení</string>
+    <string name="customization_preview_title">Náhled</string>
+    <string name="customization_preview_subtitle">Vaše knihovna, přesně podle vás</string>
+    <plurals name="customization_games_per_row">
+        <item quantity="one">%1$d hra v řadě</item>
+        <item quantity="other">%1$d her v řadě</item>
+    </plurals>
+    <string name="customization_home_background">Pozadí domovské obrazovky</string>
+    <string name="customization_background_select">Zvolte obrázek, GIF nebo video</string>
+    <string name="customization_background_default">Výchozí pozadí</string>
+    <string name="customization_background_selected">Vybráno vlastní pozadí</string>
+    <string name="customization_background_imported">Pozadí aktualizováno</string>
+    <string name="customization_background_failed">Tento soubor pozadí se nepodařilo použít</string>
+    <string name="customization_library_layout">Rozvržení knihovny</string>
+    <string name="customization_cover_size">Velikost obalu hry</string>
+    <string name="customization_percent_value">%1$d%%</string>
+    <string name="customization_text_and_fonts">Text a písma</string>
+    <string name="customization_app_font">Písmo aplikace</string>
+    <string name="customization_font_system">Výchozí systémové</string>
+    <string name="customization_font_custom">Vlastní</string>
+    <string name="customization_import_font">Importovat vlastní písmo</string>
+    <string name="customization_import_font_hint">Zvolte soubor TTF nebo OTF</string>
+    <string name="customization_font_imported">Písmo importováno</string>
+    <string name="customization_font_failed">Tento soubor písma se nepodařilo použít</string>
+    <string name="customization_text_size">Velikost textu</string>
+    <string name="customization_reset_section">Obnovit výchozí</string>
+    <string name="customization_reset">Obnovit výchozí přizpůsobení</string>
+    <string name="customization_reset_description">Obnoví výchozí pozadí, velikost obalu, písmo a velikost textu</string>
+    <string name="customization_reset_confirm_title">Obnovit výchozí přizpůsobení?</string>
+    <string name="customization_reset_confirm_body">Vaše vlastní pozadí a importované písmo budou odstraněny.</string>
+    <string name="customization_reset_action">Obnovit výchozí</string>
+    <string name="settings_theme">Téma</string>
+    <string name="settings_theme_system">Systém</string>
+    <string name="settings_theme_light">Světlé</string>
+    <string name="settings_theme_dark">Tmavé</string>
+    <string name="settings_theme_neon">Neon</string>
+    <string name="settings_about_privacy_policy">Zásady ochrany osobních údajů</string>
+    <string name="settings_about_privacy_policy_desc">Otevřete zásady ochrany osobních údajů EmuCoreC.</string>
+    <string name="shell_discord_server">Server Discord</string>
+    <string name="settings_customization_drawer_section">Navigační panel</string>
+    <string name="settings_customization_touch_controls_section">Ovládání na obrazovce</string>
+    <string name="settings_customization_touch_controls_style">Styl ovládání</string>
+    <string name="settings_customization_touch_controls_help">Mění kompletní design ovládání: kryty tlačítek, křížový ovladač, kroužky páček, krytky palců, obrysy a stavy po stisknutí. Pozice, dotykové plochy, vícedotyk a chování vstupu zůstávají nezměněny.</string>
+    <string name="settings_customization_touch_press_effect">Efekt stisknutí</string>
+    <string name="settings_customization_touch_press_effect_help">Zvolte, jak reaguje každé tlačítko na obrazovce, směr křížového ovladače a analogová páčka při stisknutí. Mění se pouze animace; velikost ovládání a dotykové plochy zůstávají nezměněny.</string>
+    <string name="settings_customization_touch_press_effect_grow">Zvětšit</string>
+    <string name="settings_customization_touch_press_effect_shrink">Zmenšit</string>
+    <string name="settings_customization_touch_press_effect_spring">Pružit</string>
+    <string name="settings_customization_touch_press_effect_glow">Záře</string>
+    <string name="settings_customization_touch_style_classic">Klasický</string>
+    <string name="settings_customization_touch_style_glass">Původní</string>
+    <string name="settings_customization_touch_style_neon">Moderní</string>
+    <string name="settings_customization_touch_style_arcade">Arkádový</string>
+    <string name="settings_customization_touch_style_minimal">Minimální</string>
+    <string name="settings_game_menu_tab">Nabídka hry</string>
+    <string name="settings_game_menu_layout_help">Mění strukturu a navigaci nabídky ve hře. Karty, viditelnost obsahu, bezpečnostní akce a ovládání gamepadu zůstávají společné pro všechna rozvržení.</string>
+    <string name="settings_game_menu_layout_sidebar">Postranní panel</string>
+    <string name="settings_game_menu_layout_dashboard">Přehled</string>
+    <string name="settings_game_menu_layout_command_center">Řídicí centrum</string>
+    <string name="settings_game_menu_layout_compact">Kompaktní</string>
+    <string name="settings_drawer_style_classic">Klasický</string>
+    <string name="settings_drawer_style_compact">Kompaktní</string>
+    <string name="settings_drawer_style_glass">Skleněný</string>
+    <string name="settings_drawer_style_console">Konzole</string>
+    <string name="feedback_title">Zpětná vazba</string>
+    <string name="feedback_subtitle">Posílejte zpětnou vazbu přímo týmu EmuCoreC</string>
+    <string name="feedback_category_title">Čeho se to týká?</string>
+    <string name="feedback_category_compatibility">Kompatibilita her</string>
+    <string name="feedback_category_performance">Výkon nebo škubání</string>
+    <string name="feedback_category_graphics">Grafika nebo vykreslování</string>
+    <string name="feedback_category_audio">Zvuk</string>
+    <string name="feedback_category_controls">Ovládání nebo gamepad</string>
+    <string name="feedback_category_crash">Pád nebo zamrznutí</string>
+    <string name="feedback_category_feature">Návrh funkce</string>
+    <string name="feedback_category_ui">Rozhraní nebo použitelnost</string>
+    <string name="feedback_category_other">Jiné</string>
+    <string name="feedback_details_title">Podrobnosti</string>
+    <string name="feedback_game_label">Hra z vaší knihovny (nepovinné)</string>
+    <string name="feedback_game_placeholder">Hledejte podle názvu nebo sériového čísla, nebo hru zadejte ručně</string>
+    <string name="feedback_game_library_empty">Nenalezli jsme žádné uložené hry. Název hry nebo sériové číslo můžete zadat ručně.</string>
+    <string name="feedback_game_clear_selection">Zrušit výběr hry</string>
+    <string name="feedback_message_label">Vaše zpětná vazba</string>
+    <string name="feedback_message_placeholder">Napište nám, co se stalo, co jste očekávali a jak to můžeme zopakovat.</string>
+    <string name="feedback_character_counter">%1$d / %2$d</string>
+    <string name="feedback_attachments_title">Přílohy</string>
+    <string name="feedback_attachments_help">Přidejte až %1$d fotografií, videí, záznamů, souborů uložení nebo jiných souborů. Maximálně %2$d MB na soubor a celkem %3$d MB.</string>
+    <string name="feedback_add_attachment">Přidat přílohu</string>
+    <string name="feedback_attachment_source_title">Zvolte typ přílohy</string>
+    <string name="feedback_add_media">Fotografie nebo video</string>
+    <string name="feedback_add_files">Soubor</string>
+    <string name="feedback_attachment_counter">Vybráno %1$d z %2$d souborů</string>
+    <string name="feedback_tip_title">Tipy pro lepší zpětnou vazbu</string>
+    <string name="feedback_tip_body">Přidejte krátké kroky k reprodukci problému a přiložte snímky obrazovky, video, záznamy, uložení nebo další užitečné soubory.</string>
+    <string name="feedback_remove_attachment">Odebrat přílohu</string>
+    <string name="feedback_send">Odeslat zpětnou vazbu</string>
+    <string name="feedback_queueing">Připravuje se…</string>
+    <string name="feedback_queued">Zpětná vazba zařazena do fronty. Odešle se automaticky, jakmile bude dostupná síť.</string>
+    <string name="feedback_error_message_required">Nejprve prosím popište svou zpětnou vazbu.</string>
+    <string name="feedback_error_too_many_files">Vybrali jste příliš mnoho souborů.</string>
+    <string name="feedback_error_file_too_large">Jeden ze souborů je větší než 49 MB.</string>
+    <string name="feedback_error_total_too_large">Vybrané soubory jsou celkem větší než 90 MB.</string>
+    <string name="feedback_error_file_unreadable">Jeden z vybraných souborů nelze přečíst.</string>
+    <string name="feedback_error_queue_failed">Zpětnou vazbu se nepodařilo připravit. Zkontrolujte vybrané soubory a zkuste to znovu.</string>
+    <string name="feedback_not_configured">Odesílání zpětné vazby není v tomto sestavení nakonfigurováno. Přidejte Worker URL a API klíč do local.properties.</string>
+    <string name="feedback_discard_title">Zahodit zpětnou vazbu?</string>
+    <string name="feedback_discard_message">Vaše zpráva a vybrané přílohy budou ztraceny.</string>
+    <string name="feedback_discard_action">Zahodit</string>
+    <string name="settings_customization_drawer_style">Vzhled postranního panelu</string>
+    <string name="settings_touch_haptics">Haptická odezva dotykového ovládání</string>
+    <string name="settings_help_touch_haptics">Přidá jemnou haptickou odezvu Androidu při prvním stisku tlačítka na obrazovce, směru křížového ovladače nebo analogové páčky. Ovlivňuje pouze pocit z ovládání, nemění vibrace ve hře.</string>
+    <string name="settings_touch_haptics_strength">Síla haptické odezvy</string>
+    <string name="settings_help_touch_haptics_strength">Řídí sílu vibrací zařízení používanou pro haptickou odezvu dotykového ovládání. Zvyšte ji, pokud je impulz příliš slabý, nebo snižte pro tišší hraní v ruce.</string>
+    <string name="settings_touch_haptics_test">Vyzkoušet haptickou odezvu</string>
+    <string name="settings_help_touch_haptics_test">Přehraje stejnou dvojici haptických impulzů (stisk a uvolnění), jakou používají ovládací prvky na obrazovce, abyste mohli porovnat předvolby a nastavit sílu ještě před spuštěním hry.</string>
+    <string name="settings_touch_haptics_preset">Pocit haptické odezvy</string>
+    <string name="settings_touch_haptics_preset_soft">Jemné</string>
+    <string name="settings_touch_haptics_preset_balanced">Vyvážené</string>
+    <string name="settings_touch_haptics_preset_crisp">Ostré</string>
+    <string name="settings_touch_haptics_preset_strong">Silné</string>
+    <string name="settings_help_touch_haptics_preset">Jemné používá šetrný stisk a velmi lehké uvolnění. Vyvážené dává zřetelný stisk s lehčím uvolněním a je výchozí. Ostré používá nejkratší a nejostřejší dvojici pro přesné poklepy. Silné používá hlubší a delší impulzy pro telefony se slabšími vibračními motorky. Posuvník síly škáluje zvolený pocit.</string>
+    <string name="settings_gyro_mode">Ovládání gyroskopem</string>
+    <string name="settings_gyro_off">Vypnuto</string>
+    <string name="settings_gyro_aim">Míření — pravá páčka</string>
+    <string name="settings_gyro_steering">Řízení — levá páčka</string>
+    <string name="settings_gyro_sensitivity">Citlivost gyroskopu</string>
+    <string name="settings_gyro_smoothing">Vyhlazení gyroskopu</string>
+    <string name="settings_gyro_invert_x">Obrátit vodorovný gyroskop</string>
+    <string name="settings_gyro_invert_x_desc">Obrátí pohyb doleva a doprava.</string>
+    <string name="settings_gyro_invert_y">Obrátit svislý gyroskop</string>
+    <string name="settings_gyro_invert_y_desc">Obrátí pohyb míření nahoru a dolů.</string>
+    <string name="settings_help_gyro_mode">Režim Míření převádí rychlost otáčení telefonu na pravou analogovou páčku pro ovládání kamery ve střílečkách a po zastavení pohybu telefonu se automaticky vrací do středu. Režim Řízení převádí držený náklon telefonu na levou analogovou páčku pro závodní hry a při spuštění hraní kalibruje aktuální úhel jako střed. Zvolený režim se používá pouze za běhu hry a vyžaduje příslušný pohybový senzor.</string>
+    <string name="settings_help_gyro_sensitivity">Řídí, jak silně pohyb telefonu vychyluje emulovanou analogovou páčku. Doporučujeme použít přepsání pro jednotlivé hry, protože hry používají různé křivky odezvy kamery a řízení.</string>
+    <string name="settings_help_gyro_smoothing">Filtruje šum senzoru a chvění ruky. Nižší hodnoty reagují rychleji; vyšší hodnoty působí stabilněji, ale přidávají malé zpoždění.</string>
+    <string name="settings_gyro_unavailable">Toto zařízení nemá pohybový senzor vyžadovaný zvoleným režimem.</string>
+    <string name="settings_touch_controls_section">Dotykové ovládání</string>
+    <string name="settings_gpu_driver_detected_device">Zjištěno: %1$s · %2$s</string>
+    <string name="settings_gpu_driver_device_hint">Nejprve se zobrazují kompatibilní ovladače. Klepnutím na kartu ovladače zobrazíte podporované čipy Snapdragon.</string>
+    <string name="settings_gpu_driver_compatibility">Kompatibilita se Snapdragonem</string>
+    <string name="settings_gpu_driver_best_match">Nejlepší shoda</string>
+    <string name="settings_gpu_driver_compatible">Kompatibilní</string>
+    <string name="settings_gpu_driver_other_family">Jiná rodina Adreno</string>
+    <string name="settings_gpu_driver_compatibility_a6xx">Adreno 6xx: Snapdragon 845/855/865/888 a mnoho řad Snapdragon 6/7</string>
+    <string name="settings_gpu_driver_compatibility_a7xx">Adreno 7xx: Snapdragon 8 Gen 1/2/3, 8s Gen 3, nedávné řady Snapdragon 7 a 6 Gen 1/3</string>
+    <string name="settings_gpu_driver_compatibility_a8xx">Adreno 8xx: Snapdragon 8 Elite Gen 5, 8 Gen 5, 8 Elite, 8s Gen 4 a 6 Gen 4</string>
+    <string name="app_name_emucorec">EmuCoreC</string>
+    <string name="home_title">PlayStation 3</string>
+    <string name="home_subtitle">Emulátor PS3 pro Android</string>
+    <string name="home_installed_count">Nainstalované hry: %1$d</string>
+    <string name="home_catalog_count">Hry v katalogu: %1$d</string>
+    <string name="home_storage_short">Připraveno</string>
+    <string name="home_storage_path">Úložiště: %1$s</string>
+    <string name="home_open_setup">Otevřít hry</string>
+    <string name="home_open_library">Otevřít knihovnu</string>
+    <string name="home_open_catalog">Procházet katalog</string>
+    <string name="home_empty_library_title">Zatím nejsou nainstalované žádné hry</string>
+    <string name="home_recent_titles_title">Naposledy hráno</string>
+    <string name="onboarding_page_1_title">PlayStation 3 na Androidu</string>
+    <string name="onboarding_page_1_body">Hrajte své hry pro PS3 na Androidu s jádrem RPCS3.</string>
+    <string name="onboarding_page_2_title">Vaše knihovna her</string>
+    <string name="onboarding_page_2_body">Vaše nainstalované hry jsou shromážděny v jedné knihovně.</string>
+    <string name="onboarding_page_3_title">Vestavěný katalog</string>
+    <string name="onboarding_page_3_body">Procházejte obaly, snímky obrazovky, videa a podrobnosti o hrách na jednom místě.</string>
+    <string name="onboarding_page_4_title">Téměř připraveno</string>
+    <string name="home_empty_library_body">Nainstalujte oficiální firmware PS3 a poté přidejte hry PKG nebo licence RAP z obrazovky Hry.</string>
+    <string name="onboarding_page_4_body">Před spuštěním her nainstalujte oficiální firmware PS3.</string>
+    <string name="onboarding_firmware_title">Firmware PS3</string>
+    <string name="onboarding_firmware_desc">Stáhněte nebo vyberte oficiální soubor systémového softwaru PS3UPDAT.PUP pro PS3.</string>
+    <string name="onboarding_firmware_info_title">Oficiální firmware PS3</string>
+    <string name="onboarding_firmware_info_body">Firmware se stahuje přímo z oficiálních aktualizačních serverů Sony. EmuCoreC jej nehostuje, nezrcadlí, neupravuje ani dále nedistribuuje.</string>
+    <string name="core_install_pkg_unsupported">Vyberte soubory PS3 PKG/ISO nebo kompletní archivní svazky ZIP/RAR.</string>
+    <string name="core_install_license_unsupported">Vyberte licenční soubor PS3 RAP.</string>
+    <string name="setup_pkg_title">Nainstalujte obsah PS3</string>
+    <string name="setup_pkg_body">Nainstalujte PKG/ISO přímo nebo vyberte jeden nebo více archivních svazků ZIP/RAR. Soubory PKG, ISO, RAP a EDAT uvnitř jsou detekovány automaticky.</string>
+    <string name="setup_pkg_license_step_title">Instalovat licenci RAP</string>
+    <string name="setup_pkg_license_step_body">Vyberte licenci RAP pro svou digitální hru PS3.</string>
+    <string name="setup_pkg_license_button">Vyberte soubor RAP</string>
+    <string name="setup_pkg_button">Vyberte obsah nebo archivy</string>
+    <string name="setup_pkg_order_note">Některé digitální hry vyžadují odpovídající licenci RAP. PKG a RAP můžete nainstalovat v libovolném pořadí.</string>
+    <string name="install_choice_title">Nainstalujte obsah PS3</string>
+    <string name="install_choice_body">Vyberte soubory PKG/ISO, archivy ZIP/RAR nebo nainstalujte licenci RAP.</string>
+    <string name="install_choice_pkg_without_license_note">Všechny svazky vícedílného archivu ZIP/RAR můžete vybrat společně. EmuCoreC jej bezpečně rozbalí, najde obsah PS3, nainstaluje rozdělené balíčky v přirozeném pořadí a odstraní dočasné soubory.</string>
+    <string name="ps3_core_settings_unavailable">Jádro RPCS3 nelze načíst nebo inicializovat.</string>
+    <string name="ps3_core_setting_rejected">Jádro RPCS3 odmítlo „%1$s“.</string>
+    <string name="ps3_core_setting_default">Výchozí hodnota jádra: %1$s</string>
+    <string name="ps3_core_setting_reset_game">Obnovit toto nastavení na globální hodnotu</string>
+    <string name="catalog_open_for_game">Otevřít v katalogu</string>
+    <string name="catalog_serial_not_found">Tento identifikátor hry PS3 nebyl v místním katalogu nalezen.</string>
+    <string name="settings_rpcs3_repository_desc">Původní repozitář emulátoru PlayStation 3 RPCS3. Děkujeme všem přispěvatelům RPCS3 za jádro, na kterém tento projekt stojí.</string>
+    <string name="settings_tab_audio">Zvuk</string>
+    <string name="settings_tab_network">Síť</string>
+    <string name="settings_tab_advanced">Pokročilé</string>
+    <string name="shell_launch_system_menu">Spustit PS3</string>
+    <string name="system_menu_launch_failed">Nelze spustit systémovou nabídku PS3.</string>
+    <string name="core_setting_edit">Upravit hodnotu</string>
+    <string name="core_setting_value">Hodnota</string>
+    <string name="core_setting_apply">Použít</string>
+    <string name="core_setting_cancel">Zrušit</string>
+    <string name="core_setting_default_value">Výchozí: %1$s</string>
+    <string name="core_setting_no_options">V této části nejsou k dispozici žádná podporovaná nastavení.</string>
+    <string name="core_label_1_controller">1 ovladač</string>
+    <string name="core_label_120">120</string>
+    <string name="core_label_1280x1080">1280x1080</string>
+    <string name="core_label_1280x720">1280x720</string>
+    <string name="core_label_1440x1080">1440x1080</string>
+    <string name="core_label_16_9">16:9</string>
+    <string name="core_label_1600x1080">1600x1080</string>
+    <string name="core_label_1920x1080">1920x1080</string>
+    <string name="core_label_1920x1080i">1920x1080i</string>
+    <string name="core_label_2_controllers">2 ovladače</string>
+    <string name="core_label_30">30</string>
+    <string name="core_label_3d_display_enabled">3D zobrazení povoleno</string>
+    <string name="core_label_3d_display_mode">Režim 3D zobrazení</string>
+    <string name="core_label_4_3">4:3</string>
+    <string name="core_label_50">50</string>
+    <string name="core_label_60">60</string>
+    <string name="core_label_720x480">720x480</string>
+    <string name="core_label_720x480i">720x480i</string>
+    <string name="core_label_720x576">720x576</string>
+    <string name="core_label_720x576i">720x576i</string>
+    <string name="core_label_960x1080">960x1080</string>
+    <string name="core_label_accurate">Přesný</string>
+    <string name="core_label_accurate_cache_line_stores">Přesné zápisy řádků mezipaměti</string>
+    <string name="core_label_accurate_ppu_128_byte_reservation_op_max_length">Přesná maximální délka 128bajtové rezervační operace PPU</string>
+    <string name="core_label_accurate_rsx_reservation_access">Přesný přístup k rezervacím RSX</string>
+    <string name="core_label_accurate_spu_dma">Přesné DMA jednotek SPU</string>
+    <string name="core_label_accurate_spu_reservations">Přesné rezervace SPU</string>
+    <string name="core_label_accurate_zcull_stats">Přesné statistiky ZCULL</string>
+    <string name="core_label_adapter">Adaptér</string>
+    <string name="core_label_adaptive">Adaptivní</string>
+    <string name="core_label_all">Vše</string>
+    <string name="core_label_all_timers">Všechny časovače</string>
+    <string name="core_label_allow_custom_background">Povolit vlastní pozadí</string>
+    <string name="core_label_allow_host_gpu_labels">Povolit značky GPU hostitele</string>
+    <string name="core_label_allow_move_hue_set_by_game">Povolit hře nastavit odstín PS Move</string>
+    <string name="core_label_allow_rsx_cpu_preemptions">Povolit přerušení běhu CPU u RSX</string>
+    <string name="core_label_anaglyph_amber_blue">Anaglyf jantarová–modrá</string>
+    <string name="core_label_anaglyph_custom">Vlastní anaglyf</string>
+    <string name="core_label_anaglyph_magenta_cyan">Anaglyf purpurová–azurová</string>
+    <string name="core_label_anaglyph_red_blue">Anaglyf červená–modrá</string>
+    <string name="core_label_anaglyph_red_cyan">Anaglyf červená–azurová</string>
+    <string name="core_label_anaglyph_red_green">Anaglyf červená–zelená</string>
+    <string name="core_label_anaglyph_trioscopic">Trioskopický anaglyf</string>
+    <string name="core_label_anisotropic_filter_override">Vynutit anizotropní filtr</string>
+    <string name="core_label_approximate">Přibližný</string>
+    <string name="core_label_as_host">Stejné jako hostitelský systém</string>
+    <string name="core_label_aspect_ratio">Poměr stran</string>
+    <string name="core_label_assume_external_debugger">Předpokládat externí ladicí nástroj</string>
+    <string name="core_label_async_recompiler_multi_threaded">Asynchronní rekompilátor (více vláken)</string>
+    <string name="core_label_async_recompiler_with_shader_interpreter">Asynchronní rekompilátor s interpretem shaderů</string>
+    <string name="core_label_asynchronous_queue_scheduler">Asynchronní plánovač front</string>
+    <string name="core_label_asynchronous_texture_streaming">Asynchronní streamování textur</string>
+    <string name="core_label_atomic">Atomický</string>
+    <string name="core_label_audio">Zvuk</string>
+    <string name="core_label_audio_channel_layout">Rozložení zvukových kanálů</string>
+    <string name="core_label_audio_device">Zvukové zařízení</string>
+    <string name="core_label_audio_format">Formát zvuku</string>
+    <string name="core_label_audio_formats">Zvukové formáty</string>
+    <string name="core_label_audio_provider">Zvukový backend</string>
+    <string name="core_label_auto">Auto</string>
+    <string name="core_label_automatic">Automaticky</string>
+    <string name="core_label_automatically_start_games_after_boot">Automaticky spouštět hry po spuštění</string>
+    <string name="core_label_av_multiout">Vícenásobný výstup AV</string>
+    <string name="core_label_background_input_enabled">Povolit vstup na pozadí</string>
+    <string name="core_label_basic">Základní</string>
+    <string name="core_label_bilinear">Bilineární</string>
+    <string name="core_label_bind_address">Adresa pro naslouchání</string>
+    <string name="core_label_blur_effect_strength">Intenzita rozostření</string>
+    <string name="core_label_body_background_hex">Barva pozadí obsahu (hex)</string>
+    <string name="core_label_body_color_hex">Barva textu obsahu (hex)</string>
+    <string name="core_label_both">Obě</string>
+    <string name="core_label_bottom_left">Vlevo dole</string>
+    <string name="core_label_bottom_right">Vpravo dole</string>
+    <string name="core_label_buzz_emulated_controller">Emulovaný ovladač Buzz</string>
+    <string name="core_label_camera">Kamera</string>
+    <string name="core_label_camera_flip">Převrácení obrazu kamery</string>
+    <string name="core_label_camera_id">ID kamery</string>
+    <string name="core_label_camera_type">Typ kamery</string>
+    <string name="core_label_cellaudio">CellAudio</string>
+    <string name="core_label_center_horizontally">Vystředit vodorovně</string>
+    <string name="core_label_center_vertically">Vystředit svisle</string>
+    <string name="core_label_clans_enabled">Povolit klany</string>
+    <string name="core_label_clock12">12hodinový formát</string>
+    <string name="core_label_clock24">24hodinový formát</string>
+    <string name="core_label_clocks_scale">Měřítko hodin</string>
+    <string name="core_label_compatible_savestate_mode">Kompatibilní režim ukládání stavů</string>
+    <string name="core_label_connected">Připojeno</string>
+    <string name="core_label_consecutive_frames_to_draw">Počet po sobě vykreslených snímků</string>
+    <string name="core_label_consecutive_frames_to_skip">Počet po sobě přeskočených snímků</string>
+    <string name="core_label_console_psid">PSID konzole</string>
+    <string name="core_label_console_time_offset_s">Časový posun konzole (s)</string>
+    <string name="core_label_convert_to_16_bit">Převést na 16 bitů</string>
+    <string name="core_label_core">Emulační jádro</string>
+    <string name="core_label_cubeb">Cubeb</string>
+    <string name="core_label_custom_anaglyph_matrices">Vlastní matice anaglyfu</string>
+    <string name="core_label_darkening_effect_strength">Intenzita ztmavení</string>
+    <string name="core_label_date_format">Formát data</string>
+    <string name="core_label_ddmmyyyy">DDMMRRRR</string>
+    <string name="core_label_debug_console_mode">Režim ladicí konzole</string>
+    <string name="core_label_debug_output">Ladicí výstup</string>
+    <string name="core_label_debug_overlay">Ladicí překryv</string>
+    <string name="core_label_debug_program_analyser">Ladění analyzátoru programu</string>
+    <string name="core_label_decr_memory_layout">Rozložení paměti DECR</string>
+    <string name="core_label_derive_mac_from_psid">Odvodit MAC z PSID</string>
+    <string name="core_label_desired_audio_buffer_duration">Požadovaná délka zvukové vyrovnávací paměti</string>
+    <string name="core_label_detail_level">Úroveň detailů</string>
+    <string name="core_label_disable">Zakázat</string>
+    <string name="core_label_disable_asynchronous_memory_manager">Zakázat asynchronní správu paměti</string>
+    <string name="core_label_disable_fifo_reordering">Zakázat přeuspořádání FIFO</string>
+    <string name="core_label_disable_hardware_colorspace_remapping">Zakázat hardwarové přemapování barevného prostoru</string>
+    <string name="core_label_disable_msl_fast_math">Zakázat rychlou matematiku MSL</string>
+    <string name="core_label_disable_on_disk_shader_cache">Zakázat diskovou mezipaměť shaderů</string>
+    <string name="core_label_disable_sampling_skip">Zakázat přeskakování vzorků</string>
+    <string name="core_label_disable_spu_getllar_spin_optimization">Zakázat optimalizaci aktivního čekání SPU GETLLAR</string>
+    <string name="core_label_disable_vertex_cache">Zakázat mezipaměť vrcholů</string>
+    <string name="core_label_disable_video_output">Zakázat obrazový výstup</string>
+    <string name="core_label_disable_vulkan_memory_allocator">Zakázat alokátor paměti Vulkan</string>
+    <string name="core_label_disable_zcull_occlusion_queries">Zakázat dotazy na zakrytí ZCull</string>
+    <string name="core_label_disabled">Zakázáno</string>
+    <string name="core_label_disconnected">Odpojeno</string>
+    <string name="core_label_disk_cache_maximum_size_mb">Maximální velikost mezipaměti disku (MB)</string>
+    <string name="core_label_display">Zobrazení</string>
+    <string name="core_label_display_aspect_override">Vynutit poměr stran zobrazení</string>
+    <string name="core_label_dns_address">Adresa DNS</string>
+    <string name="core_label_driver_recovery_timeout">Časový limit zotavení ovladače</string>
+    <string name="core_label_driver_wake_up_delay">Zpoždění probuzení ovladače</string>
+    <string name="core_label_dump_to_file">Vypsat do souboru</string>
+    <string name="core_label_empty_dev_hdd0_tmp">Vyprázdnit /dev_hdd0/tmp/</string>
+    <string name="core_label_emulate_special_depth_comparison">Emulovat zvláštní porovnávání hloubky</string>
+    <string name="core_label_emulated_midi_devices">Emulovaná zařízení MIDI</string>
+    <string name="core_label_enable">Povolit</string>
+    <string name="core_label_enable_host_root">Povolit /host_root/</string>
+    <string name="core_label_enable_buffering">Povolit zvukovou vyrovnávací paměť</string>
+    <string name="core_label_enable_frame_skip">Povolit přeskakování snímků</string>
+    <string name="core_label_enable_framerate_graph">Zobrazit graf snímkové frekvence</string>
+    <string name="core_label_enable_frametime_graph">Zobrazit graf doby snímku</string>
+    <string name="core_label_enable_gamemode">Povolit GameMode</string>
+    <string name="core_label_enable_performance_report">Povolit hlášení výkonu</string>
+    <string name="core_label_enable_time_stretching">Povolit časové roztažení zvuku</string>
+    <string name="core_label_enabled">Povoleno</string>
+    <string name="core_label_enter_button_assignment">Přiřazení potvrzovacího tlačítka</string>
+    <string name="core_label_enter_with_circle">Potvrzovat kolečkem</string>
+    <string name="core_label_enter_with_cross">Potvrzovat křížkem</string>
+    <string name="core_label_exclusive_fullscreen_mode">Exkluzivní režim celé obrazovky</string>
+    <string name="core_label_exit_rpcs3_when_process_finishes">Po dokončení procesu ukončete RPCS3</string>
+    <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
+    <string name="core_label_fake">Emulovaný</string>
+    <string name="core_label_fake_move_rotation_cone">Simulovaný kužel otáčení PS Move</string>
+    <string name="core_label_fake_move_rotation_cone_vertical">Simulovaný kužel otáčení PS Move (svislý)</string>
+    <string name="core_label_fast">Rychlý</string>
+    <string name="core_label_faudio">FAudio</string>
+    <string name="core_label_fidelityfx_cas_sharpening_intensity">Intenzita doostření FidelityFX CAS</string>
+    <string name="core_label_fidelityfx_super_resolution">FidelityFX Super Resolution</string>
+    <string name="core_label_font">Písmo</string>
+    <string name="core_label_font_size_px">Velikost písma (px)</string>
+    <string name="core_label_force_cpu_blit">Vynutit kopírování obrazu přes CPU</string>
+    <string name="core_label_force_hardware_msaa_resolve">Vynutit hardwarové vyhodnocení MSAA</string>
+    <string name="core_label_force_high_precision_z_buffer">Vynutit vysoce přesnou hloubkovou paměť Z</string>
+    <string name="core_label_frame_limit">Limit snímkové frekvence</string>
+    <string name="core_label_framebuffer_aliasing_heuristic_bias">Posun heuristiky aliasování snímkové paměti</string>
+    <string name="core_label_framerate_datapoints">Počet vzorků snímkové frekvence</string>
+    <string name="core_label_framerate_graph_detail_level">Úroveň detailů grafu snímkové frekvence</string>
+    <string name="core_label_frametime_datapoints">Počet vzorků doby snímku</string>
+    <string name="core_label_frametime_graph_detail_level">Úroveň detailů grafu doby snímku</string>
+    <string name="core_label_full">Plný</string>
+    <string name="core_label_gdb_server">Server GDB</string>
+    <string name="core_label_ghltar_emulated_controller">Emulovaný ovladač GHLtar</string>
+    <string name="core_label_giga">Giga</string>
+    <string name="core_label_gun">Světelná pistole</string>
+    <string name="core_label_handle_rsx_memory_tiling">Zpracovávat dlaždicové rozložení paměti RSX</string>
+    <string name="core_label_hdd_model_name">Model pevného disku</string>
+    <string name="core_label_hdd_serial_number">Sériové číslo pevného disku</string>
+    <string name="core_label_hdmi_0">HDMI 0</string>
+    <string name="core_label_hdmi_1">HDMI 1</string>
+    <string name="core_label_high">Vysoký</string>
+    <string name="core_label_hle_lwmutex">HLE lwmutex</string>
+    <string name="core_label_hook_static_functions">Zachytávat statické funkce</string>
+    <string name="core_label_horizontal">Horizontální</string>
+    <string name="core_label_horizontal_margin" formatted="false">Horizontální okraj (%)</string>
+    <string name="core_label_inaccurate">Nepřesný</string>
+    <string name="core_label_infinite">Nekonečný</string>
+    <string name="core_label_initialize_directories">Inicializovat adresáře</string>
+    <string name="core_label_input_output">Vstup/výstup</string>
+    <string name="core_label_inspection_mode_savestates">Ukládání stavů v režimu kontroly</string>
+    <string name="core_label_interlaced">Prokládané</string>
+    <string name="core_label_internet_enabled">Internet povolen</string>
+    <string name="core_label_interpreter_dynamic">Interpret (dynamický)</string>
+    <string name="core_label_interpreter_static">Interpret (statický)</string>
+    <string name="core_label_io_debug_overlay">Ladicí překryv vstupu/výstupu</string>
+    <string name="core_label_ip_address">IP adresa</string>
+    <string name="core_label_ip_swap_list">Seznam přesměrování IP</string>
+    <string name="core_label_keep_pads_connected">Ponechat ovladače připojené</string>
+    <string name="core_label_keyboard">Klávesnice</string>
+    <string name="core_label_keyboard_type">Typ klávesnice</string>
+    <string name="core_label_language">Jazyk</string>
+    <string name="core_label_legacy_recompiler_single_threaded">Starší rekompilátor (jedno vlákno)</string>
+    <string name="core_label_libraries_control">Správa knihoven</string>
+    <string name="core_label_license_area">Oblast licence</string>
+    <string name="core_label_limit_disk_cache_size">Omezit velikost diskové mezipaměti</string>
+    <string name="core_label_llvm_precompilation">Předkompilace LLVM</string>
+    <string name="core_label_load_sdl_gamecontroller_mappings">Načíst mapování ovladačů SDL</string>
+    <string name="core_label_lock_overlay_input_to_player_one">Omezit vstup překryvu na prvního hráče</string>
+    <string name="core_label_log">Protokol</string>
+    <string name="core_label_log_shader_programs">Zaznamenávat programy shaderů</string>
+    <string name="core_label_low">Nízký</string>
+    <string name="core_label_manual">Ručně</string>
+    <string name="core_label_master_volume">Celková hlasitost</string>
+    <string name="core_label_matrix_left">Levá matice</string>
+    <string name="core_label_matrix_right">Pravá matice</string>
+    <string name="core_label_max_cpu_preempt_count">Maximální počet přerušení běhu CPU</string>
+    <string name="core_label_max_llvm_compile_threads">Maximum vláken kompilace LLVM</string>
+    <string name="core_label_max_spurs_threads">Maximum vláken SPURS</string>
+    <string name="core_label_maximum_savestate_files">Maximální počet souborů stavů</string>
+    <string name="core_label_maximum_savestate_files_space_mib">Maximální místo pro uložené stavy (MiB)</string>
+    <string name="core_label_medium">Střední</string>
+    <string name="core_label_mega">Mega</string>
+    <string name="core_label_metrics_update_interval_ms">Interval aktualizace měření (ms)</string>
+    <string name="core_label_mfc_commands_shuffling_in_steps">Přeskupování příkazů MFC po krocích</string>
+    <string name="core_label_mfc_commands_shuffling_limit">Limit přeskupování příkazů MFC</string>
+    <string name="core_label_mfc_commands_timeout">Časový limit příkazů MFC</string>
+    <string name="core_label_mfc_debug">Ladění MFC</string>
+    <string name="core_label_microphone_devices">Mikrofony</string>
+    <string name="core_label_microphone_type">Typ mikrofonu</string>
+    <string name="core_label_minimal">Minimální</string>
+    <string name="core_label_minimum_scalable_dimension">Nejmenší rozměr pro škálování</string>
+    <string name="core_label_miscellaneous">Ostatní</string>
+    <string name="core_label_mmddyyyy">MMDDRRRR</string>
+    <string name="core_label_mono">Mono</string>
+    <string name="core_label_mouse">Myš</string>
+    <string name="core_label_mouse_debug_overlay">Ladicí překryv myši</string>
+    <string name="core_label_mouse_based_gyro_enabled">Povolit gyroskop ovládaný myší</string>
+    <string name="core_label_move">PS Move</string>
+    <string name="core_label_msaa">MSAA</string>
+    <string name="core_label_multi_threaded">Více vláken</string>
+    <string name="core_label_multithreaded_rsx">Vícevláknové RSX</string>
+    <string name="core_label_music_handler">Obsluha hudby</string>
+    <string name="core_label_nearest">Nejbližší</string>
+    <string name="core_label_net">Síť</string>
+    <string name="core_label_none">Žádná</string>
+    <string name="core_label_null">Žádný</string>
+    <string name="core_label_off">Vypnuto</string>
+    <string name="core_label_opacity" formatted="false">Neprůhlednost (%)</string>
+    <string name="core_label_opengl">OpenGL</string>
+    <string name="core_label_operating_system">Operační systém</string>
+    <string name="core_label_ordered_atomic">Uspořádané a atomické</string>
+    <string name="core_label_output_scaling_mode">Režim škálování výstupu</string>
+    <string name="core_label_over_under">Nad sebou</string>
+    <string name="core_label_pad_handler_mode">Režim obsluhy ovladačů</string>
+    <string name="core_label_pad_handler_sleep_microseconds">Prodleva obsluhy ovladačů (µs)</string>
+    <string name="core_label_paint_move_spheres">Zobrazovat koule PS Move</string>
+    <string name="core_label_pause_emulation_during_home_menu">Pozastavit emulaci v hlavní nabídce</string>
+    <string name="core_label_pause_emulation_on_rpcs3_focus_loss">Pozastavit emulaci při ztrátě zaměření RPCS3</string>
+    <string name="core_label_performance_overlay">Sledování výkonu</string>
+    <string name="core_label_performance_report_threshold">Práh pro hlášení výkonu</string>
+    <string name="core_label_play_music_during_boot_sequence">Přehrávat hudbu během spouštění</string>
+    <string name="core_label_position">Poloha</string>
+    <string name="core_label_ppu_accurate_non_java_mode">Přesný režim PPU mimo Javu</string>
+    <string name="core_label_ppu_accurate_vector_nan_values">Přesné vektorové hodnoty NaN v PPU</string>
+    <string name="core_label_ppu_calling_history">Historie volání PPU</string>
+    <string name="core_label_ppu_debug">Ladění PPU</string>
+    <string name="core_label_ppu_decoder">Dekodér PPU</string>
+    <string name="core_label_ppu_profiler">Profiler PPU</string>
+    <string name="core_label_ppu_reservation_priority_over_spus">Přednost rezervací PPU před SPU</string>
+    <string name="core_label_ppu_set_fpcc_bits">Nastavovat bity FPCC v PPU</string>
+    <string name="core_label_ppu_set_saturation_bit">Nastavovat bit saturace PPU</string>
+    <string name="core_label_ppu_threads">Vlákna PPU</string>
+    <string name="core_label_ppu_vector_nan_handling">Zpracování vektorových NaN v PPU</string>
+    <string name="core_label_precise_spu_verification">Přesné ověřování SPU</string>
+    <string name="core_label_prefer_color">Upřednostnit barvu</string>
+    <string name="core_label_prefer_depth">Upřednostnit hloubku</string>
+    <string name="core_label_preferred_spu_threads">Preferovaný počet vláken SPU</string>
+    <string name="core_label_prevent_display_sleep_while_running_games">Zabránit uspání obrazovky při hraní</string>
+    <string name="core_label_process_argv">Argumenty procesu ARGV</string>
+    <string name="core_label_ps_eye">PS Eye</string>
+    <string name="core_label_ps3">PS3</string>
+    <string name="core_label_ps3_native">Nativní PS3</string>
+    <string name="core_label_psn_country">Země PSN</string>
+    <string name="core_label_psn_status">Stav PSN</string>
+    <string name="core_label_qt">Qt</string>
+    <string name="core_label_quadraphonic">Kvadrofonní</string>
+    <string name="core_label_quadraphonic_lfe">Kvadrofonní s LFE</string>
+    <string name="core_label_raw">Nezpracované</string>
+    <string name="core_label_raw_mouse">Přímý vstup myši</string>
+    <string name="core_label_read_color_buffers">Číst barevné buffery</string>
+    <string name="core_label_read_depth_buffer">Číst hloubkový buffer</string>
+    <string name="core_label_real">Fyzický</string>
+    <string name="core_label_real_singstar">Fyzický SingStar</string>
+    <string name="core_label_recompiler_asmjit">Rekompilátor (ASMJIT)</string>
+    <string name="core_label_recompiler_llvm">Rekompilátor (LLVM)</string>
+    <string name="core_label_record_with_overlays">Nahrávat i překryvy</string>
+    <string name="core_label_relaxed">Volnější</string>
+    <string name="core_label_relaxed_zcull_sync">Volnější synchronizace ZCULL</string>
+    <string name="core_label_renderdoc_compatibility_mode">Režim kompatibility s RenderDoc</string>
+    <string name="core_label_renderer">Vykreslovač</string>
+    <string name="core_label_resolution">Rozlišení</string>
+    <string name="core_label_resolution_scale">Měřítko rozlišení</string>
+    <string name="core_label_rocksmith">Rocksmith</string>
+    <string name="core_label_rpcn">RPCN</string>
+    <string name="core_label_rpcs3_alternative_scheduler">Alternativní plánovač RPCS3</string>
+    <string name="core_label_rpcs3_scheduler">Plánovač RPCS3</string>
+    <string name="core_label_rsx_fifo_fetch_accuracy">Přesnost načítání FIFO v RSX</string>
+    <string name="core_label_rsx_profiler">Profiler RSX</string>
+    <string name="core_label_rsxaudio">RSXAudio</string>
+    <string name="core_label_rsxaudio_avport">RSXAudio Avport</string>
+    <string name="core_label_safe">Bezpečný</string>
+    <string name="core_label_save_disc_game_data">Ukládat data her z disků</string>
+    <string name="core_label_save_llvm_logs">Ukládat protokoly LLVM</string>
+    <string name="core_label_savestate">Uložený stav</string>
+    <string name="core_label_screen_size_in_inches">Velikost obrazovky v palcích</string>
+    <string name="core_label_sdl">SDL</string>
+    <string name="core_label_sdl_camera_id">ID kamery SDL</string>
+    <string name="core_label_second_frame_limit">Druhý limit snímkové frekvence</string>
+    <string name="core_label_set_daz_and_ftz">Nastavit DAZ a FTZ</string>
+    <string name="core_label_shader_chain_librashader">Řetězec shaderů (librashader)</string>
+    <string name="core_label_shader_compiler_threads">Vlákna kompilátoru shaderů</string>
+    <string name="core_label_shader_interpreter_only">Pouze interpret shaderů</string>
+    <string name="core_label_shader_loading_dialog">Dialog načítání shaderů</string>
+    <string name="core_label_shader_mode">Režim shaderů</string>
+    <string name="core_label_shader_precision">Přesnost shaderů</string>
+    <string name="core_label_shader_preset_path">Cesta k předvolbě shaderů</string>
+    <string name="core_label_show_1_and_average" formatted="false">Zobrazit dolní 1 % a průměr</string>
+    <string name="core_label_show_analog_limiter_toggle_hint">Zobrazit nápovědu k přepnutí omezovače páček</string>
+    <string name="core_label_show_autosave_autoload_hint">Zobrazit nápovědu automatického ukládání a načítání</string>
+    <string name="core_label_show_capture_hints">Zobrazit nápovědu snímání a nahrávání</string>
+    <string name="core_label_show_fatal_error_hints">Zobrazit upozornění na závažné chyby</string>
+    <string name="core_label_show_header">Zobrazit záhlaví</string>
+    <string name="core_label_show_min_and_max">Zobrazit minimum a maximum</string>
+    <string name="core_label_show_mouse_and_keyboard_toggle_hint">Zobrazit nápovědu přepínání myši a klávesnice</string>
+    <string name="core_label_show_move_cursor">Zobrazit kurzor PS Move</string>
+    <string name="core_label_show_ppu_compilation_hint">Zobrazit oznámení kompilace PPU</string>
+    <string name="core_label_show_pressure_intensity_toggle_hint">Zobrazit nápovědu k přepnutí intenzity stisku</string>
+    <string name="core_label_show_rpcn_popups">Zobrazit oznámení RPCN</string>
+    <string name="core_label_show_shader_compilation_hint">Zobrazit oznámení kompilace shaderů</string>
+    <string name="core_label_show_trophy_popups">Zobrazit oznámení trofejí</string>
+    <string name="core_label_side_by_side">Vedle sebe</string>
+    <string name="core_label_silence_all_logs">Vypnout veškeré protokolování</string>
+    <string name="core_label_simulated">Simulované</string>
+    <string name="core_label_single_threaded">Jedno vlákno</string>
+    <string name="core_label_singstar">SingStar</string>
+    <string name="core_label_sleep_timers_accuracy">Přesnost časovačů uspání</string>
+    <string name="core_label_spdif_0">SPDIF 0</string>
+    <string name="core_label_spdif_1">SPDIF 1</string>
+    <string name="core_label_spu_block_size">Velikost bloku SPU</string>
+    <string name="core_label_spu_cache">Mezipaměť SPU</string>
+    <string name="core_label_spu_debug">Ladění SPU</string>
+    <string name="core_label_spu_decoder">Dekodér SPU</string>
+    <string name="core_label_spu_delay_penalty">Dodatečné zpoždění SPU</string>
+    <string name="core_label_spu_getllar_busy_waiting_percentage">Podíl aktivního čekání SPU GETLLAR</string>
+    <string name="core_label_spu_llvm_lower_bound">Dolní mez SPU LLVM</string>
+    <string name="core_label_spu_llvm_upper_bound">Horní mez SPU LLVM</string>
+    <string name="core_label_spu_loop_detection">Detekce smyček SPU</string>
+    <string name="core_label_spu_profiler">Profiler SPU</string>
+    <string name="core_label_spu_reservation_busy_waiting_enabled">Povolit aktivní čekání na rezervace SPU</string>
+    <string name="core_label_spu_reservation_busy_waiting_percentage_1">Podíl aktivního čekání rezervací SPU 1</string>
+    <string name="core_label_spu_verification">Ověření SPU</string>
+    <string name="core_label_spu_wake_up_delay">Zpoždění probuzení SPU</string>
+    <string name="core_label_spu_wake_up_delay_thread_mask">Maska vláken pro zpoždění probuzení SPU</string>
+    <string name="core_label_spu_xfloat_accuracy">Přesnost XFloat v SPU</string>
+    <string name="core_label_standard">Standardní</string>
+    <string name="core_label_start_games_in_fullscreen_mode">Spouštět hry na celou obrazovku</string>
+    <string name="core_label_start_paused">Spustit pozastavené</string>
+    <string name="core_label_stereo">Stereo</string>
+    <string name="core_label_stereo_lfe">Stereo LFE</string>
+    <string name="core_label_stretch_to_display_area">Roztáhnout na plochu zobrazení</string>
+    <string name="core_label_strict_rendering_mode">Přísný režim vykreslování</string>
+    <string name="core_label_strict_texture_flushing">Vynucené vyprazdňování textur</string>
+    <string name="core_label_stub_ppu_traps">Nahrazovat pasti PPU prázdnou obsluhou</string>
+    <string name="core_label_surround_5_1">Prostorový zvuk 5.1</string>
+    <string name="core_label_surround_7_1">Prostorový zvuk 7.1</string>
+    <string name="core_label_suspend_emulation_savestate_mode">Ukládání stavů s hibernací emulace</string>
+    <string name="core_label_system">Systém</string>
+    <string name="core_label_system_name">Název systému</string>
+    <string name="core_label_texture_lod_bias_addend">Přídavný posun LOD textur</string>
+    <string name="core_label_thread_scheduler_mode">Režim plánování vláken</string>
+    <string name="core_label_time_format">Formát času</string>
+    <string name="core_label_time_stretching_threshold">Práh časového roztažení zvuku</string>
+    <string name="core_label_title_background_hex">Pozadí záhlaví (hex)</string>
+    <string name="core_label_title_color_hex">Barva textu záhlaví (hex)</string>
+    <string name="core_label_top_left">Vlevo nahoře</string>
+    <string name="core_label_top_right">Vpravo nahoře</string>
+    <string name="core_label_turntable_emulated_controller">Emulovaný gramofonový ovladač</string>
+    <string name="core_label_ultra">Ultra</string>
+    <string name="core_label_unknown">Neznámá</string>
+    <string name="core_label_upnp_enabled">Povolit UPnP</string>
+    <string name="core_label_use_accurate_dfma">Používat přesné DFMA</string>
+    <string name="core_label_use_full_rgb_output_range">Použijte plný rozsah výstupu RGB</string>
+    <string name="core_label_use_gpu_texture_scaling">Škálovat textury pomocí GPU</string>
+    <string name="core_label_use_llvm_cpu">Používat CPU pro LLVM</string>
+    <string name="core_label_use_native_user_interface">Používat nativní uživatelské rozhraní</string>
+    <string name="core_label_use_re_bar_for_gpu_uploads">Používat Re-BAR k přenosům do GPU</string>
+    <string name="core_label_use_recursive_scan">Prohledávat i podsložky</string>
+    <string name="core_label_use_window_space">Používat souřadnice okna</string>
+    <string name="core_label_usleep_only">Pouze usleep</string>
+    <string name="core_label_usleep_time_addend">Přídavná doba usleep</string>
+    <string name="core_label_uvc_1_1">UVC 1.1</string>
+    <string name="core_label_vblank_ntsc_fixup">Oprava Vblank NTSC</string>
+    <string name="core_label_vblank_rate">Frekvence Vblank</string>
+    <string name="core_label_vertical">Vertikální</string>
+    <string name="core_label_vertical_margin" formatted="false">Vertikální rozpětí (%)</string>
+    <string name="core_label_vfs">VFS</string>
+    <string name="core_label_video">Obraz</string>
+    <string name="core_label_vram_allocation_limit_mb">Limit přidělené VRAM (MB)</string>
+    <string name="core_label_vsync_mode">Režim VSync</string>
+    <string name="core_label_vulkan">Vulkan</string>
+    <string name="core_label_window_title_format">Formát názvu okna</string>
+    <string name="core_label_write_color_buffers">Zapisovat barevné buffery</string>
+    <string name="core_label_write_depth_buffer">Zapisovat hloubkový buffer</string>
+    <string name="core_label_xaudio2">XAudio2</string>
+    <string name="core_label_yyyymmdd">RRRRMMDD</string>
+    <string name="core_help_core_accurate_cache_line_stores" formatted="false">Přesně zpracovává instrukci PPU DCBZ. V kombinaci s přesným DMA jednotek SPU se navíc přístupy SPU PUT k řádkům mezipaměti zpracovávají atomicky.</string>
+    <string name="core_help_core_use_accurate_dfma" formatted="false">Používejte přesné instrukce FMA s dvojnásobnou přesností v backendech PPU a SPU.
+I když jeho deaktivace může poskytnout slušné zvýšení výkonu, pokud váš CPU nepodporuje FMA, může také přinést jemné chyby, které se jinak nevyskytují.
+Pokud váš CPU podporuje FMA, neměli byste jej deaktivovat.</string>
+    <string name="core_help_core_accurate_ppu_128_byte_reservation_op_max_length" formatted="false">Při zapnutí pracují atomické operace PPU s celým řádkem mezipaměti; při vypnutí jen s jedním 64bitovým blokem paměti. Číselná hodnota určuje, zda se podle délky atomické operace použije přesná varianta.</string>
+    <string name="core_help_core_ppu_set_fpcc_bits" formatted="false">Přesně nastavené bity FPCC v backendech PPU.
+Pokud si nejste jisti, toto nastavení neměňte.</string>
+    <string name="core_help_core_ppu_accurate_non_java_mode" formatted="false">Respektuje hodnoty bitu režimu Non-Java u vektorových operací PPU. Pokud si nejste jisti, toto nastavení neměňte.</string>
+    <string name="core_help_core_ppu_set_saturation_bit" formatted="false">Přesně nastavte hodnoty saturačního bitu v backendech PPU.
+Pokud si nejste jisti, toto nastavení neměňte.</string>
+    <string name="core_help_core_ppu_accurate_vector_nan_values" formatted="false">Přesně nastavené NaN vede k vektorovým instrukcím v backendech PPU.
+Pokud si nejste jisti, toto nastavení neměňte.</string>
+    <string name="core_help_core_accurate_rsx_reservation_access" formatted="false">Vynutí pauzy RSX v operacích SPU MFC_GETLLAR a SPU MFC_PUTLLUC.</string>
+    <string name="core_help_core_accurate_spu_dma" formatted="false">Přesně zpracovává operace SPU DMA.</string>
+    <string name="core_help_video_allow_host_gpu_labels" formatted="false">Umožňuje hostitelskému GPU přímo synchronizovat s CELL. To způsobí snížení výkonu, ale odhalí skutečný stav objektů GPU hostovanému CPU. Může pomoci eliminovat vizuální šum a závady na úkor výkonu. Používejte opatrně.</string>
+    <string name="core_help_video_anisotropic_filter_override" formatted="false">Vyšší hodnoty zvyšují ostrost textur na šikmých površích za cenu zdrojů GPU.
+Moderní GPU zvládnou toto nastavení v pohodě, dokonce i při 16x.
+Nechte toto na Automaticky, pokud chcete použít původní nastavení používané skutečným PS3.</string>
+    <string name="core_help_video_aspect_ratio" formatted="false">Nechte to na 16:9, pokud nemáte monitor 4:3.</string>
+    <string name="core_help_audio_rsxaudio_avport" formatted="false">Určuje, který avport se používá k vzorkování zvukových dat.</string>
+    <string name="core_help_audio_desired_audio_buffer_duration" formatted="false">Cílová doba trvání vyrovnávací paměti v milisekundách.
+Vyšší hodnoty usnadňují práci algoritmu ukládání do vyrovnávací paměti, ale mohou způsobit znatelné zpoždění zvuku.</string>
+    <string name="core_help_audio_audio_channel_layout" formatted="false">Určuje formát zvuku RPCS3.
+Pomocí „Auto“ nechte RPCS3 rozhodnout o nejlepším formátu na základě zvukového zařízení a emulovaného zvukového formátu.</string>
+    <string name="core_help_audio_audio_device" formatted="false">Určuje zařízení používané zvukovým backendem.</string>
+    <string name="core_help_audio_audio_format" formatted="false">Určuje zvukový formát emulace.
+Toto nastavení nakonfigurujte, pokud chcete přepínat mezi stereo a prostorovým zvukem.
+Změna těchto hodnot vyžaduje restart hry.
+Ruční nastavení použije vámi vybrané formáty, zatímco automatické nastavení umožní hře vybrat si ze všech dostupných formátů.</string>
+    <string name="core_help_audio_audio_formats" formatted="false">Určuje zvukový formát emulace.
+Toto nastavení nakonfigurujte, pokud chcete přepínat mezi stereo a prostorovým zvukem.
+Změna těchto hodnot vyžaduje restart hry.
+Ruční nastavení použije vámi vybrané formáty, zatímco automatické nastavení umožní hře vybrat si ze všech dostupných formátů.</string>
+    <string name="core_help_audio_audio_provider" formatted="false">Řídí, které PS3 audio API se používá.
+Hry používají CellAudio, zatímco VSH vyžaduje RSXAudio.</string>
+    <string name="core_help_audio_renderer" formatted="false">Cubeb používá multiplatformní přístup a podporuje ukládání do vyrovnávací paměti zvuku, takže je to doporučená možnost.
+Pokud není k dispozici, lze místo něj použít FAudio.</string>
+    <string name="core_help_input_output_background_input_enabled" formatted="false">Umožňuje zadávání pomocí padu a klávesnice, když není okno hry zaostřeno.</string>
+    <string name="core_help_net_bind_address" formatted="false">IP adresa síťového rozhraní, na které se má naslouchat. Dostupné pouze ve vlastních konfiguracích.</string>
+    <string name="core_help_input_output_buzz_emulated_controller" formatted="false">Podpora ovladačů Buzz!. Pokud hra vyžaduje Buzz! a nemáte fyzické ovladače, vyberte 1 nebo 2 ovladače. Pokud hra podporuje DualShock nebo máte fyzické ovladače Buzz!, vyberte Žádný.</string>
+    <string name="core_help_input_output_camera" formatted="false">Chcete-li použít výchozí kamerové zařízení vašeho operačního systému, vyberte Qt Kamera.</string>
+    <string name="core_help_input_output_camera_flip" formatted="false">Převrátí obraz kamery vodorovně, svisle nebo na obou osách.</string>
+    <string name="core_help_input_output_camera_id" formatted="false">Vyberte kameru, kterou chcete používat během hraní.</string>
+    <string name="core_help_input_output_camera_type" formatted="false">V závislosti na hře možná budete muset vybrat konkrétní typ kamery.</string>
+    <string name="core_help_core_clocks_scale" formatted="false">Změní měřítko emulovaného systémového času.
+Ovlivňuje software, který používá systémový čas k výpočtu věcí, jako jsou dynamické časové kroky.</string>
+    <string name="core_help_savestate_compatible_savestate_mode" formatted="false">Tento režim upřednostňuje v emulaci SPU kompatibilitu uložených stavů, ale může mírně snížit výkon. Při vypnutí nemusí některé hry dovolit uložit stav a do protokolu zapíší chybu pozastavení SPU.</string>
+    <string name="core_help_system_console_time_offset_s" formatted="false">Nastaví čas konzole jako posun vůči skutečnému času. Tlačítkem Nastavit na aktuální čas jej lze obnovit na aktuální čas systému.</string>
+    <string name="core_help_audio_convert_to_16_bit" formatted="false">Používá 16bitové zvukové vzorky místo výchozích 32bitových vzorků s plovoucí řádovou čárkou. Pomůže s chybnými zvukovými ovladači, pokud zvuk chybí nebo je zcela poškozený.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_left" formatted="false">Nastaví stereoskopické 3D vykreslování; dostupné jen ve vlastních konfiguracích s výchozím rozlišením 720p. Anaglyf používá pro každé oko jinou barvu, kterou odfiltrují vhodné brýle. Režim Vedle sebe běžně podporují aplikace pro VR. Režim Nad sebou je bližší nativnímu stereoskopickému výstupu, ale podporuje jej méně aplikací.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_right" formatted="false">Nastaví stereoskopické 3D vykreslování; dostupné jen ve vlastních konfiguracích s výchozím rozlišením 720p. Anaglyf používá pro každé oko jinou barvu, kterou odfiltrují vhodné brýle. Režim Vedle sebe běžně podporují aplikace pro VR. Režim Nad sebou je bližší nativnímu stereoskopickému výstupu, ale podporuje jej méně aplikací.</string>
+    <string name="core_help_system_date_format" formatted="false">Vyberte formát data PS3.</string>
+    <string name="core_help_core_debug_console_mode" formatted="false">Zvýší dostupnou systémovou paměť na úroveň konzole DECR nebo vyšší. Některý software se pak chová jinak než na běžné prodávané konzoli.</string>
+    <string name="core_help_video_debug_output" formatted="false">Povolí vestavěnou funkci ladění vybraného rozhraní API.
+Způsobí vážné snížení výkonu, zejména u Vulkan.
+Užitečné pouze pro vývojáře.
+Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_video_debug_overlay" formatted="false">Poskytuje grafické překrytí různých informací o ladění.
+Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_net_derive_mac_from_psid" formatted="false">Odvoďte MAC adresu z PSID.</string>
+    <string name="core_help_video_disable_asynchronous_memory_manager" formatted="false">Vynutí přímé provádění volání správy paměti hostitele místo asynchronního zpracování. V některých hrách může výrazně snížit výkon a způsobit zadrhávání. Určeno pouze vývojářům pro ladění ochrany paměti mezipaměti textur.</string>
+    <string name="core_help_video_disable_fifo_reordering" formatted="false">Zcela vypne optimalizace RSX FIFO. Příkazy vykreslování se zpracují v pořadí přijetí jednotkou DMA.</string>
+    <string name="core_help_video_disable_hardware_colorspace_remapping" formatted="false">Zakáže použití hardwarově nativních formátů přemapování barevného prostoru, jako jsou přípony _sRGB a _SNORM.
+Vypnutí této možnosti zvyšuje přesnost ve srovnání se PS3, ale může také způsobit určitý šum kvůli tomu, jak funguje softwarová emulace.</string>
+    <string name="core_help_video_disable_msl_fast_math" formatted="false">Deaktivuje Rychlý Math pro MSL shadery, které mohou porušovat standard IEEE 754.
+Jeho deaktivace může opravit některé artefakty, zejména na GPU Apple, na úkor výkonu.</string>
+    <string name="core_help_video_disable_zcull_occlusion_queries" formatted="false">Vypne dotazy na zakrytí a mírně až středně zvýší výkon. Může narušit určování viditelnosti objektů, způsobit chybějící geometrii nebo výrazné doskakování obrazu.</string>
+    <string name="core_help_video_disable_on_disk_shader_cache" formatted="false">Zakáže načítání a ukládání shaderů z a do mezipaměti shaderů v datovém adresáři.</string>
+    <string name="core_help_core_disable_spu_getllar_spin_optimization" formatted="false">Vypne optimalizaci aktivního čekání SPU GETLLAR. V mnoha hrách může výrazně snížit výkon a způsobit zadrhávání. Nutné pouze pro několik vybraných her.</string>
+    <string name="core_help_video_disable_vertex_cache" formatted="false">Zakáže mezipaměť vertexů.
+Může vyřešit chybějící nebo blikající grafický výstup.
+Může snížit výkon.</string>
+    <string name="core_help_video_disable_video_output" formatted="false">Vypne veškerý obrazový výstup a vykreslování grafiky PS3. Slouží pouze k vývojářskému měření výkonu CELL.</string>
+    <string name="core_help_video_disable_vulkan_memory_allocator" formatted="false">Vypne vlastní alokátor paměti Vulkan a vrátí se k přímým voláním VkAllocateMemory/VkFreeMemory.</string>
+    <string name="core_help_net_dns_address" formatted="false">DNS používané k překladu názvů hostitelů podle aplikací.</string>
+    <string name="core_help_video_driver_wake_up_delay" formatted="false">Řídí, jak dlouho trvá, než RSX začne zpracovávat po probuzení procesorem Cell.
+Zvýšení zpoždění probuzení zlepšuje stabilitu, ale velmi vysoké hodnoty mohou snížit výkon RSX/GPU.
+Doporučuje se upravovat tuto hodnotu v krocích po 20 µs až 40 µs, dokud není dosaženo nejlepší hodnoty pro optimální stabilitu.</string>
+    <string name="core_help_audio_dump_to_file" formatted="false">Uloží veškerý zvuk jako soubor raw wave. Pokud si nejste jisti, ponechte toto políčko nezaškrtnuté.</string>
+    <string name="core_help_vfs_empty_dev_hdd0_tmp" formatted="false">Vyžadováno pro některé Homebrew nebo Game Mods.
+Pokud si nejste jisti, tuto možnost nepoužívejte</string>
+    <string name="core_help_video_emulate_special_depth_comparison" formatted="false">Emulujte operace porovnávání hloubky, kde se chování hardwaru stolního počítače liší od PS3, obvykle režimy porovnání EQUAL.
+Opravuje nadměrné blikání stínů a Z-boj v některých hrách.
+Nejzřetelnější je to v některých hrách, kde se formát hloubky před průchodem Z liší od formátu hloubky rasterizace, což je scénář, který na vyhovujícím stolním hardwaru nikdy nebude fungovat správně.</string>
+    <string name="core_help_audio_enable_buffering" formatted="false">Zapne zvukovou vyrovnávací paměť. Omezí praskání a výpadky, ale zvýší zpoždění zvuku.</string>
+    <string name="core_help_net_clans_enabled" formatted="false">Povolte připojení k serveru klanů.
+Ovlivňuje pouze hry podporující funkci Clans.</string>
+    <string name="core_help_core_spu_reservation_busy_waiting_enabled" formatted="false">Zapne aktivní čekání SPU RdEventStat. Zvýší vytížení CPU a v některých hrách pomůže procesorům s mnoha vlákny (12 a více).</string>
+    <string name="core_help_miscellaneous_enable_gamemode" formatted="false">Aktivujte herní režim Feral Interactive.
+Jedná se o sérii optimalizací CPU a GPU a může potenciálně zvýšit výkon hry na některých systémech.</string>
+    <string name="core_help_vfs_enable_host_root" formatted="false">Vyžadováno pro některé Homebrew.
+Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_audio_enable_time_stretching" formatted="false">Zapne časové roztažení zvuku; vyžaduje zapnutou vyrovnávací paměť. Dále omezí praskání a výpadky, ale na pomalejších CPU může výrazně snížit kvalitu zvuku.</string>
+    <string name="core_help_net_upnp_enabled" formatted="false">Povolit UPNP.
+To automaticky přepošle porty vázané na 0.0.0.0, pokud má váš router povoleno UPNP.</string>
+    <string name="core_help_system_enter_button_assignment" formatted="false">Tlačítko používané pro enter/accept/confirm v systémových dialozích.
+Změňte toto, chcete-li místo toho používat tlačítko Kruh, což je výchozí konfigurace na japonských systémech a v mnoha japonských hrách.
+V těchto případech může přiřazení křížového tlačítka často vést k nejasnostem.</string>
+    <string name="core_help_video_vulkan_exclusive_fullscreen_mode" formatted="false">Určuje režim celé obrazovky, který RPCS3 požaduje od ovladače při použití Vulkanu. Automatický režim nechá rozhodnout ovladač; ostatní možnosti doporučí výhradní režim nebo režim bez okrajů. Upřednostnění režimu bez okrajů může pomoci s potížemi při streamování hry nebo s nesprávným zapínáním HDR systémem.</string>
+    <string name="core_help_miscellaneous_exit_rpcs3_when_process_finishes" formatted="false">Automaticky zavřít RPCS3 při zavření hry nebo když se hra sama zavře.</string>
+    <string name="core_help_core_rsx_fifo_fetch_accuracy" formatted="false">\"Rychlý\" je nejméně přesné nastavení, RSX neemuluje atomový buffer FIFO.
+\"Atomický\" výrazně prospívá stabilitě v mnoha hrách s malým omezením výkonu.
+\"Atomický &amp; Ordered\" je nejpřesnější, ale je nejpomalejší a bez větších výhod stability ve hrách.</string>
+    <string name="core_help_video_force_cpu_blit" formatted="false">Vynutí emulaci všech operací blitů a manipulace s obrázky na CPU.
+Vyžaduje, aby byla ve většině případů povolena také možnost \'Zapisovat barevné buffery\', aby se předešlo chybějící grafice.
+Výrazně snižuje výkon, ale v některých případech je přesnější.
+Toto nastavení přepíše možnost \'GPU textury škálování\'.</string>
+    <string name="core_help_video_force_high_precision_z_buffer" formatted="false">Užitečné pouze při ladění rozdílů v hardwaru GPU.
+Pro běžné uživatele to není nutné.
+Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_video_force_hardware_msaa_resolve" formatted="false">Vynutí použití hardwarového slučování vzorků MSAA na hostitelském GPU. Snižuje výkon a může způsobit grafické chyby, ale se zapnutým MSAA může nabídnout ostřejší obraz.</string>
+    <string name="core_help_video_framebuffer_aliasing_heuristic_bias" formatted="false">Řídí, jak RPCS3 řeší cíle vykreslení, kde je barva a hloubka alias stejná paměť. Auto se doporučuje pro většinu her.
+· Auto je stávající chování, zaujaté směrem k hloubce.
+· Upřednostnit barvu zachová barevnou vazbu, když je povolen barevný zápis a hloubkový zápis není. Opravuje chybějící geometrii v některých odložených rendererech (např. Starhawk) za cenu vynechání testu hloubky pro dané kreslení.
+· Upřednostnit hloubku je prozatím stejný jako Auto.</string>
+    <string name="core_help_video_frame_limit" formatted="false">Vypnuto je nejrychlejší možností.
+Použití omezovače snímků přidá další režii a zpomalí hru. Některé hry však spadnou, pokud je snímková frekvence příliš vysoká.
+Nativní PS3 by se mělo používat pouze v případě, že Auto nefunguje správně, protože může způsobit problémy s rychlostí snímků.
+Nekonečný přidává pozitivní zpětnovazební smyčku, která přidává další signál vblank na snímek, což umožňuje, aby více her bylo neomezených fps.
+Zkušení uživatelé, kteří potřebují jiné limity rámců, by měli použít nastavení \"Druhý limit snímkové frekvence\" v konfiguračním souboru.</string>
+    <string name="core_help_video_fidelityfx_cas_sharpening_intensity" formatted="false">Určuje intenzitu doostření FidelityFX Super Rozlišení. Vyšší hodnoty dají ostřejší obraz, ale mohou způsobit grafické artefakty.</string>
+    <string name="core_help_input_output_ghltar_emulated_controller" formatted="false">Guitar Hero Live (GHL) Podpora ovladače kytary.
+Vyberte 1 nebo 2 ovladače, pokud hra vyžaduje ovladače GHL Guitar a nemáte skutečné kytarové ovladače.
+Vyberte Žádný, pokud hra podporuje DualShock nebo pokud máte skutečné kytarové ovladače.
+Skutečný kytarový ovladač lze použít současně s emulovaným kytarovým ovladačem.</string>
+    <string name="core_help_video_use_gpu_texture_scaling" formatted="false">Vynutit všechny operace přenosu textur, změny měřítka a převodu na GPU.
+V některých případech může způsobit poškození textury.</string>
+    <string name="core_help_video_handle_rsx_memory_tiling" formatted="false">Při zápisu dat GPU do paměti vm dodržujte konfiguraci rozložení paměti RSX.
+To může opravit poškození grafiky pozorované, když jsou povoleny možnosti Číst barvu nebo Hloubku čtení.</string>
+    <string name="core_help_core_hook_static_functions" formatted="false">Zachytává některé funkce, například memcpy, a nahrazuje je implementacemi na vyšší úrovni. Experimentální; nemusí mít účinek nebo může narušit chod hry.</string>
+    <string name="core_help_net_internet_enabled" formatted="false">Pokud je nastaveno na Připojeno, RPCS3 umožní programům používat vaše internetové připojení.</string>
+    <string name="core_help_input_output_io_debug_overlay" formatted="false">Zobrazí grafický překryv s hodnotami vstupu ovladače prvního hráče. Je viditelný pouze při vypnutém ladicím překryvu. Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_net_ip_swap_list" formatted="false">Seznam výměny DNS.
+K dispozici pouze ve vlastních konfiguracích.</string>
+    <string name="core_help_input_output_keyboard" formatted="false">Některé hry podporují zadávání pomocí nativní klávesnice.
+Základní bude v těchto případech fungovat.</string>
+    <string name="core_help_system_keyboard_type" formatted="false">Nastaví použité rozložení klávesnice.
+V současné době jsou plně podporovány pouze americké, japonské a německé rozvržení.</string>
+    <string name="core_help_system_language" formatted="false">Některé hry se nemusí spustit, pokud systémový jazyk není k dispozici ve hře samotné.
+Ostatní hry automaticky přepnou jazyk na to, co je zde vybráno.
+Doporučuje se ponechat to na jazyku podporovaném hrou.</string>
+    <string name="core_help_system_license_area" formatted="false">Oblast konzoly definuje licenční oblast PS3.
+V závislosti na oblasti licence nemusí některé hry fungovat.</string>
+    <string name="core_help_vfs_limit_disk_cache_size" formatted="false">Automaticky odebere starší soubory z mezipaměti disku při spouštění, pokud se zvětší nad zadanou hodnotu.
+Hry mohou používat složku mezipaměti k dočasnému ukládání dat mimo systémovou paměť. Neslouží k dlouhodobému skladování.
+
+Toto nastavení je dostupné pouze v globální konfiguraci.</string>
+    <string name="core_help_core_llvm_precompilation" formatted="false">Při spuštění prohledá složku hry a předkompiluje další moduly PPU a SPU. Při vypnutí se moduly kompilují až podle potřeby, což může hru nečekaně a opakovaně přerušovat. Vypínejte pouze tehdy, chcete-li se rychleji dostat do hry.</string>
+    <string name="core_help_input_output_lock_overlay_input_to_player_one" formatted="false">Omezí ovládání nativního překryvu na prvního hráče.</string>
+    <string name="core_help_video_log_shader_programs" formatted="false">Vypíše shadery hry do souboru. Užitečné jen pro vývojáře. Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_audio_master_volume" formatted="false">Určuje celkovou hlasitost emulace. Hodnoty nad 100 % mohou snížit kvalitu zvuku.</string>
+    <string name="core_help_vfs_disk_cache_maximum_size_mb" formatted="false">Automaticky odebere starší soubory z mezipaměti disku při spouštění, pokud se zvětší nad zadanou hodnotu.
+Hry mohou používat složku mezipaměti k dočasnému ukládání dat mimo systémovou paměť. Neslouží k dlouhodobému skladování.
+
+Toto nastavení je dostupné pouze v globální konfiguraci.</string>
+    <string name="core_help_core_max_llvm_compile_threads" formatted="false">Omezuje maximální počet vláken použitých pro počáteční kompilaci modulu PPU a SPU.
+Snižte tuto hodnotu, abyste zvýšili výkon jiných otevřených aplikací.
+Výchozí nastavení používá všechna dostupná vlákna.</string>
+    <string name="core_help_core_max_cpu_preempt_count" formatted="false">Snižuje využití procesoru a spotřebu energie a prodlužuje výdrž baterie v mobilních zařízeních. (0 znamená zakázáno)
+Vyšší hodnoty způsobí výraznější efekt, ale mohou způsobit problémy se zvukem nebo výkonem. Doporučuje se hodnota 50 nebo méně.
+Tato možnost si vynutí limit FPS, protože je aktivní, když je snímková frekvence stabilní.
+Čím lehčí je hra na hardware, tím více energie šetří. (dokud nebude dosaženo hranice počtu preempcí)</string>
+    <string name="core_help_core_max_spurs_threads" formatted="false">Omezuje maximální počet vláken SPURS v každé skupině vláken.
+V některých případech může zlepšit výkon, zejména na systémech s omezeným počtem hardwarových vláken.
+Omezení počtu vláken pravděpodobně způsobí pády; je doporučeno ponechat tuto výchozí hodnotu.</string>
+    <string name="core_help_core_mfc_commands_shuffling_limit" formatted="false">Zdrží každý lichý příkaz MFC, počká alespoň na dva čekající příkazy a provede je v náhodném pořadí. Aktuálně vyžaduje některý z interpretů SPU. Výrazně snižuje výkon! Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_core_mfc_debug" formatted="false">Vytváří protokoly MFC.
+Užitečné pouze pro vývojáře.
+Toto nikdy nepoužívejte.</string>
+    <string name="core_help_audio_microphone_devices" formatted="false">Standardní by se měl používat pro většinu her.
+SingStar emuluje zařízení SingStar a měl by být používán s hrami SingStar.
+Fyzický SingStar by se měl používat pouze se zařízením REAL SingStar s hrami SingStar.
+Rocksmith by měl být použit s hardwarovým klíčem Rocksmith.</string>
+    <string name="core_help_audio_microphone_type" formatted="false">Standardní by se měl používat pro většinu her.
+SingStar emuluje zařízení SingStar a měl by být používán s hrami SingStar.
+Fyzický SingStar by se měl používat pouze se zařízením REAL SingStar s hrami SingStar.
+Rocksmith by měl být použit s hardwarovým klíčem Rocksmith.</string>
+    <string name="core_help_input_output_emulated_midi_devices" formatted="false">Vyberte až 3 emulovaná MIDI zařízení a jejich typy.</string>
+    <string name="core_help_video_minimum_scalable_dimension" formatted="false">Pouze framebuffery větší než tato velikost budou upscalovány.
+Zvýšení této hodnoty může vyřešit problémy s chybějící grafikou při převzorkování, zvláště když je povolena funkce Zapisovat barevné buffery.
+Pokud si nejste jisti, tuto možnost neměňte.</string>
+    <string name="core_help_input_output_mouse_based_gyro_enabled" formatted="false">Při spuštění hry zapne emulaci gyroskopu myší. Kdykoli ji lze přepnout přiřazenou zkratkou. Podržením pravého tlačítka myši aktivujete vstup: pohyb myši ovládá osy X a Z, kolečko osu Y. Uvolněním tlačítka se hodnoty pohybu vynulují.</string>
+    <string name="core_help_input_output_mouse_debug_overlay" formatted="false">Poskytuje grafické překrytí vstupními hodnotami myši.
+Toto se zobrazí pouze v případě, že jsou ostatní překryvné vrstvy ladění zakázány.
+Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_input_output_mouse" formatted="false">Některé hry podporují nativní vstup myší.
+V těchto případech bude fungovat Základní nebo Raw.</string>
+    <string name="core_help_input_output_move" formatted="false">Obslužný program PS PS Move se doporučuje pro oficiální ovladače PS PS Move.</string>
+    <string name="core_help_video_msaa" formatted="false">Emuluje rozložení vícenásobného vzorkování PS3. Může vyřešit jinak obtížně odstranitelné grafické chyby. Podle GPU způsobí malé až střední snížení výkonu.</string>
+    <string name="core_help_video_multithreaded_rsx" formatted="false">Přesune některé operace RSX na druhé vlákno. Zlepšuje výkon procesorů s mnoha jádry. Slabší CPU může naopak zpomalit kvůli dodatečné zátěži pracovního vlákna.</string>
+    <string name="core_help_audio_music_handler" formatted="false">V současné době se používá pouze pro emulaci cellMusic.
+Chcete-li použít výchozí výstupní zařízení vašeho operačního systému, vyberte Qt.
+Nemusí být možné přehrát všechny zvukové formáty.</string>
+    <string name="core_help_core_ppu_threads" formatted="false">Ovlivňuje maximální počet souběžně běžících vláken PPU, hodnota 1 má velmi nízkou kompatibilitu s hrami.
+2 je výchozí, pokud si nejste jisti, toto nastavení neměňte.
+Upozornění: Změna této hodnoty zneplatní kompilovanou mezipaměť PPU/SPU. Kompletní kompilace modulu bude opakována při příštím spuštění.</string>
+    <string name="core_help_video_output_scaling_mode" formatted="false">Filtruje výsledný obraz. Nejbližší nepoužívá filtr, bilineární filtr obraz vyhlazuje a FidelityFX Super Rozlišení vylepšuje zvětšený obraz. Při nižším vnitřním rozlišení než rozlišení okna zajistí zvětšení FidelityFX. Může způsobit grafické artefakty a zatím nepodporuje stereoskopický 3D výstup.</string>
+    <string name="core_help_input_output_keep_pads_connected" formatted="false">Zobrazuje všechny nakonfigurované pady jako vždy připojené ve hře, i když jsou fyzicky odpojeny.</string>
+    <string name="core_help_input_output_pad_handler_mode" formatted="false">Jedno vlákno: všechny obsluhy ovladačů běží postupně ve stejném vlákně. Více vláken: každá obsluha ovladače má vlastní vlákno. Vícevláknový režim používejte jen s dostatečnou rezervou vláken CPU.</string>
+    <string name="core_help_miscellaneous_pause_emulation_during_home_menu" formatted="false">Je-li povoleno, otevření domovské nabídky také pozastaví emulaci.
+Zatímco většina her se při zobrazení domovské nabídky pozastaví, některé nikoli.
+V takovém případě může být užitečné pozastavit emulaci, kdykoli je otevřena domovská nabídka.</string>
+    <string name="core_help_miscellaneous_pause_emulation_on_rpcs3_focus_loss" formatted="false">Automaticky pozastavit emulaci, když RPCS3 ztratí pozornost nebo je aplikace neaktivní, aby se šetřila energie a snížilo využití procesoru.
+Pamatujte, že pozastavení emulace obecně není dokonalé a nemusí být kompatibilní se všemi hrami.
+Přestože v současné době také pozastavuje hraní, nedoporučuje se na něj spoléhat, protože toto chování se může v budoucnu změnit a není účelem tohoto nastavení.</string>
+    <string name="core_help_core_enable_performance_report" formatted="false">Po zastavení emulátoru změřte určité události a vytiskněte graf. Nepovolujte, pokud k tomu nebudete vyzváni.</string>
+    <string name="core_help_video_performance_overlay_center_horizontally" formatted="false">Vodorovně vycentruje překryv výkonu a přepíše vodorovný okraj.</string>
+    <string name="core_help_video_performance_overlay_center_vertically" formatted="false">Vertikálně vycentruje překryv výkonu a přepíše svislý okraj.</string>
+    <string name="core_help_video_performance_overlay_detail_level" formatted="false">Řídí množství informací zobrazených na překryv výkonu.</string>
+    <string name="core_help_video_performance_overlay_enabled" formatted="false">Povolí nebo zakáže překryv výkonu.</string>
+    <string name="core_help_video_performance_overlay_show_header" formatted="false">V horní části překryvu výkonu zobrazí aplikaci, sestavení a verzi jádra, dole řádky CPU a GPU.</string>
+    <string name="core_help_video_performance_overlay_font_size_px" formatted="false">Nastaví velikost písma překryvu výkonu (měřeno v pixelech).</string>
+    <string name="core_help_video_performance_overlay_framerate_datapoints" formatted="false">Nastavuje množství datových bodů použitých v grafu snímkové frekvence.</string>
+    <string name="core_help_video_performance_overlay_framerate_graph_detail_level" formatted="false">Řídí množství informací zobrazených na překryv výkonu.</string>
+    <string name="core_help_video_performance_overlay_enable_framerate_graph" formatted="false">Povolí nebo zakáže graf snímkové frekvence.</string>
+    <string name="core_help_video_performance_overlay_frametime_datapoints" formatted="false">Nastavuje množství datových bodů použitých v grafu frametime.</string>
+    <string name="core_help_video_performance_overlay_frametime_graph_detail_level" formatted="false">Řídí množství informací zobrazených na překryv výkonu.</string>
+    <string name="core_help_video_performance_overlay_enable_frametime_graph" formatted="false">Povolí nebo zakáže graf doby snímků.</string>
+    <string name="core_help_video_performance_overlay_horizontal_margin" formatted="false">Nastavuje horizontální vzdálenost k okraji obrazovky vzhledem k kvadrantu obrazovky (měřeno v %).</string>
+    <string name="core_help_video_performance_overlay_vertical_margin" formatted="false">Nastaví vertikální vzdálenost k okraji obrazovky vzhledem k kvadrantu obrazovky (měřeno v %).</string>
+    <string name="core_help_video_performance_overlay_opacity" formatted="false">Nastavuje neprůhlednost překryvu výkonu (měřeno v %).</string>
+    <string name="core_help_video_performance_overlay_position" formatted="false">Nastaví pozici (kvadrant) překryvu výkonu na obrazovce.</string>
+    <string name="core_help_video_performance_overlay_metrics_update_interval_ms" formatted="false">Nastavuje časový interval, ve kterém se aktualizuje překryvný výkon (měřeno v milisekundách).
+Nastavení na 16 milisekund obnoví překryv výkonu na zhruba 60 Hz.
+Obnovovací frekvence překryvu výkonu neovlivňuje statistiky snímkového grafu a může být pouze tak rychlá, jak to aktuální hra umožňuje.</string>
+    <string name="core_help_video_performance_overlay_use_window_space" formatted="false">Umístěte překrytí vzhledem k celé ploše okna, což umožňuje umístění mimo oblast renderování hry.</string>
+    <string name="core_help_miscellaneous_play_music_during_boot_sequence" formatted="false">Přehrávejte hudbu během spouštěcí sekvence, pokud je k dispozici.</string>
+    <string name="core_help_core_ppu_debug" formatted="false">Vytváří protokoly PPU.
+Užitečné pouze pro vývojáře.
+Toto nikdy nepoužívejte.</string>
+    <string name="core_help_core_ppu_decoder" formatted="false">Před prvním spuštěním znovu zkompiluje a uloží kód PPU hry pomocí rekompilátoru LLVM. Toto je zdaleka nejrychlejší možnost a měla by se používat vždy. Pokud narazíte na problémy s kompatibilitou, vraťte se k některému z interpretů a zkuste to znovu. Pokud si nejste jisti, použijte tuto možnost.</string>
+    <string name="core_help_core_ppu_reservation_priority_over_spus" formatted="false">Poskytněte PPU výhodu při provádění, když SPU používají rezervace. Toto nastavení je doporučeno pouze pro několik her pro zlepšení výkonu. NEPOUŽÍVEJTE jej bez doporučení z důvodu možného snížení výkonu.</string>
+    <string name="core_help_core_ppu_vector_nan_handling" formatted="false">Opravuje výsledky NaN ve vektorových instrukcích PPU. Pokud si nejste jisti, toto nastavení neměňte.</string>
+    <string name="core_help_video_accurate_zcull_stats" formatted="false">Změní chování synchronizace sestavy ZCULL. Experimentujte, abyste našli nejlepší možnost pro vaši hru. Pro většinu her se doporučuje přibližný režim. · Přesnost je nejpřesnější pro chování PS3. Vyžadováno pro přesné zobrazení v některých titulech, jako jsou Demon\'s Souls a The Darkness. · Přibližný je mnohem rychlejší způsob generování okluzních dat, která se nemusí vždy shodovat s tím, co by generoval PS3. Funguje dobře s většinou her PS3. · Volnější úplně změní metodu synchronizace a může výrazně zlepšit výkon v některých hrách nebo úplně zlomit jiné.</string>
+    <string name="core_help_core_preferred_spu_threads" formatted="false">Některé fáze SPU jsou citlivé na souběh vláken. Omezení jejich počtu může zmírnit čekání, zlepšit výkon a omezit zadrhávání v některých hrách. Pokud nižší hodnota výkon zhorší, ponechte automatickou volbu.</string>
+    <string name="core_help_miscellaneous_prevent_display_sleep_while_running_games" formatted="false">Zabraňte spánku displeje, když je spuštěna hra. To vyžaduje službu org.freedesktop.ScreenSaver D-Bus v systému Linux. Tato možnost bude deaktivována, pokud aktuální platforma nepodporuje ovládání spánku displeje.</string>
+    <string name="core_help_net_psn_country" formatted="false">Změní zemi RPCN.</string>
+    <string name="core_help_net_psn_status" formatted="false">Pokud je nastaveno na RPCN, RPCS3 použije server RPCN jako připojení PSN, pokud je hra podporována. Pokud je nastaveno na Simulované, RPCS3 se pokusí zfalšovat připojení PSN, ale jakýkoli skutečný pokus o použití funkce PSN může vést k chybám nebo selhání. Simulace je k dispozici pouze ve vlastních konfiguracích.</string>
+    <string name="core_help_video_read_color_buffers" formatted="false">Inicializuje paměť cíle vykreslování z paměti vm.</string>
+    <string name="core_help_video_read_depth_buffer" formatted="false">Inicializuje paměť cíle vykreslování z paměti vm.</string>
+    <string name="core_help_video_record_with_overlays" formatted="false">Umožňuje nahrávání s překryvy. To má vliv i na snímky obrazovky.</string>
+    <string name="core_help_video_relaxed_zcull_sync" formatted="false">Změní chování synchronizace sestavy ZCULL. Experimentujte, abyste našli nejlepší možnost pro vaši hru. Pro většinu her se doporučuje přibližný režim. · Přesnost je nejpřesnější pro chování PS3. Vyžadováno pro přesné zobrazení v některých titulech, jako jsou Demon\'s Souls a The Darkness. · Přibližný je mnohem rychlejší způsob generování okluzních dat, která se nemusí vždy shodovat s tím, co by generoval PS3. Funguje dobře s většinou her PS3. · Volnější úplně změní metodu synchronizace a může výrazně zlepšit výkon v některých hrách nebo úplně zlomit jiné.</string>
+    <string name="core_help_video_renderdoc_compatibility_mode" formatted="false">Umožňuje použití klasických vyrovnávacích pamětí OpenGL, které umožňují nástrojům pro zachycení pracovat se RPCS3, např. RenderDoc. Také umožňuje Vulkan používat značky ladění pro hezčí zachycení Renderdocu. Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_video_renderer" formatted="false">Vulkan se doporučuje pro Android. OpenGL používá backend kompatibility OpenGL ES a může pomoci s grafickými problémy specifickými pro hry.</string>
+    <string name="core_help_video_resolution" formatted="false">Toto nastavení bude ignorováno, pokud je Měřítko rozlišení nastaveno na cokoliv jiného než 100 %! Nechte to na 1280x720. Každá hra PS3 je kompatibilní s tímto rozlišením. 1920x1080 používejte pouze v případě, že to hra podporuje. Zřídka kvůli chybám emulace se některé hry vykreslí pouze v nízkém rozlišení, jako je 480p.</string>
+    <string name="core_help_video_resolution_scale" formatted="false">Změní rozlišení hry o dané procento. Základní rozlišení je vždy 1280x720. Pokud chcete použít normální možnosti rozlišení, nastavte tuto hodnotu na 100 %. Hodnoty pod 100 % obvykle výkon nezlepší.</string>
+    <string name="core_help_video_screen_size_in_inches" formatted="false">Nastaví stereoskopické 3D vykreslování; dostupné jen ve vlastních konfiguracích s výchozím rozlišením 720p. Anaglyf používá pro každé oko jinou barvu, kterou odfiltrují vhodné brýle. Režim Vedle sebe běžně podporují aplikace pro VR. Režim Nad sebou je bližší nativnímu stereoskopickému výstupu, ale podporuje jej méně aplikací.</string>
+    <string name="core_help_input_output_load_sdl_gamecontroller_mappings" formatted="false">Načte databázi SDL GameController pro lepší kompatibilitu ovladačů. Používá se jen při obsluze ovladačů přes SDL.</string>
+    <string name="core_help_core_set_daz_and_ftz" formatted="false">Nastavuje speciální příznaky MXCSR pro ladění chyb v operacích SSE. Zrychluje výkon PPU za cenu přesnosti.</string>
+    <string name="core_help_video_shader_compiler_threads" formatted="false">Počet vláken, která se mají použít pro backend kompilátoru shaderu. Má vliv pouze tehdy, když je režim shaderu nastaven na jeden z asynchronních režimů.</string>
+    <string name="core_help_video_shader_loading_dialog_blur_effect_strength" formatted="false">Mění intenzitu rozostření pozadí nativního dialogu načítání shaderů pro lepší čitelnost nebo vzhled.</string>
+    <string name="core_help_video_shader_loading_dialog_darkening_effect_strength" formatted="false">Mění intenzitu ztmavení pozadí nativního dialogu načítání shaderů pro lepší čitelnost nebo vzhled.</string>
+    <string name="core_help_video_shader_loading_dialog_allow_custom_background" formatted="false">Zobrazí obrázek na pozadí nativního dialogu nebo obrazovky načítání shaderů. Výchozí obrázek je /PS3_GAME/PIC1.PNG.</string>
+    <string name="core_help_video_shader_mode" formatted="false">Doporučená možnost. Pokud shader není v mezipaměti, nic se s ním nevykreslí, dokud se nezkompiluje. Části obrazu se proto mohou objevit se zpožděním.</string>
+    <string name="core_help_video_shader_precision" formatted="false">Řídí úroveň přesnosti generovaných shaderů. Nízká přesnost generuje mnohem rychlejší kód v závislosti na hardwaru, ale někdy může způsobit drobné vizuální závady nebo blikání.</string>
+    <string name="core_help_miscellaneous_show_analog_limiter_toggle_hint" formatted="false">Zobrazuje nápovědu k přepnutí analogového omezovače pomocí nativního překrytí.</string>
+    <string name="core_help_miscellaneous_show_autosave_autoload_hint" formatted="false">Zobrazí nápovědu automatického ukládání a načítání v nativním překryvu.</string>
+    <string name="core_help_miscellaneous_show_capture_hints" formatted="false">Zobrazí nápovědu pořizování snímků a nahrávání v nativním překryvu.</string>
+    <string name="core_help_miscellaneous_show_fatal_error_hints" formatted="false">Zobrazuje tipy pro závažné chyby pomocí nativního překrytí.</string>
+    <string name="core_help_miscellaneous_show_mouse_and_keyboard_toggle_hint" formatted="false">Zobrazuje nápovědu pro přepínání myši a klávesnice pomocí nativního překrytí.</string>
+    <string name="core_help_input_output_show_move_cursor" formatted="false">Zobrazuje nezpracovanou pozici vstupu PS PS Move. To může být velmi užitečné během kalibračních obrazovek.</string>
+    <string name="core_help_miscellaneous_show_ppu_compilation_hint" formatted="false">Zobrazuje nápovědu ke kompilaci modulů PPU pomocí nativního překrytí.</string>
+    <string name="core_help_miscellaneous_show_pressure_intensity_toggle_hint" formatted="false">Zobrazuje nápovědu pro přepínání intenzity tlaku pomocí nativního překrytí.</string>
+    <string name="core_help_miscellaneous_show_rpcn_popups" formatted="false">Zobrazit vyskakovací okna seznamu přátel RPCN.</string>
+    <string name="core_help_miscellaneous_show_shader_compilation_hint" formatted="false">Zobrazuje nápovědu ke kompilaci shaderů pomocí nativního překrytí.</string>
+    <string name="core_help_miscellaneous_show_trophy_popups" formatted="false">Zobrazí oznámení při odemčení trofeje.</string>
+    <string name="core_help_miscellaneous_silence_all_logs" formatted="false">Zastavte zápis jakýchkoli protokolů po spuštění hry. Nepoužívejte, pokud si nemyslíte, že je to nutné.</string>
+    <string name="core_help_core_sleep_timers_accuracy" formatted="false">Mění přesnost dob uspání. Volba Stejné jako hostitelský systém zachovává přesnost operačního systému, Všechny časovače se ji snaží zlepšit. Pouze usleep omezuje úpravy na systémové volání usleep. Výkon se může změnit neočekávaným způsobem.</string>
+    <string name="core_help_core_spu_block_size" formatted="false">Řídí analyzátor SPU, zejména velikost zkompilovaných jednotek. Mega a Giga mohou zlepšit výkon spojením menších jednotek do větších; počet jednotek klesne, ale jejich velikost vzroste. Pro nejlepší kompatibilitu zvolte Bezpečný.</string>
+    <string name="core_help_core_spu_cache" formatted="false">Před spuštěním překompiluje a ukládá do mezipaměti kód SPU hry pomocí rekompilátoru LLVM, což zvyšuje dobu spouštění navíc. Jedná se o nejrychlejší možnost s velmi dobrou kompatibilitou. Pokud se setkáte s problémy, použijte rekompilátor ASMJIT.</string>
+    <string name="core_help_core_spu_debug" formatted="false">Vytváří protokoly SPU. Užitečné pouze pro vývojáře. Toto nikdy nepoužívejte.</string>
+    <string name="core_help_core_spu_decoder" formatted="false">Před spuštěním překompiluje a ukládá do mezipaměti kód SPU hry pomocí rekompilátoru LLVM, což zvyšuje dobu spouštění navíc. Jedná se o nejrychlejší možnost s velmi dobrou kompatibilitou. Pokud se setkáte s problémy, použijte rekompilátor ASMJIT.</string>
+    <string name="core_help_core_spu_loop_detection" formatted="false">Pokuste se detekovat podmínky smyčky v jádrech SPU a použijte je jako rady pro plánování. Zlepšuje výkon a snižuje využití procesoru. Ve vzácných případech může způsobit vážné zasekávání zvuku.</string>
+    <string name="core_help_core_spu_profiler" formatted="false">Je-li povoleno, výkon SPU se měří za běhu. Povolit pouze na žádost vývojáře, protože když je povoleno, samo o sobě trochu snižuje výkon.</string>
+    <string name="core_help_miscellaneous_start_games_in_fullscreen_mode" formatted="false">Automaticky přepne okno hry na celou obrazovku. Dvojitým kliknutím na okno hry nebo stisknutím Alt+Enter přepnete režim celé obrazovky a okna.</string>
+    <string name="core_help_miscellaneous_automatically_start_games_after_boot" formatted="false">Nechte tuto možnost povolenou, pokud nejste vývojář.</string>
+    <string name="core_help_savestate_start_paused" formatted="false">Načte uložený stav a pozastaví emulaci na prvním snímku. Hráč se tak může připravit, než hra začne pokračovat.</string>
+    <string name="core_help_video_3d_display_enabled" formatted="false">Nastaví stereoskopické 3D vykreslování; dostupné jen ve vlastních konfiguracích s výchozím rozlišením 720p. Anaglyf používá pro každé oko jinou barvu, kterou odfiltrují vhodné brýle. Režim Vedle sebe běžně podporují aplikace pro VR. Režim Nad sebou je bližší nativnímu stereoskopickému výstupu, ale podporuje jej méně aplikací.</string>
+    <string name="core_help_video_3d_display_mode" formatted="false">Nastaví stereoskopické 3D vykreslování; dostupné jen ve vlastních konfiguracích s výchozím rozlišením 720p. Anaglyf používá pro každé oko jinou barvu, kterou odfiltrují vhodné brýle. Režim Vedle sebe běžně podporují aplikace pro VR. Režim Nad sebou je bližší nativnímu stereoskopickému výstupu, ale podporuje jej méně aplikací.</string>
+    <string name="core_help_video_stretch_to_display_area" formatted="false">Přepíše poměr stran a roztáhne obraz na celou plochu zobrazení.</string>
+    <string name="core_help_video_strict_rendering_mode" formatted="false">Vynucuje přísnou shodu se specifikací API. V některých hrách může dojít ke snížení výkonu. Dokáže vyřešit vzácné případy chybějící grafiky a blikání. Pokud si nejste jisti, tuto možnost nepoužívejte.</string>
+    <string name="core_help_video_strict_texture_flushing" formatted="false">Vynutí vyprazdňování textur i tehdy, kdy není nutné nebo správné. Může způsobit grafické artefakty, ale pomáhá při ladění některých problémů s mezipamětí textur.</string>
+    <string name="core_help_savestate_suspend_emulation_savestate_mode" formatted="false">Když je tento režim zapnutý, emulace se při ukládání ukončí a soubor savestate je po načtení skryt, což zabraňuje opětovnému použití RPCS3. Tento režim je jako hibernace emulace: pokud nechcete při hraní hry podvádět pomocí savestates, zvažte použití tohoto režimu. Všimněte si, že soubor savestate nezmizel úplně, jen jej RPCS3 ignoruje. V případě potřeby jej můžete ručně znovu spustit.</string>
+    <string name="core_help_video_texture_lod_bias_addend" formatted="false">Mění přesnost vzorkování textury. (Malé změny mají velký účinek.) Pokud si nejste jisti, nepoužívejte hodnoty mimo rozsah -12 až +12. -3 až +3 je dost pro většinu případů použití</string>
+    <string name="core_help_core_thread_scheduler_mode" formatted="false">Kontrolujte, jak RPCS3 využívá vlákna vašeho systému. Každá možnost silně závisí na hře a na vašem CPU. Doporučuje se vyzkoušet každou možnost, abyste zjistili, která funguje nejlépe. Změna plánovače vláken není podporována u procesorů s méně než 12 vlákny.</string>
+    <string name="core_help_system_time_format" formatted="false">Vyberte formát času PS3.</string>
+    <string name="core_help_audio_time_stretching_threshold" formatted="false">Práh naplnění zvukové vyrovnávací paměti v procentech. Pod touto hodnotou se spustí časové roztažení zvuku.</string>
+    <string name="core_help_input_output_turntable_emulated_controller" formatted="false">Podpora gramofonových ovladačů DJ Hero. Pokud je hra vyžaduje a nemáte fyzické ovladače, vyberte 1 nebo 2 ovladače. Pokud hra podporuje DualShock nebo máte fyzické ovladače, vyberte Žádný. Fyzický gramofonový ovladač lze používat současně s emulovaným.</string>
+    <string name="core_help_miscellaneous_use_native_user_interface" formatted="false">Umožňuje použití nativního HUD v okně hry, které může komunikovat s herními ovladači. Když je zakázáno, použijí se místo něj běžné dialogy Qt. V současné době podporuje klávesnice na obrazovce pouze anglické rozložení kláves.</string>
+    <string name="core_help_video_vulkan_use_re_bar_for_gpu_uploads" formatted="false">Vulkan se pokusí využít adresní prostor PCI-e Resizable BAR pro přenos časově citlivých dat do GPU. Při nízké základní snímkové frekvenci může výrazně zrychlit karty NVIDIA. U her s velmi vysokou snímkovou frekvencí může naopak snížit výkon GPU všech výrobců.</string>
+    <string name="core_help_miscellaneous_use_recursive_scan" formatted="false">Umožňuje použití rekurzivního skenování podsložek při skenování her z vybrané složky. Když je tato možnost zakázána, hry se kontrolují pouze ve vybrané složce.</string>
+    <string name="core_help_video_vblank_ntsc_fixup" formatted="false">Vynásobí rychlost VBLANK 1000/1001 pro hodnoty jako 59,94 Hz. Je známo, že opravuje rytmickou hru Space Channel 5 Part 2</string>
+    <string name="core_help_video_vblank_rate" formatted="false">Nastavuje frekvenci vertikálních zatemňovacích signálů, které emulátor vysílá. Ovlivňuje načasování událostí, které závisí na těchto signálech.</string>
+    <string name="core_help_video_vsync_mode" formatted="false">Umožňuje vertikální synchronizaci pro eliminaci trhání. Adaptivní režim – Preferuje udržení výkonu. Může přeskakovat snímky nebo dokonce trhat, aby nedošlo ke snížení snímkové frekvence hry. Plný režim – Žádné trhání není povoleno, i když je snížený výkon. Tento režim ve výchozím nastavení omezí vaši snímkovou frekvenci na obnovovací frekvenci displeje, pokud nebude přepsána na ovládacím panelu ovladače.</string>
+    <string name="core_help_video_vulkan_adapter" formatted="false">Na systémech s více GPU vyberte, který GPU se má použít v RPCS3, když používáte Vulkan. Při použití OpenGL to není potřeba.</string>
+    <string name="core_help_video_vulkan_asynchronous_queue_scheduler" formatted="false">Určuje plánování asynchronních výpočtů GPU při asynchronním streamování. Bezpečný režim lépe dodržuje specifikace za cenu určité zátěže CPU a funguje na všech zařízeních. Rychlý režim používá rychlejší, ale méně standardní řešení. Na GPU NVIDIA je interně vypnutý, protože způsobuje zatuhnutí GPU.</string>
+    <string name="core_help_video_vulkan_asynchronous_texture_streaming" formatted="false">Přenáší textury do GPU souběžně s 3D vykreslováním pomocí asynchronních výpočtů. Může zrychlit výkonnější GPU s volnou kapacitou. Funguje jen s Vulkanem a při dostatečně výkonném CPU výrazně těží ze zapnutého MTRSX.</string>
+    <string name="core_help_miscellaneous_window_title_format" formatted="false">Nastaví název okna hry. Změna názvu nebo přidání snímkové frekvence může způsobit, že chybný či zastaralý nahrávací software RPCS3 nerozpozná.</string>
+    <string name="core_help_video_write_color_buffers" formatted="false">Zapněte při chybějící grafice nebo rozbitém osvětlení ve hře. V některých případech sníží výkon a způsobí zadrhávání. Vyžadováno pro Demon’s Souls.</string>
+    <string name="core_help_video_write_depth_buffer" formatted="false">Zapisuje hodnoty vyrovnávací paměti hloubky do paměti vm.</string>
+    <string name="core_help_core_spu_xfloat_accuracy" formatted="false">Určuje přesnost zpracování vektorů s plovoucí řádovou čárkou v SPU. Opravuje chyby v různých hrách za cenu výkonu. Platí jen při dekodéru SPU nastaveném na Dynamický nebo LLVM.</string>
+    <string name="core_label_chinese_simplified">Čínština (zjednodušená)</string>
+    <string name="core_label_chinese_traditional">Čínština (tradiční)</string>
+    <string name="core_label_chinese_keyboard_simplified">Čínská klávesnice (zjednodušená)</string>
+    <string name="core_label_chinese_keyboard_traditional">Čínská klávesnice (tradiční)</string>
+    <string name="core_label_danish">Dánština</string>
+    <string name="core_label_danish_keyboard">Dánská klávesnice</string>
+    <string name="core_label_dutch">Nizozemština</string>
+    <string name="core_label_dutch_keyboard">Nizozemská klávesnice</string>
+    <string name="core_label_english_uk">Angličtina (Velká Británie)</string>
+    <string name="core_label_english_us">Angličtina (USA)</string>
+    <string name="core_label_english_keyboard_uk_standard">Anglická klávesnice (britská)</string>
+    <string name="core_label_english_keyboard_us_standard">Anglická klávesnice (americká)</string>
+    <string name="core_label_finnish">Finština</string>
+    <string name="core_label_finnish_keyboard">Finská klávesnice</string>
+    <string name="core_label_french">Francouzština</string>
+    <string name="core_label_french_keyboard">Francouzská klávesnice</string>
+    <string name="core_label_french_keyboard_belgium">Francouzská klávesnice (Belgie)</string>
+    <string name="core_label_french_keyboard_canada">Francouzská klávesnice (Kanada)</string>
+    <string name="core_label_french_keyboard_switzerland">Francouzská klávesnice (Švýcarsko)</string>
+    <string name="core_label_german">Němčina</string>
+    <string name="core_label_german_keyboard">Německá klávesnice</string>
+    <string name="core_label_german_keyboard_switzerland">Německá klávesnice (Švýcarsko)</string>
+    <string name="core_label_italian">Italština</string>
+    <string name="core_label_italian_keyboard">Italská klávesnice</string>
+    <string name="core_label_japanese">Japonština</string>
+    <string name="core_label_japanese_keyboard">Japonská klávesnice</string>
+    <string name="core_label_japanese_keyboard_kana_state">Japonská klávesnice (režim kana)</string>
+    <string name="core_label_korean">Korejština</string>
+    <string name="core_label_korean_keyboard">Korejská klávesnice</string>
+    <string name="core_label_norwegian">Norština</string>
+    <string name="core_label_norwegian_keyboard">Norská klávesnice</string>
+    <string name="core_label_other">Jiné</string>
+    <string name="core_label_polish">Polština</string>
+    <string name="core_label_polish_keyboard">Polská klávesnice</string>
+    <string name="core_label_portuguese_brazil">Portugalština (Brazílie)</string>
+    <string name="core_label_portuguese_portugal">Portugalština (Portugalsko)</string>
+    <string name="core_label_portuguese_keyboard_brazil">Portugalská klávesnice (Brazílie)</string>
+    <string name="core_label_portuguese_keyboard_portugal">Portugalská klávesnice (Portugalsko)</string>
+    <string name="core_label_russian">Ruština</string>
+    <string name="core_label_russian_keyboard">Ruská klávesnice</string>
+    <string name="core_label_scea">SCEA</string>
+    <string name="core_label_scee">SCEE</string>
+    <string name="core_label_sceh">SCEH</string>
+    <string name="core_label_scej">SCEJ</string>
+    <string name="core_label_scek">SCEK</string>
+    <string name="core_label_sch">SCH</string>
+    <string name="core_label_spanish">Španělština</string>
+    <string name="core_label_spanish_keyboard">Španělská klávesnice</string>
+    <string name="core_label_swedish">Švédština</string>
+    <string name="core_label_swedish_keyboard">Švédská klávesnice</string>
+    <string name="core_label_turkish">Turečtina</string>
+    <string name="core_label_turkish_keyboard">Turecká klávesnice</string>
+    <string name="core_help_video_display_aspect_override" formatted="false">Přepíše konečný poměr stran zobrazení v tisícinách (1778 = 16:9, 1333 = 4:3). Chcete-li použít poměr hry, nastavte jej na 0. Použijte jej pouze k přizpůsobení neobvyklých displejů telefonů nebo tabletů; nesprávná hodnota roztáhne obraz.</string>
+    <string name="core_help_video_shader_preset_path" formatted="false">Absolutní cesta k předvolbě shaderů RetroArch .slangp používané při režimu škálování výstupu Řetězec shaderů. Pro běžný výstup ponechte prázdné. Používejte kompatibilní předvolby; při neplatné cestě se zobrazí běžný obraz.</string>
+    <string name="core_label_async_shader_recompiler">Asynchronní rekompilátor shaderů</string>
+    <string name="core_label_async_with_shader_interpreter">Asynchronně s interpretem shaderů</string>
+    <string name="core_label_forced">Vynucené</string>
+    <string name="core_label_interpreter">Interpret</string>
+    <string name="core_label_interpreter_legacy">Interpret (starší)</string>
+    <string name="core_label_llvm_recompiler_legacy">Rekompilátor LLVM (starší)</string>
+    <string name="core_label_shader_recompiler">Rekompilátor shaderů</string>
+    <string name="core_setting_search">Možnosti vyhledávání</string>
+    <string name="core_setting_no_results">Žádné odpovídající možnosti</string>
+    <plurals name="library_game_count">
+        <item quantity="one">Celkem %1$d hra</item>
+        <item quantity="few">Celkem %1$d hry</item>
+        <item quantity="many">Celkem %1$d hry</item>
+        <item quantity="other">Celkem %1$d her</item>
+    </plurals>
+    <plurals name="install_dialog_items_progress">
+        <item quantity="one">Dokončené položky: %1$d z %2$d</item>
+        <item quantity="few">Dokončené položky: %1$d z %2$d</item>
+        <item quantity="many">Dokončené položky: %1$d z %2$d</item>
+        <item quantity="other">Dokončené položky: %1$d z %2$d</item>
+    </plurals>
+    <string name="direct_boot_add_game">Přidat hru ze složky</string>
+    <string name="direct_boot_added_success">Hra \"%1$s\" byla úspěšně přidána</string>
+    <string name="direct_boot_folder_resolve_failed">Nepodařilo se zjistit cestu ke složce</string>
+    <string name="direct_boot_no_param_sfo">PARAM.SFO nebyl nalezen ve vybrané složce</string>
+    <string name="direct_boot_invalid_title_id">Neplatný identifikátor hry</string>
+    <string name="direct_boot_link_failed">Nepodařilo se vytvořit odkaz pro přímé spuštění</string>
+    <string name="onboarding_games_folder_title">Složka s hrami</string>
+    <string name="onboarding_games_folder_desc">Vyberte složku s vašimi hrami PS3 (JB Folder, PS3_GAME, ISO, Disc)</string>
+    <string name="onboarding_status_choose_folder">Vybrat složku</string>
+    <string name="settings_tab_library">Knihovna</string>
+    <string name="settings_library_folders_title">Složky s hrami</string>
+    <string name="settings_library_folders_desc">Hry z těchto složek se zobrazí v knihovně a spustí se přímo, bez kopírování souborů do interního úložiště.</string>
+    <string name="settings_library_add_folder">Přidat složku s hrami</string>
+    <string name="settings_library_remove_folder">Odebrat složku</string>
+    <string name="settings_library_no_folders">Nebyly přidány žádné složky s hrami</string>
+    <string name="settings_library_folder_removed">Složka odstraněna z knihovny</string>
+    <string name="onboarding_permission_storage_title">Přístup k úložišti</string>
+    <string name="onboarding_permission_storage_desc">Přístup k úložišti zařízení pro přímé čtení herních souborů bez kopírování</string>
+    <string name="onboarding_permission_storage_grant">Udělit oprávnění</string>
+    <string name="onboarding_permission_storage_granted">Oprávnění uděleno</string>
+    <string name="settings_discord_rich_presence">Discord Rich Presence</string>
+    <string name="discord_title">Discord</string>
+    <string name="discord_rich_presence_title">Discord Rich Presence</string>
+    <string name="discord_intro">Připojte Discord a ukažte, že hrajete na EmuCoreC. Sami určujete, které podrobnosti o hře se sdílí.</string>
+    <string name="discord_connected_account">Připojený účet</string>
+    <string name="discord_connect">Připojit Discord</string>
+    <string name="discord_disconnect">Odpojit</string>
+    <string name="discord_open_server">Otevřít náš server Discord</string>
+    <string name="discord_privacy_title">Aktivita a soukromí</string>
+    <string name="discord_enabled">Integrace Discord</string>
+    <string name="discord_enabled_desc">Povolit EmuCoreC zveřejňovat vaši herní aktivitu</string>
+    <string name="discord_share_title">Zobrazovat název hry</string>
+    <string name="discord_share_title_desc">Zobrazí aktuální hru a její obal ve vašem stavu na Discordu</string>
+    <string name="discord_share_serial">Zobrazovat ID titulu</string>
+    <string name="discord_share_serial_desc">Zahrňte ID titulu PS3, například BLES00001</string>
+    <string name="discord_preview_title">Náhled stavu</string>
+    <string name="discord_preview_game_title">Název hry</string>
+    <string name="discord_preview_serial">ID titulu</string>
+    <string name="discord_privacy_note">Přihlášení používá Discord OAuth s PKCE. Přístupový token je šifrován pomocí Android Keystore a nikdy se neposílá na servery EmuCoreC.</string>
+    <string name="discord_status_disabled">Zakázáno</string>
+    <string name="discord_status_unavailable">SDK není v tomto sestavení k dispozici</string>
+    <string name="discord_status_disconnected">Nepřipojeno</string>
+    <string name="discord_status_authorizing">Čekání na autorizaci</string>
+    <string name="discord_status_connecting">Připojování…</string>
+    <string name="discord_status_connected">Připojeno</string>
+    <string name="discord_status_failed">Připojení se nezdařilo</string>
+    <string name="discord_friends_title">Přátelé v EmuCoreC</string>
+    <string name="discord_friends_empty">Žádní přátelé na Discordu právě nepoužívají EmuCoreC.</string>
+    <string name="discord_presence_library">Prochází knihovnu her</string>
+    <string name="discord_presence_private_game">Hraje hru na PS3</string>
+    <string name="discord_presence_paused">Pozastaveno</string>
+    <string name="discord_presence_playing">Hraje %1$s</string>
+    <string name="settings_discord_sdk_unavailable">Discord Social SDK není součástí tohoto sestavení.</string>
+    <string name="settings_discord_service_error">Pomocnou službu Discordu se nepodařilo spustit.</string>
+    <string name="settings_discord_token_error">Přihlašovací token Discordu se nepodařilo ochránit.</string>
+    <string name="drive_after_game">Po zavření hry</string>
+    <string name="drive_backup_now">Zálohovat nyní</string>
+    <string name="drive_cancel">Zrušit</string>
+    <string name="drive_category_cheats">Cheaty</string>
+    <string name="drive_category_patches">Nastavení pro jednotlivé hry</string>
+    <string name="drive_category_save_data">Data uložení</string>
+    <string name="drive_category_settings">Nastavení a ovládání</string>
+    <string name="drive_category_states">Trofeje</string>
+    <string name="drive_category_style">Vzhled</string>
+    <string name="drive_charging">Pouze při nabíjení</string>
+    <string name="drive_connect">Připojit Google Drive</string>
+    <string name="drive_core_warning">Tato záloha používá jinou verzi jádra. Některá data nemusí být kompatibilní.</string>
+    <string name="drive_delete">Smazat</string>
+    <string name="drive_delete_warning">Přesunout tuto zálohu do koše Google Drive? Místní uložení tím nebudou ovlivněna.</string>
+    <string name="drive_description">Zálohujte nastavení, data uložení, trofeje, cheaty a vzhled na svůj Google Drive. Hry, firmware, mezipaměti a přihlašovací data jsou vyloučeny.</string>
+    <string name="drive_disconnect">Odpojit</string>
+    <string name="drive_disconnect_warning">Automatické zálohy se zastaví. Kopie již uložené na Google Drive zůstanou. Odhlášení z vašeho profilu EmuCoreC tím neprovedete.</string>
+    <string name="drive_downloading">Stahování zálohy…</string>
+    <string name="drive_empty">Zatím žádné dokončené zálohy.</string>
+    <string name="drive_empty_description">Zde se zobrazí vaše dokončené zálohy. Vytvořte první kopii a mějte svá uložení a nastavení na svém Google Drive.</string>
+    <string name="drive_error_auth">Přístup ke Google Drive není dostupný. Znovu připojte svůj účet.</string>
+    <string name="drive_error_busy">Hra běží nebo se spouští. Záloha počká; obnovení proveďte až po zavření hry.</string>
+    <string name="drive_error_configuration">Google Drive je dočasně nedostupný. Zkuste to prosím později.</string>
+    <string name="drive_error_failed">Operaci se nepodařilo dokončit. Zkontrolujte připojení a účet Google a zkuste to znovu.</string>
+    <string name="drive_error_invalid">Záloha je poškozená nebo nepodporovaná. Nebyla obnovena.</string>
+    <string name="drive_error_missing">Tato záloha byla odebrána nebo již není přístupná.</string>
+    <string name="drive_error_network">Připojení bylo přerušeno. Nahrávání může pokračovat, jakmile bude dostupná síť.</string>
+    <string name="drive_error_quota">Váš Google Drive je plný. Uvolněte místo a zkuste to znovu.</string>
+    <string name="drive_error_space">V tomto zařízení není dost místa pro zápis. Uvolněte místo nebo zkontrolujte zvolené úložiště.</string>
+    <string name="drive_history">Historie záloh</string>
+    <string name="drive_hours">Každých %1$d h</string>
+    <string name="drive_include_save_data">Zahrnout data uložení a trofeje</string>
+    <string name="drive_last_backup">Poslední úspěšná záloha</string>
+    <string name="drive_manual">Ručně</string>
+    <string name="drive_open">Otevřít Google Drive</string>
+    <string name="drive_preparing">Příprava bezpečné kopie…</string>
+    <string name="drive_private">Soukromé zálohy ve vašem účtu Google</string>
+    <string name="drive_reconnect">Znovu připojit Google Drive</string>
+    <string name="drive_refresh">Aktualizovat</string>
+    <string name="drive_restore">Obnovit</string>
+    <string name="drive_restore_warning">Vybraná data nahradí odpovídající místní soubory. Nejprve se vytvoří záložní kopie pro obnovení. Před obnovením zastavte hru. Na jiném zařízení znovu vyberte své hry.</string>
+    <string name="drive_restored">Obnovení dokončeno. Znovu otevřete obrazovky, aby se obnovené nastavení načetlo.</string>
+    <string name="drive_restoring">Obnovování dat…</string>
+    <string name="drive_retention">Ponechat %1$d posledních kopií na zařízení</string>
+    <string name="drive_schedule">Automatické zálohy</string>
+    <string name="drive_schedule_note">Android může plánované zálohy odložit. Hry mají přednost. Automatické zálohy přeskakují nezměněná data.</string>
+    <string name="drive_settings_tab">Nastavení</string>
+    <string name="drive_title">Google Drive</string>
+    <string name="drive_transfer_amount">%1$s z %2$s</string>
+    <string name="drive_transfer_remaining">Zbývá přibližně %1$s</string>
+    <string name="drive_transfer_speed">%1$s/s</string>
+    <string name="drive_uploading">Nahrávání zálohy…</string>
+    <string name="drive_verifying">Kontrola integrity zálohy…</string>
+    <string name="drive_waiting">Čekání na síť, baterii nebo jinou operaci…</string>
+    <string name="drive_wifi">Pouze neomezená síť</string>
+    <string name="drive_working">Probíhá…</string>
+    <string name="my_lists_cloud_failed">Záloha se nezdařila. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="my_lists_cloud_hint">Přihlaste se ke svému profilu a zálohujte své seznamy.</string>
+    <string name="my_lists_cloud_synced">Vaše seznamy jsou uloženy ve vašem účtu a lze je obnovit na jiném zařízení.</string>
+    <string name="my_lists_cloud_title">Záloha do cloudu</string>
+    <string name="my_lists_empty_body">Otevřete katalog, klepněte na nabídku se třemi tečkami u hry a přidejte ji do jednoho ze svých seznamů.</string>
+    <string name="my_lists_empty_title">Zatím žádné hry</string>
+    <string name="my_lists_subtitle">Stavy, oblíbené a vaše sbírka her</string>
+    <string name="my_lists_title">Moje seznamy</string>
+    <string name="profile_accent_blue">Modrá</string>
+    <string name="profile_accent_crimson">Karmínová</string>
+    <string name="profile_accent_emerald">Smaragdová</string>
+    <string name="profile_accent_gold">Zlatá</string>
+    <string name="profile_accent_violet">Fialová</string>
+    <string name="profile_account_created">Účet vytvořen.</string>
+    <string name="profile_action_failed">Něco se pokazilo. Zkuste to prosím znovu.</string>
+    <string name="profile_auth_title">Váš účet EmuCoreC</string>
+    <string name="profile_backup_done">Seznamy zálohovány</string>
+    <string name="profile_block_player">Zablokovat hráče</string>
+    <string name="profile_blocked_empty">Žádní zablokovaní hráči.</string>
+    <string name="profile_blocked_title">Zablokovaní hráči</string>
+    <string name="profile_catalog_game_not_found">%1$s zatím není v katalogu her dostupná.</string>
+    <string name="profile_cloud_confirm_restore">Potvrdit obnovení</string>
+    <string name="profile_cloud_count">Cloud · %1$d</string>
+    <string name="profile_cloud_delete">Smazat cloudový profil</string>
+    <string name="profile_cloud_deleted">Cloudový profil smazán.</string>
+    <string name="profile_cloud_description">Uložte až 5 pojmenovaných profilů. Synchronizuje se pouze nastavení emulátoru a nastavení jednotlivých her. Vaše hry, firmware, data uložení, trofeje a vlastní ovladače zůstávají pouze v tomto zařízení a nesynchronizují se.</string>
+    <string name="profile_cloud_name">Název profilu</string>
+    <string name="profile_cloud_restore">Obnovit</string>
+    <string name="profile_cloud_restore_warning">Tím se nahradí nastavení emulátoru a nastavení jednotlivých her v tomto zařízení. Vaše hry, firmware, data uložení a trofeje se nezmění.</string>
+    <string name="profile_cloud_restored">Nastavení emulátoru obnoveno. Spusťte běžící hru znovu, aby se použilo.</string>
+    <string name="profile_cloud_save_current">Uložit aktuální nastavení</string>
+    <string name="profile_cloud_saved">Nastavení emulátoru bylo uloženo do vašeho profilu.</string>
+    <string name="profile_cloud_title">Nastavení emulátoru v cloudu</string>
+    <string name="profile_cloud_version">Aplikace %1$s · jádro %2$s</string>
+    <string name="profile_create_account">Vytvořit účet</string>
+    <string name="profile_device_android">Systém</string>
+    <string name="profile_device_app_core">Aplikace · jádro</string>
+    <string name="profile_device_current">Toto zařízení</string>
+    <string name="profile_device_delete">Smazat zařízení</string>
+    <string name="profile_device_deleted">Zařízení odebráno</string>
+    <string name="profile_device_gpu">Grafika</string>
+    <string name="profile_device_make_private">Skrýt z profilu</string>
+    <string name="profile_device_make_public">Zobrazit v profilu</string>
+    <string name="profile_device_private_done">Zařízení bylo skryto z vašeho profilu.</string>
+    <string name="profile_device_public_done">Zařízení je viditelné ve vašem profilu.</string>
+    <string name="profile_device_ram">Paměť</string>
+    <string name="profile_device_show">Zobrazit zařízení</string>
+    <string name="profile_device_soc">Procesor</string>
+    <string name="profile_devices_count">Zařízení · %1$d</string>
+    <string name="profile_devices_description">Podrobnosti o zařízení používají náhodný identifikátor aplikace, nikdy ID hardwaru. Sami určujete, zda bude zařízení viditelné ve vašem veřejném profilu.</string>
+    <string name="profile_devices_empty">Zatím žádná registrovaná zařízení.</string>
+    <string name="profile_devices_title">Vaše zařízení</string>
+    <string name="profile_display_name">Zobrazované jméno</string>
+    <string name="profile_done">Hotovo.</string>
+    <string name="profile_edit_name">Upravit</string>
+    <string name="profile_edit_name_description">Zvolte jméno, které ostatní hráči uvidí ve vyhledávání a žebříčcích.</string>
+    <string name="profile_email">E-mail</string>
+    <string name="profile_event_achievement">Trofej odemčena v %1$s</string>
+    <string name="profile_features_title">Funkce profilu</string>
+    <string name="profile_friend_accept">Přijmout žádost</string>
+    <string name="profile_friend_add">Přidat přítele</string>
+    <string name="profile_friend_added">Přítel přidán.</string>
+    <string name="profile_friend_pending">Žádost odeslána</string>
+    <string name="profile_friend_remove">Přátelé</string>
+    <string name="profile_friend_remove_action">Odebrat</string>
+    <string name="profile_friend_remove_confirm">Odebrat %1$s z přátel?</string>
+    <string name="profile_friend_remove_title">Odebrat přítele?</string>
+    <string name="profile_friend_removed">Přátelství zrušeno.</string>
+    <string name="profile_friend_request_sent">Žádost o přátelství odeslána.</string>
+    <string name="profile_friend_requests">Žádosti o přátelství</string>
+    <string name="profile_friend_requests_empty">Žádné příchozí žádosti.</string>
+    <string name="profile_friends_empty">Zatím žádní přátelé.</string>
+    <string name="profile_friends_title">Přátelé</string>
+    <string name="profile_game_last_played_format">Naposledy hráno %1$s</string>
+    <string name="profile_game_sessions_format">%1$d relací</string>
+    <string name="profile_games_empty">Zatím žádné hry</string>
+    <string name="profile_games_played">Odehrané hry</string>
+    <string name="profile_google_failed">Přihlášení přes Google se nezdařilo.</string>
+    <string name="profile_google_sign_in">Pokračovat přes Google</string>
+    <string name="profile_have_account">Již mám účet</string>
+    <string name="profile_leaderboard_empty">Zatím žádní hráči</string>
+    <string name="profile_leaderboard_games_format">%1$d her</string>
+    <string name="profile_leaderboard_load_failed">Žebříček se nepodařilo načíst.</string>
+    <string name="profile_leaderboard_no_results">Nenalezeni žádní odpovídající hráči.</string>
+    <string name="profile_leaderboard_refresh">Aktualizovat žebříček</string>
+    <string name="profile_leaderboard_search_help">Zadejte alespoň 2 znaky nebo celé ID, například EX-A7K4P2.</string>
+    <string name="profile_leaderboard_search_hint">Jméno nebo ID</string>
+    <string name="profile_more_games_failed">Další hry se nepodařilo načíst.</string>
+    <string name="profile_name_character_count">%1$d/32 znaků</string>
+    <string name="profile_name_updated">Zobrazované jméno aktualizováno.</string>
+    <string name="profile_need_account">Vytvořit účet</string>
+    <string name="profile_password">Heslo</string>
+    <string name="profile_password_reset_sent">E-mail pro obnovení hesla byl odeslán. Zkontrolujte svou schránku.</string>
+    <string name="profile_player">Hráč</string>
+    <string name="profile_player_blocked">Hráč zablokován.</string>
+    <string name="profile_player_card_brand">HRÁČSKÁ KARTA EmuCoreC</string>
+    <string name="profile_player_card_footer">Vzpomínky na PS3, sleduje EmuCoreC</string>
+    <string name="profile_player_card_share">Sdílet hráčskou kartu</string>
+    <string name="profile_player_card_share_text">Najdete mě na EmuCoreC: %1$s</string>
+    <string name="profile_player_id_format">ID hráče: %1$s</string>
+    <string name="profile_player_not_found">Hráč nenalezen</string>
+    <string name="profile_player_search_failed">Hráče se nepodařilo vyhledat.</string>
+    <string name="profile_player_unblocked">Hráč odblokován.</string>
+    <string name="profile_pro_badge">PRO</string>
+    <string name="profile_pro_updated">Profil Pro aktualizován.</string>
+    <string name="profile_rank">Pořadí</string>
+    <string name="profile_rank_insights">Pořadí #%1$d z %2$d · Top %3$d%%</string>
+    <string name="profile_recent_events">Nedávné události</string>
+    <string name="profile_recently_played">Naposledy hráno</string>
+    <string name="profile_reset_password">Obnovit heslo</string>
+    <string name="profile_restore">Obnovit</string>
+    <string name="profile_restore_done">Seznamy obnoveny</string>
+    <string name="profile_showcase_title">Prezentace her</string>
+    <string name="profile_sign_in">Přihlásit se</string>
+    <string name="profile_sign_out">Odhlásit se</string>
+    <string name="profile_signed_in">Přihlášeno.</string>
+    <string name="profile_signed_out">Odhlášeno.</string>
+    <string name="profile_social_center_title">Přátelé a oznámení</string>
+    <string name="profile_stats_activity">Aktivita</string>
+    <string name="profile_stats_best_streak">Nejlepší série</string>
+    <string name="profile_stats_current_streak">Aktuální série</string>
+    <string name="profile_stats_days_format">%1$d dní</string>
+    <string name="profile_stats_empty">Historie aktivity začíná herními relacemi zaznamenanými touto verzí.</string>
+    <string name="profile_stats_history_empty_title">Historie je připravena</string>
+    <string name="profile_stats_lifetime_body">Vaše celkové součty, relace a globální umístění jsou zde vždy k dispozici.</string>
+    <string name="profile_stats_lifetime_title">Celkový přehled</string>
+    <string name="profile_stats_load_failed">Historii aktivity se nepodařilo načíst. Zkuste to prosím znovu.</string>
+    <string name="profile_stats_locked_body">Odemkněte historii aktivity, série, týdenní a měsíční grafy, percentilové přehledy a hráčské karty v Nastavení &gt; Pro.</string>
+    <string name="profile_stats_locked_title">Rozšířené statistiky jsou součástí Pro</string>
+    <string name="profile_stats_refresh">Aktualizovat aktivitu</string>
+    <string name="profile_stats_this_month">Posledních 30 dní</string>
+    <string name="profile_stats_this_week">Posledních 7 dní</string>
+    <string name="profile_stats_total_sessions">Celkem relací</string>
+    <string name="profile_stats_weekly_chart">Nedávná doba hraní</string>
+    <string name="profile_tab_achievements">Trofeje</string>
+    <string name="profile_tab_games">Hry</string>
+    <string name="profile_tab_leaderboard">Top 1000</string>
+    <string name="profile_tab_overview">Přehled</string>
+    <string name="profile_tab_stats">Statistiky</string>
+    <string name="profile_total_time">Celkový čas</string>
+    <string name="profile_trophies_empty">Zatím žádné trofeje. Zahrajte si hru s trofejemi a zde uvidíte svůj pokrok.</string>
+    <string name="profile_trophies_load_failed">Trofeje se nepodařilo načíst.</string>
+    <string name="profile_trophies_points_format">%1$d/%2$d b.</string>
+    <string name="profile_trophies_summary_format">%1$d z %2$d trofejí · %3$d bodů</string>
+    <string name="profile_trophy_filter_all">Vše</string>
+    <string name="profile_trophy_filter_completed">Dokončeno</string>
+    <string name="profile_trophy_filter_in_progress">Probíhá</string>
+    <string name="profile_trophy_progress_format">Odemčeno %1$d z %2$d</string>
+    <string name="profile_unblock_player">Odblokovat</string>
+    <string name="save">Uložit</string>
+    <string name="settings_ra_points_label">Body</string>
+    <string name="core_update_reset_title">Aktualizace jádra</string>
+    <string name="core_update_reset_body">Tato aktualizace obsahuje změny jádra emulátoru. Obnovte výchozí mezipaměť a konfiguraci emulátoru, aby nové jádro běželo bez chyb.</string>
+    <string name="core_update_reset_kept">Firmware PS3, složky s hrami, ovládání, uložené pozice a obaly zůstanou zachovány.</string>
+    <string name="core_update_reset_action">Obnovit výchozí nastavení</string>
+    <string name="core_update_reset_keep">Ponechat aktuální nastavení</string>
+    <string name="core_update_reset_done">Nastavení bylo obnoveno na výchozí</string>
+    <string name="core_label_fighting_games">Bojové hry</string>
+    <string name="core_label_shooter_games">Střílečky</string>
+    <string name="nav_save_states">Rychlá uložení</string>
+    <string name="savestate_manager_subtitle">Snímky emulátoru, oddělené od uložení ve hře</string>
+    <string name="emulation_savestate_slot_label">Slot %1$d</string>
+    <string name="emulation_savestate_empty">Prázdný</string>
+    <string name="emulation_savestate_saved_at">Uloženo %1$s</string>
+    <string name="emulation_savestate_save_action">Uložit stav</string>
+    <string name="emulation_savestate_load_action">Načíst</string>
+    <string name="emulation_savestate_saved_toast">Uložený stav vytvořen</string>
+    <string name="emulation_savestate_loaded_toast">Uložený stav načten</string>
+    <string name="emulation_savestate_failed_toast">Operace s uloženým stavem se nezdařila</string>
+    <string name="emulation_savestate_confirm_save_title">Přepsat uložený stav?</string>
+    <string name="emulation_savestate_confirm_save_body">%1$s již obsahuje stav. Bude nahrazen aktuálním okamžikem.</string>
+    <string name="emulation_savestate_confirm_load_title">Načíst uložený stav?</string>
+    <string name="emulation_savestate_confirm_load_body">Pokrok po tomto snímku v %1$s bude ztracen.</string>
+    <string name="emulation_savestate_startup_loading">Načítání uloženého stavu…</string>
+    <string name="emulation_savestate_saving">Ukládání uloženého stavu…</string>
+    <string name="emulation_savestate_unavailable">Ukládání stavů není v tomto jádru dostupné.</string>
+    <string name="settings_app_language_czech">Čeština</string>
+    <string name="settings_app_language_polish">Polština</string>
+    <string name="settings_app_language_japanese">Japonština</string>
+    <string name="settings_app_language_korean">Korejština</string>
+    <string name="settings_app_language_indonesian">Indonéština</string>
+    <string name="settings_app_language_persian">Perština</string>
+
+    <string name="controls_button_circle">Kolečko</string>
+    <string name="controls_button_cross">Křížek</string>
+    <string name="controls_button_down">Dolů</string>
+    <string name="controls_button_l1">L1</string>
+    <string name="controls_button_l2">L2</string>
+    <string name="controls_button_l3">L3</string>
+    <string name="controls_button_left">Vlevo</string>
+    <string name="controls_button_left_stick">Levá páčka</string>
+    <string name="controls_button_r1">R1</string>
+    <string name="controls_button_r2">R2</string>
+    <string name="controls_button_r3">R3</string>
+    <string name="controls_button_right">Vpravo</string>
+    <string name="controls_button_right_stick">Pravá páčka</string>
+    <string name="controls_button_select">Select</string>
+    <string name="controls_button_square">Čtverec</string>
+    <string name="controls_button_start">Start</string>
+    <string name="controls_button_triangle">Trojúhelník</string>
+    <string name="controls_button_up">Nahoru</string>
+    <string name="controls_editor_combo">Kombinace</string>
+    <string name="controls_editor_combo_description">Podržením tohoto tlačítka aktivujete obě akce současně.</string>
+    <string name="controls_editor_create_combo">Přidat tlačítko</string>
+    <string name="controls_editor_delete">Smazat</string>
+    <string name="controls_editor_duplicate">Duplikovat</string>
+    <string name="controls_editor_grid">Mřížka</string>
+    <string name="controls_editor_group_buttons">Akční tlačítka</string>
+    <string name="controls_editor_group_dpad">Křížový ovladač</string>
+    <string name="controls_editor_none">Žádná</string>
+    <string name="controls_editor_opacity_value">Neprůhlednost %1$d%%</string>
+    <string name="controls_editor_primary_action">Hlavní akce</string>
+    <string name="controls_editor_reset_selected">Obnovit vybrané</string>
+    <string name="controls_editor_secondary_action">Druhá akce</string>
+    <string name="controls_editor_snap">Přichytit k mřížce</string>
+    <string name="emulation_controls_editor_reset">Obnovit výchozí</string>
+    <string name="emulation_controls_editor_size">Velikost</string>
+    <string name="emulation_controls_editor_visible">Viditelné</string>
+
+    <string name="common_next">Další</string>
+    <string name="common_previous">Předchozí</string>
+    <string name="emulation_menu_section_savestates">Uložené stavy</string>
+    <string name="emulation_quickbar_quick_load">Rychle načíst stav</string>
+    <string name="emulation_quickbar_quick_save">Rychle uložit stav</string>
+    <string name="emulation_savestate_confirm_delete_body">Uložený stav %1$s bude trvale smazán.</string>
+    <string name="emulation_savestate_confirm_delete_title">Smazat uložený stav?</string>
+    <string name="emulation_savestate_delete_action">Smazat</string>
+    <string name="emulation_savestate_deleted_toast">Uložený stav smazán</string>
+    <string name="emulation_savestate_load_starts_game">Hra se spustí a obnoví z tohoto uloženého stavu.</string>
+    <string name="emulation_savestate_quick_label">Rychlý</string>
+    <string name="emulation_tab_savestates">Uložené stavy</string>
+    <string name="savestate_manager_empty_body">Vytvořte uložený stav v nabídce emulátoru během hry nebo tlačítkem rychlého uložení.</string>
+    <string name="savestate_manager_empty_title">Zatím žádné uložené stavy</string>
+    <string name="savestate_manager_refresh">Aktualizovat</string>
+</resources>

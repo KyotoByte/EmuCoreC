@@ -37,6 +37,7 @@ namespace
 
 bool VKGSRender::reinitialize_swapchain()
 {
+	const u64 surface_generation = m_frame->surface_generation();
 	m_swapchain_dims.width = m_frame->client_width();
 	m_swapchain_dims.height = m_frame->client_height();
 
@@ -90,15 +91,15 @@ bool VKGSRender::reinitialize_swapchain()
 		vk::remove_framebuffers_with_image(m_swapchain->get_image(i));
 	}
 
-	// Reset frame context storage
-	for (auto& ctx : m_frame_context_storage)
+#ifdef ANDROID
+	// A SurfaceView can replace its native window without changing dimensions.
+	// Rebuilding only VkSwapchainKHR would keep using the abandoned VkSurfaceKHR.
+	if (!m_instance.recreate_surface(*m_swapchain, m_frame->handle()))
 	{
-		ctx.destroy(*m_device);
+		swapchain_unavailable = true;
+		return false;
 	}
-	m_current_frame = nullptr;
-	m_max_async_frames = 0;
-	m_current_queue_index = 0;
-	m_frame_context_storage.clear();
+#endif
 
 	// Rebuild swapchain. Old swapchain destruction is handled by the init_swapchain call
 	if (!m_swapchain->init(m_swapchain_dims.width, m_swapchain_dims.height))
@@ -107,6 +108,17 @@ bool VKGSRender::reinitialize_swapchain()
 		swapchain_unavailable = true;
 		return false;
 	}
+
+	// Keep the drained contexts available for offscreen drawing if recreation
+	// fails while Android has no surface. Replace them only after success.
+	for (auto& ctx : m_frame_context_storage)
+	{
+		ctx.destroy(*m_device);
+	}
+	m_current_frame = nullptr;
+	m_max_async_frames = 0;
+	m_current_queue_index = 0;
+	m_frame_context_storage.clear();
 
 	// Re-initialize CPU frame contexts
 	m_max_async_frames = m_swapchain->get_swap_image_count();
@@ -144,6 +156,7 @@ bool VKGSRender::reinitialize_swapchain()
 	swapchain_unavailable = false;
 	should_reinitialize_swapchain = false;
 	m_vsync_mode = g_cfg.video.vsync;
+	m_surface_generation = surface_generation;
 	return true;
 }
 
@@ -430,6 +443,10 @@ vk::viewable_image* VKGSRender::get_present_source(/* inout */ vk::present_surfa
 
 void VKGSRender::flip(const rsx::display_flip_info_t& info)
 {
+	if (m_surface_generation != m_frame->surface_generation())
+	{
+		swapchain_unavailable = true;
+	}
 	// Check swapchain condition/status
 	if (!m_swapchain->supports_automatic_wm_reports())
 	{
@@ -464,6 +481,16 @@ void VKGSRender::flip(const rsx::display_flip_info_t& info)
 				rsx::thread::flip(info);
 				return;
 			}
+
+#ifdef ANDROID
+			if (!m_current_frame)
+			{
+				// SurfaceView may remain absent while the activity is paused.
+				m_frame->flip(m_context);
+				rsx::thread::flip(info);
+				return;
+			}
+#endif
 
 			std::this_thread::sleep_for(100ms);
 		}
@@ -625,13 +652,28 @@ void VKGSRender::flip(const rsx::display_flip_info_t& info)
 
 			continue;
 		}
+		case VK_ERROR_SURFACE_LOST_KHR:
+			// Android destroys SurfaceView's producer before activity teardown.
+			// No image was acquired; keep the commands/resources for the next
+			// flush and recreate the surface when a window becomes available.
+			swapchain_unavailable = true;
+			m_current_frame->present_image = umax;
+			m_frame->flip(m_context);
+			rsx::thread::flip(info);
+			return;
 		case VK_SUBOPTIMAL_KHR:
 			should_reinitialize_swapchain = true;
 			break;
 		case VK_ERROR_OUT_OF_DATE_KHR:
 			rsx_log.warning("vkAcquireNextImageKHR failed with VK_ERROR_OUT_OF_DATE_KHR. Flip request ignored until surface is recreated.");
 			swapchain_unavailable = true;
-			reinitialize_swapchain();
+			if (!reinitialize_swapchain())
+			{
+				m_current_frame->present_image = umax;
+				m_frame->flip(m_context);
+				rsx::thread::flip(info);
+				return;
+			}
 			ensure(m_current_frame, "Could not reinitialize swapchain after VK_ERROR_OUT_OF_DATE_KHR signal!");
 			continue;
 		default:

@@ -88,7 +88,7 @@ class InputEnhancementsContractTest {
             }.toList()
         }
 
-        assertEquals(11, localizedDirectories.size)
+        assertEquals(17, localizedDirectories.size)
         assertTrue("Expected the complete input string set", requiredKeys.size >= 20)
         localizedDirectories.forEach { directory ->
             assertEquals(

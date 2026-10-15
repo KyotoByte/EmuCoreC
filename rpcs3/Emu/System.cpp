@@ -3069,6 +3069,7 @@ void Emulator::FinalizeRunRequest()
 			}, info);
 		}).detach();
 	}
+	g_emu_callbacks.on_run_completed();
 }
 
 bool Emulator::Pause(bool freeze_emulation, bool show_resume_message)
@@ -3210,6 +3211,14 @@ void Emulator::Resume()
 	if (m_state != system_state::paused)
 	{
 		return;
+	}
+	if (m_emu_state_close_pending)
+	{
+		m_resume_after_failed_savestate = true;
+		// A preparation failure can clear the marker between these two reads.
+		// Either its failure path replays the request, or this caller handles it.
+		if (m_emu_state_close_pending || !m_resume_after_failed_savestate.exchange(false))
+			return;
 	}
 
 	// Print and reset debug data collected
@@ -3541,6 +3550,12 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 					}
 				} success_guard {};
 
+				const auto replay_held_resume = [this]()
+				{
+					if (m_resume_after_failed_savestate.exchange(false))
+						CallFromMainThread([this]() { Resume(); }, nullptr, false);
+				};
+
 				std::vector<std::pair<shared_ptr<named_thread<spu_thread>>, u32>> paused_spus;
 
 				if (!try_lock_spu_threads_in_a_state_compatible_with_savestates(false, &paused_spus))
@@ -3558,9 +3573,11 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 					}
 
 					m_emu_state_close_pending = false;
+					replay_held_resume();
 
 					CallFromMainThread([pause = std::move(pause_thread)]()
 					{
+						g_emu_callbacks.on_save_state_completed(false, false, {});
 						// Join thread
 					}, nullptr, false);
 
@@ -3602,9 +3619,11 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 					}
 
 					m_emu_state_close_pending = false;
+					replay_held_resume();
 
 					CallFromMainThread([pause = std::move(pause_thread)]()
 					{
+						g_emu_callbacks.on_save_state_completed(false, false, {});
 						// Join thread
 					}, nullptr, false);
 
@@ -3661,6 +3680,7 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 		read_used_savestate_versions();
 		m_savestate_extension_flags1 = {};
 		m_emu_state_close_pending = false;
+		m_resume_after_failed_savestate = false;
 		m_precompilation_option = {};
 	};
 
@@ -3742,6 +3762,7 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 
 	*join_thread = make_ptr(new named_thread("Emulation Join Thread"sv, [join_thread, reset_emu_state, savestate, allow_autoexit, save_stage = save_stage ? *save_stage : savestate_stage{}, return_to_big_picture_mode, this]() mutable
 	{
+		const bool saving = savestate;
 		fs::pending_file file;
 
 		auto verbose_message = std::make_shared<atomic_ptr<std::string>>();
@@ -4120,6 +4141,9 @@ void Emulator::Kill(bool allow_autoexit, bool savestate, savestate_stage* save_s
 				clean_savestates(m_title_id, m_path, max_files, max_files_size_mb << 20);
 			}
 		}
+
+		if (saving)
+			g_emu_callbacks.on_save_state_completed(savestate, true, savestate ? path : std::string{});
 
 		// Log additional debug information - do not do it on the main thread due to the concern of halting UI events
 

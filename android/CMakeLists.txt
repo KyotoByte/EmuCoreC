@@ -55,6 +55,7 @@ set(EMUCOREC_INPUT_SOURCES
 
 add_library(emucorec-core SHARED
     src/rpcsx-android.cpp
+    src/save_states.cpp
     # Android OpenGL ES context ownership. This is compiled independently of
     # the renderer while the desktop GL backend is being ported to GLES.
     ${CMAKE_SOURCE_DIR}/rpcs3/Emu/RSX/GL/EGLAndroid.cpp

@@ -116,6 +116,7 @@ private:
 	vk::framebuffer_holder* m_draw_fbo = nullptr;
 
 	sizeu m_swapchain_dims{};
+	u64 m_surface_generation = 0;
 	bool swapchain_unavailable = false;
 	bool should_reinitialize_swapchain = false;
 

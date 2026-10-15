@@ -77,7 +77,7 @@ import com.sbro.emucorec.ui.theme.neon.neonShape
 import com.sbro.emucorec.ui.theme.neon.neonShapeCorners
 
 enum class PrimaryDestination {
-    Library, Setup, GameManager, Patches, PlayTime, Achievements, SaveData, Search, Settings, Profile, Discord, Feedback
+    Library, Setup, GameManager, Patches, PlayTime, Achievements, SaveData, SaveStates, Search, Settings, Profile, Discord, Feedback
 }
 
 private enum class MobileLeadingAction {
@@ -99,6 +99,7 @@ fun AdaptiveShell(
     onNavigatePlayTime: () -> Unit,
     onNavigateAchievements: () -> Unit,
     onNavigateSaveData: () -> Unit,
+    onNavigateSaveStates: () -> Unit,
     onNavigateSearch: () -> Unit,
     onNavigateSettings: () -> Unit,
     onNavigateProfile: () -> Unit = {},
@@ -121,6 +122,7 @@ fun AdaptiveShell(
             onNavigatePlayTime = onNavigatePlayTime,
             onNavigateAchievements = onNavigateAchievements,
             onNavigateSaveData = onNavigateSaveData,
+            onNavigateSaveStates = onNavigateSaveStates,
             onNavigateSearch = onNavigateSearch,
             onNavigateSettings = onNavigateSettings,
             onNavigateProfile = onNavigateProfile,
@@ -174,6 +176,7 @@ fun AdaptiveShell(
             onNavigatePlayTime = onNavigatePlayTime,
             onNavigateAchievements = onNavigateAchievements,
             onNavigateSaveData = onNavigateSaveData,
+            onNavigateSaveStates = onNavigateSaveStates,
             onNavigateSearch = onNavigateSearch,
             onNavigateSettings = onNavigateSettings,
             onNavigateProfile = onNavigateProfile,
@@ -201,6 +204,7 @@ private fun CompactAdaptiveShell(
     onNavigatePlayTime: () -> Unit,
     onNavigateAchievements: () -> Unit,
     onNavigateSaveData: () -> Unit,
+    onNavigateSaveStates: () -> Unit,
     onNavigateSearch: () -> Unit,
     onNavigateSettings: () -> Unit,
     onNavigateProfile: () -> Unit,
@@ -286,6 +290,7 @@ private fun CompactAdaptiveShell(
                     onNavigatePlayTime = onNavigatePlayTime,
                     onNavigateAchievements = onNavigateAchievements,
                     onNavigateSaveData = onNavigateSaveData,
+            onNavigateSaveStates = onNavigateSaveStates,
                     onNavigateSearch = onNavigateSearch,
                     onNavigateSettings = onNavigateSettings,
                     onNavigateProfile = onNavigateProfile,
@@ -321,6 +326,7 @@ private fun SideNavigation(
     onNavigatePlayTime: () -> Unit,
     onNavigateAchievements: () -> Unit,
     onNavigateSaveData: () -> Unit,
+    onNavigateSaveStates: () -> Unit,
     onNavigateSearch: () -> Unit,
     onNavigateSettings: () -> Unit,
     onNavigateProfile: () -> Unit,
@@ -374,6 +380,10 @@ private fun SideNavigation(
     val navigateAchievements = rememberDebouncedClick {
         onCloseDrawer()
         onNavigateAchievements()
+    }
+    val navigateSaveStates = rememberDebouncedClick {
+        onCloseDrawer()
+        onNavigateSaveStates()
     }
     val navigateSaveData = rememberDebouncedClick {
         onCloseDrawer()
@@ -554,6 +564,12 @@ private fun SideNavigation(
                     label = stringResource(R.string.nav_achievements),
                     selected = selected == PrimaryDestination.Achievements,
                     onClick = navigateAchievements
+                )
+                ShellItem(
+                    icon = Icons.Rounded.Save,
+                    label = stringResource(R.string.nav_save_states),
+                    selected = selected == PrimaryDestination.SaveStates,
+                    onClick = navigateSaveStates
                 )
                 ShellItem(
                     icon = Icons.Rounded.Save,

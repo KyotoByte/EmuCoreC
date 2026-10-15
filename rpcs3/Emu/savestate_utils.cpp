@@ -152,26 +152,54 @@ std::vector<version_entry> get_savestate_versioning_data(fs::file&& file, std::s
 		ar.m_file_handler = make_uncompressed_serialization_file_handler(std::move(file));
 	}
 
-	if (u64 r = 0; ar.try_read(r) != 0 || r != "RPCS3SAV"_u64)
+	// Compressed handlers report an estimated size. A try_read() based on that
+	// estimate can assert on a corrupt/truncated stream instead of rejecting it.
+	const auto read_bytes = [&ar](void* destination, usz size)
+	{
+		if (!size) return true;
+		if (~ar.pos < size || !ar.m_file_handler->handle_file_op(ar, ar.pos, size))
+			return false;
+		if (ar.pos < ar.data_offset || ar.pos - ar.data_offset > ar.data.size() ||
+			size > ar.data.size() - (ar.pos - ar.data_offset))
+			return false;
+		std::memcpy(destination, ar.data.data() + ar.pos - ar.data_offset, size);
+		ar.pos += size;
+		return true;
+	};
+	u64 magic = 0;
+	if (!read_bytes(&magic, sizeof(magic)) || magic != "RPCS3SAV"_u64)
 	{
 		return {};
 	}
 
 	ar.pos = 10;
 
-	u64 offs = ar.try_read<u64>().second;
-
-	const usz fsize = ar.get_size(offs);
-
-	if (!offs || fsize <= offs)
+	u64 offs = 0;
+	if (!read_bytes(&offs, sizeof(offs)) || offs < ar.pos)
 	{
 		return {};
 	}
 
-	ar.seek_pos(offs);
-	ar.breathe(true);
+	// Older states keep the versions after the payload. Skip in bounded chunks
+	// rather than allocating the offset declared by an untrusted header.
+	while (ar.pos < offs)
+	{
+		const usz count = std::min<u64>(offs - ar.pos, 0x100000);
+		if (!ar.m_file_handler->handle_file_op(ar, ar.pos, count) ||
+			ar.pos < ar.data_offset || ar.pos - ar.data_offset > ar.data.size() ||
+			count > ar.data.size() - (ar.pos - ar.data_offset))
+			return {};
+		ar.pos += count;
+		if (!ar.m_file_handler->handle_file_op(ar, 0, umax)) return {};
+	}
 
-	std::vector<version_entry> ver_data = ar.pop<std::vector<version_entry>>();
+	// All supported categories fit in one VLE byte. Reject continuation bytes
+	// as well as oversized counts before allocating or invoking deserialization.
+	static_assert(s_serial_versions.size() < 0x80);
+	u8 count = 0;
+	if (!read_bytes(&count, 1) || count > s_serial_versions.size()) return {};
+	std::vector<version_entry> ver_data(count);
+	if (!read_bytes(ver_data.data(), count * sizeof(version_entry))) return {};
 	return ver_data;
 }
 

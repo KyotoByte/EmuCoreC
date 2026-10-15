@@ -1,0 +1,1810 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="emulation_quickbar_home_menu">RPCS3 홈 메뉴</string>
+    <string name="onboarding_storage_title">에뮬레이터 저장 공간</string>
+    <string name="onboarding_storage_choose_title">에뮬레이터 저장 공간 선택</string>
+    <string name="onboarding_storage_only_default">현재 Android에서 사용할 수 있는 앱 저장 공간이 하나뿐입니다. 에뮬레이터 파일용으로 사용 가능한 경우 사용자 지정 폴더를 선택할 수도 있습니다.</string>
+    <string name="onboarding_status_install_firmware">Sony 공식 PS3 시스템 소프트웨어를 설치하세요.</string>
+    <string name="onboarding_status_ready">설정이 완료되었습니다.</string>
+    <string name="onboarding_firmware_download">다운로드</string>
+    <string name="onboarding_firmware_cancel_download">취소</string>
+    <string name="onboarding_firmware_downloading">다운로드 중 %1$d%%</string>
+    <string name="onboarding_firmware_download_failed">다운로드에 실패했습니다. 다시 시도하세요.</string>
+    <string name="onboarding_back">뒤로</string>
+    <string name="onboarding_next">다음</string>
+    <string name="onboarding_get_started">시작하기</string>
+    <string name="nav_setup">게임</string>
+    <string name="nav_library">라이브러리</string>
+    <string name="nav_game_manager">게임 관리자</string>
+    <string name="nav_patches">패치</string>
+    <string name="nav_play_time">플레이 시간</string>
+    <string name="nav_achievements">업적</string>
+    <string name="nav_save_manager">저장</string>
+    <string name="nav_catalog">카탈로그</string>
+    <string name="nav_settings">설정</string>
+    <string name="nav_profile">프로필</string>
+    <string name="library_refresh">새로 고침</string>
+    <string name="library_search_hint">설치된 게임 검색</string>
+    <string name="library_empty_title">게임을 찾을 수 없습니다</string>
+    <string name="library_empty_body">게임 화면에서 게임을 설치한 뒤 라이브러리를 새로 고침하세요.</string>
+    <string name="library_add_shortcut">바로가기 추가</string>
+    <string name="library_shortcut_requested">바로가기 요청을 보냈습니다.</string>
+    <string name="library_shortcut_unsupported">이 런처는 고정 바로가기를 지원하지 않습니다.</string>
+    <string name="library_shortcut_failed">바로가기를 만들지 못했습니다.</string>
+    <string name="detail_launch">게임 실행</string>
+    <string name="detail_delete_game">게임 삭제</string>
+    <string name="detail_delete_game_confirm_title">설치된 게임을 삭제할까요?</string>
+    <string name="detail_delete_game_confirm_body">라이브러리에서 설치된 게임 파일이 제거됩니다.</string>
+    <string name="detail_delete_game_failed">게임을 삭제하지 못했습니다.</string>
+    <string name="save_manager_title">저장</string>
+    <string name="save_manager_open_for_game">저장</string>
+    <string name="save_manager_search_hint">세이브 검색</string>
+    <string name="save_manager_export">내보내기</string>
+    <string name="save_manager_import">가져오기</string>
+    <string name="save_manager_delete">세이브 삭제</string>
+    <string name="save_manager_delete_confirm_title">세이브 데이터를 삭제할까요?</string>
+    <string name="save_manager_delete_confirm_body">%1$s의 세이브 데이터가 제거됩니다.</string>
+    <string name="save_manager_delete_failed">세이브 데이터를 삭제하지 못했습니다.</string>
+    <string name="save_manager_export_success">세이브 데이터를 내보냈습니다.</string>
+    <string name="save_manager_export_failed">세이브 데이터를 내보내지 못했습니다.</string>
+    <string name="save_manager_import_success">세이브 데이터를 가져왔습니다: %1$s.</string>
+    <string name="save_manager_import_failed">세이브 데이터를 가져오지 못했습니다.</string>
+    <string name="save_manager_import_empty">압축 파일에 세이브 파일이 없습니다.</string>
+    <string name="save_manager_import_unsafe">압축 파일에 안전하지 않은 경로가 있습니다.</string>
+    <string name="save_manager_import_unknown_target">이 압축 파일을 가져오기 전에 게임 세이브 카드를 선택하거나, 세이브 폴더가 하나만 있는 압축 파일을 사용하세요.</string>
+    <string name="save_manager_backup_all_title">전체 세이브 백업</string>
+    <string name="save_manager_backup_all_body">모든 세이브 폴더를 하나의 ZIP 백업으로 만들거나, 이전 전체 백업에서 세이브 폴더를 복원합니다.</string>
+    <string name="save_manager_backup_all">백업</string>
+    <string name="save_manager_restore_all">모두 복원</string>
+    <string name="save_manager_backup_all_success">세이브 폴더 %1$d개를 백업했습니다.</string>
+    <string name="save_manager_backup_all_failed">모든 세이브를 백업하지 못했습니다.</string>
+    <string name="save_manager_restore_all_success">세이브 폴더 %1$d개를 복원했습니다.</string>
+    <string name="save_manager_restore_all_failed">모든 세이브를 복원하지 못했습니다.</string>
+    <string name="save_manager_restore_all_confirm_title">모든 세이브를 복원할까요?</string>
+    <string name="save_manager_restore_all_confirm_body">선택한 백업의 세이브 폴더가 이 기기의 일치하는 세이브 폴더를 대체합니다. 기존 세이브는 백업에 해당 세이브 ID가 없을 때만 유지됩니다.</string>
+    <string name="save_manager_restore_all_confirm">세이브 복원</string>
+    <string name="save_manager_empty_title">세이브 데이터를 찾을 수 없습니다</string>
+    <string name="save_manager_empty_body">게임을 실행해 세이브 데이터를 만들거나, 세이브 압축 파일을 가져오세요.</string>
+    <string name="save_manager_empty_game_title">%1$s의 세이브 데이터가 없습니다</string>
+    <string name="save_manager_empty_game_body">이 게임을 실행해 세이브 데이터를 만들거나, 해당 게임의 세이브 압축 파일을 가져오세요.</string>
+    <string name="save_manager_orphan_save">게임이 설치되지 않음</string>
+    <string name="game_manager_title">게임 관리자</string>
+    <string name="game_manager_open_for_game">게임 설정</string>
+    <string name="game_manager_empty_title">설치된 게임이 없습니다</string>
+    <string name="game_manager_empty_body">먼저 게임을 설치한 뒤 여기에서 해당 게임의 사용자 지정 프로필을 만드세요.</string>
+    <string name="game_manager_choose_game">게임 선택</string>
+    <string name="game_manager_reset_global">전역 기본값 사용</string>
+    <string name="game_manager_invert_left_x">왼쪽 스틱 X 반전</string>
+    <string name="game_manager_invert_right_x">오른쪽 스틱 X 반전</string>
+    <string name="patches_title">패치</string>
+    <string name="patches_open_for_game">패치</string>
+    <string name="patches_choose_game">게임 선택</string>
+    <string name="patches_empty_title">사용 가능한 패치 없음</string>
+    <string name="patches_empty_body">먼저 게임을 설치한 다음 여기서 해당 게임의 패치를 다운로드하세요.</string>
+    <string name="patches_no_patches_for_game">이 게임의 패치를 찾을 수 없습니다.</string>
+    <string name="patches_update">패치 업데이트</string>
+    <string name="patches_up_to_date">패치가 이미 최신 상태입니다.</string>
+    <string name="patches_import_success">패치 %1$d개를 가져왔습니다.</string>
+    <string name="patches_import_error">오류: %1$s</string>
+    <string name="patches_hint_update">위의 다운로드 버튼을 눌러 이 게임의 패치를 받으세요.</string>
+    <string name="patches_version">v%1$s</string>
+    <string name="patches_app_version">앱 %1$s</string>
+    <string name="play_time_title">플레이 시간</string>
+    <string name="play_time_open_for_game">플레이 시간</string>
+    <string name="play_time_current_session">현재 플레이 세션</string>
+    <string name="play_time_filter_game">게임 선택</string>
+    <string name="play_time_all_games">모든 게임</string>
+    <string name="play_time_total_time">총 시간</string>
+    <string name="play_time_sessions">세션</string>
+    <string name="play_time_games_played">플레이한 게임</string>
+    <string name="play_time_daily_chart">최근 14일</string>
+    <string name="play_time_games_chart">게임별 시간</string>
+    <string name="play_time_recent_sessions">세션</string>
+    <string name="play_time_no_sessions_title">아직 플레이 세션이 없습니다</string>
+    <string name="play_time_no_sessions_body">게임을 실행하면 플레이 세션이 여기에 표시됩니다.</string>
+    <string name="play_time_no_game_sessions_body">이 게임은 아직 플레이하지 않았습니다. 실행하면 플레이 세션이 여기에 표시됩니다.</string>
+    <string name="play_time_today">오늘</string>
+    <string name="play_time_yesterday">어제</string>
+    <string name="achievements_title">업적</string>
+    <string name="achievements_open_for_game">업적</string>
+    <string name="achievements_how_to_unlock">잠금 해제 방법?</string>
+    <string name="achievements_translate">번역</string>
+    <string name="achievements_hint_title">잠금 해제 방법</string>
+    <string name="achievements_translation_title">번역됨</string>
+    <string name="achievements_assist_error">불러오지 못했습니다. 다시 시도하세요.</string>
+    <string name="achievements_progress_count">%1$d/%2$d</string>
+    <string name="achievements_choose_game">게임 선택</string>
+    <string name="achievements_trophy">트로피</string>
+    <string name="achievements_hidden_trophy">숨겨진 트로피</string>
+    <string name="achievements_hidden_trophy_body">이 트로피를 잠금 해제하면 상세 정보가 표시됩니다.</string>
+    <string name="achievements_unlocked_at">%1$s에 잠금 해제</string>
+    <string name="achievements_empty_title">트로피를 찾을 수 없습니다</string>
+    <string name="achievements_empty_body">트로피를 지원하는 게임을 실행하거나, 게임 설치 후 새로 고침하세요.</string>
+    <string name="detail_title_id">타이틀 ID</string>
+    <string name="detail_content_id">콘텐츠 ID</string>
+    <string name="detail_version">버전</string>
+    <string name="detail_category">카테고리</string>
+    <string name="detail_overview_title">개요</string>
+    <string name="detail_catalog_meta_title">카탈로그 상세 정보</string>
+    <string name="detail_installed_section">설치된 게임</string>
+    <string name="detail_screenshots_title">스크린샷</string>
+    <string name="detail_videos_title">동영상</string>
+    <string name="detail_release_year">출시 연도</string>
+    <string name="detail_rating">평점</string>
+    <string name="detail_genres">장르</string>
+    <string name="detail_empty_title">상세 정보가 없습니다</string>
+    <string name="detail_empty_body">현재 이 게임에 사용할 수 있는 설치 데이터 또는 카탈로그 데이터가 없습니다.</string>
+    <string name="detail_catalog_missing_body">카탈로그 상세 정보를 일시적으로 사용할 수 없습니다.</string>
+    <string name="detail_igdb_source_note">이 화면의 일부 설명과 게임 데이터는 IGDB에서 제공됩니다.</string>
+    <string name="detail_compatibility_title">호환성</string>
+    <string name="detail_compatibility_status">상태</string>
+    <string name="detail_compatibility_issue">문제</string>
+    <string name="detail_compatibility_title_id_label">일치하는 타이틀 ID</string>
+    <string name="detail_compatibility_known_serials">알려진 타이틀 ID</string>
+    <string name="detail_compatibility_updated">업데이트됨</string>
+    <string name="detail_compatibility_unavailable">현재 RPCS3 공식 호환성 데이터베이스를 이용할 수 없습니다.</string>
+    <string name="detail_compatibility_unmapped">이 카탈로그 항목은 아직 로컬 카탈로그에 매핑된 타이틀 ID가 없습니다.</string>
+    <string name="detail_compatibility_missing_entry">RPCS3에는 현재 이 타이틀 ID에 대한 호환성 항목이 없습니다.</string>
+    <string name="detail_compatibility_source_note">호환성 정보는 RPCS3 공식 목록을 기준으로 합니다. 이슈 #%1$d.</string>
+    <string name="detail_show_more">더 보기</string>
+    <string name="detail_show_less">접기</string>
+    <string name="detail_screenshot_saved">스크린샷 저장됨</string>
+    <string name="detail_screenshot_save_failed">스크린샷을 저장할 수 없습니다</string>
+    <string name="detail_save_screenshot">스크린샷 저장</string>
+    <string name="compatibility_unknown">알 수 없음</string>
+    <string name="compatibility_nothing">없음</string>
+    <string name="compatibility_bootable">부팅 가능</string>
+    <string name="compatibility_intro">인트로</string>
+    <string name="compatibility_menu">메뉴</string>
+    <string name="compatibility_ingame_less">인게임 -</string>
+    <string name="compatibility_ingame_more">인게임 +</string>
+    <string name="compatibility_playable">플레이 가능</string>
+    <string name="catalog_title">PS3 카탈로그</string>
+    <string name="catalog_search_hint">게임 검색</string>
+    <string name="catalog_search_clear">검색 지우기</string>
+    <string name="catalog_toggle_search">카탈로그 검색 전환</string>
+    <string name="catalog_toggle_filters">카탈로그 필터 전환</string>
+    <string name="catalog_filters_title">필터</string>
+    <string name="catalog_filter_genre">장르</string>
+    <string name="catalog_filter_year">연도</string>
+    <string name="catalog_filter_rating">평점</string>
+    <string name="catalog_filter_all_genres">모든 장르</string>
+    <string name="catalog_filter_all_years">모든 연도</string>
+    <string name="catalog_filter_any_rating">모든 평점</string>
+    <string name="catalog_filters_clear">필터 지우기</string>
+    <string name="catalog_empty_title">카탈로그 데이터베이스를 찾을 수 없습니다</string>
+    <string name="catalog_empty_body">games.db를 추가하면 로컬 PS3 카탈로그를 사용할 수 있습니다.</string>
+    <string name="catalog_no_results_title">일치하는 항목이 없습니다</string>
+    <string name="catalog_no_results_body">다른 타이틀, 연도 또는 철자를 입력해 보세요.</string>
+    <string name="catalog_profile_menu">프로필 목록</string>
+    <string name="catalog_profile_remove">프로필에서 제거</string>
+    <string name="catalog_profile_status_title">플레이 상태</string>
+    <string name="catalog_profile_clear_status">플레이 상태 지우기</string>
+    <string name="profile_title">프로필</string>
+    <string name="profile_game_count">게임 %1$d개 저장됨</string>
+    <string name="profile_refresh">프로필 새로 고침</string>
+    <string name="profile_toggle_layout">프로필 레이아웃 전환</string>
+    <string name="profile_section_count">%1$d</string>
+    <string name="profile_status_playing">플레이 중</string>
+    <string name="profile_status_want_to_play">플레이하고 싶음</string>
+    <string name="profile_status_completed">완료됨</string>
+    <string name="profile_status_dropped">중단</string>
+    <string name="profile_status_favorites">즐겨찾기</string>
+    <string name="profile_account_title">로컬 프로필</string>
+    <string name="profile_account_body">이름, 아바타, 즐겨찾기, 게임 목록은 이 기기에만 저장됩니다.</string>
+    <string name="profile_hide_backup">로컬 프로필 숨기기</string>
+    <string name="profile_show_backup">로컬 프로필 표시</string>
+    <string name="profile_user_name">표시 이름</string>
+    <string name="profile_default_name">플레이어</string>
+    <string name="profile_change_avatar">아바타 변경</string>
+    <string name="profile_backup">저장</string>
+    <string name="profile_empty_title">아직 프로필에 게임이 없습니다</string>
+    <string name="profile_empty_body">카탈로그를 열고 게임의 점 세 개 메뉴를 눌러 프로필 목록 중 하나에 추가하세요.</string>
+    <string name="settings_title">설정</string>
+    <string name="settings_options_content_description">설정 옵션</string>
+    <string name="settings_reset_defaults_menu">기본 설정 복원</string>
+    <string name="settings_reset_defaults_title">기본 설정을 복원할까요?</string>
+    <string name="settings_reset_defaults_message">에뮬레이터 설정이 권장 기본값으로 초기화됩니다. 게임, 세이브, 앱 언어, 선택한 폴더는 변경되지 않습니다.</string>
+    <string name="settings_reset_defaults_confirm">복원</string>
+    <string name="settings_reset_defaults_cancel">취소</string>
+    <string name="settings_tab_general">일반</string>
+    <string name="settings_tab_graphics">그래픽</string>
+    <string name="settings_tab_overlay">오버레이</string>
+    <string name="settings_tab_controls">컨트롤</string>
+    <string name="settings_tab_storage">저장 공간</string>
+    <string name="settings_tab_about">정보</string>
+    <string name="settings_tab_updates">업데이트</string>
+    <string name="settings_core_overlay_opacity_label">오버레이 불투명도</string>
+    <string name="settings_core_overlay_opacity_value">%1$d%%</string>
+    <string name="settings_core_gamepad_overlay">게임패드 오버레이 표시</string>
+    <string name="settings_core_overlay_scale_label">오버레이 크기</string>
+    <string name="settings_core_overlay_scale_value">%1$.1fx</string>
+    <string name="settings_core_analog_multiplier_label">아날로그 배율</string>
+    <string name="settings_core_analog_multiplier_value">%1$.1fx</string>
+    <string name="settings_gamepad_section">실제 게임패드</string>
+    <string name="settings_gamepad_connected">게임패드가 연결되었습니다. 이 설정은 플레이 중 실시간으로 적용됩니다.</string>
+    <string name="settings_gamepad_disconnected">이 설정을 사용하려면 물리 게임패드를 연결하세요.</string>
+    <string name="settings_gamepad_deadzone">스틱 데드 존</string>
+    <string name="settings_gamepad_trigger_threshold">트리거 임계값</string>
+    <string name="settings_gamepad_percent_value">%1$d%%</string>
+    <string name="settings_gamepad_button_profile">버튼 재매핑</string>
+    <string name="settings_gamepad_profile_standard">표준</string>
+    <string name="settings_gamepad_profile_swap_cross_circle">Cross/Circle 교체</string>
+    <string name="settings_gamepad_profile_nintendo_face">Nintendo 페이스 버튼</string>
+    <string name="settings_vibration_section">진동</string>
+    <string name="settings_vibration_enable">진동</string>
+    <string name="settings_vibration_strength">진동 강도</string>
+    <string name="settings_edit_touch_controls">컨트롤 편집</string>
+    <string name="settings_help_edit_touch_controls">화면에 표시되는 게임패드 버튼의 위치와 크기를 조정합니다. 별도의 사용자 지정 레이아웃이 없는 모든 게임에 적용됩니다.</string>
+    <string name="settings_test_vibration">진동 테스트</string>
+    <string name="settings_test_vibration_button">테스트</string>
+    <string name="settings_device_vibration_fallback">대체 수단으로 기기 진동 사용</string>
+    <string name="settings_gamepad_swap_sticks">스틱 교체</string>
+    <string name="settings_gamepad_invert_left_y">왼쪽 스틱 Y 반전</string>
+    <string name="settings_gamepad_invert_right_y">오른쪽 스틱 Y 반전</string>
+    <string name="settings_storage_title">저장 공간</string>
+    <string name="settings_storage_body">에뮬레이터 데이터는 선택한 PS3 루트 폴더에 저장됩니다. 설치된 게임은 config/dev_hdd0/game, 저장 데이터와 트로피는 config/dev_hdd0/home, 셰이더 및 임시 캐시는 cache에 저장됩니다.</string>
+    <string name="settings_change_storage">저장 공간 변경</string>
+    <string name="settings_storage_location_internal">기기 저장 공간</string>
+    <string name="settings_storage_location_sd">SD 카드</string>
+    <string name="settings_storage_location_external">외부 저장 공간</string>
+    <string name="settings_storage_change_note">저장 공간을 변경하면 누락된 에뮬레이터 데이터가 선택한 위치로 이동합니다. 대상 위치의 기존 파일은 유지됩니다.</string>
+    <string name="settings_storage_migrating">에뮬레이터 데이터 이동 중…</string>
+    <string name="settings_storage_confirm_title">에뮬레이터 저장 공간을 변경할까요?</string>
+    <string name="settings_storage_confirm_body">EmuCoreC가 펌웨어, 게임, 저장 데이터, 트로피, 코어 설정을 포함한 전체 PS3 가상 파일 시스템을 %1$s(으)로 복사합니다. 대상 위치의 기존 파일은 유지됩니다. 다시 생성할 수 있는 캐시와 패치는 기존 앱 저장 공간에 남습니다.</string>
+    <string name="settings_storage_confirm_action">데이터 이동</string>
+    <string name="settings_storage_migration_title">에뮬레이터 데이터 이동</string>
+    <string name="settings_storage_migration_body">PS3 가상 파일 시스템을 선택한 저장소로 복사하는 동안 EmuCoreC를 닫지 마세요.</string>
+    <string name="settings_storage_migration_count">파일 %1$d/%2$d 확인됨</string>
+    <string name="settings_storage_migration_failed">저장 공간을 이동할 수 없습니다</string>
+    <string name="settings_backup_title">설정 백업</string>
+    <string name="settings_backup_body">앱 환경 설정과 에뮬레이터 설정을 파일로 백업하거나 이전 백업에서 복원합니다.</string>
+    <string name="settings_backup_create">설정 백업</string>
+    <string name="settings_backup_restore">백업 복원</string>
+    <string name="settings_backup_created">설정 백업을 만들었습니다.</string>
+    <string name="settings_backup_failed">설정 백업을 만들지 못했습니다.</string>
+    <string name="settings_backup_restored">백업에서 설정을 복원했습니다.</string>
+    <string name="settings_backup_restore_failed">설정 백업을 복원하지 못했습니다.</string>
+    <string name="settings_backup_restore_title">설정 백업을 복원할까요?</string>
+    <string name="settings_backup_restore_message">현재 앱 환경 설정과 에뮬레이터 설정이 선택한 백업으로 대체됩니다.</string>
+    <string name="settings_backup_restore_confirm">복원</string>
+    <string name="settings_clear_cache_title">캐시 지우기</string>
+    <string name="settings_clear_cache_body">셰이더 캐시, 텍스처 캐시, 로그, 임시 설치 파일을 제거합니다. 설정, 세이브, 설치된 게임, 펌웨어에는 영향을 주지 않습니다.</string>
+    <string name="settings_clear_cache_action">캐시 지우기</string>
+    <string name="settings_clear_cache_size">캐시 크기: %1$s</string>
+    <string name="settings_clear_cache_empty">제거할 캐시 데이터가 없습니다.</string>
+    <string name="settings_clear_cache_confirm_title">캐시를 지울까요?</string>
+    <string name="settings_clear_cache_confirm_message">%1$s의 공간이 확보됩니다. 셰이더를 다시 만들기 때문에 게임을 처음 시작할 때 조금 더 오래 걸릴 수 있습니다.</string>
+    <string name="settings_clear_cache_confirm_action">지우기</string>
+    <string name="settings_clear_cache_done">캐시를 지웠습니다. %1$s 확보됨.</string>
+    <string name="settings_clear_cache_failed">캐시를 지우지 못했습니다.</string>
+    <string name="settings_clear_cover_cache_title">표지 캐시 삭제</string>
+    <string name="settings_clear_cover_cache_body">다운로드한 게임 표지, 스크린샷, 미디어 미리보기를 삭제합니다. 필요할 때 다시 다운로드됩니다.</string>
+    <string name="settings_clear_cover_cache_action">표지 캐시 삭제</string>
+    <string name="settings_clear_cover_cache_size">표지 캐시 크기: %1$s</string>
+    <string name="settings_clear_cover_cache_empty">삭제할 표지 캐시가 없습니다.</string>
+    <string name="settings_clear_cover_cache_confirm_title">표지 캐시를 삭제할까요?</string>
+    <string name="settings_clear_cover_cache_confirm_message">캐시된 게임 표지와 스크린샷을 삭제하여 %1$s의 공간을 확보합니다. 이미지는 볼 때 다시 다운로드됩니다.</string>
+    <string name="settings_clear_cover_cache_confirm_action">지우기</string>
+    <string name="settings_clear_cover_cache_done">표지 캐시를 삭제하여 %1$s의 공간을 확보했습니다.</string>
+    <string name="settings_clear_cover_cache_failed">표지 캐시를 삭제하지 못했습니다.</string>
+    <string name="settings_keep_screen_on">화면 켜짐 유지</string>
+    <string name="settings_keep_screen_on_summary">앱 사용 중이나 게임 플레이 중 화면이 꺼지지 않도록 합니다</string>
+    <string name="settings_about_title">EmuCoreC 정보</string>
+    <string name="settings_help_content_description">설정 도움말 열기</string>
+    <string name="settings_help_dialog_label">설정 가이드</string>
+    <string name="settings_help_dialog_tip">한 번에 하나의 옵션만 변경한 뒤 같은 게임 장면을 테스트하여 무엇이 실제로 개선되었는지 확인하세요.</string>
+    <string name="settings_help_gamepad_overlay">물리 컨트롤러를 사용하지 않을 때 화면 컨트롤을 표시합니다.\n\n터치나 컨트롤러 입력을 자신의 플레이 방식에 더 가깝게 만들 때 사용하세요. 컨트롤이 이미 적절하다면 변경하지 마세요. 극단적인 값은 조준, 메뉴, 터치 기능 사용을 어렵게 만들 수 있습니다.</string>
+    <string name="settings_help_overlay_scale">화면 컨트롤의 크기를 변경합니다.\n\n터치나 컨트롤러 입력을 자신의 플레이 방식에 더 가깝게 만들 때 사용하세요. 컨트롤이 이미 적절하다면 변경하지 마세요. 극단적인 값은 조준, 메뉴, 터치 기능 사용을 어렵게 만들 수 있습니다.</string>
+    <string name="settings_help_overlay_opacity">화면 컨트롤의 투명도를 변경합니다.\n\n터치나 컨트롤러 입력을 자신의 플레이 방식에 더 가깝게 만들 때 사용하세요. 컨트롤이 이미 적절하다면 변경하지 마세요. 극단적인 값은 조준, 메뉴, 터치 기능 사용을 어렵게 만들 수 있습니다.</string>
+    <string name="settings_help_analog_multiplier">아날로그 스틱 감도를 변경합니다.\n\n터치나 컨트롤러 입력을 자신의 플레이 방식에 더 가깝게 만들 때 사용하세요. 컨트롤이 이미 적절하다면 변경하지 마세요. 극단적인 값은 조준, 메뉴, 터치 기능 사용을 어렵게 만들 수 있습니다.</string>
+    <string name="settings_help_gamepad_deadzone">중앙 근처의 작은 스틱 움직임을 걸러 드리프트를 줄입니다. 카메라나 캐릭터가 저절로 움직이면 값을 높이고, 조준 반응이 둔하면 값을 낮추세요.</string>
+    <string name="settings_help_gamepad_trigger_threshold">입력이 전달되기 전에 아날로그 트리거가 얼마나 움직여야 하는지 설정합니다. 트리거 입력이 불안정하면 값을 높이고, 레이싱이나 압력 감지 컨트롤에는 값을 낮추세요.</string>
+    <string name="settings_help_gamepad_button_profile">물리 컨트롤러의 전면 버튼을 에뮬레이터에 입력되기 전에 다시 매핑합니다. 컨트롤러의 버튼 배치가 PS3의 ×, ○, □, △ 배치와 다를 때 사용하세요.</string>
+    <string name="settings_help_vibration_enable">지원되는 게임이 물리 컨트롤러로 진동을 보내거나, 대체 기능이 활성화된 경우 Android 기기 본체로 진동을 보낼 수 있게 합니다.</string>
+    <string name="settings_help_vibration_strength">게임패드 럼블과 기기 대체 진동의 강도를 조절합니다.</string>
+    <string name="settings_help_test_vibration">현재 진동 강도와 경로를 사용해 짧은 진동을 재생합니다.</string>
+    <string name="settings_help_device_vibration_fallback">물리 컨트롤러가 없거나 럼블 모터가 없는 경우 휴대폰이나 휴대형 기기 본체를 진동시킵니다.</string>
+    <string name="settings_help_gamepad_swap_sticks">왼쪽과 오른쪽 스틱 축을 교체합니다. 스틱 배치가 특이한 게임이나 컨트롤러에 유용합니다.</string>
+    <string name="settings_help_gamepad_invert_x">조향 또는 카메라 제어에 사용하는 스틱의 좌우 방향을 반전합니다.</string>
+    <string name="settings_help_gamepad_invert_y">카메라나 조준 컨트롤의 수직 스틱 움직임을 반전합니다.</string>
+    <string name="settings_reset_toast">%1$s이(가) 기본값으로 초기화되었습니다</string>
+    <string name="settings_app_language">앱 언어</string>
+    <string name="settings_app_language_system">시스템 기본값</string>
+    <string name="settings_app_language_english">영어</string>
+    <string name="settings_app_language_russian">러시아어</string>
+    <string name="settings_app_language_ukrainian">우크라이나어</string>
+    <string name="settings_app_language_spanish">스페인어</string>
+    <string name="settings_app_language_french">프랑스어</string>
+    <string name="settings_app_language_german">독일어</string>
+    <string name="settings_app_language_portuguese">포르투갈어</string>
+    <string name="settings_app_language_chinese_traditional">중국어 번체</string>
+    <string name="settings_app_language_hindi">힌디어</string>
+    <string name="settings_app_language_italian">이탈리아어</string>
+    <string name="settings_app_language_turkish">터키어</string>
+    <string name="settings_app_language_arabic">아랍어</string>
+    <string name="settings_language_picker_title">언어</string>
+    <string name="settings_gpu_driver">GPU 드라이버</string>
+    <string name="settings_gpu_driver_global">전역 사용</string>
+    <string name="settings_gpu_driver_system">시스템</string>
+    <string name="settings_gpu_driver_custom">사용자 지정</string>
+    <string name="settings_gpu_driver_installed">설치된 드라이버</string>
+    <string name="settings_help_gpu_driver">시스템 Vulkan 드라이버와 사용자 지정 드라이버 중에서 선택합니다.\n\n시스템 Vulkan 드라이버에 그래픽 버그가 있거나 성능이 약할 때 호환되는 Adreno 기기에서 주로 사용자 지정 드라이버를 사용하세요. Mali, PowerVR, 알 수 없는 GPU 또는 사용자 지정 드라이버로 충돌이 발생할 때는 시스템 드라이버를 유지하세요.</string>
+    <string name="settings_gpu_driver_manage">드라이버 관리</string>
+    <string name="settings_gpu_driver_manager_title">GPU 드라이버</string>
+    <string name="settings_gpu_driver_game_title">게임 GPU 드라이버</string>
+    <string name="settings_gpu_driver_manager_subtitle">Adreno 드라이버를 설치, 다운로드, 적용 또는 제거합니다.</string>
+    <string name="settings_gpu_driver_active_title">활성 드라이버</string>
+    <string name="settings_gpu_driver_install_from_file">파일에서 설치</string>
+    <string name="settings_gpu_driver_catalog">드라이버 카탈로그</string>
+    <string name="settings_gpu_driver_refresh">새로 고침</string>
+    <string name="settings_gpu_driver_catalog_loading">드라이버 카탈로그 불러오는 중…</string>
+    <string name="settings_gpu_driver_catalog_failed">드라이버 카탈로그를 불러올 수 없습니다</string>
+    <string name="settings_gpu_driver_catalog_empty">아직 사용 가능한 온라인 드라이버가 없습니다.</string>
+    <string name="settings_gpu_driver_download_apply">다운로드 &amp; 적용</string>
+    <string name="settings_gpu_driver_downloaded">다운로드됨</string>
+    <string name="settings_gpu_driver_apply">적용</string>
+    <string name="settings_gpu_driver_applied">적용됨</string>
+    <string name="settings_gpu_driver_remove_short">제거</string>
+    <string name="settings_gpu_driver_recommended">권장</string>
+    <string name="settings_gpu_driver_source">출처</string>
+    <string name="settings_gpu_driver_search">드라이버 검색</string>
+    <string name="settings_gpu_driver_filter_all">전체</string>
+    <string name="settings_gpu_driver_no_matches">일치하는 드라이버 없음</string>
+    <string name="settings_gpu_driver_no_matches_desc">검색어나 선택한 필터를 변경하세요.</string>
+    <string name="settings_gpu_driver_remove">드라이버 제거</string>
+    <string name="settings_gpu_driver_none_installed">아직 설치된 사용자 지정 GPU 드라이버가 없습니다.</string>
+    <string name="settings_gpu_driver_install_failed">GPU 드라이버 설치에 실패했습니다.</string>
+    <string name="settings_gpu_driver_install_success">GPU 드라이버 설치됨: %1$s</string>
+    <string name="settings_gpu_driver_status_system">시스템 Vulkan 드라이버가 활성화되어 있습니다</string>
+    <string name="settings_gpu_driver_status_global">전역 GPU 드라이버 사용 중: %1$s</string>
+    <string name="settings_gpu_driver_status_global_system">전역 GPU 드라이버 사용 중: 시스템 Vulkan</string>
+    <string name="settings_gpu_driver_status_global_desc">이 게임은 전역 GPU 드라이버 선택을 따릅니다.</string>
+    <string name="settings_gpu_driver_status_game_system">게임 재정의: 시스템 Vulkan 드라이버</string>
+    <string name="settings_gpu_driver_status_game_active">게임 재정의: %1$s</string>
+    <string name="settings_gpu_driver_status_system_desc">사용자 지정 드라이버가 선택되지 않아 시스템 Vulkan 드라이버를 사용합니다.</string>
+    <string name="settings_gpu_driver_status_active">사용자 지정 드라이버 활성: %1$s</string>
+    <string name="settings_gpu_driver_status_active_desc">이 드라이버는 Vulkan과 함께 사용할 준비가 되었습니다. 실제 지원 여부는 기기 호환성에 따라 달라집니다.</string>
+    <string name="settings_gpu_driver_status_renderer">사용자 지정 드라이버가 선택되었지만 렌더러는 %1$s입니다</string>
+    <string name="settings_gpu_driver_status_renderer_desc">사용자 지정 GPU 드라이버는 Vulkan에서만 작동합니다. 이 드라이버를 사용하려면 렌더러를 Vulkan으로 전환하세요.</string>
+    <string name="settings_gpu_driver_status_broken">드라이버 아카이브가 불완전합니다: %1$s을(를) 찾을 수 없음</string>
+    <string name="settings_gpu_driver_status_broken_desc">드라이버 메타데이터는 있지만 Vulkan 라이브러리가 없습니다. 드라이버를 다시 설치하세요.</string>
+    <string name="settings_about_version">앱 버전</string>
+    <string name="settings_about_version_value">버전 %1$s</string>
+    <string name="settings_about_body_extended">EmuCoreC는 모바일에 맞춘 인터페이스, 로컬 라이브러리 관리, RPCS3 기반 에뮬레이션 코어를 통해 Android에서 PS3 에뮬레이션을 제공합니다.</string>
+    <string name="settings_about_community_title">커뮤니티 및 지원</string>
+    <string name="settings_about_website">공식 웹사이트</string>
+    <string name="settings_about_website_desc">다운로드, 뉴스, 프로젝트 링크를 보려면 EmuCoreC 웹사이트를 여세요.</string>
+    <string name="settings_about_repository">EmuCoreC 저장소</string>
+    <string name="settings_about_repository_desc">GitHub에서 소스 코드를 보고, 문제를 제보하고, 개발 상황을 팔로우하세요.</string>
+    <string name="settings_about_discord">Discord 참여</string>
+    <string name="settings_about_discord_desc">커뮤니티와 대화하고, 피드백을 공유하고, 프로젝트 업데이트를 받아보세요.</string>
+    <string name="settings_about_support">EmuCoreC 후원</string>
+    <string name="settings_about_support_desc">Patreon 멤버십을 통해 개발이 계속될 수 있도록 도와주세요.</string>
+    <string name="settings_emulation_core">에뮬레이션 코어</string>
+    <string name="settings_based_on_rpcsx">RPCS3 기반</string>
+    <string name="settings_developer">개발자</string>
+    <string name="settings_created_by_sbro">Sashkin Apps 제작</string>
+    <string name="settings_play_store_profile">Play Store 프로필</string>
+    <string name="settings_play_store_profile_desc">개발자의 다른 Android 앱을 확인하세요.</string>
+    <string name="settings_core_source_code">코어 소스 코드</string>
+    <string name="settings_core_source_description">EmuCoreC는 자체 Android 인터페이스를 사용합니다. 에뮬레이션 코어만 RPCS3를 기반으로 합니다.</string>
+    <string name="settings_rpcsx_repository_desc">원본 RPCS3 프로젝트 저장소를 엽니다.</string>
+    <string name="settings_updates_version_label">버전</string>
+    <string name="settings_updates_open_release">릴리스 페이지 열기</string>
+    <string name="settings_updates_release_notes_title">새로운 기능</string>
+    <string name="settings_updates_release_notes_empty">이 릴리스에는 릴리스 노트가 없습니다.</string>
+    <string name="settings_updates_history_title">업데이트 기록</string>
+    <string name="settings_updates_history_body">GitHub 릴리스, 릴리스 날짜, 변경 내역을 살펴보세요.</string>
+    <string name="settings_updates_history_loading">릴리스 기록 불러오는 중</string>
+    <string name="settings_updates_history_empty">릴리스를 찾을 수 없습니다.</string>
+    <string name="settings_updates_published_label">게시일</string>
+    <string name="settings_updates_parallel_title">병렬 버전</string>
+    <string name="settings_updates_parallel_body">Android는 릴리스에 고유한 패키지 이름과 앱 라벨로 빌드된 특별한 APK(예: EmuCoreC (0.1.1))가 포함된 경우에만 여러 EmuCoreC 버전을 설치할 수 있습니다. 일반 이전 APK는 현재 앱을 교체하거나 다운그레이드합니다.</string>
+    <string name="settings_updates_parallel_package">별도 앱 패키지</string>
+    <string name="settings_updates_parallel_download">다운로드</string>
+    <string name="settings_updates_parallel_unavailable">이 릴리스에서는 별도 APK를 사용할 수 없습니다.</string>
+    <string name="settings_updates_cancel">취소</string>
+    <string name="shell_setup_section">설치</string>
+    <string name="shell_library_section">라이브러리</string>
+    <string name="shell_tools_section">도구</string>
+    <string name="shell_install_content">패키지 및 DLC 설치</string>
+    <string name="game_launch_failed">이 게임을 실행하지 못했습니다.</string>
+    <string name="folder_picker_failed">선택한 폴더를 사용하지 못했습니다.</string>
+    <string name="core_install_firmware_failed">펌웨어 설치를 시작하지 못했습니다.</string>
+    <string name="core_install_firmware_unsupported">지원되는 펌웨어 파일(.PUP 등)을 선택하세요.</string>
+    <string name="core_install_pkg_failed">PS3 콘텐츠 설치를 시작하지 못했습니다.</string>
+    <string name="game_launch_requires_firmware">게임을 실행하기 전에 기본 펌웨어를 설치하세요.</string>
+    <string name="install_dialog_title_generic">설치</string>
+    <string name="install_dialog_title_firmware">펌웨어 설치 중</string>
+    <string name="install_dialog_title_license">라이선스 설치 중</string>
+    <string name="install_dialog_title_pkg">PS3 콘텐츠 설치 중</string>
+    <string name="install_dialog_success">설치가 완료되었습니다.</string>
+    <string name="install_dialog_error">설치에 실패했습니다.</string>
+    <string name="install_dialog_percent">%1$d%% 완료</string>
+    <string name="install_dialog_close">닫기</string>
+    <string name="install_dialog_unexpected_error">설치 중 문제가 발생했습니다.</string>
+    <string name="install_dialog_firmware_failed">펌웨어 설치에 실패했습니다.</string>
+    <string name="install_dialog_license_failed">라이선스 설치에 실패했습니다.</string>
+    <string name="install_dialog_pkg_failed">PS3 콘텐츠를 설치하지 못했습니다.</string>
+    <string name="install_dialog_firmware_done">펌웨어 패키지가 설치되었습니다.</string>
+    <string name="install_dialog_license_done">라이선스가 설치되었습니다.</string>
+    <string name="install_dialog_pkg_done">PS3 콘텐츠를 설치했습니다.</string>
+    <string name="install_dialog_extracting_archive">%1$s 압축 해제 중…</string>
+    <string name="install_archive_missing_volume">분할 압축 파일의 일부가 누락되었습니다. 첫 번째와 마지막 파일을 포함한 모든 부분을 선택하세요.</string>
+    <string name="install_archive_password_protected">암호로 보호된 압축 파일은 아직 지원되지 않습니다. 먼저 압축을 해제하거나 암호를 제거하세요.</string>
+    <string name="install_archive_unsafe">압축 파일에 안전하지 않은 경로나 링크가 포함되어 있어 거부되었습니다.</string>
+    <string name="install_archive_not_enough_space">이 콘텐츠를 안전하게 압축 해제하고 설치할 공간이 부족합니다.</string>
+    <string name="install_archive_no_content">지원되는 PS3 PKG, ISO, RAP 또는 EDAT 파일을 찾을 수 없습니다.</string>
+    <string name="install_archive_failed">압축 파일이 손상되었거나 불완전하거나 지원되지 않는 형식입니다.</string>
+    <string name="setup_title">게임 설치</string>
+    <string name="common_back">뒤로</string>
+    <string name="common_not_available">사용할 수 없음</string>
+    <string name="common_unknown">알 수 없음</string>
+    <string name="common_close">닫기</string>
+    <string name="common_cancel">취소</string>
+    <string name="emulation_pause">일시 정지</string>
+    <string name="emulation_resume">재개</string>
+    <string name="emulation_menu_title">게임 메뉴</string>
+    <string name="emulation_menu_unknown_game">실행 중인 게임</string>
+    <string name="emulation_tab_game">게임</string>
+    <string name="emulation_tab_controls">컨트롤</string>
+    <string name="emulation_tab_achievements">업적</string>
+    <string name="emulation_tab_gamepad">게임패드</string>
+    <string name="emulation_quickbar_open_menu">메뉴 열기</string>
+    <string name="emulation_menu_paused_badge">일시 중지됨</string>
+    <string name="emulation_menu_badge_live">실시간</string>
+    <string name="emulation_menu_badge_restart">재시작 필요</string>
+    <string name="emulation_menu_section_now">지금</string>
+    <string name="emulation_menu_section_now_desc">변경 사항이 실행 중인 게임에 즉시 적용됩니다.</string>
+    <string name="emulation_menu_section_touch">터치 컨트롤</string>
+    <string name="emulation_menu_section_touch_desc">화면 게임패드입니다. 변경 사항이 즉시 적용됩니다.</string>
+    <string name="emulation_menu_section_gamepad">실제 게임패드</string>
+    <string name="emulation_menu_section_gamepad_desc">연결된 컨트롤러의 데드 존, 재매핑, 진동, 스틱 동작을 설정합니다.</string>
+    <string name="emulation_menu_section_gamepad_disconnected">실제 게임패드를 연결하여 이 컨트롤을 변경하세요.</string>
+    <string name="emulation_achievements_loading">실행 중인 게임의 트로피를 불러오는 중입니다.</string>
+    <string name="emulation_achievements_empty">실행 중인 게임에서 트로피를 찾을 수 없습니다.</string>
+    <string name="emulation_achievements_empty_body">트로피를 지원하는 게임을 설치하거나 라이브러리에서 게임 트로피를 새로 고치세요.</string>
+    <string name="emulation_menu_controls_desc">화면 컨트롤을 표시하거나 숨깁니다.</string>
+    <string name="emulation_menu_hide_controls">컨트롤 숨기기</string>
+    <string name="emulation_menu_show_controls">컨트롤 표시</string>
+    <string name="emulation_menu_edit_controls">컨트롤 편집</string>
+    <string name="emulation_menu_edit_controls_desc">각 화면 컨트롤을 이동, 크기 조절, 표시 또는 숨깁니다.</string>
+    <string name="emulation_menu_reset_overlay">컨트롤 레이아웃 초기화</string>
+    <string name="emulation_menu_reset_overlay_desc">터치 컨트롤의 기본 크기, 불투명도, 레이아웃을 복원합니다.</string>
+    <string name="emulation_controls_editor_title">컨트롤 편집기</string>
+    <string name="emulation_controls_editor_percent">%1$d%%</string>
+    <string name="emulation_controls_editor_touch_area_mode">터치 영역</string>
+    <string name="emulation_controls_editor_width">너비</string>
+    <string name="emulation_controls_editor_height">높이</string>
+    <string name="emulation_controls_editor_done">완료</string>
+    <string name="emulation_menu_exit_game">게임 종료</string>
+    <string name="emulation_exit_confirm_title">게임을 종료할까요?</string>
+    <string name="emulation_exit_confirm_body">현재 세션이 닫히고 라이브러리로 돌아갑니다.</string>
+    <string name="emulation_exit_confirm_action">종료</string>
+    <string name="emulation_exit_cancel_action">취소</string>
+    <string name="settings_tab_customization">사용자 지정</string>
+    <string name="customization_preview_title">미리 듣기</string>
+    <string name="customization_preview_subtitle">나만을 위한 라이브러리</string>
+    <plurals name="customization_games_per_row">
+        <item quantity="one">한 행에 게임 %1$d개</item>
+        <item quantity="other">한 행에 게임 %1$d개</item>
+    </plurals>
+    <string name="customization_home_background">홈 화면 배경</string>
+    <string name="customization_background_select">이미지, GIF 또는 동영상 선택</string>
+    <string name="customization_background_default">기본 배경</string>
+    <string name="customization_background_selected">사용자 지정 배경 선택됨</string>
+    <string name="customization_background_imported">배경이 업데이트되었습니다</string>
+    <string name="customization_background_failed">이 배경 파일을 사용할 수 없습니다</string>
+    <string name="customization_library_layout">라이브러리 레이아웃</string>
+    <string name="customization_cover_size">게임 커버 크기</string>
+    <string name="customization_percent_value">%1$d%%</string>
+    <string name="customization_text_and_fonts">텍스트 및 글꼴</string>
+    <string name="customization_app_font">앱 글꼴</string>
+    <string name="customization_font_system">시스템 기본값</string>
+    <string name="customization_font_custom">사용자 지정</string>
+    <string name="customization_import_font">사용자 지정 글꼴 가져오기</string>
+    <string name="customization_import_font_hint">TTF 또는 OTF 파일 선택</string>
+    <string name="customization_font_imported">글꼴을 가져왔습니다</string>
+    <string name="customization_font_failed">이 글꼴 파일을 사용할 수 없습니다</string>
+    <string name="customization_text_size">텍스트 크기</string>
+    <string name="customization_reset_section">초기화</string>
+    <string name="customization_reset">사용자 지정 초기화</string>
+    <string name="customization_reset_description">기본 배경, 커버 크기, 글꼴, 텍스트 크기를 복원합니다</string>
+    <string name="customization_reset_confirm_title">사용자 지정을 초기화할까요?</string>
+    <string name="customization_reset_confirm_body">사용자 지정 배경과 가져온 글꼴이 제거됩니다.</string>
+    <string name="customization_reset_action">초기화</string>
+    <string name="settings_theme">테마</string>
+    <string name="settings_theme_system">시스템</string>
+    <string name="settings_theme_light">라이트</string>
+    <string name="settings_theme_dark">다크</string>
+    <string name="settings_theme_neon">네온</string>
+    <string name="settings_about_privacy_policy">개인정보 처리방침</string>
+    <string name="settings_about_privacy_policy_desc">EmuCoreC 개인정보 처리방침을 엽니다.</string>
+    <string name="shell_discord_server">Discord 서버</string>
+    <string name="settings_customization_drawer_section">내비게이션 서랍</string>
+    <string name="settings_customization_touch_controls_section">화면 컨트롤</string>
+    <string name="settings_customization_touch_controls_style">컨트롤 스타일</string>
+    <string name="settings_customization_touch_controls_help">버튼 셸, D-패드, 스틱 링, 썸 캡, 외곽선, 눌림 상태 등 전체 컨트롤 디자인을 변경합니다. 위치, 터치 영역, 멀티 터치, 입력 동작은 그대로 유지됩니다.</string>
+    <string name="settings_customization_touch_press_effect">누름 효과</string>
+    <string name="settings_customization_touch_press_effect_help">누르고 있을 때 모든 화면 버튼, D-패드 방향, 아날로그 스틱이 반응하는 방식을 선택하세요. 애니메이션만 변경되며 컨트롤 크기와 터치 영역은 그대로 유지됩니다.</string>
+    <string name="settings_customization_touch_press_effect_grow">확대</string>
+    <string name="settings_customization_touch_press_effect_shrink">축소</string>
+    <string name="settings_customization_touch_press_effect_spring">스프링</string>
+    <string name="settings_customization_touch_press_effect_glow">글로우</string>
+    <string name="settings_customization_touch_style_classic">클래식</string>
+    <string name="settings_customization_touch_style_glass">레거시</string>
+    <string name="settings_customization_touch_style_neon">모던</string>
+    <string name="settings_customization_touch_style_arcade">아케이드</string>
+    <string name="settings_customization_touch_style_minimal">미니멀</string>
+    <string name="settings_game_menu_tab">게임 메뉴</string>
+    <string name="settings_game_menu_layout_help">게임 내 메뉴의 구조와 탐색 방식을 변경합니다. 탭, 콘텐츠 표시, 안전 동작, 게임패드 컨트롤은 모든 레이아웃에서 동일하게 유지됩니다.</string>
+    <string name="settings_game_menu_layout_sidebar">사이드바</string>
+    <string name="settings_game_menu_layout_dashboard">대시보드</string>
+    <string name="settings_game_menu_layout_command_center">커맨드 센터</string>
+    <string name="settings_game_menu_layout_compact">컴팩트</string>
+    <string name="settings_drawer_style_classic">클래식</string>
+    <string name="settings_drawer_style_compact">컴팩트</string>
+    <string name="settings_drawer_style_glass">글래스</string>
+    <string name="settings_drawer_style_console">콘솔</string>
+    <string name="feedback_title">피드백</string>
+    <string name="feedback_subtitle">EmuCoreC 팀에 의견을 직접 보내주세요</string>
+    <string name="feedback_category_title">어떤 내용인가요?</string>
+    <string name="feedback_category_compatibility">게임 호환성</string>
+    <string name="feedback_category_performance">성능 또는 끊김</string>
+    <string name="feedback_category_graphics">그래픽 또는 렌더링</string>
+    <string name="feedback_category_audio">오디오</string>
+    <string name="feedback_category_controls">컨트롤 또는 게임패드</string>
+    <string name="feedback_category_crash">충돌 또는 멈춤</string>
+    <string name="feedback_category_feature">기능 요청</string>
+    <string name="feedback_category_ui">인터페이스 또는 사용성</string>
+    <string name="feedback_category_other">기타</string>
+    <string name="feedback_details_title">세부 정보</string>
+    <string name="feedback_game_label">라이브러리의 게임 (선택 사항)</string>
+    <string name="feedback_game_placeholder">제목이나 시리얼로 검색하거나 게임을 직접 입력하세요</string>
+    <string name="feedback_game_library_empty">캐시된 게임을 찾을 수 없습니다. 게임 제목이나 시리얼을 직접 입력할 수 있습니다.</string>
+    <string name="feedback_game_clear_selection">게임 선택 지우기</string>
+    <string name="feedback_message_label">의견 내용</string>
+    <string name="feedback_message_placeholder">어떤 일이 있었는지, 무엇을 기대했는지, 어떻게 재현할 수 있는지 알려주세요.</string>
+    <string name="feedback_character_counter">%1$d / %2$d</string>
+    <string name="feedback_attachments_title">첨부 파일</string>
+    <string name="feedback_attachments_help">사진, 동영상, 로그, 저장 파일 또는 기타 파일을 최대 %1$d개까지 추가할 수 있습니다. 파일당 최대 %2$d MB, 전체 최대 %3$d MB입니다.</string>
+    <string name="feedback_add_attachment">첨부 파일 추가</string>
+    <string name="feedback_attachment_source_title">첨부 유형 선택</string>
+    <string name="feedback_add_media">사진 또는 동영상</string>
+    <string name="feedback_add_files">파일</string>
+    <string name="feedback_attachment_counter">%2$d개 파일 중 %1$d개 선택됨</string>
+    <string name="feedback_tip_title">더 나은 의견을 위한 팁</string>
+    <string name="feedback_tip_body">문제를 재현하는 간단한 단계를 적고 스크린샷, 동영상, 로그, 저장 파일 또는 기타 유용한 파일을 첨부하세요.</string>
+    <string name="feedback_remove_attachment">첨부 파일 제거</string>
+    <string name="feedback_send">의견 보내기</string>
+    <string name="feedback_queueing">준비 중…</string>
+    <string name="feedback_queued">의견이 대기열에 추가되었습니다. 네트워크가 연결되면 자동으로 전송됩니다.</string>
+    <string name="feedback_error_message_required">먼저 의견 내용을 작성해 주세요.</string>
+    <string name="feedback_error_too_many_files">파일을 너무 많이 선택했습니다.</string>
+    <string name="feedback_error_file_too_large">파일 중 하나가 49 MB를 초과합니다.</string>
+    <string name="feedback_error_total_too_large">선택한 파일의 전체 용량이 90 MB를 초과합니다.</string>
+    <string name="feedback_error_file_unreadable">선택한 파일 중 하나를 읽을 수 없습니다.</string>
+    <string name="feedback_error_queue_failed">의견을 준비할 수 없습니다. 선택한 파일을 확인하고 다시 시도해 주세요.</string>
+    <string name="feedback_not_configured">이 빌드에서는 의견 전송이 구성되지 않았습니다. local.properties에 Worker URL과 API 키를 추가하세요.</string>
+    <string name="feedback_discard_title">의견을 삭제할까요?</string>
+    <string name="feedback_discard_message">작성한 메시지와 선택한 첨부 파일이 사라집니다.</string>
+    <string name="feedback_discard_action">삭제</string>
+    <string name="settings_customization_drawer_style">서랍 메뉴 모양</string>
+    <string name="settings_touch_haptics">터치 컨트롤 햅틱</string>
+    <string name="settings_help_touch_haptics">화면 버튼, D-패드 방향 또는 아날로그 스틱을 처음 누를 때 가벼운 Android 햅틱 피드백을 추가합니다. 이는 컨트롤 감촉에만 영향을 주며 게임 내 진동은 변경하지 않습니다.</string>
+    <string name="settings_touch_haptics_strength">터치 햅틱 강도</string>
+    <string name="settings_help_touch_haptics_strength">터치 컨트롤 햅틱에 사용되는 기기 진동 강도를 조절합니다. 진동이 너무 약하면 높이고, 조용한 휴대 플레이를 원하면 낮추세요.</string>
+    <string name="settings_touch_haptics_test">터치 햅틱 테스트</string>
+    <string name="settings_help_touch_haptics_test">화면 컨트롤에서 사용하는 것과 동일한 누름-해제 햅틱 쌍을 재생하여 게임을 실행하기 전에 프리셋을 비교하고 강도를 조절할 수 있습니다.</string>
+    <string name="settings_touch_haptics_preset">햅틱 감촉</string>
+    <string name="settings_touch_haptics_preset_soft">부드러움</string>
+    <string name="settings_touch_haptics_preset_balanced">균형</string>
+    <string name="settings_touch_haptics_preset_crisp">또렷함</string>
+    <string name="settings_touch_haptics_preset_strong">강함</string>
+    <string name="settings_help_touch_haptics_preset">부드러움은 온화한 누름과 매우 가벼운 해제를 사용합니다. 균형은 선명한 누름과 가벼운 해제를 제공하며 기본값입니다. 또렷함은 정밀한 탭을 위한 가장 짧고 날카로운 쌍을 사용합니다. 강함은 진동 모터가 약한 휴대폰을 위한 더 깊고 긴 진동을 사용합니다. 강도 슬라이더는 선택한 감촉을 조절합니다.</string>
+    <string name="settings_gyro_mode">자이로스코프 제어</string>
+    <string name="settings_gyro_off">끔</string>
+    <string name="settings_gyro_aim">조준 — 오른쪽 스틱</string>
+    <string name="settings_gyro_steering">조향 — 왼쪽 스틱</string>
+    <string name="settings_gyro_sensitivity">자이로스코프 감도</string>
+    <string name="settings_gyro_smoothing">자이로스코프 평활화</string>
+    <string name="settings_gyro_invert_x">가로 자이로 반전</string>
+    <string name="settings_gyro_invert_x_desc">좌우 움직임을 반전합니다.</string>
+    <string name="settings_gyro_invert_y">세로 자이로 반전</string>
+    <string name="settings_gyro_invert_y_desc">위아래 조준 움직임을 반전합니다.</string>
+    <string name="settings_help_gyro_mode">조준은 휴대폰 회전 속도를 오른쪽 아날로그 스틱으로 변환하여 슈터 게임의 카메라를 제어하고, 휴대폰이 멈추면 자동으로 중앙으로 돌아갑니다. 조향은 휴대폰의 기울기를 왼쪽 아날로그 스틱으로 변환하여 레이싱 게임에 사용하며 게임플레이가 시작될 때 현재 각도를 중앙으로 보정합니다. 선택한 모드는 게임 실행 중에만 사용되며 해당 모션 센서가 필요합니다.</string>
+    <string name="settings_help_gyro_sensitivity">휴대폰 움직임이 에뮬레이션된 아날로그 스틱을 얼마나 강하게 움직이는지 조절합니다. 게임마다 카메라와 조향 반응 곡선이 다르므로 게임별 재정의를 권장합니다.</string>
+    <string name="settings_help_gyro_smoothing">센서 노이즈와 손떨림을 걸러냅니다. 값이 낮으면 더 빠르게 반응하고, 높으면 더 안정적이지만 약간의 지연이 추가됩니다.</string>
+    <string name="settings_gyro_unavailable">이 기기에는 선택한 모드에 필요한 모션 센서가 없습니다.</string>
+    <string name="settings_touch_controls_section">터치 컨트롤</string>
+    <string name="settings_gpu_driver_detected_device">감지됨: %1$s · %2$s</string>
+    <string name="settings_gpu_driver_device_hint">호환되는 드라이버가 먼저 표시됩니다. 드라이버 카드를 탭하면 지원되는 Snapdragon 칩을 볼 수 있습니다.</string>
+    <string name="settings_gpu_driver_compatibility">Snapdragon 호환성</string>
+    <string name="settings_gpu_driver_best_match">최적 일치</string>
+    <string name="settings_gpu_driver_compatible">호환됨</string>
+    <string name="settings_gpu_driver_other_family">다른 Adreno 제품군</string>
+    <string name="settings_gpu_driver_compatibility_a6xx">Adreno 6xx: Snapdragon 845/855/865/888 및 다수의 Snapdragon 6/7 시리즈</string>
+    <string name="settings_gpu_driver_compatibility_a7xx">Adreno 7xx: Snapdragon 8 Gen 1/2/3, 8s Gen 3, 최신 Snapdragon 7 시리즈 및 6 Gen 1/3</string>
+    <string name="settings_gpu_driver_compatibility_a8xx">Adreno 8xx: Snapdragon 8 Elite Gen 5, 8 Gen 5, 8 Elite, 8s Gen 4 및 6 Gen 4</string>
+    <string name="app_name_emucorec">EmuCoreC</string>
+    <string name="home_title">PlayStation 3</string>
+    <string name="home_subtitle">Android용 PS3 에뮬레이터</string>
+    <string name="home_installed_count">설치된 게임: %1$d</string>
+    <string name="home_catalog_count">카탈로그 게임: %1$d</string>
+    <string name="home_storage_short">준비됨</string>
+    <string name="home_storage_path">저장 공간: %1$s</string>
+    <string name="home_open_setup">게임 열기</string>
+    <string name="home_open_library">라이브러리 열기</string>
+    <string name="home_open_catalog">카탈로그 둘러보기</string>
+    <string name="home_empty_library_title">아직 설치된 게임이 없습니다</string>
+    <string name="home_recent_titles_title">최근 플레이</string>
+    <string name="onboarding_page_1_title">Android에서 즐기는 PlayStation 3</string>
+    <string name="onboarding_page_1_body">RPCS3 코어로 Android에서 PS3 게임을 플레이하세요.</string>
+    <string name="onboarding_page_2_title">나의 게임 라이브러리</string>
+    <string name="onboarding_page_2_body">설치된 게임이 하나의 라이브러리에 모입니다.</string>
+    <string name="onboarding_page_3_title">내장 카탈로그</string>
+    <string name="onboarding_page_3_body">커버, 스크린샷, 동영상, 게임 정보를 한곳에서 살펴보세요.</string>
+    <string name="onboarding_page_4_title">거의 다 됐습니다</string>
+    <string name="home_empty_library_body">PS3 공식 펌웨어를 설치한 다음 게임 화면에서 PKG 게임이나 RAP 라이선스를 추가하세요.</string>
+    <string name="onboarding_page_4_body">게임을 실행하기 전에 PS3 공식 펌웨어를 설치하세요.</string>
+    <string name="onboarding_firmware_title">PS3 펌웨어</string>
+    <string name="onboarding_firmware_desc">PS3 공식 시스템 소프트웨어 파일인 PS3UPDAT.PUP를 다운로드하거나 선택하세요.</string>
+    <string name="onboarding_firmware_info_title">PS3 공식 펌웨어</string>
+    <string name="onboarding_firmware_info_body">펌웨어는 Sony 공식 업데이트 서버에서 직접 다운로드됩니다. EmuCoreC는 펌웨어를 호스팅, 미러링, 수정 또는 재배포하지 않습니다.</string>
+    <string name="core_install_pkg_unsupported">PS3 PKG/ISO 파일 또는 분할 ZIP/RAR 압축 파일의 모든 부분을 선택하세요.</string>
+    <string name="core_install_license_unsupported">PS3 RAP 라이선스 파일을 선택하세요.</string>
+    <string name="setup_pkg_title">PS3 콘텐츠 설치</string>
+    <string name="setup_pkg_body">PKG/ISO를 직접 설치하거나 ZIP/RAR 압축 파일을 하나 이상 선택하세요. 안에 있는 PKG, ISO, RAP, EDAT 파일은 자동으로 감지됩니다.</string>
+    <string name="setup_pkg_license_step_title">RAP 라이선스 설치</string>
+    <string name="setup_pkg_license_step_body">디지털 PS3 게임에 맞는 RAP 라이선스를 선택하세요.</string>
+    <string name="setup_pkg_license_button">RAP 파일 선택</string>
+    <string name="setup_pkg_button">콘텐츠 또는 압축 파일 선택</string>
+    <string name="setup_pkg_order_note">일부 디지털 게임에는 해당 게임의 RAP 라이선스가 필요합니다. PKG와 RAP는 어느 순서로 설치해도 됩니다.</string>
+    <string name="install_choice_title">PS3 콘텐츠 설치</string>
+    <string name="install_choice_body">PKG/ISO 파일이나 ZIP/RAR 압축 파일을 선택하거나 RAP 라이선스를 설치하세요.</string>
+    <string name="install_choice_pkg_without_license_note">분할 ZIP/RAR 압축 파일의 모든 부분을 한 번에 선택할 수 있습니다. EmuCoreC가 안전하게 압축을 풀고 PS3 콘텐츠를 찾아 분할 패키지를 번호 순서대로 설치한 다음 임시 파일을 삭제합니다.</string>
+    <string name="ps3_core_settings_unavailable">RPCS3 코어를 불러오거나 초기화하지 못했습니다.</string>
+    <string name="ps3_core_setting_rejected">RPCS3 코어가 ‘%1$s’을(를) 거부했습니다.</string>
+    <string name="ps3_core_setting_default">코어 기본값: %1$s</string>
+    <string name="ps3_core_setting_reset_game">이 설정을 전역 설정값으로 재설정</string>
+    <string name="catalog_open_for_game">카탈로그에서 열기</string>
+    <string name="catalog_serial_not_found">로컬 카탈로그에서 이 PS3 시리얼 번호를 찾을 수 없습니다.</string>
+    <string name="settings_rpcs3_repository_desc">원본 RPCS3 PlayStation 3 에뮬레이터 저장소입니다. 이 프로젝트의 기반이 되는 코어에 기여해 주신 모든 RPCS3 기여자분께 감사드립니다.</string>
+    <string name="settings_tab_audio">오디오</string>
+    <string name="settings_tab_network">네트워크</string>
+    <string name="settings_tab_advanced">고급</string>
+    <string name="shell_launch_system_menu">PS3 실행</string>
+    <string name="system_menu_launch_failed">PS3 시스템 메뉴를 시작하지 못했습니다.</string>
+    <string name="core_setting_edit">값 편집</string>
+    <string name="core_setting_value">값</string>
+    <string name="core_setting_apply">적용</string>
+    <string name="core_setting_cancel">취소</string>
+    <string name="core_setting_default_value">기본값: %1$s</string>
+    <string name="core_setting_no_options">이 섹션에는 지원되는 설정이 없습니다.</string>
+    <string name="core_label_1_controller">컨트롤러 1개</string>
+    <string name="core_label_120">120</string>
+    <string name="core_label_1280x1080">1280x1080</string>
+    <string name="core_label_1280x720">1280x720</string>
+    <string name="core_label_1440x1080">1440x1080</string>
+    <string name="core_label_16_9">16:9</string>
+    <string name="core_label_1600x1080">1600x1080</string>
+    <string name="core_label_1920x1080">1920x1080</string>
+    <string name="core_label_1920x1080i">1920x1080i</string>
+    <string name="core_label_2_controllers">컨트롤러 2개</string>
+    <string name="core_label_30">30</string>
+    <string name="core_label_3d_display_enabled">3D 디스플레이 활성화</string>
+    <string name="core_label_3d_display_mode">3D 디스플레이 모드</string>
+    <string name="core_label_4_3">4:3</string>
+    <string name="core_label_50">50</string>
+    <string name="core_label_60">60</string>
+    <string name="core_label_720x480">720x480</string>
+    <string name="core_label_720x480i">720x480i</string>
+    <string name="core_label_720x576">720x576</string>
+    <string name="core_label_720x576i">720x576i</string>
+    <string name="core_label_960x1080">960x1080</string>
+    <string name="core_label_accurate">정확</string>
+    <string name="core_label_accurate_cache_line_stores">정확한 캐시 라인 쓰기</string>
+    <string name="core_label_accurate_ppu_128_byte_reservation_op_max_length">정확한 PPU 128바이트 예약 연산 최대 길이</string>
+    <string name="core_label_accurate_rsx_reservation_access">정확한 RSX 예약 접근</string>
+    <string name="core_label_accurate_spu_dma">정확한 SPU DMA</string>
+    <string name="core_label_accurate_spu_reservations">정확한 SPU 예약</string>
+    <string name="core_label_accurate_zcull_stats">정확한 ZCULL 통계</string>
+    <string name="core_label_adapter">어댑터</string>
+    <string name="core_label_adaptive">적응형</string>
+    <string name="core_label_all">전체</string>
+    <string name="core_label_all_timers">모든 타이머</string>
+    <string name="core_label_allow_custom_background">맞춤 배경 허용</string>
+    <string name="core_label_allow_host_gpu_labels">호스트 GPU 레이블 허용</string>
+    <string name="core_label_allow_move_hue_set_by_game">게임의 PS Move 발광 색상 지정 허용</string>
+    <string name="core_label_allow_rsx_cpu_preemptions">RSX CPU 선점 허용</string>
+    <string name="core_label_anaglyph_amber_blue">애너글리프(호박색-파랑)</string>
+    <string name="core_label_anaglyph_custom">애너글리프(사용자 지정)</string>
+    <string name="core_label_anaglyph_magenta_cyan">애너글리프(마젠타-시안)</string>
+    <string name="core_label_anaglyph_red_blue">애너글리프(빨강-파랑)</string>
+    <string name="core_label_anaglyph_red_cyan">애너글리프(빨강-시안)</string>
+    <string name="core_label_anaglyph_red_green">애너글리프(빨강-초록)</string>
+    <string name="core_label_anaglyph_trioscopic">애너글리프(Trioscopic)</string>
+    <string name="core_label_anisotropic_filter_override">이방성 필터 재정의</string>
+    <string name="core_label_approximate">근사</string>
+    <string name="core_label_as_host">호스트 시스템과 동일</string>
+    <string name="core_label_aspect_ratio">화면 비율</string>
+    <string name="core_label_assume_external_debugger">외부 디버거 가정</string>
+    <string name="core_label_async_recompiler_multi_threaded">비동기 리컴파일러(멀티스레드)</string>
+    <string name="core_label_async_recompiler_with_shader_interpreter">비동기 리컴파일러 및 셰이더 인터프리터</string>
+    <string name="core_label_asynchronous_queue_scheduler">비동기 대기열 스케줄러</string>
+    <string name="core_label_asynchronous_texture_streaming">비동기 텍스처 스트리밍</string>
+    <string name="core_label_atomic">원자적</string>
+    <string name="core_label_audio">오디오</string>
+    <string name="core_label_audio_channel_layout">오디오 채널 레이아웃</string>
+    <string name="core_label_audio_device">오디오 장치</string>
+    <string name="core_label_audio_format">오디오 형식</string>
+    <string name="core_label_audio_formats">오디오 형식</string>
+    <string name="core_label_audio_provider">오디오 백엔드</string>
+    <string name="core_label_auto">자동</string>
+    <string name="core_label_automatic">자동</string>
+    <string name="core_label_automatically_start_games_after_boot">부팅 후 자동으로 게임 시작</string>
+    <string name="core_label_av_multiout">AV 멀티아웃</string>
+    <string name="core_label_background_input_enabled">백그라운드 입력 활성화</string>
+    <string name="core_label_basic">기본</string>
+    <string name="core_label_bilinear">이중선형</string>
+    <string name="core_label_bind_address">바인딩 주소</string>
+    <string name="core_label_blur_effect_strength">흐림 효과 강도</string>
+    <string name="core_label_body_background_hex">본문 배경색(16진수)</string>
+    <string name="core_label_body_color_hex">본문 글자색(16진수)</string>
+    <string name="core_label_both">둘 다</string>
+    <string name="core_label_bottom_left">왼쪽 하단</string>
+    <string name="core_label_bottom_right">오른쪽 하단</string>
+    <string name="core_label_buzz_emulated_controller">Buzz 컨트롤러 에뮬레이션</string>
+    <string name="core_label_camera">카메라</string>
+    <string name="core_label_camera_flip">카메라 영상 반전</string>
+    <string name="core_label_camera_id">카메라 ID</string>
+    <string name="core_label_camera_type">카메라 유형</string>
+    <string name="core_label_cellaudio">CellAudio</string>
+    <string name="core_label_center_horizontally">가로 가운데 정렬</string>
+    <string name="core_label_center_vertically">세로 가운데 정렬</string>
+    <string name="core_label_clans_enabled">클랜 활성화</string>
+    <string name="core_label_clock12">12시간제</string>
+    <string name="core_label_clock24">24시간제</string>
+    <string name="core_label_clocks_scale">클럭 배율</string>
+    <string name="core_label_compatible_savestate_mode">호환성 우선 상태 저장 모드</string>
+    <string name="core_label_connected">연결됨</string>
+    <string name="core_label_consecutive_frames_to_draw">연속으로 그릴 프레임 수</string>
+    <string name="core_label_consecutive_frames_to_skip">연속으로 건너뛸 프레임 수</string>
+    <string name="core_label_console_psid">콘솔 PSID</string>
+    <string name="core_label_console_time_offset_s">콘솔 시간 오프셋(초)</string>
+    <string name="core_label_convert_to_16_bit">16비트로 변환</string>
+    <string name="core_label_core">에뮬레이션 코어</string>
+    <string name="core_label_cubeb">Cubeb</string>
+    <string name="core_label_custom_anaglyph_matrices">맞춤형 애너글리프 행렬</string>
+    <string name="core_label_darkening_effect_strength">어둡게 하기 효과 강도</string>
+    <string name="core_label_date_format">날짜 형식</string>
+    <string name="core_label_ddmmyyyy">일월년(DDMMYYYY)</string>
+    <string name="core_label_debug_console_mode">디버그 콘솔 모드</string>
+    <string name="core_label_debug_output">디버그 출력</string>
+    <string name="core_label_debug_overlay">디버그 오버레이</string>
+    <string name="core_label_debug_program_analyser">디버그 프로그램 분석기</string>
+    <string name="core_label_decr_memory_layout">DECR 메모리 레이아웃</string>
+    <string name="core_label_derive_mac_from_psid">PSID에서 MAC 파생</string>
+    <string name="core_label_desired_audio_buffer_duration">목표 오디오 버퍼 길이</string>
+    <string name="core_label_detail_level">세부 수준</string>
+    <string name="core_label_disable">비활성화</string>
+    <string name="core_label_disable_asynchronous_memory_manager">비동기 메모리 관리자 비활성화</string>
+    <string name="core_label_disable_fifo_reordering">FIFO 재정렬 비활성화</string>
+    <string name="core_label_disable_hardware_colorspace_remapping">하드웨어 색 공간 재매핑 비활성화</string>
+    <string name="core_label_disable_msl_fast_math">MSL Fast Math 비활성화</string>
+    <string name="core_label_disable_on_disk_shader_cache">온디스크 셰이더 캐시 비활성화</string>
+    <string name="core_label_disable_sampling_skip">샘플링 건너뛰기 비활성화</string>
+    <string name="core_label_disable_spu_getllar_spin_optimization">SPU GETLLAR 스핀 최적화 비활성화</string>
+    <string name="core_label_disable_vertex_cache">정점 캐시 비활성화</string>
+    <string name="core_label_disable_video_output">비디오 출력 비활성화</string>
+    <string name="core_label_disable_vulkan_memory_allocator">Vulkan 메모리 할당자 비활성화</string>
+    <string name="core_label_disable_zcull_occlusion_queries">ZCULL 오클루전 쿼리 비활성화</string>
+    <string name="core_label_disabled">사용 안 함</string>
+    <string name="core_label_disconnected">연결 안 됨</string>
+    <string name="core_label_disk_cache_maximum_size_mb">디스크 캐시 최대 크기(MB)</string>
+    <string name="core_label_display">디스플레이</string>
+    <string name="core_label_display_aspect_override">표시 화면 비율 재정의</string>
+    <string name="core_label_dns_address">DNS 주소</string>
+    <string name="core_label_driver_recovery_timeout">드라이버 복구 시간 초과</string>
+    <string name="core_label_driver_wake_up_delay">드라이버 웨이크업 지연</string>
+    <string name="core_label_dump_to_file">파일로 덤프</string>
+    <string name="core_label_empty_dev_hdd0_tmp">/dev_hdd0/tmp/ 비우기</string>
+    <string name="core_label_emulate_special_depth_comparison">특수 깊이 비교 에뮬레이션</string>
+    <string name="core_label_emulated_midi_devices">에뮬레이션할 MIDI 장치</string>
+    <string name="core_label_enable">활성화</string>
+    <string name="core_label_enable_host_root">/host_root/ 활성화</string>
+    <string name="core_label_enable_buffering">버퍼링 활성화</string>
+    <string name="core_label_enable_frame_skip">프레임 건너뛰기 활성화</string>
+    <string name="core_label_enable_framerate_graph">프레임 속도 그래프 활성화</string>
+    <string name="core_label_enable_frametime_graph">프레임타임 그래프 활성화</string>
+    <string name="core_label_enable_gamemode">GameMode 활성화</string>
+    <string name="core_label_enable_performance_report">성능 보고서 활성화</string>
+    <string name="core_label_enable_time_stretching">타임 스트레칭 활성화</string>
+    <string name="core_label_enabled">활성화됨</string>
+    <string name="core_label_enter_button_assignment">확인 버튼 할당</string>
+    <string name="core_label_enter_with_circle">○ 버튼으로 확인</string>
+    <string name="core_label_enter_with_cross">× 버튼으로 확인</string>
+    <string name="core_label_exclusive_fullscreen_mode">독점 전체 화면 모드</string>
+    <string name="core_label_exit_rpcs3_when_process_finishes">프로세스가 완료되면 RPCS3 종료</string>
+    <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
+    <string name="core_label_fake">에뮬레이션</string>
+    <string name="core_label_fake_move_rotation_cone">PS Move 회전 원뿔 모사</string>
+    <string name="core_label_fake_move_rotation_cone_vertical">PS Move 회전 원뿔 모사(수직)</string>
+    <string name="core_label_fast">빠름</string>
+    <string name="core_label_faudio">FAudio</string>
+    <string name="core_label_fidelityfx_cas_sharpening_intensity">FidelityFX CAS 샤프닝 강도</string>
+    <string name="core_label_fidelityfx_super_resolution">FidelityFX Super Resolution</string>
+    <string name="core_label_font">글꼴</string>
+    <string name="core_label_font_size_px">글꼴 크기(px)</string>
+    <string name="core_label_force_cpu_blit">CPU 블릿 강제 사용</string>
+    <string name="core_label_force_hardware_msaa_resolve">하드웨어 MSAA 리졸브 강제 사용</string>
+    <string name="core_label_force_high_precision_z_buffer">고정밀 Z 버퍼 강제 사용</string>
+    <string name="core_label_frame_limit">프레임 제한</string>
+    <string name="core_label_framebuffer_aliasing_heuristic_bias">프레임버퍼 앨리어싱 휴리스틱 바이어스</string>
+    <string name="core_label_framerate_datapoints">프레임 속도 데이터 포인트</string>
+    <string name="core_label_framerate_graph_detail_level">프레임 속도 그래프 세부 수준</string>
+    <string name="core_label_frametime_datapoints">프레임타임 데이터 포인트</string>
+    <string name="core_label_frametime_graph_detail_level">프레임타임 그래프 세부 수준</string>
+    <string name="core_label_full">전체</string>
+    <string name="core_label_gdb_server">GDB 서버</string>
+    <string name="core_label_ghltar_emulated_controller">GHLtar 컨트롤러 에뮬레이션</string>
+    <string name="core_label_giga">Giga</string>
+    <string name="core_label_gun">라이트 건</string>
+    <string name="core_label_handle_rsx_memory_tiling">RSX 메모리 타일링 처리</string>
+    <string name="core_label_hdd_model_name">HDD 모델명</string>
+    <string name="core_label_hdd_serial_number">HDD 일련번호</string>
+    <string name="core_label_hdmi_0">HDMI 0</string>
+    <string name="core_label_hdmi_1">HDMI 1</string>
+    <string name="core_label_high">높음</string>
+    <string name="core_label_hle_lwmutex">HLE lwmutex</string>
+    <string name="core_label_hook_static_functions">정적 함수 후킹</string>
+    <string name="core_label_horizontal">수평</string>
+    <string name="core_label_horizontal_margin" formatted="false">수평 마진(%)</string>
+    <string name="core_label_inaccurate">부정확</string>
+    <string name="core_label_infinite">무한</string>
+    <string name="core_label_initialize_directories">디렉터리 초기화</string>
+    <string name="core_label_input_output">입력/출력</string>
+    <string name="core_label_inspection_mode_savestates">검사 모드 상태 저장</string>
+    <string name="core_label_interlaced">인터레이스</string>
+    <string name="core_label_internet_enabled">인터넷 활성화</string>
+    <string name="core_label_interpreter_dynamic">인터프리터(동적)</string>
+    <string name="core_label_interpreter_static">인터프리터(정적)</string>
+    <string name="core_label_io_debug_overlay">IO 디버그 오버레이</string>
+    <string name="core_label_ip_address">IP 주소</string>
+    <string name="core_label_ip_swap_list">IP 스왑 목록</string>
+    <string name="core_label_keep_pads_connected">패드를 연결된 상태로 유지</string>
+    <string name="core_label_keyboard">키보드</string>
+    <string name="core_label_keyboard_type">키보드 유형</string>
+    <string name="core_label_language">언어</string>
+    <string name="core_label_legacy_recompiler_single_threaded">레거시 리컴파일러(단일 스레드)</string>
+    <string name="core_label_libraries_control">라이브러리 제어</string>
+    <string name="core_label_license_area">라이선스 지역</string>
+    <string name="core_label_limit_disk_cache_size">디스크 캐시 크기 제한</string>
+    <string name="core_label_llvm_precompilation">LLVM 사전 컴파일</string>
+    <string name="core_label_load_sdl_gamecontroller_mappings">SDL GameController 매핑 로드</string>
+    <string name="core_label_lock_overlay_input_to_player_one">오버레이 입력을 플레이어 1로 제한</string>
+    <string name="core_label_log">로그</string>
+    <string name="core_label_log_shader_programs">셰이더 프로그램 로그 기록</string>
+    <string name="core_label_low">낮음</string>
+    <string name="core_label_manual">수동</string>
+    <string name="core_label_master_volume">마스터 볼륨</string>
+    <string name="core_label_matrix_left">왼쪽 눈 행렬</string>
+    <string name="core_label_matrix_right">오른쪽 눈 행렬</string>
+    <string name="core_label_max_cpu_preempt_count">최대 CPU 선점 수</string>
+    <string name="core_label_max_llvm_compile_threads">최대 LLVM 컴파일 스레드 수</string>
+    <string name="core_label_max_spurs_threads">최대 SPURS 스레드 수</string>
+    <string name="core_label_maximum_savestate_files">상태 저장 파일 수 제한</string>
+    <string name="core_label_maximum_savestate_files_space_mib">상태 저장 파일 총용량 제한(MiB)</string>
+    <string name="core_label_medium">중간</string>
+    <string name="core_label_mega">Mega</string>
+    <string name="core_label_metrics_update_interval_ms">측정항목 업데이트 간격(ms)</string>
+    <string name="core_label_mfc_commands_shuffling_in_steps">MFC 명령을 단계적으로 섞음</string>
+    <string name="core_label_mfc_commands_shuffling_limit">MFC 명령 셔플링 제한</string>
+    <string name="core_label_mfc_commands_timeout">MFC 명령 시간 초과</string>
+    <string name="core_label_mfc_debug">MFC 디버그</string>
+    <string name="core_label_microphone_devices">마이크 장치</string>
+    <string name="core_label_microphone_type">마이크 유형</string>
+    <string name="core_label_minimal">미니멀</string>
+    <string name="core_label_minimum_scalable_dimension">스케일링할 최소 크기</string>
+    <string name="core_label_miscellaneous">기타</string>
+    <string name="core_label_mmddyyyy">월일년(MMDDYYYY)</string>
+    <string name="core_label_mono">모노</string>
+    <string name="core_label_mouse">마우스</string>
+    <string name="core_label_mouse_debug_overlay">마우스 디버그 오버레이</string>
+    <string name="core_label_mouse_based_gyro_enabled">마우스 기반 자이로 활성화</string>
+    <string name="core_label_move">PS Move</string>
+    <string name="core_label_msaa">MSAA</string>
+    <string name="core_label_multi_threaded">멀티스레드</string>
+    <string name="core_label_multithreaded_rsx">멀티스레드 RSX</string>
+    <string name="core_label_music_handler">음악 재생 핸들러</string>
+    <string name="core_label_nearest">최근접</string>
+    <string name="core_label_net">네트워크</string>
+    <string name="core_label_none">없음</string>
+    <string name="core_label_null">없음</string>
+    <string name="core_label_off">끔</string>
+    <string name="core_label_opacity" formatted="false">불투명도(%)</string>
+    <string name="core_label_opengl">OpenGL</string>
+    <string name="core_label_operating_system">운영 체제</string>
+    <string name="core_label_ordered_atomic">순서 보장 및 원자적</string>
+    <string name="core_label_output_scaling_mode">출력 스케일링 모드</string>
+    <string name="core_label_over_under">상하 분할</string>
+    <string name="core_label_pad_handler_mode">패드 핸들러 모드</string>
+    <string name="core_label_pad_handler_sleep_microseconds">패드 핸들러 절전(마이크로초)</string>
+    <string name="core_label_paint_move_spheres">PS Move 구체 그리기</string>
+    <string name="core_label_pause_emulation_during_home_menu">홈 메뉴에서 에뮬레이션 일시 중지</string>
+    <string name="core_label_pause_emulation_on_rpcs3_focus_loss">RPCS3 포커스 손실 시 에뮬레이션 일시 중지</string>
+    <string name="core_label_performance_overlay">성능 모니터링</string>
+    <string name="core_label_performance_report_threshold">성능 보고서 임계값</string>
+    <string name="core_label_play_music_during_boot_sequence">부팅 시퀀스 중 음악 재생</string>
+    <string name="core_label_position">위치</string>
+    <string name="core_label_ppu_accurate_non_java_mode">PPU 정확한 비Java 모드</string>
+    <string name="core_label_ppu_accurate_vector_nan_values">PPU 정확한 벡터 NaN 값</string>
+    <string name="core_label_ppu_calling_history">PPU 호출 기록</string>
+    <string name="core_label_ppu_debug">PPU 디버그</string>
+    <string name="core_label_ppu_decoder">PPU 디코더</string>
+    <string name="core_label_ppu_profiler">PPU 프로파일러</string>
+    <string name="core_label_ppu_reservation_priority_over_spus">SPU보다 PPU 예약 우선</string>
+    <string name="core_label_ppu_set_fpcc_bits">PPU FPCC 비트 설정</string>
+    <string name="core_label_ppu_set_saturation_bit">PPU 포화 비트 설정</string>
+    <string name="core_label_ppu_threads">PPU 스레드</string>
+    <string name="core_label_ppu_vector_nan_handling">PPU 벡터 NaN 처리</string>
+    <string name="core_label_precise_spu_verification">정확한 SPU 검증</string>
+    <string name="core_label_prefer_color">색상 우선</string>
+    <string name="core_label_prefer_depth">깊이 우선</string>
+    <string name="core_label_preferred_spu_threads">선호하는 SPU 스레드 수</string>
+    <string name="core_label_prevent_display_sleep_while_running_games">게임 실행 중 디스플레이 절전 방지</string>
+    <string name="core_label_process_argv">프로세스 ARGV 인수</string>
+    <string name="core_label_ps_eye">PS Eye</string>
+    <string name="core_label_ps3">PS3</string>
+    <string name="core_label_ps3_native">PS3 네이티브</string>
+    <string name="core_label_psn_country">PSN 국가</string>
+    <string name="core_label_psn_status">PSN 상태</string>
+    <string name="core_label_qt">Qt</string>
+    <string name="core_label_quadraphonic">4채널</string>
+    <string name="core_label_quadraphonic_lfe">4채널 및 LFE</string>
+    <string name="core_label_raw">가공 안 함</string>
+    <string name="core_label_raw_mouse">원시 마우스 입력</string>
+    <string name="core_label_read_color_buffers">색상 버퍼 읽기</string>
+    <string name="core_label_read_depth_buffer">깊이 버퍼 읽기</string>
+    <string name="core_label_real">실제 기기</string>
+    <string name="core_label_real_singstar">실제 SingStar</string>
+    <string name="core_label_recompiler_asmjit">리컴파일러(ASMJIT)</string>
+    <string name="core_label_recompiler_llvm">리컴파일러(LLVM)</string>
+    <string name="core_label_record_with_overlays">오버레이를 포함하여 녹화</string>
+    <string name="core_label_relaxed">완화</string>
+    <string name="core_label_relaxed_zcull_sync">ZCULL 동기화 완화</string>
+    <string name="core_label_renderdoc_compatibility_mode">Renderdoc 호환 모드</string>
+    <string name="core_label_renderer">렌더러</string>
+    <string name="core_label_resolution">해상도</string>
+    <string name="core_label_resolution_scale">해상도 배율</string>
+    <string name="core_label_rocksmith">Rocksmith</string>
+    <string name="core_label_rpcn">RPCN</string>
+    <string name="core_label_rpcs3_alternative_scheduler">RPCS3 대체 스케줄러</string>
+    <string name="core_label_rpcs3_scheduler">RPCS3 스케줄러</string>
+    <string name="core_label_rsx_fifo_fetch_accuracy">RSX FIFO 가져오기 정확도</string>
+    <string name="core_label_rsx_profiler">RSX 프로파일러</string>
+    <string name="core_label_rsxaudio">RSXAudio</string>
+    <string name="core_label_rsxaudio_avport">RSXAudio Avport</string>
+    <string name="core_label_safe">안전</string>
+    <string name="core_label_save_disc_game_data">디스크 게임 데이터 저장</string>
+    <string name="core_label_save_llvm_logs">LLVM 로그 저장</string>
+    <string name="core_label_savestate">상태 저장</string>
+    <string name="core_label_screen_size_in_inches">화면 크기(인치)</string>
+    <string name="core_label_sdl">SDL</string>
+    <string name="core_label_sdl_camera_id">SDL 카메라 ID</string>
+    <string name="core_label_second_frame_limit">두 번째 프레임 제한</string>
+    <string name="core_label_set_daz_and_ftz">DAZ 및 FTZ 설정</string>
+    <string name="core_label_shader_chain_librashader">셰이더 체인(librashader)</string>
+    <string name="core_label_shader_compiler_threads">셰이더 컴파일러 스레드</string>
+    <string name="core_label_shader_interpreter_only">셰이더 인터프리터만</string>
+    <string name="core_label_shader_loading_dialog">셰이더 로딩 대화상자</string>
+    <string name="core_label_shader_mode">셰이더 모드</string>
+    <string name="core_label_shader_precision">셰이더 정밀도</string>
+    <string name="core_label_shader_preset_path">셰이더 사전 설정 경로</string>
+    <string name="core_label_show_1_and_average" formatted="false">하위 1% 및 평균 표시</string>
+    <string name="core_label_show_analog_limiter_toggle_hint">아날로그 리미터 토글 힌트 표시</string>
+    <string name="core_label_show_autosave_autoload_hint">자동 저장/자동 로드 힌트 표시</string>
+    <string name="core_label_show_capture_hints">캡처 힌트 표시</string>
+    <string name="core_label_show_fatal_error_hints">치명적인 오류 힌트 표시</string>
+    <string name="core_label_show_header">헤더 표시</string>
+    <string name="core_label_show_min_and_max">최소 및 최대 표시</string>
+    <string name="core_label_show_mouse_and_keyboard_toggle_hint">마우스 및 키보드 전환 힌트 표시</string>
+    <string name="core_label_show_move_cursor">PS Move 커서 표시</string>
+    <string name="core_label_show_ppu_compilation_hint">PPU 컴파일 힌트 표시</string>
+    <string name="core_label_show_pressure_intensity_toggle_hint">감압 강도 전환 힌트 표시</string>
+    <string name="core_label_show_rpcn_popups">RPCN 팝업 표시</string>
+    <string name="core_label_show_shader_compilation_hint">셰이더 컴파일 힌트 표시</string>
+    <string name="core_label_show_trophy_popups">트로피 팝업 표시</string>
+    <string name="core_label_side_by_side">좌우 분할</string>
+    <string name="core_label_silence_all_logs">모든 로그 출력 차단</string>
+    <string name="core_label_simulated">시뮬레이션</string>
+    <string name="core_label_single_threaded">단일 스레드</string>
+    <string name="core_label_singstar">SingStar</string>
+    <string name="core_label_sleep_timers_accuracy">슬립 타이머 정확도</string>
+    <string name="core_label_spdif_0">SPDIF 0</string>
+    <string name="core_label_spdif_1">SPDIF 1</string>
+    <string name="core_label_spu_block_size">SPU 블록 크기</string>
+    <string name="core_label_spu_cache">SPU 캐시</string>
+    <string name="core_label_spu_debug">SPU 디버그</string>
+    <string name="core_label_spu_decoder">SPU 디코더</string>
+    <string name="core_label_spu_delay_penalty">SPU 지연 페널티</string>
+    <string name="core_label_spu_getllar_busy_waiting_percentage">SPU GETLLAR 바쁜 대기 비율</string>
+    <string name="core_label_spu_llvm_lower_bound">SPU LLVM 하한</string>
+    <string name="core_label_spu_llvm_upper_bound">SPU LLVM 상한</string>
+    <string name="core_label_spu_loop_detection">SPU 루프 감지</string>
+    <string name="core_label_spu_profiler">SPU 프로파일러</string>
+    <string name="core_label_spu_reservation_busy_waiting_enabled">SPU 예약 바쁜 대기 활성화</string>
+    <string name="core_label_spu_reservation_busy_waiting_percentage_1">SPU 예약 바쁜 대기 비율 1</string>
+    <string name="core_label_spu_verification">SPU 검증</string>
+    <string name="core_label_spu_wake_up_delay">SPU 웨이크업 지연</string>
+    <string name="core_label_spu_wake_up_delay_thread_mask">SPU 웨이크업 지연 스레드 마스크</string>
+    <string name="core_label_spu_xfloat_accuracy">SPU XFloat 정확도</string>
+    <string name="core_label_standard">표준</string>
+    <string name="core_label_start_games_in_fullscreen_mode">전체 화면 모드로 게임 시작</string>
+    <string name="core_label_start_paused">일시 중지 상태로 시작</string>
+    <string name="core_label_stereo">스테레오</string>
+    <string name="core_label_stereo_lfe">스테레오 및 LFE</string>
+    <string name="core_label_stretch_to_display_area">표시 영역까지 늘이기</string>
+    <string name="core_label_strict_rendering_mode">엄격한 렌더링 모드</string>
+    <string name="core_label_strict_texture_flushing">엄격한 텍스처 플러싱</string>
+    <string name="core_label_stub_ppu_traps">스텁 PPU 트랩</string>
+    <string name="core_label_surround_5_1">서라운드 5.1</string>
+    <string name="core_label_surround_7_1">서라운드 7.1</string>
+    <string name="core_label_suspend_emulation_savestate_mode">에뮬레이션 중단 상태 저장 모드</string>
+    <string name="core_label_system">시스템</string>
+    <string name="core_label_system_name">시스템 이름</string>
+    <string name="core_label_texture_lod_bias_addend">텍스처 LOD 바이어스 추가</string>
+    <string name="core_label_thread_scheduler_mode">스레드 스케줄러 모드</string>
+    <string name="core_label_time_format">시간 형식</string>
+    <string name="core_label_time_stretching_threshold">타임 스트레칭 임계값</string>
+    <string name="core_label_title_background_hex">제목 배경색(16진수)</string>
+    <string name="core_label_title_color_hex">제목 글자색(16진수)</string>
+    <string name="core_label_top_left">왼쪽 위</string>
+    <string name="core_label_top_right">오른쪽 상단</string>
+    <string name="core_label_turntable_emulated_controller">턴테이블 컨트롤러 에뮬레이션</string>
+    <string name="core_label_ultra">최고</string>
+    <string name="core_label_unknown">알 수 없음</string>
+    <string name="core_label_upnp_enabled">UPNP 활성화</string>
+    <string name="core_label_use_accurate_dfma">정확한 DFMA 사용</string>
+    <string name="core_label_use_full_rgb_output_range">전체 RGB 출력 범위 사용</string>
+    <string name="core_label_use_gpu_texture_scaling">GPU 텍스처 스케일링 사용</string>
+    <string name="core_label_use_llvm_cpu">LLVM CPU 사용</string>
+    <string name="core_label_use_native_user_interface">네이티브 사용자 인터페이스 사용</string>
+    <string name="core_label_use_re_bar_for_gpu_uploads">GPU 업로드에 Re-BAR 사용</string>
+    <string name="core_label_use_recursive_scan">재귀 스캔 사용</string>
+    <string name="core_label_use_window_space">창 공간 사용</string>
+    <string name="core_label_usleep_only">usleep만 사용</string>
+    <string name="core_label_usleep_time_addend">usleep 시간 추가값</string>
+    <string name="core_label_uvc_1_1">UVC 1.1</string>
+    <string name="core_label_vblank_ntsc_fixup">Vblank NTSC 보정</string>
+    <string name="core_label_vblank_rate">Vblank 빈도</string>
+    <string name="core_label_vertical">수직</string>
+    <string name="core_label_vertical_margin" formatted="false">수직 마진(%)</string>
+    <string name="core_label_vfs">VFS</string>
+    <string name="core_label_video">동영상</string>
+    <string name="core_label_vram_allocation_limit_mb">VRAM 할당 제한(MB)</string>
+    <string name="core_label_vsync_mode">수직동기화 모드</string>
+    <string name="core_label_vulkan">Vulkan</string>
+    <string name="core_label_window_title_format">창 제목 형식</string>
+    <string name="core_label_write_color_buffers">색상 버퍼 쓰기</string>
+    <string name="core_label_write_depth_buffer">깊이 버퍼 쓰기</string>
+    <string name="core_label_xaudio2">XAudio2</string>
+    <string name="core_label_yyyymmdd">년월일(YYYYMMDD)</string>
+    <string name="core_help_core_accurate_cache_line_stores" formatted="false">PPU DCBZ 명령을 정확하게 처리합니다.\n‘정확한 SPU DMA’와 함께 사용하면 SPU PUT 캐시 라인 접근도 원자적으로 처리됩니다.</string>
+    <string name="core_help_core_use_accurate_dfma" formatted="false">PPU 및 SPU 백엔드에서 정확한 배정밀도 FMA 명령을 사용합니다.\nFMA를 지원하지 않는 CPU에서는 비활성화하면 성능이 향상될 수 있지만, 원래 발생하지 않던 미묘한 오류가 생길 수 있습니다.\nFMA를 지원하는 CPU에서는 비활성화하지 마세요.</string>
+    <string name="core_help_core_accurate_ppu_128_byte_reservation_op_max_length" formatted="false">활성화하면 PPU 원자적 연산이 캐시 라인 전체 데이터에 적용됩니다. 비활성화하면 하나의 64비트 메모리 블록에 적용됩니다.\n숫자 값은 원자적 연산의 길이에 따라 정확한 처리 방식을 사용할지 결정합니다.</string>
+    <string name="core_help_core_ppu_set_fpcc_bits" formatted="false">PPU 백엔드에서 FPCC 비트를 정확하게 설정합니다.
+확실하지 않은 경우 이 설정을 수정하지 마십시오.</string>
+    <string name="core_help_core_ppu_accurate_non_java_mode" formatted="false">PPU 백엔드의 벡터 작업에 대한 비Java 모드 비트 값을 존중합니다.
+확실하지 않은 경우 이 설정을 수정하지 마십시오.</string>
+    <string name="core_help_core_ppu_set_saturation_bit" formatted="false">PPU 백엔드에서 포화 비트 값을 정확하게 설정합니다.
+확실하지 않은 경우 이 설정을 수정하지 마십시오.</string>
+    <string name="core_help_core_ppu_accurate_vector_nan_values" formatted="false">PPU 백엔드의 벡터 명령에서 NaN 결과를 정확하게 설정합니다.\n잘 모르면 이 설정을 변경하지 마세요.</string>
+    <string name="core_help_core_accurate_rsx_reservation_access" formatted="false">SPU MFC_GETLLAR 및 SPU MFC_PUTLLUC 작업에서 RSX를 강제로 일시 중지합니다.</string>
+    <string name="core_help_core_accurate_spu_dma" formatted="false">SPU DMA 작업을 정확하게 처리합니다.</string>
+    <string name="core_help_video_allow_host_gpu_labels" formatted="false">호스트 GPU가 CELL과 직접 동기화할 수 있도록 합니다. 이로 인해 성능이 저하되지만 GPU 개체의 실제 상태가 게스트 CPU에 노출됩니다. 성능을 희생하면서 시각적 노이즈와 결함을 제거하는 데 도움이 될 수 있습니다. 주의해서 사용하세요.</string>
+    <string name="core_help_video_anisotropic_filter_override" formatted="false">값이 높을수록 GPU 리소스를 희생하여 경사면의 텍스처 선명도가 높아집니다.
+최신 GPU는 16x에서도 이 설정을 잘 처리할 수 있습니다.
+실제 PS3에서 사용되는 원래 설정을 사용하려면 이 설정을 자동으로 유지하세요.</string>
+    <string name="core_help_video_aspect_ratio" formatted="false">4:3 모니터가 아닌 이상 16:9로 두세요.</string>
+    <string name="core_help_audio_rsxaudio_avport" formatted="false">오디오 데이터를 샘플링하는 데 사용되는 avport를 제어합니다.</string>
+    <string name="core_help_audio_desired_audio_buffer_duration" formatted="false">목표 버퍼 길이를 밀리초 단위로 지정합니다.\n값이 클수록 버퍼링 알고리즘이 안정적으로 작동하기 쉬워지지만 오디오 지연이 두드러질 수 있습니다.</string>
+    <string name="core_help_audio_audio_channel_layout" formatted="false">RPCS3의 사운드 형식을 지정합니다.\n‘자동’을 선택하면 오디오 장치와 에뮬레이션하는 오디오 형식에 맞춰 RPCS3가 가장 적합한 형식을 선택합니다.</string>
+    <string name="core_help_audio_audio_device" formatted="false">오디오 백엔드에서 사용되는 장치를 제어합니다.</string>
+    <string name="core_help_audio_audio_format" formatted="false">에뮬레이션의 사운드 형식을 결정합니다.
+스테레오와 서라운드 사운드 간에 전환하려면 이 설정을 구성하십시오.
+이 값을 변경하려면 게임을 다시 시작해야 합니다.
+수동 설정에서는 선택한 형식을 사용하고, 자동 설정에서는 게임이 사용 가능한 모든 형식 중에서 선택할 수 있습니다.</string>
+    <string name="core_help_audio_audio_formats" formatted="false">에뮬레이션의 사운드 형식을 결정합니다.
+스테레오와 서라운드 사운드 간에 전환하려면 이 설정을 구성하십시오.
+이 값을 변경하려면 게임을 다시 시작해야 합니다.
+수동 설정에서는 선택한 형식을 사용하고, 자동 설정에서는 게임이 사용 가능한 모든 형식 중에서 선택할 수 있습니다.</string>
+    <string name="core_help_audio_audio_provider" formatted="false">어떤 PS3 오디오 API가 사용되는지 제어합니다.
+게임은 CellAudio를 사용하는 반면 VSH에는 RSXAudio가 필요합니다.</string>
+    <string name="core_help_audio_renderer" formatted="false">Cubeb은 여러 플랫폼을 지원하고 오디오 버퍼링을 제공하므로 권장됩니다.\n사용할 수 없는 경우 FAudio를 대신 사용할 수 있습니다.</string>
+    <string name="core_help_input_output_background_input_enabled" formatted="false">게임 창에 초점이 맞춰져 있지 않은 동안 패드 및 키보드 입력을 허용합니다.</string>
+    <string name="core_help_net_bind_address" formatted="false">바인딩할 인터페이스 IP 주소입니다.
+사용자 정의 구성에서만 사용할 수 있습니다.</string>
+    <string name="core_help_input_output_buzz_emulated_controller" formatted="false">Buzz! 컨트롤러를 지원합니다.\n게임에 Buzz! 컨트롤러가 필요하지만 실제 컨트롤러가 없다면 ‘컨트롤러 1개’ 또는 ‘컨트롤러 2개’를 선택하세요.\n게임이 DualShock을 지원하거나 실제 Buzz! 컨트롤러가 있다면 ‘없음’을 선택하세요.</string>
+    <string name="core_help_input_output_camera" formatted="false">운영 체제의 기본 카메라 장치를 사용하려면 Qt 카메라를 선택합니다.</string>
+    <string name="core_help_input_output_camera_flip" formatted="false">카메라 이미지를 수평, 수직 또는 두 축 모두에서 뒤집습니다.</string>
+    <string name="core_help_input_output_camera_id" formatted="false">게임 플레이 중에 사용할 카메라를 선택하세요.</string>
+    <string name="core_help_input_output_camera_type" formatted="false">게임에 따라 특정 카메라 유형을 선택해야 할 수도 있습니다.</string>
+    <string name="core_help_core_clocks_scale" formatted="false">에뮬레이트된 시스템 시간의 규모를 변경합니다.
+동적 시간 단계 등을 계산하기 위해 시스템 시간을 사용하는 소프트웨어에 영향을 줍니다.</string>
+    <string name="core_help_savestate_compatible_savestate_mode" formatted="false">이 모드가 켜져 있으면 SPU 에뮬레이션은 저장 상태 호환성을 우선시하지만 성능이 약간 저하될 수 있습니다.
+이 모드가 꺼져 있으면 일부 게임에서는 저장 상태를 허용하지 않고 로그에 SPU 일시 중지 오류가 표시될 수 있습니다.</string>
+    <string name="core_help_system_console_time_offset_s" formatted="false">콘솔 내에서 사용될 시간을 설정합니다. 이는 벽시계 시간을 추적하는 오프셋으로 적용됩니다.
+\"지금으로 설정\"을 클릭하면 현재 벽시계 시간으로 재설정할 수 있습니다.</string>
+    <string name="core_help_audio_convert_to_16_bit" formatted="false">기본 32비트 부동 소수점 대신 16비트 오디오 샘플을 사용합니다.\n오디오 드라이버 문제로 소리가 나오지 않거나 심하게 깨지는 경우 사용하세요.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_left" formatted="false">3D 입체 렌더링 모드를 설정합니다(기본 해상도가 720p인 사용자 지정 설정에서만 사용 가능).\n애너글리프는 양쪽 눈에 서로 다른 색상을 사용하며, 전용 안경으로 이를 분리합니다.\n좌우 분할은 VR 뷰어 앱에서 널리 지원됩니다.\n상하 분할은 원래의 입체 출력 방식에 더 가깝지만 지원하는 앱이 비교적 적습니다.</string>
+    <string name="core_help_video_custom_anaglyph_matrices_matrix_right" formatted="false">3D 입체 렌더링 모드를 설정합니다(기본 해상도가 720p인 사용자 지정 설정에서만 사용 가능).\n애너글리프는 양쪽 눈에 서로 다른 색상을 사용하며, 전용 안경으로 이를 분리합니다.\n좌우 분할은 VR 뷰어 앱에서 널리 지원됩니다.\n상하 분할은 원래의 입체 출력 방식에 더 가깝지만 지원하는 앱이 비교적 적습니다.</string>
+    <string name="core_help_system_date_format" formatted="false">PS3의 날짜 형식을 선택합니다.</string>
+    <string name="core_help_core_debug_console_mode" formatted="false">DECR 콘솔 등에 맞게 사용 가능한 시스템 메모리의 양을 늘립니다.
+일부 소프트웨어가 정품 하드웨어와 다르게 작동하도록 합니다.</string>
+    <string name="core_help_video_debug_output" formatted="false">선택한 API에 내장된 디버깅 기능을 활성화합니다.\n특히 Vulkan에서는 성능이 크게 저하됩니다.\n개발자에게만 유용한 기능입니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_video_debug_overlay" formatted="false">다양한 디버깅 정보를 화면에 오버레이로 표시합니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_net_derive_mac_from_psid" formatted="false">PSID에서 MAC 주소를 파생시킵니다.</string>
+    <string name="core_help_video_disable_asynchronous_memory_manager" formatted="false">호스트 메모리 관리 호출이 비동기적으로 처리되는 대신 인라인되도록 강제합니다.
+이로 인해 일부 게임에서는 심각한 성능 저하 및 끊김 현상이 발생할 수 있습니다.
+이 옵션은 개발자가 텍스처 캐시 메모리 보호 문제를 디버깅하는 데만 필요합니다.</string>
+    <string name="core_help_video_disable_fifo_reordering" formatted="false">RSX FIFO 최적화를 완전히 비활성화합니다. 드로우는 DMA 풀러가 수신한 대로 처리됩니다.</string>
+    <string name="core_help_video_disable_hardware_colorspace_remapping" formatted="false">_sRGB, _SNORM 접미사 등 하드웨어 고유의 색 공간 재매핑 형식을 사용하지 않도록 합니다.\n이 옵션을 비활성화하면 PS3에 비해 정밀도가 높아지지만 소프트웨어 에뮬레이션 방식으로 인해 화면에 노이즈가 생길 수도 있습니다.</string>
+    <string name="core_help_video_disable_msl_fast_math" formatted="false">IEEE 754 표준을 위반할 수 있는 MSL 셰이더의 빠름 Math를 비활성화합니다.\n성능은 저하되지만 특히 Apple GPU에서 화면의 시각적 오류를 해결할 수 있습니다.</string>
+    <string name="core_help_video_disable_zcull_occlusion_queries" formatted="false">오클루전 쿼리 실행을 비활성화하여 성능을 소폭 또는 중간 정도 향상시킵니다.\n가려짐 판정에 문제가 생겨 물체의 형상이 누락되거나 갑자기 나타나는 심한 팝인 현상이 발생할 수 있습니다.</string>
+    <string name="core_help_video_disable_on_disk_shader_cache" formatted="false">데이터 디렉터리에 있는 셰이더 캐시의 읽기와 저장을 비활성화합니다.</string>
+    <string name="core_help_core_disable_spu_getllar_spin_optimization" formatted="false">SPU GETLLAR 스핀 최적화를 비활성화합니다.\n많은 게임에서 심각한 성능 저하와 끊김 현상이 발생할 수 있습니다.\n일부 특정 게임에서만 필요한 옵션입니다.</string>
+    <string name="core_help_video_disable_vertex_cache" formatted="false">정점 캐시를 비활성화합니다.\n그래픽 누락이나 깜박임을 해결할 수 있습니다.\n성능이 저하될 수 있습니다.</string>
+    <string name="core_help_video_disable_video_output" formatted="false">모든 비디오 출력과 PS3 그래픽 렌더링을 비활성화합니다.
+유일한 사용 사례는 개발을 위해 CELL의 성능을 평가하는 것입니다.</string>
+    <string name="core_help_video_disable_vulkan_memory_allocator" formatted="false">사용자 정의 Vulkan 메모리 할당자를 비활성화하고 VkAllocateMemory/VkFreeMemory에 대한 직접 호출로 되돌립니다.</string>
+    <string name="core_help_net_dns_address" formatted="false">애플리케이션이 호스트 이름을 확인하는 데 사용되는 DNS입니다.</string>
+    <string name="core_help_video_driver_wake_up_delay" formatted="false">셀 프로세서에 의해 깨어난 후 RSX가 처리를 시작하는 데 걸리는 시간을 제어합니다.
+웨이크업 지연을 늘리면 안정성이 향상되지만 값이 너무 높으면 RSX/GPU 성능이 저하될 수 있습니다.
+최적의 안정성을 위한 최상의 값에 도달할 때까지 이를 20μs에서 40μs 단위로 조정하는 것이 좋습니다.</string>
+    <string name="core_help_audio_dump_to_file" formatted="false">모든 오디오를 원시 웨이브 파일로 저장합니다. 확실하지 않은 경우 선택하지 않은 상태로 두세요.</string>
+    <string name="core_help_vfs_empty_dev_hdd0_tmp" formatted="false">일부 홈브루 또는 게임 모드에 필요합니다.
+확실하지 않은 경우 이 옵션을 사용하지 마세요.</string>
+    <string name="core_help_video_emulate_special_depth_comparison" formatted="false">데스크탑 하드웨어 동작이 PS3와 다른 깊이 비교 작업(일반적으로 EQUAL 비교 모드)을 에뮬레이션합니다.
+일부 게임에서 과도한 그림자 깜박임 및 Z 파이팅을 수정합니다.
+이는 Z 프리패스 깊이 형식이 래스터화 깊이 형식과 다른 일부 게임에서 가장 분명하게 나타나며, 이는 호환 데스크톱 하드웨어에서 제대로 작동하지 않는 시나리오입니다.</string>
+    <string name="core_help_audio_enable_buffering" formatted="false">딱딱거리는 소리/끊김 현상을 줄여주지만 오디오 대기 시간을 늘리는 오디오 버퍼링을 활성화합니다.</string>
+    <string name="core_help_net_clans_enabled" formatted="false">클랜 서버에 대한 연결을 활성화합니다.
+클랜 기능을 지원하는 게임에만 영향을 미칩니다.</string>
+    <string name="core_help_core_spu_reservation_busy_waiting_enabled" formatted="false">SPU RdEventStat 스핀 대기를 활성화합니다.\nCPU 사용량이 늘어나지만, 일부 게임에서는 스레드가 많은 CPU(12개 이상)에 도움이 됩니다.</string>
+    <string name="core_help_miscellaneous_enable_gamemode" formatted="false">Feral Interactive의 GameMode를 활성화합니다.\nCPU와 GPU에 여러 최적화를 적용하여 일부 시스템에서 게임 성능을 향상시킬 수 있습니다.</string>
+    <string name="core_help_vfs_enable_host_root" formatted="false">일부 홈브루에는 필수입니다.
+확실하지 않은 경우 이 옵션을 사용하지 마십시오.</string>
+    <string name="core_help_audio_enable_time_stretching" formatted="false">타임 스트레칭을 활성화합니다. 버퍼링을 활성화해야 합니다.
+딱딱거리는 소리/끊김 현상이 더욱 줄어들지만 느린 CPU에서는 오디오 품질이 눈에 띄게 저하될 수 있습니다.</string>
+    <string name="core_help_net_upnp_enabled" formatted="false">UPNP를 활성화합니다.\n라우터에서 UPNP가 활성화되어 있으면 0.0.0.0에 바인딩된 포트를 자동으로 전달합니다.</string>
+    <string name="core_help_system_enter_button_assignment" formatted="false">시스템 대화상자에서 입력, 수락, 확인에 사용할 버튼입니다.\n일본판 시스템과 많은 일본 게임의 기본 설정인 ○ 버튼으로 변경할 수 있습니다.\n이러한 경우 × 버튼을 할당하면 혼란을 줄 수 있습니다.</string>
+    <string name="core_help_video_vulkan_exclusive_fullscreen_mode" formatted="false">Vulkan 렌더러를 사용할 때 RPCS3가 드라이버에 요청하는 전체 화면 모드를 지정합니다.\n‘자동’에서는 드라이버가 적절한 모드를 선택합니다. 다른 옵션은 독점 전체 화면과 테두리 없는 전체 화면 중 어느 방식을 사용할지 드라이버에 알립니다.\nRPCS3 게임 방송에 문제가 있거나 전체 화면에서 시스템이 HDR 모드를 잘못 활성화하는 경우, 테두리 없는 전체 화면을 우선하면 도움이 될 수 있습니다.</string>
+    <string name="core_help_miscellaneous_exit_rpcs3_when_process_finishes" formatted="false">게임을 닫거나 게임 자체를 닫을 때 RPCS3을 자동으로 닫습니다.</string>
+    <string name="core_help_core_rsx_fifo_fetch_accuracy" formatted="false">‘빠름’은 정밀도가 가장 낮으며 RSX의 원자적 FIFO 버퍼를 에뮬레이션하지 않습니다.\n‘원자적’은 성능 저하가 적으면서 많은 게임의 안정성을 크게 높입니다.\n‘순서 보장 및 원자적’은 가장 정확하지만 가장 느리며, 게임 안정성에 추가로 주는 이점은 적습니다.</string>
+    <string name="core_help_video_force_cpu_blit" formatted="false">모든 블릿 및 이미지 처리 연산을 CPU에서 에뮬레이션합니다.\n대부분의 경우 그래픽 누락을 방지하려면 ‘색상 버퍼 쓰기’도 활성화해야 합니다.\n성능이 크게 저하되지만 일부 경우에는 더 정확하게 처리됩니다.\n이 설정은 ‘GPU 텍스처 스케일링’ 옵션보다 우선합니다.</string>
+    <string name="core_help_video_force_high_precision_z_buffer" formatted="false">GPU 하드웨어 간의 차이를 디버깅할 때만 유용합니다.\n일반 사용자에게는 필요하지 않습니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_video_force_hardware_msaa_resolve" formatted="false">MSAA의 모든 샘플링 연산에 호스트 GPU의 리졸브 기능을 강제로 사용합니다.\n성능 저하와 시각적 오류가 발생할 위험이 있지만, MSAA가 활성화되어 있을 때 더 선명한 화면을 얻을 수 있습니다.</string>
+    <string name="core_help_video_framebuffer_aliasing_heuristic_bias" formatted="false">색상과 깊이가 같은 메모리를 공유하는 렌더 타깃의 처리 방식을 지정합니다. 대부분의 게임에서는 ‘자동’을 권장합니다.\n・자동: 기존 동작으로, 깊이를 우선합니다.\n・색상 우선: 색상 쓰기가 활성화되고 깊이 쓰기가 비활성화되어 있을 때 색상 바인딩을 유지합니다. 해당 그리기에서 깊이 테스트를 생략하는 대신 일부 디퍼드 렌더러(예: Starhawk)의 형상 누락을 해결합니다.\n・깊이 우선: 현재는 ‘자동’과 같습니다.</string>
+    <string name="core_help_video_frame_limit" formatted="false">꺼짐이 가장 빠른 옵션입니다.
+프레임 제한을 사용하면 오버헤드가 추가되고 게임 속도가 느려집니다. 그러나 일부 게임은 프레임 속도가 너무 높으면 충돌이 발생합니다.
+PS3 네이티브는 프레임 속도 문제가 발생할 수 있으므로 자동이 올바르게 작동하지 않는 경우에만 사용해야 합니다.
+무한는 프레임당 또 다른 vblank 신호를 추가하는 포지티브 피드백 루프를 추가하여 더 많은 게임을 fps 무제한으로 만들 수 있습니다.
+다른 프레임 제한이 필요한 숙련된 사용자는 구성 파일에서 \"두 번째 프레임 제한\" 설정을 사용해야 합니다.</string>
+    <string name="core_help_video_fidelityfx_cas_sharpening_intensity" formatted="false">FidelityFX Super 해상도이 적용되는 선명도를 제어합니다. 값이 높을수록 출력은 더 선명해지지만 아티팩트가 발생할 수 있습니다.</string>
+    <string name="core_help_input_output_ghltar_emulated_controller" formatted="false">Guitar Hero Live(GHL) 기타 컨트롤러를 지원합니다.\n게임에 GHL 기타 컨트롤러가 필요하지만 실제 기타 컨트롤러가 없다면 ‘컨트롤러 1개’ 또는 ‘컨트롤러 2개’를 선택하세요.\n게임이 DualShock을 지원하거나 실제 기타 컨트롤러가 있다면 ‘없음’을 선택하세요.\n실제 기타 컨트롤러와 에뮬레이션한 기타 컨트롤러를 동시에 사용할 수 있습니다.</string>
+    <string name="core_help_video_use_gpu_texture_scaling" formatted="false">GPU에서 모든 텍스처 전송, 크기 조정 및 변환 작업을 강제합니다.
+경우에 따라 텍스처가 손상될 수 있습니다.</string>
+    <string name="core_help_video_handle_rsx_memory_tiling" formatted="false">GPU 데이터를 VM 메모리에 쓸 때 RSX 메모리 타일링 구성을 따르세요.
+이는 색상 읽기 또는 깊이 읽기 옵션이 활성화되었을 때 관찰되는 그래픽 손상을 수정할 수 있습니다.</string>
+    <string name="core_help_core_hook_static_functions" formatted="false">memcpy 같은 일부 함수를 후킹하여 고수준 구현으로 대체합니다. 효과가 없거나 문제를 일으킬 수 있는 실험적 기능입니다.</string>
+    <string name="core_help_net_internet_enabled" formatted="false">연결됨으로 설정되면 RPCS3는 프로그램이 인터넷 연결을 사용할 수 있도록 허용합니다.</string>
+    <string name="core_help_input_output_io_debug_overlay" formatted="false">플레이어 1의 컨트롤러 입력값을 화면에 오버레이로 표시합니다.\n디버그 오버레이가 비활성화되어 있을 때만 표시됩니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_net_ip_swap_list" formatted="false">DNS 스왑 목록.
+사용자 정의 구성에서만 사용할 수 있습니다.</string>
+    <string name="core_help_input_output_keyboard" formatted="false">일부 게임은 기본 키보드 입력을 지원합니다.
+이러한 경우에는 기본이 작동합니다.</string>
+    <string name="core_help_system_keyboard_type" formatted="false">사용되는 키보드 레이아웃을 설정합니다.
+현재로서는 미국, 일본, 독일 레이아웃만 완전히 지원됩니다.</string>
+    <string name="core_help_system_language" formatted="false">게임 자체에서 시스템 언어를 사용할 수 없는 경우 일부 게임이 부팅되지 않을 수 있습니다.
+다른 게임에서는 여기에서 선택한 언어로 자동으로 언어가 전환됩니다.
+게임에서 지원하는 언어로 남겨두는 것을 권장합니다.</string>
+    <string name="core_help_system_license_area" formatted="false">콘솔 영역은 PS3의 라이선스 영역을 정의합니다.
+라이센스 지역에 따라 일부 게임이 작동하지 않을 수 있습니다.</string>
+    <string name="core_help_vfs_limit_disk_cache_size" formatted="false">디스크 캐시가 지정한 용량을 초과하면 시작 시 오래된 파일을 자동으로 삭제합니다.\n게임은 캐시 폴더를 사용하여 시스템 메모리 밖에 데이터를 임시로 저장할 수 있습니다. 장기 보관용으로는 사용되지 않습니다.\n\n이 설정은 전역 설정에서만 사용할 수 있습니다.</string>
+    <string name="core_help_core_llvm_precompilation" formatted="false">게임 디렉터리를 검색하여 시작 시 추가 PPU 및 SPU 모듈을 사전 컴파일합니다.\n비활성화하면 해당 모듈은 필요할 때만 컴파일됩니다. 게임에 따라 플레이가 예기치 않게, 때로는 자주 중단될 수 있습니다.\n게임에 더 빨리 진입하고 싶은 경우에만 비활성화하세요.</string>
+    <string name="core_help_input_output_lock_overlay_input_to_player_one" formatted="false">네이티브 오버레이 입력을 플레이어 1로 제한합니다.</string>
+    <string name="core_help_video_log_shader_programs" formatted="false">게임 셰이더를 파일로 덤프합니다. 개발자에게만 유용한 기능입니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_audio_master_volume" formatted="false">에뮬레이션 전체의 음량을 조절합니다.\n100%를 초과하면 음질이 저하될 수 있습니다.</string>
+    <string name="core_help_vfs_disk_cache_maximum_size_mb" formatted="false">디스크 캐시가 지정한 용량을 초과하면 시작 시 오래된 파일을 자동으로 삭제합니다.\n게임은 캐시 폴더를 사용하여 시스템 메모리 밖에 데이터를 임시로 저장할 수 있습니다. 장기 보관용으로는 사용되지 않습니다.\n\n이 설정은 전역 설정에서만 사용할 수 있습니다.</string>
+    <string name="core_help_core_max_llvm_compile_threads" formatted="false">초기 PPU 및 SPU 모듈 컴파일에 사용되는 최대 스레드 수를 제한합니다.
+열려 있는 다른 응용 프로그램의 성능을 높이려면 이 값을 낮추십시오.
+기본값은 사용 가능한 모든 스레드를 사용합니다.</string>
+    <string name="core_help_core_max_cpu_preempt_count" formatted="false">CPU 사용량과 전력 소비를 줄여 모바일 기기의 배터리 사용 시간을 늘립니다(0은 비활성화).\n값이 클수록 효과가 커지지만 오디오나 성능 문제가 생길 수 있습니다. 50 이하를 권장합니다.\n프레임 속도가 안정적일 때 작동하므로 이 옵션은 FPS 제한을 강제합니다.\n하드웨어에 주는 게임 부하가 가벼울수록 전력을 더 절약합니다(선점 횟수 한도에 도달할 때까지).</string>
+    <string name="core_help_core_max_spurs_threads" formatted="false">각 스레드 그룹의 최대 SPURS 스레드 수를 제한합니다.\n특히 하드웨어 스레드 수가 적은 시스템에서 성능이 향상될 수 있습니다.\n스레드 수를 제한하면 충돌이 발생할 수 있으므로 기본값을 유지하는 것이 좋습니다.</string>
+    <string name="core_help_core_mfc_commands_shuffling_limit" formatted="false">MFC 명령을 지연시키고 최소 2개의 명령이 대기할 때까지 기다린 후 무작위 순서로 실행합니다.\n현재는 SPU 인터프리터 중 하나와 함께 사용해야 합니다.\n성능이 크게 저하됩니다! 잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_core_mfc_debug" formatted="false">MFC 로그를 생성합니다.
+개발자에게만 유용합니다.
+이것을 절대 사용하지 마십시오.</string>
+    <string name="core_help_audio_microphone_devices" formatted="false">대부분의 게임에서는 표준을 사용해야 합니다.
+SingStar는 SingStar 장치를 에뮬레이션하며 SingStar 게임과 함께 사용해야 합니다.
+실제 SingStar는 SingStar 게임이 포함된 실제 SingStar 장치에서만 사용해야 합니다.
+Rocksmith는 Rocksmith 동글과 함께 사용해야 합니다.</string>
+    <string name="core_help_audio_microphone_type" formatted="false">대부분의 게임에서는 표준을 사용해야 합니다.
+SingStar는 SingStar 장치를 에뮬레이션하며 SingStar 게임과 함께 사용해야 합니다.
+실제 SingStar는 SingStar 게임이 포함된 실제 SingStar 장치에서만 사용해야 합니다.
+Rocksmith는 Rocksmith 동글과 함께 사용해야 합니다.</string>
+    <string name="core_help_input_output_emulated_midi_devices" formatted="false">최대 3개의 에뮬레이트된 MIDI 장치와 해당 유형을 선택하세요.</string>
+    <string name="core_help_video_minimum_scalable_dimension" formatted="false">이 크기보다 큰 프레임버퍼만 업스케일링합니다.\n값을 높이면 업스케일링 시 그래픽이 누락되는 문제를 해결할 수 있으며, 특히 ‘색상 버퍼 쓰기’가 활성화된 경우 도움이 될 수 있습니다.\n잘 모르면 변경하지 마세요.</string>
+    <string name="core_help_input_output_mouse_based_gyro_enabled" formatted="false">게임 시작 시 마우스 기반 자이로 에뮬레이션을 활성화합니다. 또한 관련 단축키를 사용하여 언제든지 전환할 수도 있습니다.
+자이로 입력을 활성화하려면 마우스 오른쪽 버튼을 누르고 있습니다. 마우스를 움직이면 X 및 Z 모션 축에 매핑되고 스크롤 휠은 Y축에 매핑됩니다. 모션 값을 재설정하려면 버튼을 놓습니다.</string>
+    <string name="core_help_input_output_mouse_debug_overlay" formatted="false">마우스 입력값을 화면에 오버레이로 표시합니다.\n다른 디버그 오버레이가 비활성화되어 있을 때만 표시됩니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_input_output_mouse" formatted="false">일부 게임은 기본 마우스 입력을 지원합니다.
+이러한 경우에는 기본 또는 가공 안 함가 작동합니다.</string>
+    <string name="core_help_input_output_move" formatted="false">PS Move 핸들러는 공식 PS Move 컨트롤러에 권장됩니다.</string>
+    <string name="core_help_video_msaa" formatted="false">PS3 멀티샘플링 레이아웃을 에뮬레이트합니다.
+그래픽 결함을 해결하기 어려운 일부 문제를 해결할 수 있습니다.
+GPU 하드웨어에 따라 성능 저하가 낮거나 중간 정도입니다.</string>
+    <string name="core_help_video_multithreaded_rsx" formatted="false">일부 RSX 작업을 보조 스레드로 오프로드합니다.
+하이코어 프로세서의 성능이 향상되었습니다.
+추가 작업자 스레드 로드로 인해 약한 CPU의 속도가 느려질 수 있습니다.</string>
+    <string name="core_help_audio_music_handler" formatted="false">현재는 cellMusic 에뮬레이션에만 사용됩니다.
+운영 체제의 기본 출력 장치를 사용하려면 Qt를 선택하십시오.
+모든 오디오 형식을 재생하지 못할 수도 있습니다.</string>
+    <string name="core_help_core_ppu_threads" formatted="false">동시에 실행되는 최대 PPU 스레드 수에 영향을 미치며, 값이 1이면 게임과의 호환성이 매우 낮습니다.
+2가 기본값입니다. 확실하지 않은 경우 이 설정을 수정하지 마십시오.
+경고: 이 값을 변경하면 컴파일된 PPU/SPU 캐시가 무효화됩니다. 전체 모듈 컴파일은 다음 실행 시 반복됩니다.</string>
+    <string name="core_help_video_output_scaling_mode" formatted="false">최종 이미지 필터링. 최근접는 필터링을 적용하지 않고 이중선형는 이미지를 매끄럽게 하며 FidelityFX Super 해상도은 확대된 이미지를 향상시킵니다.
+게임이 창 해상도보다 낮은 내부 해상도로 렌더링되는 경우 FidelityFX가 업스케일을 처리합니다.
+FidelityFX로 인해 시각적 아티팩트가 발생할 수 있습니다.
+FidelityFX는 현재 스테레오 3D 출력에서 작동하지 않습니다.</string>
+    <string name="core_help_input_output_keep_pads_connected" formatted="false">물리적으로 연결이 끊어진 경우에도 구성된 모든 패드가 게임 내에서 항상 연결된 것으로 표시됩니다.</string>
+    <string name="core_help_input_output_pad_handler_mode" formatted="false">단일 스레드: 모든 컨트롤러 핸들러를 같은 스레드에서 순서대로 실행합니다.\n멀티스레드: 각 컨트롤러 핸들러를 별도의 스레드에서 실행합니다.\n추가 스레드를 사용할 여유가 있을 때만 멀티스레드를 사용하세요.</string>
+    <string name="core_help_miscellaneous_pause_emulation_during_home_menu" formatted="false">활성화되면 홈 메뉴를 열면 에뮬레이션도 일시 중지됩니다.
+대부분의 게임은 홈 메뉴가 표시되는 동안 일시 중지되지만 일부 게임은 그렇지 않습니다.
+이 경우 홈 메뉴가 열릴 때마다 에뮬레이션을 일시 중지하는 것이 도움이 될 수 있습니다.</string>
+    <string name="core_help_miscellaneous_pause_emulation_on_rpcs3_focus_loss" formatted="false">RPCS3가 포커스를 잃거나 애플리케이션이 비활성화되면 전원을 절약하고 CPU 사용량을 줄이기 위해 에뮬레이션을 자동으로 일시 중지합니다.
+일반적으로 에뮬레이션 일시 중지는 완벽하지 않으며 모든 게임과 호환되지 않을 수 있습니다.
+현재는 게임 플레이도 일시 중지하지만 이 동작은 향후 변경될 수 있고 이 설정의 목적이 아니므로 의존하지 않는 것이 좋습니다.</string>
+    <string name="core_help_core_enable_performance_report" formatted="false">특정 이벤트를 측정하여 에뮬레이터가 중지된 후 차트를 출력합니다. 요청받지 않았다면 활성화하지 마세요.</string>
+    <string name="core_help_video_performance_overlay_center_horizontally" formatted="false">성능 오버레이를 가로 중앙에 배치하고 가로 여백을 재정의합니다.</string>
+    <string name="core_help_video_performance_overlay_center_vertically" formatted="false">성능 오버레이를 수직으로 중앙에 배치하고 수직 여백을 재정의합니다.</string>
+    <string name="core_help_video_performance_overlay_detail_level" formatted="false">성능 오버레이에 표시되는 정보의 양을 제어합니다.</string>
+    <string name="core_help_video_performance_overlay_enabled" formatted="false">성능 오버레이를 활성화하거나 비활성화합니다.</string>
+    <string name="core_help_video_performance_overlay_show_header" formatted="false">상단에는 앱, 빌드 및 코어 버전이 표시되고 성능 오버레이 하단에는 CPU 및 GPU 행이 표시됩니다.</string>
+    <string name="core_help_video_performance_overlay_font_size_px" formatted="false">성능 오버레이의 글꼴 크기를 설정합니다(픽셀 단위로 측정).</string>
+    <string name="core_help_video_performance_overlay_framerate_datapoints" formatted="false">프레임 속도 그래프에 사용되는 데이터 포인트의 양을 설정합니다.</string>
+    <string name="core_help_video_performance_overlay_framerate_graph_detail_level" formatted="false">성능 오버레이에 표시되는 정보의 양을 제어합니다.</string>
+    <string name="core_help_video_performance_overlay_enable_framerate_graph" formatted="false">프레임 속도 그래프를 활성화하거나 비활성화합니다.</string>
+    <string name="core_help_video_performance_overlay_frametime_datapoints" formatted="false">프레임타임 그래프에 사용되는 데이터 포인트의 양을 설정합니다.</string>
+    <string name="core_help_video_performance_overlay_frametime_graph_detail_level" formatted="false">성능 오버레이에 표시되는 정보의 양을 제어합니다.</string>
+    <string name="core_help_video_performance_overlay_enable_frametime_graph" formatted="false">프레임타임 그래프를 활성화하거나 비활성화합니다.</string>
+    <string name="core_help_video_performance_overlay_horizontal_margin" formatted="false">화면 사분면을 기준으로 화면 테두리까지의 수평 거리를 설정합니다(%로 측정).</string>
+    <string name="core_help_video_performance_overlay_vertical_margin" formatted="false">화면 사분면을 기준으로 화면 테두리까지의 수직 거리를 설정합니다(%로 측정).</string>
+    <string name="core_help_video_performance_overlay_opacity" formatted="false">성능 오버레이의 불투명도를 설정합니다(%로 측정).</string>
+    <string name="core_help_video_performance_overlay_position" formatted="false">성능 오버레이의 화면 위치(사분면)를 설정합니다.</string>
+    <string name="core_help_video_performance_overlay_metrics_update_interval_ms" formatted="false">성능 오버레이가 업데이트되는 시간 간격을 설정합니다(밀리초 단위로 측정).
+이 값을 16밀리초로 설정하면 성능 오버레이가 대략 60Hz로 새로 고쳐집니다.
+성능 오버레이 새로 고침 빈도는 프레임 그래프 통계에 영향을 주지 않으며 현재 게임에서 허용하는 만큼만 빠릅니다.</string>
+    <string name="core_help_video_performance_overlay_use_window_space" formatted="false">창 전체를 기준으로 오버레이를 배치하여 게임 렌더링 영역 밖에도 표시할 수 있게 합니다.</string>
+    <string name="core_help_miscellaneous_play_music_during_boot_sequence" formatted="false">가능한 경우 부팅 순서 중에 음악을 재생합니다.</string>
+    <string name="core_help_core_ppu_debug" formatted="false">PPU 로그를 생성합니다.
+개발자에게만 유용합니다.
+이것을 절대 사용하지 마십시오.</string>
+    <string name="core_help_core_ppu_decoder" formatted="false">처음 실행하기 전에 LLVM 리컴파일러로 게임의 PPU 코드를 한 번 컴파일하고 캐시합니다.\n가장 빠른 방식이므로 일반적으로 이 옵션을 사용하세요.\n호환성 문제가 발생하면 인터프리터 중 하나로 변경하여 다시 시도하세요.\n잘 모르면 이 옵션을 사용하세요.</string>
+    <string name="core_help_core_ppu_reservation_priority_over_spus" formatted="false">SPU가 예약을 사용하는 동안 PPU 실행을 우선합니다.\n성능 향상을 위해 권장되는 게임은 일부에 한정됩니다.\n성능이 저하될 수 있으므로 권고받지 않았다면 사용하지 마세요.</string>
+    <string name="core_help_core_ppu_vector_nan_handling" formatted="false">PPU 백엔드의 벡터 명령에서 NaN 결과를 보정합니다.\n잘 모르면 이 설정을 변경하지 마세요.</string>
+    <string name="core_help_video_accurate_zcull_stats" formatted="false">ZCULL 보고서 동기화 방식을 변경합니다. 게임에 가장 적합한 설정을 시험해 보세요. 대부분의 게임에는 ‘근사’를 권장합니다.\n・정확: PS3 동작을 가장 정확하게 재현합니다. Demon’s Souls, The Darkness 등의 정확한 화면 표현에 필요합니다.\n・근사: PS3가 생성하는 결과와 완전히 일치하지 않을 수 있지만 오클루전 데이터를 훨씬 빠르게 생성합니다. 대부분의 PS3 게임에서 잘 작동합니다.\n・완화: 동기화 방식을 완전히 변경합니다. 일부 게임은 성능이 크게 향상되지만 다른 게임은 전혀 작동하지 않을 수 있습니다.</string>
+    <string name="core_help_core_preferred_spu_threads" formatted="false">일부 SPU 단계는 경쟁 조건에 민감하며 한 번에 제한된 수를 허용하면 성능 지연을 완화하는 데 도움이 됩니다.
+이 값을 더 작은 값으로 설정하면 일부 게임에서 성능이 향상되고 끊김 현상이 줄어들 수 있습니다.
+작은 값을 설정할 때 성능이 부정적인 영향을 받는 경우 자동으로 두십시오.</string>
+    <string name="core_help_miscellaneous_prevent_display_sleep_while_running_games" formatted="false">게임이 실행되는 동안 디스플레이가 절전 모드로 전환되는 것을 방지합니다.
+이를 위해서는 Linux의 org.freedesktop.ScreenSaver D-Bus 서비스가 필요합니다.
+현재 플랫폼이 디스플레이 절전 제어를 지원하지 않는 경우 이 옵션은 비활성화됩니다.</string>
+    <string name="core_help_net_psn_country" formatted="false">RPCN 국가를 변경합니다.</string>
+    <string name="core_help_net_psn_status" formatted="false">RPCN으로 설정된 경우 게임이 지원되면 RPCS3는 RPCN 서버를 PSN 연결로 사용합니다.
+시뮬레이션로 설정된 경우 RPCS3는 PSN 연결을 위조하려고 시도하지만 PSN 기능을 실제로 사용하려고 시도하면 오류나 충돌이 발생할 수 있습니다.
+시뮬레이션은 사용자 정의 구성에서만 사용할 수 있습니다.</string>
+    <string name="core_help_video_read_color_buffers" formatted="false">가상 머신 메모리를 사용하여 렌더 타깃 메모리를 초기화합니다.</string>
+    <string name="core_help_video_read_depth_buffer" formatted="false">가상 머신 메모리를 사용하여 렌더 타깃 메모리를 초기화합니다.</string>
+    <string name="core_help_video_record_with_overlays" formatted="false">오버레이를 포함하여 녹화합니다.\n스크린샷에도 적용됩니다.</string>
+    <string name="core_help_video_relaxed_zcull_sync" formatted="false">ZCULL 보고서 동기화 방식을 변경합니다. 게임에 가장 적합한 설정을 시험해 보세요. 대부분의 게임에는 ‘근사’를 권장합니다.\n・정확: PS3 동작을 가장 정확하게 재현합니다. Demon’s Souls, The Darkness 등의 정확한 화면 표현에 필요합니다.\n・근사: PS3가 생성하는 결과와 완전히 일치하지 않을 수 있지만 오클루전 데이터를 훨씬 빠르게 생성합니다. 대부분의 PS3 게임에서 잘 작동합니다.\n・완화: 동기화 방식을 완전히 변경합니다. 일부 게임은 성능이 크게 향상되지만 다른 게임은 전혀 작동하지 않을 수 있습니다.</string>
+    <string name="core_help_video_renderdoc_compatibility_mode" formatted="false">기존 방식의 OpenGL 버퍼를 활성화하여 RenderDoc 같은 캡처 도구를 RPCS3와 함께 사용할 수 있게 합니다.\nVulkan에서는 디버그 마커도 활성화되어 RenderDoc 캡처를 더 쉽게 분석할 수 있습니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_video_renderer" formatted="false">Vulkan은 Android에서 권장됩니다. OpenGL은 OpenGL ES 호환성 백엔드를 사용하며 게임 관련 그래픽 문제를 해결하는 데 도움을 줄 수 있습니다.</string>
+    <string name="core_help_video_resolution" formatted="false">해상도 스케일이 100%가 아닌 다른 값으로 설정된 경우 이 설정은 무시됩니다!
+1280x720에 그대로 두세요. 모든 PS3 게임은 이 해상도와 호환됩니다.
+게임에서 지원하는 경우에만 1920x1080을 사용하세요.
+드물게 에뮬레이션 버그로 인해 일부 게임은 480p와 같은 낮은 해상도에서만 렌더링됩니다.</string>
+    <string name="core_help_video_resolution_scale" formatted="false">게임 해상도를 지정한 비율로 확대하거나 축소합니다.\n기준 해상도는 항상 1280x720입니다.\n일반 ‘해상도’ 설정을 사용하려면 100%로 설정하세요.\n100% 미만의 값은 일반적으로 성능을 향상시키지 않습니다.</string>
+    <string name="core_help_video_screen_size_in_inches" formatted="false">3D 입체 렌더링 모드를 설정합니다(기본 해상도가 720p인 사용자 지정 설정에서만 사용 가능).\n애너글리프는 양쪽 눈에 서로 다른 색상을 사용하며, 전용 안경으로 이를 분리합니다.\n좌우 분할은 VR 뷰어 앱에서 널리 지원됩니다.\n상하 분할은 원래의 입체 출력 방식에 더 가깝지만 지원하는 앱이 비교적 적습니다.</string>
+    <string name="core_help_input_output_load_sdl_gamecontroller_mappings" formatted="false">향상된 게임패드 호환성을 위해 SDL GameController 데이터베이스를 로드합니다. SDL 패드 핸들러에서만 사용됩니다.</string>
+    <string name="core_help_core_set_daz_and_ftz" formatted="false">SSE 작업의 오류를 디버깅하기 위해 특수 MXCSR 플래그를 설정합니다.
+정확성을 희생하면서 PPU 성능을 가속화합니다.</string>
+    <string name="core_help_video_shader_compiler_threads" formatted="false">셰이더 컴파일러 백엔드에 사용할 스레드 수입니다.
+셰이더 모드가 비동기 모드 중 하나로 설정된 경우에만 영향을 미칩니다.</string>
+    <string name="core_help_video_shader_loading_dialog_blur_effect_strength" formatted="false">기본 셰이더 로딩 대화 상자의 배경 이미지 흐림 효과 강도를 변경합니다.
+이는 가독성 및/또는 미학을 향상시키는 데 사용될 수 있습니다.</string>
+    <string name="core_help_video_shader_loading_dialog_darkening_effect_strength" formatted="false">기본 셰이더 로딩 대화 상자의 배경 이미지 어둡게 하기 효과 강도를 변경합니다.
+이는 가독성 및/또는 미학을 향상시키는 데 사용될 수 있습니다.</string>
+    <string name="core_help_video_shader_loading_dialog_allow_custom_background" formatted="false">네이티브 셰이더 로딩 대화상자/로딩 화면 중에 배경 이미지를 표시합니다.
+기본적으로 사용되는 이미지는 /PS3_GAME/PIC1.PNG입니다.</string>
+    <string name="core_help_video_shader_mode" formatted="false">권장되는 옵션입니다.\n캐시에 없는 셰이더는 컴파일이 끝날 때까지 해당 셰이더를 사용하는 부분이 렌더링되지 않습니다.\n이로 인해 그래픽이 뒤늦게 나타나는 팝인 현상이 생길 수 있습니다.</string>
+    <string name="core_help_video_shader_precision" formatted="false">생성된 셰이더의 정밀도 수준을 제어합니다. 정밀도가 낮으면 하드웨어에 따라 훨씬 빠른 코드가 생성되지만 때로는 사소한 시각적 결함이나 깜박임이 발생할 수 있습니다.</string>
+    <string name="core_help_miscellaneous_show_analog_limiter_toggle_hint" formatted="false">네이티브 오버레이를 사용하여 아날로그 리미터 토글 힌트를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_autosave_autoload_hint" formatted="false">네이티브 오버레이를 사용하여 자동 저장/자동 로드 힌트를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_capture_hints" formatted="false">네이티브 오버레이를 사용하여 스크린샷 및 녹화 힌트를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_fatal_error_hints" formatted="false">네이티브 오버레이를 사용하여 치명적인 오류 힌트를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_mouse_and_keyboard_toggle_hint" formatted="false">네이티브 오버레이를 사용하여 마우스 및 키보드 전환 힌트를 표시합니다.</string>
+    <string name="core_help_input_output_show_move_cursor" formatted="false">PS Move 입력의 원시 위치를 표시합니다.
+이는 교정 화면 중에 매우 유용할 수 있습니다.</string>
+    <string name="core_help_miscellaneous_show_ppu_compilation_hint" formatted="false">네이티브 오버레이에 ‘PPU 모듈 컴파일 중’ 안내를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_pressure_intensity_toggle_hint" formatted="false">네이티브 오버레이에 감압 강도 전환 힌트를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_rpcn_popups" formatted="false">RPCN 친구 목록 팝업을 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_shader_compilation_hint" formatted="false">네이티브 오버레이에 ‘셰이더 컴파일 중’ 안내를 표시합니다.</string>
+    <string name="core_help_miscellaneous_show_trophy_popups" formatted="false">트로피가 잠금 해제되면 트로피 팝업을 표시합니다.</string>
+    <string name="core_help_miscellaneous_silence_all_logs" formatted="false">게임 시작 후 모든 로그 기록을 중지합니다. 필요하다고 판단되는 경우에만 사용하세요.</string>
+    <string name="core_help_core_sleep_timers_accuracy" formatted="false">슬립 시간의 정확도를 변경합니다.\n‘호스트 시스템과 동일’은 운영 체제의 기본 정확도를 사용하고, ‘모든 타이머’는 정확도 향상을 시도합니다.\n‘usleep만 사용’은 조정을 usleep 시스템 호출로 제한합니다.\n예상치 못한 방식으로 성능에 영향을 줄 수 있습니다.</string>
+    <string name="core_help_core_spu_block_size" formatted="false">이 옵션은 SPU 분석기, 특히 컴파일된 단위의 크기를 제어합니다. Mega 및 Giga 모드에서는 더 작은 단위를 함께 묶어서 컴파일된 단위 수를 줄이되 크기를 늘려 성능을 향상시킬 수 있습니다.
+호환성을 극대화하려면 안전 모드를 사용하세요.</string>
+    <string name="core_help_core_spu_cache" formatted="false">실행 전에 LLVM 리컴파일러로 게임의 SPU 코드를 컴파일하고 캐시하므로 시작 시간이 늘어납니다.\n실행 속도가 가장 빠르고 호환성도 매우 좋습니다.\n문제가 발생하면 ASMJIT 리컴파일러를 사용하세요.</string>
+    <string name="core_help_core_spu_debug" formatted="false">SPU 로그를 생성합니다.\n개발자에게만 유용한 기능입니다.\n일반적인 사용에서는 활성화하지 마세요.</string>
+    <string name="core_help_core_spu_decoder" formatted="false">실행 전에 LLVM 리컴파일러로 게임의 SPU 코드를 컴파일하고 캐시하므로 시작 시간이 늘어납니다.\n실행 속도가 가장 빠르고 호환성도 매우 좋습니다.\n문제가 발생하면 ASMJIT 리컴파일러를 사용하세요.</string>
+    <string name="core_help_core_spu_loop_detection" formatted="false">SPU 커널에서 루프 조건을 감지하고 이를 스케줄링 힌트로 사용해 보십시오.
+성능을 향상시키고 CPU 사용량을 줄입니다.
+드문 경우지만 심각한 오디오 끊김 현상이 발생할 수 있습니다.</string>
+    <string name="core_help_core_spu_profiler" formatted="false">활성화하면 실행 중 SPU 성능을 측정합니다.\n측정 자체로 성능이 약간 저하되므로 개발자의 요청이 있을 때만 활성화하세요.</string>
+    <string name="core_help_miscellaneous_start_games_in_fullscreen_mode" formatted="false">게임 창을 자동으로 전체 화면으로 전환합니다.
+게임 창을 두 번 클릭하거나 Alt+Enter를 눌러 전체 화면과 창 모드를 전환합니다.</string>
+    <string name="core_help_miscellaneous_automatically_start_games_after_boot" formatted="false">개발자가 아니라면 활성화된 상태로 두세요.</string>
+    <string name="core_help_savestate_start_paused" formatted="false">이 모드가 켜져 있으면 저장 상태가 로드되고 첫 번째 프레임에서 일시 중지됩니다.
+이를 통해 플레이어는 즉시 액션에 뛰어들지 않고도 게임플레이를 준비할 수 있습니다.</string>
+    <string name="core_help_video_3d_display_enabled" formatted="false">3D 입체 렌더링 모드를 설정합니다(기본 해상도가 720p인 사용자 지정 설정에서만 사용 가능).\n애너글리프는 양쪽 눈에 서로 다른 색상을 사용하며, 전용 안경으로 이를 분리합니다.\n좌우 분할은 VR 뷰어 앱에서 널리 지원됩니다.\n상하 분할은 원래의 입체 출력 방식에 더 가깝지만 지원하는 앱이 비교적 적습니다.</string>
+    <string name="core_help_video_3d_display_mode" formatted="false">3D 입체 렌더링 모드를 설정합니다(기본 해상도가 720p인 사용자 지정 설정에서만 사용 가능).\n애너글리프는 양쪽 눈에 서로 다른 색상을 사용하며, 전용 안경으로 이를 분리합니다.\n좌우 분할은 VR 뷰어 앱에서 널리 지원됩니다.\n상하 분할은 원래의 입체 출력 방식에 더 가깝지만 지원하는 앱이 비교적 적습니다.</string>
+    <string name="core_help_video_stretch_to_display_area" formatted="false">종횡비를 재정의하고 이미지를 전체 표시 영역으로 늘립니다.</string>
+    <string name="core_help_video_strict_rendering_mode" formatted="false">API 사양을 엄격히 준수하도록 합니다.\n일부 게임에서 성능이 저하될 수 있습니다.\n드물게 발생하는 그래픽 누락이나 깜박임을 해결할 수 있습니다.\n잘 모르면 사용하지 마세요.</string>
+    <string name="core_help_video_strict_texture_flushing" formatted="false">필요하지 않거나 올바르지 않은 상황에서도 텍스처 플러싱을 강제합니다. 시각적 아티팩트를 유발하는 것으로 알려져 있지만 특정 텍스처 캐시 문제를 디버깅하는 데 유용합니다.</string>
+    <string name="core_help_savestate_suspend_emulation_savestate_mode" formatted="false">활성화하면 상태 저장 시 에뮬레이션이 종료되며, 저장 파일은 불러온 후 숨김 처리되어 RPCS3에서 다시 사용할 수 없게 됩니다.\n에뮬레이션의 최대 절전 모드와 비슷합니다. 플레이 중 상태 저장을 반복 이용하는 것을 방지하고 싶다면 이 모드를 사용하세요.\n파일 자체가 삭제되지는 않으며 RPCS3가 무시할 뿐입니다. 필요한 경우 수동으로 다시 실행할 수 있습니다.</string>
+    <string name="core_help_video_texture_lod_bias_addend" formatted="false">텍스처 샘플링 정밀도를 변경합니다. 작은 변화도 큰 영향을 줍니다.\n잘 모르면 -12~+12 범위를 벗어난 값은 사용하지 마세요.\n대부분의 경우 -3~+3이면 충분합니다.</string>
+    <string name="core_help_core_thread_scheduler_mode" formatted="false">RPCS3가 시스템 스레드를 활용하는 방식을 지정합니다.\n각 옵션의 효과는 게임과 CPU에 따라 크게 달라지므로 하나씩 시험하여 가장 적합한 옵션을 찾는 것이 좋습니다.\n스레드가 12개 미만인 CPU에서는 스레드 스케줄러 변경을 지원하지 않습니다.</string>
+    <string name="core_help_system_time_format" formatted="false">PS3의 시간 표시 형식을 선택합니다.</string>
+    <string name="core_help_audio_time_stretching_threshold" formatted="false">버퍼에 채워진 데이터 비율이 이 값(%)보다 낮아지면 타임 스트레칭을 시작합니다.</string>
+    <string name="core_help_input_output_turntable_emulated_controller" formatted="false">DJ Hero 턴테이블 컨트롤러를 지원합니다.\n게임에 이 컨트롤러가 필요하지만 실제 컨트롤러가 없다면 ‘컨트롤러 1개’ 또는 ‘컨트롤러 2개’를 선택하세요.\n게임이 DualShock을 지원하거나 실제 턴테이블 컨트롤러가 있다면 ‘없음’을 선택하세요.\n실제 턴테이블 컨트롤러와 에뮬레이션한 컨트롤러를 동시에 사용할 수 있습니다.</string>
+    <string name="core_help_miscellaneous_use_native_user_interface" formatted="false">게임 컨트롤러와 상호 작용할 수 있는 게임 창 내에서 기본 HUD를 사용할 수 있습니다.
+비활성화되면 일반 Qt 대화 상자가 대신 사용됩니다.
+현재 온스크린 키보드는 영어 키 레이아웃만 지원합니다.</string>
+    <string name="core_help_video_vulkan_use_re_bar_for_gpu_uploads" formatted="false">활성화하면 Vulkan이 타이밍에 민감한 데이터를 GPU로 전송할 때 PCI-e Resizable BAR 주소 공간을 사용하려고 합니다.\n기본 프레임 속도가 낮으면 NVIDIA GPU에서 성능이 크게 향상됩니다.\n프레임 속도가 매우 높은 게임에서는 GPU 제조사와 관계없이 성능이 저하될 수 있습니다.</string>
+    <string name="core_help_miscellaneous_use_recursive_scan" formatted="false">선택한 폴더에서 게임을 검색할 때 하위 폴더에 대한 재귀 검색 사용을 활성화합니다.
+비활성화하면 선택한 폴더에서만 게임이 검색됩니다.</string>
+    <string name="core_help_video_vblank_ntsc_fixup" formatted="false">59.94Hz와 같은 값에 대해 VBLANK의 속도에 1000/1001을 곱합니다.
+리듬 게임 Space Channel 5 Part 2를 수정한 것으로 알려져 있습니다.</string>
+    <string name="core_help_video_vblank_rate" formatted="false">에뮬레이터가 보내는 수직 귀선소거 신호의 주파수를 조정합니다.
+이러한 신호에 의존하는 이벤트 타이밍에 영향을 미칩니다.</string>
+    <string name="core_help_video_vsync_mode" formatted="false">수직 동기화를 활성화하여 화면 찢어짐을 방지합니다.\n적응형: 성능 유지를 우선합니다. 게임의 프레임 속도를 유지하기 위해 프레임을 건너뛰거나 화면 찢어짐을 허용할 수 있습니다.\n전체: 성능이 저하되더라도 화면 찢어짐을 허용하지 않습니다. 드라이버 설정에서 재정의하지 않는 한 프레임 속도를 디스플레이 주사율로 제한합니다.</string>
+    <string name="core_help_video_vulkan_adapter" formatted="false">다중 GPU 시스템에서 Vulkan을 사용할 때 RPCS3에서 사용할 GPU를 선택하세요.
+OpenGL을 사용하는 경우에는 필요하지 않습니다.</string>
+    <string name="core_help_video_vulkan_asynchronous_queue_scheduler" formatted="false">비동기 스트리밍 시 GPU 비동기 컴퓨트 작업의 스케줄링 방식을 지정합니다.\n‘안전’은 CPU 오버헤드가 약간 늘지만 사양을 더 충실히 따르며 모든 장치에서 작동합니다.\n‘빠름’은 속도를 우선한 우회 방식을 사용합니다. GPU가 멈추는 문제 때문에 NVIDIA GPU에서는 내부적으로 비활성화됩니다.</string>
+    <string name="core_help_video_vulkan_asynchronous_texture_streaming" formatted="false">비동기 컴퓨트를 사용하여 3D 렌더링과 병렬로 텍스처를 GPU에 전송합니다.\n처리 여유가 있는 고성능 GPU에서 성능이 향상될 수 있습니다.\nVulkan 렌더러에서만 작동합니다. CPU 성능이 충분하다면 ‘멀티스레드 RSX’를 활성화할 때 효과가 더 큽니다.</string>
+    <string name="core_help_miscellaneous_window_title_format" formatted="false">게임 창 제목을 구성합니다.
+이를 변경하거나 프레임 속도를 추가하면 버그가 있거나 오래된 녹화 소프트웨어가 RPCS3를 인식하지 못할 수 있습니다.</string>
+    <string name="core_help_video_write_color_buffers" formatted="false">게임에서 그래픽이 누락되거나 조명이 깨지는 경우 활성화하세요.\n성능 저하와 끊김 현상이 발생할 수 있습니다.\nDemon’s Souls에는 필수입니다.</string>
+    <string name="core_help_video_write_depth_buffer" formatted="false">vm 메모리에 깊이 버퍼 값을 씁니다.</string>
+    <string name="core_help_core_spu_xfloat_accuracy" formatted="false">SPU 부동 소수점 벡터 처리의 정확도를 조절합니다.\n성능을 희생하는 대신 여러 게임의 오류를 해결합니다.\nSPU 디코더가 동적 인터프리터 또는 LLVM으로 설정된 경우에만 적용됩니다.</string>
+    <string name="core_label_chinese_simplified">중국어(간체)</string>
+    <string name="core_label_chinese_traditional">중국어(번체)</string>
+    <string name="core_label_chinese_keyboard_simplified">중국어 키보드(간체)</string>
+    <string name="core_label_chinese_keyboard_traditional">중국어 키보드(번체)</string>
+    <string name="core_label_danish">덴마크어</string>
+    <string name="core_label_danish_keyboard">덴마크어 키보드</string>
+    <string name="core_label_dutch">네덜란드어</string>
+    <string name="core_label_dutch_keyboard">네덜란드어 키보드</string>
+    <string name="core_label_english_uk">영어(영국)</string>
+    <string name="core_label_english_us">영어(미국)</string>
+    <string name="core_label_english_keyboard_uk_standard">영어 키보드(영국 표준)</string>
+    <string name="core_label_english_keyboard_us_standard">영어 키보드(미국 표준)</string>
+    <string name="core_label_finnish">핀란드어</string>
+    <string name="core_label_finnish_keyboard">핀란드어 키보드</string>
+    <string name="core_label_french">프랑스어</string>
+    <string name="core_label_french_keyboard">프랑스어 키보드</string>
+    <string name="core_label_french_keyboard_belgium">프랑스어 키보드(벨기에)</string>
+    <string name="core_label_french_keyboard_canada">프랑스어 키보드(캐나다)</string>
+    <string name="core_label_french_keyboard_switzerland">프랑스어 키보드(스위스)</string>
+    <string name="core_label_german">독일어</string>
+    <string name="core_label_german_keyboard">독일어 키보드</string>
+    <string name="core_label_german_keyboard_switzerland">독일어 키보드(스위스)</string>
+    <string name="core_label_italian">이탈리아어</string>
+    <string name="core_label_italian_keyboard">이탈리아어 키보드</string>
+    <string name="core_label_japanese">일본어</string>
+    <string name="core_label_japanese_keyboard">일본어 키보드</string>
+    <string name="core_label_japanese_keyboard_kana_state">일본어 키보드(가나 입력)</string>
+    <string name="core_label_korean">한국어</string>
+    <string name="core_label_korean_keyboard">한국어 키보드</string>
+    <string name="core_label_norwegian">노르웨이어</string>
+    <string name="core_label_norwegian_keyboard">노르웨이어 키보드</string>
+    <string name="core_label_other">기타</string>
+    <string name="core_label_polish">폴란드어</string>
+    <string name="core_label_polish_keyboard">폴란드어 키보드</string>
+    <string name="core_label_portuguese_brazil">포르투갈어(브라질)</string>
+    <string name="core_label_portuguese_portugal">포르투갈어(포르투갈)</string>
+    <string name="core_label_portuguese_keyboard_brazil">포르투갈어 키보드(브라질)</string>
+    <string name="core_label_portuguese_keyboard_portugal">포르투갈어 키보드(포르투갈)</string>
+    <string name="core_label_russian">러시아어</string>
+    <string name="core_label_russian_keyboard">러시아어 키보드</string>
+    <string name="core_label_scea">SCEA</string>
+    <string name="core_label_scee">SCEE</string>
+    <string name="core_label_sceh">SCEH</string>
+    <string name="core_label_scej">SCEJ</string>
+    <string name="core_label_scek">SCEK</string>
+    <string name="core_label_sch">SCH</string>
+    <string name="core_label_spanish">스페인어</string>
+    <string name="core_label_spanish_keyboard">스페인어 키보드</string>
+    <string name="core_label_swedish">스웨덴어</string>
+    <string name="core_label_swedish_keyboard">스웨덴어 키보드</string>
+    <string name="core_label_turkish">터키어</string>
+    <string name="core_label_turkish_keyboard">터키어 키보드</string>
+    <string name="core_help_video_display_aspect_override" formatted="false">최종 화면 비율을 1000분의 1 단위로 지정합니다(1778 = 16:9, 1333 = 4:3). 0으로 설정하면 게임의 원래 비율을 사용합니다. 특수한 화면 비율의 휴대폰이나 태블릿에 맞출 때만 사용하세요. 값이 잘못되면 화면이 늘어납니다.</string>
+    <string name="core_help_video_shader_preset_path" formatted="false">출력 크기 조정 모드가 셰이더 체인으로 설정된 경우 사용되는 RetroArch .slangp 셰이더 사전 설정에 대한 절대 경로입니다. 일반 출력을 위해서는 비워두세요. 호환되는 사전 설정만 사용하십시오. 잘못된 경로는 일반 이미지로 대체됩니다.</string>
+    <string name="core_label_async_shader_recompiler">비동기 셰이더 리컴파일러</string>
+    <string name="core_label_async_with_shader_interpreter">비동기 및 셰이더 인터프리터</string>
+    <string name="core_label_forced">강제</string>
+    <string name="core_label_interpreter">인터프리터</string>
+    <string name="core_label_interpreter_legacy">인터프리터(레거시)</string>
+    <string name="core_label_llvm_recompiler_legacy">LLVM 리컴파일러(레거시)</string>
+    <string name="core_label_shader_recompiler">셰이더 리컴파일러</string>
+    <string name="core_setting_search">설정 검색</string>
+    <string name="core_setting_no_results">일치하는 설정 없음</string>
+    <plurals name="library_game_count">
+        <item quantity="one">총 게임 %1$d개</item>
+        <item quantity="other">총 게임 %1$d개</item>
+    </plurals>
+    <plurals name="install_dialog_items_progress">
+        <item quantity="one">%2$d개 중 %1$d개 완료</item>
+        <item quantity="other">%2$d개 중 %1$d개 완료</item>
+    </plurals>
+    <string name="direct_boot_add_game">폴더에서 게임 추가</string>
+    <string name="direct_boot_added_success">게임 ‘%1$s’을(를) 추가했습니다</string>
+    <string name="direct_boot_folder_resolve_failed">폴더 경로를 확인하지 못했습니다</string>
+    <string name="direct_boot_no_param_sfo">선택한 폴더에서 PARAM.SFO를 찾을 수 없습니다</string>
+    <string name="direct_boot_invalid_title_id">잘못된 게임 타이틀 ID</string>
+    <string name="direct_boot_link_failed">직접 실행 링크를 만들지 못했습니다</string>
+    <string name="onboarding_games_folder_title">게임 폴더</string>
+    <string name="onboarding_games_folder_desc">PS3 게임이 있는 폴더를 선택하세요(JB Folder, PS3_GAME, ISO, Disc)</string>
+    <string name="onboarding_status_choose_folder">폴더 선택</string>
+    <string name="settings_tab_library">라이브러리</string>
+    <string name="settings_library_folders_title">게임 폴더</string>
+    <string name="settings_library_folders_desc">이 폴더의 게임은 라이브러리에 표시되며 내부 저장소로 복사하지 않고 직접 실행할 수 있습니다.</string>
+    <string name="settings_library_add_folder">게임 폴더 추가</string>
+    <string name="settings_library_remove_folder">폴더 제거</string>
+    <string name="settings_library_no_folders">추가된 게임 폴더 없음</string>
+    <string name="settings_library_folder_removed">라이브러리에서 폴더를 제거했습니다</string>
+    <string name="onboarding_permission_storage_title">저장소 접근 권한</string>
+    <string name="onboarding_permission_storage_desc">게임 파일을 복사하지 않고 직접 읽을 수 있도록 기기 저장소에 대한 접근을 허용합니다</string>
+    <string name="onboarding_permission_storage_grant">권한 허용</string>
+    <string name="onboarding_permission_storage_granted">권한 허용됨</string>
+    <string name="settings_discord_rich_presence">Discord 리치 프레즌스</string>
+    <string name="discord_title">Discord</string>
+    <string name="discord_rich_presence_title">Discord Rich Presence</string>
+    <string name="discord_intro">Discord를 연결하여 EmuCoreC에서 플레이 중임을 표시하세요. 어떤 게임 정보를 공유할지 직접 제어할 수 있습니다.</string>
+    <string name="discord_connected_account">연결된 계정</string>
+    <string name="discord_connect">Discord 연결</string>
+    <string name="discord_disconnect">연결 해제</string>
+    <string name="discord_open_server">Discord 서버 열기</string>
+    <string name="discord_privacy_title">활동 및 개인정보</string>
+    <string name="discord_enabled">Discord 연동</string>
+    <string name="discord_enabled_desc">EmuCoreC가 게임 활동을 게시하도록 허용</string>
+    <string name="discord_share_title">게임 제목 표시</string>
+    <string name="discord_share_title_desc">Discord 상태에 현재 게임과 커버 표시</string>
+    <string name="discord_share_serial">타이틀 ID 표시</string>
+    <string name="discord_share_serial_desc">BLES00001과 같은 PS3 타이틀 ID 포함</string>
+    <string name="discord_preview_title">상태 미리 보기</string>
+    <string name="discord_preview_game_title">게임 제목</string>
+    <string name="discord_preview_serial">타이틀 ID</string>
+    <string name="discord_privacy_note">로그인은 PKCE를 사용하는 Discord OAuth를 사용합니다. 액세스 토큰은 Android Keystore로 암호화되며 EmuCoreC 서버로 전송되지 않습니다.</string>
+    <string name="discord_status_disabled">사용 안 함</string>
+    <string name="discord_status_unavailable">이 빌드에서 SDK를 사용할 수 없음</string>
+    <string name="discord_status_disconnected">연결되지 않음</string>
+    <string name="discord_status_authorizing">승인 대기 중</string>
+    <string name="discord_status_connecting">연결 중…</string>
+    <string name="discord_status_connected">연결됨</string>
+    <string name="discord_status_failed">연결 실패</string>
+    <string name="discord_friends_title">EmuCoreC의 친구</string>
+    <string name="discord_friends_empty">현재 EmuCoreC를 사용 중인 Discord 친구가 없습니다.</string>
+    <string name="discord_presence_library">게임 라이브러리 탐색 중</string>
+    <string name="discord_presence_private_game">PS3 게임 플레이 중</string>
+    <string name="discord_presence_paused">일시 중지됨</string>
+    <string name="discord_presence_playing">%1$s 플레이 중</string>
+    <string name="settings_discord_sdk_unavailable">이 빌드에는 Discord Social SDK가 포함되어 있지 않습니다.</string>
+    <string name="settings_discord_service_error">Discord 도우미 서비스를 시작할 수 없습니다.</string>
+    <string name="settings_discord_token_error">Discord 로그인 토큰을 보호할 수 없습니다.</string>
+    <string name="drive_after_game">게임을 닫은 후</string>
+    <string name="drive_backup_now">지금 백업</string>
+    <string name="drive_cancel">취소</string>
+    <string name="drive_category_cheats">치트</string>
+    <string name="drive_category_patches">게임별 설정</string>
+    <string name="drive_category_save_data">저장 데이터</string>
+    <string name="drive_category_settings">설정 및 컨트롤</string>
+    <string name="drive_category_states">트로피</string>
+    <string name="drive_category_style">모양</string>
+    <string name="drive_charging">충전 중에만</string>
+    <string name="drive_connect">Google Drive 연결</string>
+    <string name="drive_core_warning">이 백업은 다른 코어 버전을 사용합니다. 일부 데이터가 호환되지 않을 수 있습니다.</string>
+    <string name="drive_delete">삭제</string>
+    <string name="drive_delete_warning">이 백업을 Google Drive 휴지통으로 이동할까요? 로컬 저장 데이터는 영향을 받지 않습니다.</string>
+    <string name="drive_description">설정, 저장 데이터, 트로피, 치트 및 모양을 내 Drive에 백업합니다. 게임, 펌웨어, 캐시 및 로그인 데이터는 제외됩니다.</string>
+    <string name="drive_disconnect">연결 해제</string>
+    <string name="drive_disconnect_warning">자동 백업이 중지됩니다. Google Drive에 이미 있는 사본은 유지됩니다. EmuCoreC 프로필에서 로그아웃되지는 않습니다.</string>
+    <string name="drive_downloading">백업 다운로드 중…</string>
+    <string name="drive_empty">아직 완료된 백업이 없습니다.</string>
+    <string name="drive_empty_description">완료된 백업이 여기에 표시됩니다. 첫 사본을 만들어 저장 데이터와 설정을 Google Drive에 보관하세요.</string>
+    <string name="drive_error_auth">Google Drive에 접근할 수 없습니다. 계정을 다시 연결하세요.</string>
+    <string name="drive_error_busy">게임이 실행 중이거나 시작 중입니다. 백업은 대기하며, 복원은 게임을 닫은 후에만 하세요.</string>
+    <string name="drive_error_configuration">Google Drive를 일시적으로 사용할 수 없습니다. 나중에 다시 시도해 주세요.</string>
+    <string name="drive_error_failed">작업을 완료할 수 없습니다. 연결과 Google 계정을 확인한 후 다시 시도하세요.</string>
+    <string name="drive_error_invalid">백업이 손상되었거나 지원되지 않습니다. 복원되지 않았습니다.</string>
+    <string name="drive_error_missing">이 백업이 제거되었거나 더 이상 접근할 수 없습니다.</string>
+    <string name="drive_error_network">연결이 중단되었습니다. 네트워크가 연결되면 업로드가 계속될 수 있습니다.</string>
+    <string name="drive_error_quota">Google Drive가 가득 찼습니다. 공간을 확보하고 다시 시도하세요.</string>
+    <string name="drive_error_space">이 기기에 쓸 수 있는 저장 공간이 부족합니다. 공간을 확보하거나 선택한 저장 공간을 확인하세요.</string>
+    <string name="drive_history">백업 기록</string>
+    <string name="drive_hours">%1$d시간마다</string>
+    <string name="drive_include_save_data">저장 데이터 및 트로피 포함</string>
+    <string name="drive_last_backup">마지막 성공한 백업</string>
+    <string name="drive_manual">수동</string>
+    <string name="drive_open">Google Drive 열기</string>
+    <string name="drive_preparing">안전한 사본 준비 중…</string>
+    <string name="drive_private">Google 계정의 비공개 백업</string>
+    <string name="drive_reconnect">Google Drive 다시 연결</string>
+    <string name="drive_refresh">새로 고침</string>
+    <string name="drive_restore">복원</string>
+    <string name="drive_restore_warning">선택한 데이터가 일치하는 로컬 파일을 대체합니다. 먼저 복구 사본이 생성됩니다. 복원하기 전에 게임을 중지하세요. 다른 기기에서는 게임을 다시 선택하세요.</string>
+    <string name="drive_restored">복원이 완료되었습니다. 복원된 설정을 다시 불러오려면 화면을 다시 여세요.</string>
+    <string name="drive_restoring">데이터 복원 중…</string>
+    <string name="drive_retention">기기당 최근 사본 %1$d개 유지</string>
+    <string name="drive_schedule">자동 백업</string>
+    <string name="drive_schedule_note">Android가 예약된 백업을 지연시킬 수 있습니다. 게임이 우선합니다. 자동 백업은 변경되지 않은 데이터를 건너뜁니다.</string>
+    <string name="drive_settings_tab">설정</string>
+    <string name="drive_title">Google Drive</string>
+    <string name="drive_transfer_amount">%2$s 중 %1$s</string>
+    <string name="drive_transfer_remaining">약 %1$s 남음</string>
+    <string name="drive_transfer_speed">%1$s/s</string>
+    <string name="drive_uploading">백업 업로드 중…</string>
+    <string name="drive_verifying">백업 무결성 확인 중…</string>
+    <string name="drive_waiting">네트워크, 배터리 또는 다른 작업을 기다리는 중…</string>
+    <string name="drive_wifi">종량제가 아닌 네트워크만</string>
+    <string name="drive_working">작업 중…</string>
+    <string name="my_lists_cloud_failed">백업에 실패했습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="my_lists_cloud_hint">목록을 백업하려면 프로필에 로그인하세요.</string>
+    <string name="my_lists_cloud_synced">목록은 계정에 저장되며 다른 기기에서 복원할 수 있습니다.</string>
+    <string name="my_lists_cloud_title">클라우드 백업</string>
+    <string name="my_lists_empty_body">카탈로그를 열고 게임의 점 세 개 메뉴를 탭한 다음 목록 중 하나에 추가하세요.</string>
+    <string name="my_lists_empty_title">아직 게임이 없습니다</string>
+    <string name="my_lists_subtitle">상태, 즐겨찾기 및 게임 컬렉션</string>
+    <string name="my_lists_title">내 목록</string>
+    <string name="profile_accent_blue">파랑</string>
+    <string name="profile_accent_crimson">크림슨</string>
+    <string name="profile_accent_emerald">에메랄드</string>
+    <string name="profile_accent_gold">골드</string>
+    <string name="profile_accent_violet">바이올렛</string>
+    <string name="profile_account_created">계정이 생성되었습니다.</string>
+    <string name="profile_action_failed">문제가 발생했습니다. 다시 시도해 주세요.</string>
+    <string name="profile_auth_title">내 EmuCoreC 계정</string>
+    <string name="profile_backup_done">목록을 백업했습니다</string>
+    <string name="profile_block_player">플레이어 차단</string>
+    <string name="profile_blocked_empty">차단한 플레이어가 없습니다.</string>
+    <string name="profile_blocked_title">차단한 플레이어</string>
+    <string name="profile_catalog_game_not_found">%1$s은(는) 아직 게임 카탈로그에서 사용할 수 없습니다.</string>
+    <string name="profile_cloud_confirm_restore">복원 확인</string>
+    <string name="profile_cloud_count">클라우드 · %1$d</string>
+    <string name="profile_cloud_delete">클라우드 프로필 삭제</string>
+    <string name="profile_cloud_deleted">클라우드 프로필을 삭제했습니다.</string>
+    <string name="profile_cloud_description">최대 5개의 이름이 지정된 프로필을 저장할 수 있습니다. 에뮬레이터 및 게임별 설정만 동기화됩니다. 게임, 펌웨어, 저장 데이터, 트로피 및 사용자 지정 드라이버는 이 기기에만 남아 있으며 동기화되지 않습니다.</string>
+    <string name="profile_cloud_name">프로필 이름</string>
+    <string name="profile_cloud_restore">복원</string>
+    <string name="profile_cloud_restore_warning">이 기기의 에뮬레이터 및 게임별 설정이 대체됩니다. 게임, 펌웨어, 저장 데이터 및 트로피는 변경되지 않습니다.</string>
+    <string name="profile_cloud_restored">에뮬레이터 설정을 복원했습니다. 적용하려면 실행 중인 게임을 다시 시작하세요.</string>
+    <string name="profile_cloud_save_current">현재 설정 저장</string>
+    <string name="profile_cloud_saved">에뮬레이터 설정을 프로필에 저장했습니다.</string>
+    <string name="profile_cloud_title">클라우드의 에뮬레이터 설정</string>
+    <string name="profile_cloud_version">앱 %1$s · 코어 %2$s</string>
+    <string name="profile_create_account">계정 만들기</string>
+    <string name="profile_device_android">시스템</string>
+    <string name="profile_device_app_core">앱 · 코어</string>
+    <string name="profile_device_current">이 기기</string>
+    <string name="profile_device_delete">기기 삭제</string>
+    <string name="profile_device_deleted">기기를 제거했습니다</string>
+    <string name="profile_device_gpu">그래픽</string>
+    <string name="profile_device_make_private">프로필에서 숨기기</string>
+    <string name="profile_device_make_public">프로필에 표시</string>
+    <string name="profile_device_private_done">기기를 프로필에서 숨겼습니다.</string>
+    <string name="profile_device_public_done">기기가 프로필에 표시됩니다.</string>
+    <string name="profile_device_ram">메모리</string>
+    <string name="profile_device_show">기기 표시</string>
+    <string name="profile_device_soc">프로세서</string>
+    <string name="profile_devices_count">기기 · %1$d</string>
+    <string name="profile_devices_description">기기 세부 정보는 하드웨어 ID가 아닌 무작위 앱 식별자를 사용합니다. 공개 프로필에 기기를 표시할지 직접 선택할 수 있습니다.</string>
+    <string name="profile_devices_empty">아직 등록된 기기가 없습니다.</string>
+    <string name="profile_devices_title">내 기기</string>
+    <string name="profile_display_name">표시 이름</string>
+    <string name="profile_done">완료.</string>
+    <string name="profile_edit_name">편집</string>
+    <string name="profile_edit_name_description">다른 플레이어가 검색과 순위표에서 보게 될 이름을 선택하세요.</string>
+    <string name="profile_email">이메일</string>
+    <string name="profile_event_achievement">%1$s에서 트로피 잠금 해제</string>
+    <string name="profile_features_title">프로필 기능</string>
+    <string name="profile_friend_accept">요청 수락</string>
+    <string name="profile_friend_add">친구 추가</string>
+    <string name="profile_friend_added">친구를 추가했습니다.</string>
+    <string name="profile_friend_pending">요청 보냄</string>
+    <string name="profile_friend_remove">친구</string>
+    <string name="profile_friend_remove_action">제거</string>
+    <string name="profile_friend_remove_confirm">%1$s을(를) 친구에서 제거할까요?</string>
+    <string name="profile_friend_remove_title">친구를 제거할까요?</string>
+    <string name="profile_friend_removed">친구 관계를 해제했습니다.</string>
+    <string name="profile_friend_request_sent">친구 요청을 보냈습니다.</string>
+    <string name="profile_friend_requests">친구 요청</string>
+    <string name="profile_friend_requests_empty">받은 요청이 없습니다.</string>
+    <string name="profile_friends_empty">아직 추가한 친구가 없습니다.</string>
+    <string name="profile_friends_title">친구</string>
+    <string name="profile_game_last_played_format">마지막 플레이 %1$s</string>
+    <string name="profile_game_sessions_format">%1$d회 플레이</string>
+    <string name="profile_games_empty">아직 게임이 없습니다</string>
+    <string name="profile_games_played">플레이한 게임</string>
+    <string name="profile_google_failed">Google 로그인에 실패했습니다.</string>
+    <string name="profile_google_sign_in">Google로 계속</string>
+    <string name="profile_have_account">이미 계정이 있습니다</string>
+    <string name="profile_leaderboard_empty">아직 플레이어가 없습니다</string>
+    <string name="profile_leaderboard_games_format">게임 %1$d개</string>
+    <string name="profile_leaderboard_load_failed">순위표를 불러올 수 없습니다.</string>
+    <string name="profile_leaderboard_no_results">일치하는 플레이어를 찾을 수 없습니다.</string>
+    <string name="profile_leaderboard_refresh">순위 새로 고침</string>
+    <string name="profile_leaderboard_search_help">2자 이상 입력하거나 EX-A7K4P2와 같은 전체 ID를 입력하세요.</string>
+    <string name="profile_leaderboard_search_hint">이름 또는 ID</string>
+    <string name="profile_more_games_failed">게임을 더 불러올 수 없습니다.</string>
+    <string name="profile_name_character_count">%1$d/32자</string>
+    <string name="profile_name_updated">표시 이름을 업데이트했습니다.</string>
+    <string name="profile_need_account">계정 만들기</string>
+    <string name="profile_password">비밀번호</string>
+    <string name="profile_password_reset_sent">비밀번호 재설정 이메일을 보냈습니다. 받은 편지함을 확인하세요.</string>
+    <string name="profile_player">플레이어</string>
+    <string name="profile_player_blocked">플레이어를 차단했습니다.</string>
+    <string name="profile_player_card_brand">EmuCoreC 플레이어 카드</string>
+    <string name="profile_player_card_footer">EmuCoreC가 기록하는 PS3의 추억</string>
+    <string name="profile_player_card_share">플레이어 카드 공유</string>
+    <string name="profile_player_card_share_text">EmuCoreC에서 찾아보세요: %1$s</string>
+    <string name="profile_player_id_format">플레이어 ID: %1$s</string>
+    <string name="profile_player_not_found">플레이어를 찾을 수 없음</string>
+    <string name="profile_player_search_failed">플레이어를 검색할 수 없습니다.</string>
+    <string name="profile_player_unblocked">플레이어 차단을 해제했습니다.</string>
+    <string name="profile_pro_badge">PRO</string>
+    <string name="profile_pro_updated">Pro 프로필을 업데이트했습니다.</string>
+    <string name="profile_rank">순위</string>
+    <string name="profile_rank_insights">순위 #%1$d / %2$d · 상위 %3$d%%</string>
+    <string name="profile_recent_events">최근 이벤트</string>
+    <string name="profile_recently_played">최근 플레이</string>
+    <string name="profile_reset_password">비밀번호 재설정</string>
+    <string name="profile_restore">복원</string>
+    <string name="profile_restore_done">목록을 복원했습니다</string>
+    <string name="profile_showcase_title">게임 소개</string>
+    <string name="profile_sign_in">로그인</string>
+    <string name="profile_sign_out">로그아웃</string>
+    <string name="profile_signed_in">로그인했습니다.</string>
+    <string name="profile_signed_out">로그아웃했습니다.</string>
+    <string name="profile_social_center_title">친구 및 알림</string>
+    <string name="profile_stats_activity">활동</string>
+    <string name="profile_stats_best_streak">최고 연속 기록</string>
+    <string name="profile_stats_current_streak">현재 연속 기록</string>
+    <string name="profile_stats_days_format">%1$d일</string>
+    <string name="profile_stats_empty">활동 기록은 이 버전에서 기록한 플레이 세션부터 시작됩니다.</string>
+    <string name="profile_stats_history_empty_title">기록 준비 완료</string>
+    <string name="profile_stats_lifetime_body">누적 합계, 세션 및 글로벌 순위는 항상 여기에서 확인할 수 있습니다.</string>
+    <string name="profile_stats_lifetime_title">누적 개요</string>
+    <string name="profile_stats_load_failed">활동 기록을 불러올 수 없습니다. 다시 시도해 주세요.</string>
+    <string name="profile_stats_locked_body">설정 &gt; Pro에서 활동 기록, 연속 기록, 주간 및 월간 차트, 백분위 분석 및 플레이어 카드를 잠금 해제하세요.</string>
+    <string name="profile_stats_locked_title">고급 통계는 Pro에 포함되어 있습니다</string>
+    <string name="profile_stats_refresh">활동 새로 고침</string>
+    <string name="profile_stats_this_month">최근 30일</string>
+    <string name="profile_stats_this_week">최근 7일</string>
+    <string name="profile_stats_total_sessions">총 세션</string>
+    <string name="profile_stats_weekly_chart">최근 플레이 시간</string>
+    <string name="profile_tab_achievements">트로피</string>
+    <string name="profile_tab_games">게임</string>
+    <string name="profile_tab_leaderboard">상위 1000</string>
+    <string name="profile_tab_overview">개요</string>
+    <string name="profile_tab_stats">통계</string>
+    <string name="profile_total_time">총 시간</string>
+    <string name="profile_trophies_empty">아직 트로피가 없습니다. 트로피가 있는 게임을 플레이하면 여기에서 진행 상황을 볼 수 있습니다.</string>
+    <string name="profile_trophies_load_failed">트로피를 불러올 수 없습니다.</string>
+    <string name="profile_trophies_points_format">%1$d/%2$d 포인트</string>
+    <string name="profile_trophies_summary_format">트로피 %2$d개 중 %1$d개 · %3$d 포인트</string>
+    <string name="profile_trophy_filter_all">전체</string>
+    <string name="profile_trophy_filter_completed">완료됨</string>
+    <string name="profile_trophy_filter_in_progress">진행 중</string>
+    <string name="profile_trophy_progress_format">%2$d개 중 %1$d개 잠금 해제</string>
+    <string name="profile_unblock_player">차단 해제</string>
+    <string name="save">저장</string>
+    <string name="settings_ra_points_label">포인트</string>
+    <string name="core_update_reset_title">코어 업데이트</string>
+    <string name="core_update_reset_body">이 업데이트에는 에뮬레이터 코어 변경 사항이 포함되어 있습니다. 새 코어가 문제없이 실행되도록 에뮬레이터 캐시와 구성을 초기화하세요.</string>
+    <string name="core_update_reset_kept">PS3 펌웨어, 게임 폴더, 조작 설정, 저장 데이터, 표지는 유지됩니다.</string>
+    <string name="core_update_reset_action">설정 초기화</string>
+    <string name="core_update_reset_keep">현재 설정 유지</string>
+    <string name="core_update_reset_done">설정이 초기화되었습니다</string>
+    <string name="core_label_fighting_games">격투 게임</string>
+    <string name="core_label_shooter_games">슈팅 게임</string>
+    <string name="nav_save_states">빠른 저장</string>
+    <string name="savestate_manager_subtitle">게임 내 저장과 별개인 에뮬레이터 스냅샷</string>
+    <string name="emulation_savestate_slot_label">슬롯 %1$d</string>
+    <string name="emulation_savestate_empty">비어 있음</string>
+    <string name="emulation_savestate_saved_at">%1$s에 저장됨</string>
+    <string name="emulation_savestate_save_action">세이브 스테이트 저장</string>
+    <string name="emulation_savestate_load_action">불러오기</string>
+    <string name="emulation_savestate_saved_toast">세이브 스테이트를 생성했습니다</string>
+    <string name="emulation_savestate_loaded_toast">세이브 스테이트를 불러왔습니다</string>
+    <string name="emulation_savestate_failed_toast">세이브 스테이트 작업에 실패했습니다</string>
+    <string name="emulation_savestate_confirm_save_title">세이브 스테이트를 덮어쓸까요?</string>
+    <string name="emulation_savestate_confirm_save_body">%1$s에 이미 스테이트가 있습니다. 현재 순간으로 대체됩니다.</string>
+    <string name="emulation_savestate_confirm_load_title">세이브 스테이트를 불러올까요?</string>
+    <string name="emulation_savestate_confirm_load_body">%1$s에서 이 스냅샷 이후의 진행 상황이 사라집니다.</string>
+    <string name="emulation_savestate_startup_loading">세이브 스테이트 불러오는 중…</string>
+    <string name="emulation_savestate_saving">세이브 스테이트 저장 중…</string>
+    <string name="emulation_savestate_unavailable">이 코어에서는 상태 저장을 사용할 수 없습니다.</string>
+    <string name="settings_app_language_czech">체코어</string>
+    <string name="settings_app_language_polish">폴란드어</string>
+    <string name="settings_app_language_japanese">일본어</string>
+    <string name="settings_app_language_korean">한국어</string>
+    <string name="settings_app_language_indonesian">인도네시아어</string>
+    <string name="settings_app_language_persian">페르시아어</string>
+
+    <string name="controls_button_circle">동그라미</string>
+    <string name="controls_button_cross">엑스</string>
+    <string name="controls_button_down">아래</string>
+    <string name="controls_button_l1">L1</string>
+    <string name="controls_button_l2">L2</string>
+    <string name="controls_button_l3">L3</string>
+    <string name="controls_button_left">왼쪽</string>
+    <string name="controls_button_left_stick">왼쪽 스틱</string>
+    <string name="controls_button_r1">R1</string>
+    <string name="controls_button_r2">R2</string>
+    <string name="controls_button_r3">R3</string>
+    <string name="controls_button_right">오른쪽</string>
+    <string name="controls_button_right_stick">오른쪽 스틱</string>
+    <string name="controls_button_select">셀렉트</string>
+    <string name="controls_button_square">네모</string>
+    <string name="controls_button_start">스타트</string>
+    <string name="controls_button_triangle">세모</string>
+    <string name="controls_button_up">위</string>
+    <string name="controls_editor_combo">콤보</string>
+    <string name="controls_editor_combo_description">이 버튼을 누르고 있는 동안 두 동작이 동시에 실행됩니다.</string>
+    <string name="controls_editor_create_combo">버튼 추가</string>
+    <string name="controls_editor_delete">삭제</string>
+    <string name="controls_editor_duplicate">복제</string>
+    <string name="controls_editor_grid">격자</string>
+    <string name="controls_editor_group_buttons">액션 버튼</string>
+    <string name="controls_editor_group_dpad">십자 키</string>
+    <string name="controls_editor_none">없음</string>
+    <string name="controls_editor_opacity_value">불투명도 %1$d%%</string>
+    <string name="controls_editor_primary_action">첫 번째 동작</string>
+    <string name="controls_editor_reset_selected">선택 항목 초기화</string>
+    <string name="controls_editor_secondary_action">두 번째 동작</string>
+    <string name="controls_editor_snap">격자에 맞춤</string>
+    <string name="emulation_controls_editor_reset">초기화</string>
+    <string name="emulation_controls_editor_size">크기</string>
+    <string name="emulation_controls_editor_visible">표시</string>
+
+    <string name="common_next">다음</string>
+    <string name="common_previous">이전</string>
+    <string name="emulation_menu_section_savestates">세이브 스테이트</string>
+    <string name="emulation_quickbar_quick_load">스테이트 빠른 불러오기</string>
+    <string name="emulation_quickbar_quick_save">스테이트 빠른 저장</string>
+    <string name="emulation_savestate_confirm_delete_body">선택한 세이브 스테이트(%1$s)가 영구적으로 삭제됩니다.</string>
+    <string name="emulation_savestate_confirm_delete_title">세이브 스테이트를 삭제할까요?</string>
+    <string name="emulation_savestate_delete_action">삭제</string>
+    <string name="emulation_savestate_deleted_toast">세이브 스테이트를 삭제했습니다</string>
+    <string name="emulation_savestate_load_starts_game">게임을 실행하고 이 세이브 스테이트에서 이어서 진행합니다.</string>
+    <string name="emulation_savestate_quick_label">빠른 저장</string>
+    <string name="emulation_tab_savestates">세이브 스테이트</string>
+    <string name="savestate_manager_empty_body">플레이 중 에뮬레이터 메뉴를 열거나 빠른 저장 버튼을 눌러 생성하세요.</string>
+    <string name="savestate_manager_empty_title">아직 세이브 스테이트가 없습니다</string>
+    <string name="savestate_manager_refresh">새로 고침</string>
+</resources>

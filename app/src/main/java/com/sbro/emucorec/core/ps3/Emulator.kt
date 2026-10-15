@@ -26,6 +26,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.content.pm.ShortcutInfoCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
+import androidx.lifecycle.lifecycleScope
 import com.sbro.emucorec.R
 import com.sbro.emucorec.core.BackupSessionGate
 import com.sbro.emucorec.core.EmulatorStorage
@@ -47,6 +48,11 @@ import com.sbro.emucorec.ui.emulation.EmulationOverlayHost
 import com.sbro.emucorec.ui.theme.EmuCoreCTheme
 import net.rpcsx.BootResult
 import net.rpcsx.RPCSX
+import net.rpcsx.EmulatorState
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.thread
@@ -64,6 +70,8 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
     private val bootStarted = AtomicBoolean(false)
     private var bootThread: Thread? = null
     private var exiting = false
+    @Volatile private var finishPending = false
+    private val bootGate = Any()
     private var menuPaused = false
     private var lifecyclePaused = false
 
@@ -151,12 +159,38 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         super.onDestroy()
     }
 
+    override fun finish() {
+        if (finishPending || isFinishing) return
+        finishPending = true
+        if (!RPCSX.initialized) {
+            super.finish()
+            return
+        }
+        // Android abandons SurfaceView as soon as the activity finishes. Keep
+        // its producer alive until a pending restore and VM shutdown settle.
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                synchronized(bootGate) { Ps3Runtime.requestStop() }
+                while (RPCSX.instance.saveStateBusy() || Ps3Runtime.state() != EmulatorState.Stopped) delay(25)
+            }
+            finishAfterStop()
+        }
+    }
+
+    private fun finishAfterStop() = super.finish()
+
+    internal fun emulationSurface() = surfaceView
+    fun isSaveStateLaunch(): Boolean = gamePathFromIntent(intent).let {
+        it.endsWith(".SAVESTAT") || it.endsWith(".SAVESTAT.zst") || it.endsWith(".SAVESTAT.gz")
+    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) hideSystemBars()
     }
 
     fun onEmulationSurfaceReady() {
+        if (finishPending || isFinishing) return
         if (!::surfaceView.isInitialized || !surfaceView.holder.surface.isValid) return
         val currentWidth = surfaceView.width
         val currentHeight = surfaceView.height
@@ -170,7 +204,7 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
                 return@thread
             }
             surfaceView.post {
-                if (!surfaceView.holder.surface.isValid || isFinishing) return@post
+                if (!surfaceView.holder.surface.isValid || isFinishing || finishPending) return@post
                 val width = surfaceView.width.coerceAtLeast(1)
                 val height = surfaceView.height.coerceAtLeast(1)
                 Ps3Runtime.attachSurface(
@@ -181,7 +215,10 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
                         ?.takeIf { it.isFinite() && it >= 20.0 } ?: 60.0,
                 )
                 bootThread = thread(name = "emucorec-ps3-game") {
-                    val result = Ps3Runtime.boot(this, gamePath, currentGameIdOrIntent())
+                    val result = synchronized(bootGate) {
+                        if (finishPending) return@thread
+                        Ps3Runtime.boot(this, gamePath, currentGameIdOrIntent())
+                    }
                     if (result != BootResult.NoErrors && result != BootResult.AlreadyAdded) {
                         showBootFailure(result.name)
                     } else {
@@ -291,7 +328,6 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         if (exiting) return
         exiting = true
         finishPlayTimeSessionIfNeeded()
-        Ps3Runtime.stop()
         finish()
     }
 

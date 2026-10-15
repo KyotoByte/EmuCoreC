@@ -4,6 +4,7 @@
 #include "util/shared_ptr.hpp"
 
 #include <functional>
+#include <string>
 
 enum class localized_string_id;
 
@@ -16,6 +17,7 @@ struct emu_callbacks
 {
 	std::function<void(std::function<void()>, atomic_t<u32>*)> call_from_main_thread;
 	std::function<void(bool)> on_run; // (start_playtime) continuing or going ingame, so start the clock
+	std::function<void()> on_run_completed = []() {};
 	std::function<void()> on_pause;
 	std::function<void()> on_resume;
 	std::function<void()> on_stop;
@@ -23,6 +25,8 @@ struct emu_callbacks
 	std::function<void()> on_missing_fw;
 	std::function<void(std::shared_ptr<atomic_t<bool>>, int)> on_emulation_stop_no_response;
 	std::function<void(std::shared_ptr<atomic_t<bool>>, stx::shared_ptr<utils::serial>, stx::atomic_ptr<std::string>*, std::shared_ptr<void>)> on_save_state_progress;
+	// A failed preparation leaves the VM alive; a file write completes after teardown begins.
+	std::function<void(bool success, bool game_stopped, const std::string& path)> on_save_state_completed = [](bool, bool, const std::string&) {};
 	std::function<void(bool enabled)> enable_disc_eject;
 	std::function<void(bool enabled)> enable_disc_insert;
 	std::function<bool(bool, std::function<void()>)> try_to_quit; // (force_quit, on_exit) Try to close RPCS3

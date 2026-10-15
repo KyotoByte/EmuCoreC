@@ -13,8 +13,31 @@ data class TouchControlElement(
     val width: Float,
     val height: Float,
     val visible: Boolean = true,
-    val analogMode: TouchAnalogMode = TouchAnalogMode.Stick
+    val analogMode: TouchAnalogMode = TouchAnalogMode.Stick,
+    val actionId: String = id,
+    val secondaryActionId: String? = null,
+    val opacity: Int = CONTROL_OPACITY_MAX
 )
+
+internal const val CONTROL_OPACITY_MIN = 10
+internal const val CONTROL_OPACITY_MAX = 100
+internal const val CONTROL_OPACITY_STEP = 10
+
+/** Normalized coordinates must preserve positive sizes independently of canvas resolution. */
+internal fun normalizedTouchControlDimension(value: Float): Float =
+    value.takeIf { it.isFinite() && it > 0f }?.coerceAtMost(0.5f) ?: 0.08f
+
+internal fun TouchControlElement.normalized(): TouchControlElement {
+    val safeWidth = normalizedTouchControlDimension(width)
+    val safeHeight = normalizedTouchControlDimension(height)
+    return copy(
+        x = x.takeIf(Float::isFinite)?.coerceIn(0f, 1f - safeWidth) ?: 0.5f,
+        y = y.takeIf(Float::isFinite)?.coerceIn(0f, 1f - safeHeight) ?: 0.5f,
+        width = safeWidth, height = safeHeight,
+        secondaryActionId = secondaryActionId?.takeIf { it in TouchControlIds.BUTTON_IDS && it != actionId },
+        opacity = opacity.coerceIn(CONTROL_OPACITY_MIN, CONTROL_OPACITY_MAX)
+    )
+}
 
 enum class TouchAnalogMode(val storageValue: String) {
     Stick("stick"),
@@ -49,7 +72,7 @@ class TouchControlLayoutRepository(context: Context) {
     /** Saves a per-game layout when gameId is provided, the global default otherwise. */
     fun save(gameId: String? = null, elements: List<TouchControlElement>) {
         val array = JSONArray()
-        elements.forEach { element ->
+        elements.distinctBy { it.id }.map { it.normalized() }.forEach { element ->
             array.put(
                 JSONObject()
                     .put("id", element.id)
@@ -59,6 +82,9 @@ class TouchControlLayoutRepository(context: Context) {
                     .put("height", element.height)
                     .put("visible", element.visible)
                     .put("analogMode", element.analogMode.storageValue)
+                    .put("actionId", element.actionId)
+                    .put("secondaryActionId", element.secondaryActionId)
+                    .put("opacity", element.opacity)
             )
         }
         val key = gameId?.takeIf(String::isNotBlank)?.let(::perGameKey) ?: KEY_LAYOUT
@@ -84,6 +110,9 @@ class TouchControlLayoutRepository(context: Context) {
                         width = item.getDouble("width").toFloat(),
                         height = item.getDouble("height").toFloat(),
                         visible = item.optBoolean("visible", true),
+                        actionId = item.optString("actionId", item.getString("id")),
+                        secondaryActionId = item.optString("secondaryActionId").takeIf { it.isNotBlank() },
+                        opacity = item.optInt("opacity", CONTROL_OPACITY_MAX),
                         analogMode = TouchAnalogMode.fromStorage(
                             if (item.has("analogMode")) item.optString("analogMode") else null
                         )
@@ -100,24 +129,13 @@ class TouchControlLayoutRepository(context: Context) {
         return "layout_v2_game_$safe"
     }
 
-    private fun TouchControlElement.coerceToCanvas(): TouchControlElement {
-        val safeWidth = width.coerceIn(MIN_ELEMENT_SIZE, MAX_ELEMENT_SIZE)
-        val safeHeight = height.coerceIn(MIN_ELEMENT_SIZE, MAX_ELEMENT_SIZE)
-        return copy(
-            width = safeWidth,
-            height = safeHeight,
-            x = x.coerceIn(0f, 1f - safeWidth),
-            y = y.coerceIn(0f, 1f - safeHeight)
-        )
-    }
+    private fun TouchControlElement.coerceToCanvas(): TouchControlElement = normalized()
 
     private companion object {
         const val PREFS_NAME = "touch_control_layout"
         // Bumped when a default-layout change must reach devices that already
         // saved a stale copy of the previous default (e.g. L3's position).
         const val KEY_LAYOUT = "layout_v2"
-        const val MIN_ELEMENT_SIZE = 0.035f
-        const val MAX_ELEMENT_SIZE = 0.5f
     }
 }
 
@@ -140,4 +158,7 @@ object TouchControlIds {
     const val CIRCLE = "circle"
     const val SELECT = "select"
     const val START = "start"
+
+    val BUTTON_IDS = setOf(L2, L1, R2, R1, DPAD_UP, DPAD_DOWN, DPAD_LEFT, DPAD_RIGHT,
+        L3, R3, TRIANGLE, CROSS, SQUARE, CIRCLE, SELECT, START)
 }

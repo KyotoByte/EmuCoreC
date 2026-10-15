@@ -5,6 +5,7 @@ import com.sbro.emucorec.data.DrawerVisualStyle
 import com.sbro.emucorec.data.GameMenuLayoutStyle
 import com.sbro.emucorec.data.TouchControlPressEffect
 import com.sbro.emucorec.data.TouchControlVisualStyle
+import com.sbro.emucorec.ui.emulation.buildDefaultTouchLayout
 import java.nio.file.Files
 import java.nio.file.Path
 import kotlin.io.path.readText
@@ -99,25 +100,33 @@ class CustomizationStyleContractTest {
     fun visualEffectsDoNotChangeTheTouchTargetGeometry() {
         val overlay = sourceRoot().resolve("ui/emulation/EmulationOverlay.kt").readText()
         val item = Regex(
-            """val sizeModifier = Modifier[\s\S]*?Box\(modifier = sizeModifier\.then\(inputModifier\)[\s\S]*?when \(descriptor\.type\)"""
+            """val sizeModifier = Modifier[\s\S]*?Box\(modifier = sizeModifier\.testTag\([^\n]*?\.then\(inputModifier\)[\s\S]*?when \(descriptor\.type\)"""
         ).find(overlay)?.value.orEmpty()
 
         assertTrue("Touch target geometry and input modifier must remain the outer layer", item.isNotBlank())
         assertTrue("Visual scaling must use graphicsLayer", "graphicsLayer(" in overlay)
-        assertTrue("All press effects need explicit scale behavior", "TouchControlPressEffect.GLOW -> 1.02f" in overlay)
+        val renderer = sourceRoot().resolve("ui/common/VectorTouchControls.kt").readText()
+        assertTrue("Press scaling must remain inside the shared visual renderer",
+            "graphicsLayer(alpha = alpha, scaleX = pressScale, scaleY = pressScale)" in renderer)
+        com.sbro.emucorec.data.TouchControlPressEffect.entries.forEach { effect ->
+            assertTrue("Missing press effect $effect", "TouchControlPressEffect.$effect ->" in renderer)
+        }
     }
 
     @Test
     fun defaultDpadButtonsHaveARealGapAndDoNotOverlap() {
-        val overlay = sourceRoot().resolve("ui/emulation/EmulationOverlay.kt").readText()
-        val clusterSize = 136f
-        val buttonSize = clusterSize / 3.25f
-        val axisStep = (clusterSize - buttonSize) / 2f
-
-        assertTrue("D-pad buttons need a positive gap", axisStep - buttonSize > 0f)
-        assertTrue("D-pad button size must use the separated 3x3 layout", "dpadClusterSize / 3.25f" in overlay)
-        assertTrue("Down must occupy the bottom cell", "dpadY + dpadStep * 2f" in overlay)
-        assertTrue("Right must occupy the trailing cell", "sidePaddingPx + dpadStep * 2f" in overlay)
+        for ((width, height) in listOf(800f to 400f, 360f to 640f, 3200f to 2000f)) {
+            for (scale in listOf(0.55f, 0.9f, 1.5f)) {
+                val buttons = buildDefaultTouchLayout(width, height, width > height, scale, 1f, 16f, 22f, 22f)
+                    .filter { it.id.startsWith("dpad_") }
+                assertEquals(4, buttons.size)
+                for (first in buttons) for (second in buttons.filter { it.id != first.id }) {
+                    assertTrue("D-pad targets overlap at ${width}x$height, scale $scale",
+                        first.x + first.width < second.x || second.x + second.width < first.x ||
+                            first.y + first.height < second.y || second.y + second.height < first.y)
+                }
+            }
+        }
     }
 
     private fun sourceRoot(): Path {

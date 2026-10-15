@@ -10,7 +10,7 @@ import org.junit.Test
 import org.w3c.dom.Element
 
 class LocaleResourceContractTest {
-    private val expectedLocales = setOf("ar", "de", "es", "fr", "hi", "it", "pt", "ru", "tr", "uk", "zh")
+    private val expectedLocales = setOf("ar", "cs", "de", "es", "fa", "fr", "hi", "id", "it", "ja", "ko", "pl", "pt", "ru", "tr", "uk", "zh")
     private val formatSpecifier = Regex("""%(?:\d+\$)?[-#+, 0(<]*\d*(?:\.\d+)?[a-zA-Z%]""")
     private val knownEnglishSentenceFragments = setOf(
         "Disables RSX FIFO optimizations completely",
@@ -31,7 +31,7 @@ class LocaleResourceContractTest {
         val resourceRoot = locateResourceRoot()
         val configured = parseLocaleConfig(resourceRoot.resolve("xml/locales_config.xml")) - "en"
         val directories = localizedDirectories(resourceRoot).mapTo(mutableSetOf()) {
-            it.fileName.toString().removePrefix("values-")
+            it.fileName.toString().removePrefix("values-").let { tag -> if (tag == "in") "id" else tag }
         }
 
         assertEquals(expectedLocales, configured)
@@ -107,29 +107,36 @@ class LocaleResourceContractTest {
     }
 
     private fun parseResources(path: Path): ResourceContract {
-        val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(path.toFile())
         val unformattedStrings = mutableSetOf<String>()
-        val strings = buildMap {
-            val nodes = document.getElementsByTagName("string")
-            for (index in 0 until nodes.length) {
-                val element = nodes.item(index) as Element
-                val name = element.getAttribute("name")
-                if (element.getAttribute("formatted") == "false") unformattedStrings += name
-                put(name, element.textContent.trim())
-            }
-        }
-        val plurals = buildMap {
-            val nodes = document.getElementsByTagName("plurals")
-            for (index in 0 until nodes.length) {
-                val element = nodes.item(index) as Element
-                val quantities = buildMap {
-                    val items = element.getElementsByTagName("item")
-                    for (itemIndex in 0 until items.length) {
-                        val item = items.item(itemIndex) as Element
-                        put(item.getAttribute("quantity"), item.textContent.trim())
-                    }
+        val strings = mutableMapOf<String, String>()
+        val plurals = mutableMapOf<String, Map<String, String>>()
+        Files.list(path.parent).use { files ->
+            files.filter { it.fileName.toString().endsWith(".xml") }.forEach { file ->
+                val document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(file.toFile())
+                val stringNodes = document.getElementsByTagName("string")
+                val pluralNodes = document.getElementsByTagName("plurals")
+                if (file != path) {
+                    assertEquals("Strings belong in strings.xml: $file", 0, stringNodes.length)
+                    assertEquals("Plurals belong in strings.xml: $file", 0, pluralNodes.length)
                 }
-                put(element.getAttribute("name"), quantities)
+                for (index in 0 until stringNodes.length) {
+                    val element = stringNodes.item(index) as Element
+                    val name = element.getAttribute("name")
+                    if (element.getAttribute("formatted") == "false") unformattedStrings += name
+                    assertTrue("Duplicate string $name in $file", strings.put(name, element.textContent.trim()) == null)
+                }
+                for (index in 0 until pluralNodes.length) {
+                    val element = pluralNodes.item(index) as Element
+                    val quantities = buildMap {
+                        val items = element.getElementsByTagName("item")
+                        for (itemIndex in 0 until items.length) {
+                            val item = items.item(itemIndex) as Element
+                            put(item.getAttribute("quantity"), item.textContent.trim())
+                        }
+                    }
+                    val name = element.getAttribute("name")
+                    assertTrue("Duplicate plural $name in $file", plurals.put(name, quantities) == null)
+                }
             }
         }
         return ResourceContract(strings, plurals, unformattedStrings)

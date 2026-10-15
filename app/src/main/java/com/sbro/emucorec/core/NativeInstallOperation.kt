@@ -10,6 +10,12 @@ import net.rpcsx.ProgressRepository
 internal suspend fun awaitNativeInstallCompletion(
     start: (Long) -> Boolean,
     onProgress: (NativeProgress) -> Unit = {},
+): Boolean = awaitNativeOperationCompletion(start, onProgress, "Installation failed")
+
+internal suspend fun awaitNativeOperationCompletion(
+    start: (Long) -> Boolean,
+    onProgress: (NativeProgress) -> Unit = {},
+    rejectionMessage: String = "Operation failed",
 ): Boolean = suspendCancellableCoroutine { continuation ->
     val settled = AtomicBoolean(false)
     val progressId = ProgressRepository.create { progress ->
@@ -24,6 +30,6 @@ internal suspend fun awaitNativeInstallCompletion(
     if (!continuation.isActive) return@suspendCancellableCoroutine
     val accepted = runCatching { start(progressId) }.getOrDefault(false)
     if (!accepted && !settled.get()) {
-        ProgressRepository.onProgressEvent(progressId, -1, 0, "Installation failed")
+        ProgressRepository.onProgressEvent(progressId, -1, 0, rejectionMessage)
     }
 }

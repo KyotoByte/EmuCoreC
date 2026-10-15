@@ -232,7 +232,7 @@ namespace vk
 				}
 			}
 		}
-#ifdef __APPLE__ 
+#ifdef __APPLE__
 		// MoltenVK's ICD will not be detected without these extensions enabled.
 		else
 		{
@@ -325,6 +325,23 @@ namespace vk
 
 		return gpus;
 	}
+
+#ifdef ANDROID
+	bool instance::recreate_surface(swapchain_base& swapchain, display_handle_t window_handle)
+	{
+		auto wsi = dynamic_cast<swapchain_WSI*>(&swapchain);
+		if (!wsi) return false;
+		wsi->reset_surface(VK_NULL_HANDLE);
+		if (m_surface) vkDestroySurfaceKHR(m_instance, m_surface, nullptr);
+		m_surface = VK_NULL_HANDLE;
+		VkAndroidSurfaceCreateInfoKHR info{VK_STRUCTURE_TYPE_ANDROID_SURFACE_CREATE_INFO_KHR};
+		info.window = std::get<ANativeWindow*>(window_handle);
+		if (!info.window || vkCreateAndroidSurfaceKHR(m_instance, &info, nullptr, &m_surface) != VK_SUCCESS)
+			return false;
+		wsi->reset_surface(m_surface);
+		return m_surface != VK_NULL_HANDLE;
+	}
+#endif
 
 	swapchain_base* instance::create_swapchain(display_handle_t window_handle, vk::physical_device& dev)
 	{

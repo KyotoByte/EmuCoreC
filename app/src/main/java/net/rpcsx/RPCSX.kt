@@ -95,6 +95,7 @@ class RPCSX {
     external fun settingsSet(path: String, value: String): Boolean
     external fun getState() : Int
     external fun kill()
+    external fun pause()
     external fun resume()
     external fun openHomeMenu()
     external fun loginUser(userId: String)
@@ -105,6 +106,11 @@ class RPCSX {
     external fun getDirInstallPath(sfoFd: Int) : String?
     external fun getVersion(): String
     external fun probeDiscInfo(path: String, iconOut: String): String
+    external fun saveStatesSupported(): Boolean
+    external fun saveStateBusy(): Boolean
+    external fun requestSaveState(slot: Int, progressId: Long): Boolean
+    external fun requestLoadState(slot: Int, progressId: Long): Boolean
+    external fun saveStateSlots(): String
     external fun setCustomDriver(path: String, libraryName: String, hookDir: String): Boolean
     external fun setAppInfo(version: String, build: String, device: String)
     external fun patchEngineVersion(): String

@@ -24,7 +24,7 @@ class CoreLocaleContractTest {
                 .toList()
         }
 
-        assertEquals(11, localizedDirectories.size)
+        assertEquals(17, localizedDirectories.size)
         assertTrue("Expected PS3 core, firmware and credit strings", required.size >= 14)
         assertTrue(
             "Dead settings returned to the default locale",

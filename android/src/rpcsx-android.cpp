@@ -1,5 +1,6 @@
 #include <fstream>
 #include "stdafx.h"
+#include "save_states.h"
 #include "Crypto/unpkg.h"
 #include "Crypto/unself.h"
 #include "Emu/Audio/Cubeb/CubebBackend.h"
@@ -100,6 +101,7 @@ struct AtExit {
 
 static bool g_initialized;
 static std::atomic<ANativeWindow *> g_native_window;
+static std::mutex g_native_window_mutex;
 
 // The surface size Android last reported, packed as (width << 32 | height) so the RSX
 // thread reads both halves from one atomic and can never see a width from one orientation
@@ -393,6 +395,7 @@ struct GraphicsFrame : GSFrameBase {
   mutable int height = 0;
 
   ~GraphicsFrame() {
+    std::lock_guard lock(g_native_window_mutex);
     if (activeNativeWindow != nullptr) {
       ANativeWindow_release(activeNativeWindow);
     }
@@ -408,12 +411,15 @@ struct GraphicsFrame : GSFrameBase {
     // just after Vulkan device creation and nothing at all to say why. Say so instead.
     u32 waited_ms = 0;
 
+    std::unique_lock window_lock(g_native_window_mutex);
     while ((result = g_native_window.load()) == nullptr) [[unlikely]] {
       if (Emu.IsStopped()) {
         return activeNativeWindow;
       }
 
+      window_lock.unlock();
       std::this_thread::sleep_for(std::chrono::milliseconds(100));
+      window_lock.lock();
       waited_ms += 100;
 
       if (waited_ms % 3000 == 0) {
@@ -533,6 +539,7 @@ struct GraphicsFrame : GSFrameBase {
   // window that has arrived but not yet been measured, which only happens before the first
   // surfaceChanged.
   int client_width() override {
+    if (!g_native_window.load()) return 0;
     if (const u64 packed = g_native_window_size.load()) {
       return static_cast<int>(packed >> 32);
     }
@@ -541,6 +548,7 @@ struct GraphicsFrame : GSFrameBase {
     return width;
   }
   int client_height() override {
+    if (!g_native_window.load()) return 0;
     if (const u64 packed = g_native_window_size.load()) {
       return static_cast<int>(packed & 0xffffffffu);
     }
@@ -557,6 +565,7 @@ struct GraphicsFrame : GSFrameBase {
   }
 
   display_handle_t handle() const override { return getNativeWindow(); }
+  u64 surface_generation() const override { return g_native_window_epoch.load(); }
 
 
   bool can_consume_frame() const override { return false; }
@@ -1701,6 +1710,15 @@ static void invokeAsync(std::function<void(JNIEnv *)> cb) {
   g_mainThreadProcessor.push(std::move(cb));
 }
 
+void report_native_operation_result(long progress_id, bool success, std::string message) {
+  if (progress_id <= 0) return;
+  invokeAsync([progress_id, success, message = std::move(message)](JNIEnv* env) {
+    Progress progress(env, progress_id);
+    if (success) progress.success(1, message);
+    else progress.failure(message);
+  });
+}
+
 static void invokeSync(std::function<void(JNIEnv *)> cb) {
   atomic_t<u32> wakeup{false};
   g_mainThreadProcessor.push(std::move(cb), &wakeup);
@@ -1980,7 +1998,7 @@ extern void ppu_finalize(const ppu_module<lv2_obj> &);
 extern bool ppu_load_rel_exec(const ppu_rel_object &);
 
 // Compilation, disc probing, boot and shutdown all own the same VM/VFS state.
-static std::mutex g_emu_lifecycle_mutex;
+std::mutex g_emu_lifecycle_mutex;
 
 class CompilationQueue {
   std::mutex queueMutex;
@@ -2297,9 +2315,10 @@ static void setupCallbacks() {
             g_mainThreadDispatcher.post(std::move(cb));
           },
       .on_run = [](auto...) {},
+      .on_run_completed = save_states::running,
       .on_pause = [](auto...) {},
       .on_resume = [](auto...) {},
-      .on_stop = [](auto...) {},
+      .on_stop = save_states::stopped,
       .on_ready = [](auto...) {},
       .on_missing_fw = [](auto...) {},
       // RPCS3's stop watchdog calls this when shutting the VM down has taken about 10
@@ -2340,6 +2359,7 @@ static void setupCallbacks() {
             });
           },
       .on_save_state_progress = [](auto...) {},
+      .on_save_state_completed = save_states::completed,
       .enable_disc_eject = [](auto...) {},
       .enable_disc_insert = [](auto...) {},
       .try_to_quit = [](bool, std::function<void()> on_exit) {
@@ -2981,11 +3001,14 @@ extern "C" bool _rpcsx_collectGameInfo(JNIEnv *env, std::string_view rootDir,
 // stopped before g_fxo teardown has finished, and a boot or kill can start right after it.
 // Held so a probe cannot be inside vfs::mount while this resets g_fxo underneath it.
 extern "C" void _rpcsx_shutdown() {
+  if (save_states::defer_stop()) return;
   std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
+  if (save_states::defer_stop()) return;
   Emu.Kill();
 }
 
 extern "C" int _rpcsx_boot(std::string_view path_) {
+  if (save_states::busy()) return static_cast<int>(game_boot_result::still_running);
   // Taken FIRST, before the Kill below, and held across the whole boot.
   //
   // Emu.Kill() spawns an "Emulation Join Thread" that joins every emulator thread. It is
@@ -3000,6 +3023,11 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   // is what left the emulator never reaching stopped, and every later boot then failed and
   // bounced the user back to the library.
   std::lock_guard emu_lock(g_emu_lifecycle_mutex);
+  if (save_states::busy()) return static_cast<int>(game_boot_result::still_running);
+  if ((path_.ends_with(".SAVESTAT") || path_.ends_with(".SAVESTAT.zst") || path_.ends_with(".SAVESTAT.gz")) &&
+      (!save_states::validate_slot_file(std::string(path_)) || !is_savestate_compatible(std::string(path_)))) {
+    return static_cast<int>(game_boot_result::invalid_file_or_folder);
+  }
 
   // BootGame's restore_on_no_boot path does ensure(IsStopped()) whenever the boot fails,
   // so entering it while the emulator is still winding down aborts the process outright
@@ -3050,7 +3078,9 @@ extern "C" int _rpcsx_getState() {
   return static_cast<int>(Emu.GetStatus(false));
 }
 extern "C" void _rpcsx_kill() {
+  if (save_states::defer_stop()) return;
   std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
+  if (save_states::defer_stop()) return;
   Emu.Kill();
 }
 extern "C" void _rpcsx_resume() { Emu.Resume(); }
@@ -3060,9 +3090,15 @@ extern "C" void _rpcsx_resume() { Emu.Resume(); }
 // and _rpcsx_surfaceEvent has always called it on surface loss. That is why BACKGROUNDING the app
 // was the only thing that actually paused, while the in-game pause menu left the emulator running
 // underneath it, and why pause/resume were asymmetric: resume() reached the core, pause() did not.
-extern "C" void _rpcsx_pause() { Emu.Pause(); }
+extern "C" void _rpcsx_pause() {
+  // Restoration owns the VM until its run callback or deferred stop completes.
+  if (!save_states::busy()) Emu.Pause();
+}
 
 extern "C" void _rpcsx_openHomeMenu() {
+  if (save_states::busy()) return;
+  std::lock_guard lock(g_emu_lifecycle_mutex);
+  if (save_states::busy()) return;
   if (auto padThread = pad::get_pad_thread(true)) {
     padThread->open_home_menu();
   }
@@ -3111,12 +3147,16 @@ extern "C" std::string _rpcsx_getCurrentTrophyName() {
 // ---------------------------------------------------------------------------
 
 extern "C" bool _rpcsx_saveState() {
+  std::lock_guard lock(g_emu_lifecycle_mutex);
+  if (save_states::busy()) return false;
   if (!Emu.IsRunning() && !Emu.IsPaused()) {
     rpcsx_android.error("saveState: no game is running");
     return false;
   }
 
   Emu.CallFromMainThread([]() {
+    std::lock_guard lock(g_emu_lifecycle_mutex);
+    if (save_states::busy()) return;
     if (!g_cfg.savestate.suspend_emu.get()) {
       // Come straight back up from the state we are about to write. Without
       // this, saving drops the user to the library, which reads as a crash.
@@ -3132,6 +3172,8 @@ extern "C" bool _rpcsx_saveState() {
 
 // index is 1-based and 1 == most recent, matching boot_current_game_savestate.
 extern "C" bool _rpcsx_loadState(unsigned int index) {
+  std::lock_guard lock(g_emu_lifecycle_mutex);
+  if (save_states::busy()) return false;
   if (index == 0) {
     index = 1;
   }
@@ -3146,192 +3188,6 @@ extern "C" bool _rpcsx_loadState(unsigned int index) {
   Emu.CallFromMainThread(
       [index]() { boot_current_game_savestate(false, index); });
   return true;
-}
-
-// ---------------------------------------------------------------------------
-// Numbered save slots.
-//
-// RPCS3 keeps savestates as a rolling history: every save writes a new file with
-// an auto-incrementing id and you address them by age, 1 == most recent. The app
-// UI offers ten numbered slots instead, so before this the slot number was simply
-// dropped on save and read as an age on load -- "save to slot 3" pushed a new
-// newest state and "load slot 3" fetched the fourth-newest. Slots that quietly
-// mean something else are worse than no slots.
-//
-// So the history stays exactly as RPCS3 manages it, and a slot is a COPY of a
-// state parked under savestates/<title>/emucorec_slots/. A separate directory on
-// purpose: get_savestate_file() derives the next auto id by listing the title's
-// directory, and dropping our own filenames in there would feed that scheme names
-// it never generated.
-// ---------------------------------------------------------------------------
-
-static std::string emucorec_slot_dir(std::string_view title) {
-  return fs::get_config_dir() + "/savestates/" + std::string(title) +
-         "/emucorec_slots/";
-}
-
-// The stored file for this slot, or empty. The extension is whatever the core
-// wrote (.zst today, .gz and bare historically), so it is discovered rather than
-// assumed -- a slot written by one build must still load in another.
-static std::string emucorec_slot_find(std::string_view title, unsigned int slot) {
-  if (title.empty()) {
-    return {};
-  }
-
-  const std::string base =
-      emucorec_slot_dir(title) + "slot" + std::to_string(slot) + ".SAVESTAT";
-
-  for (std::string_view ext : {".zst", ".gz", ""}) {
-    if (std::string path = base + std::string(ext); fs::is_file(path)) {
-      return path;
-    }
-  }
-
-  return {};
-}
-
-// Copy the state the core has just written into [slot]. Runs from
-// after_kill_callback, which is the first point the file is complete on disk.
-static void emucorec_slot_capture(unsigned int slot, const std::string& title,
-                                const std::string& boot) {
-  const std::string newest = get_savestate_file(title, boot, 1);
-
-  if (!fs::is_file(newest)) {
-    rpcsx_android.error("saveState: slot %u, nothing written at '%s'", slot,
-                        newest);
-    return;
-  }
-
-  const std::string dir = emucorec_slot_dir(title);
-
-  if (!fs::create_path(dir)) {
-    rpcsx_android.error("saveState: cannot create '%s' (%s)", dir,
-                        fs::g_tls_error);
-    return;
-  }
-
-  // Carry the source's extension across so the copy stays readable by whatever
-  // wrote it, compressed or not.
-  constexpr std::string_view stem = ".SAVESTAT";
-  const usz pos = newest.rfind(stem);
-  const std::string suffix =
-      pos == umax ? std::string{} : newest.substr(pos + stem.size());
-  const std::string dest =
-      dir + "slot" + std::to_string(slot) + std::string(stem) + suffix;
-
-  // Clear the slot's other spellings first, or a re-save in a different
-  // compression mode leaves two files and emucorec_slot_find returns the stale one.
-  for (std::string_view ext : {".zst", ".gz", ""}) {
-    if (std::string old = dir + "slot" + std::to_string(slot) +
-                          std::string(stem) + std::string(ext);
-        old != dest && fs::is_file(old)) {
-      fs::remove_file(old);
-    }
-  }
-
-  // COPY, never move: the restart below boots from the very file the core just
-  // wrote, so taking it away would resume nothing.
-  if (!fs::copy_file(newest, dest, true)) {
-    rpcsx_android.error("saveState: slot %u copy failed '%s' -> '%s' (%s)", slot,
-                        newest, dest, fs::g_tls_error);
-    return;
-  }
-
-  // Best effort. A slot with no picture still loads, so a missing frame must not turn a
-  // successful save into a failed one.
-  if (!emucorec_write_thumbnail(dir + "slot" + std::to_string(slot) + ".thumb")) {
-    rpcsx_android.notice("saveState: slot %u has no frame to preview", slot);
-  }
-
-  rpcsx_android.success("saveState: slot %u <- '%s'", slot, newest);
-}
-
-extern "C" bool _rpcsx_saveStateToSlot(unsigned int slot) {
-  if (!Emu.IsRunning() && !Emu.IsPaused()) {
-    rpcsx_android.error("saveState: no game is running");
-    return false;
-  }
-
-  // Read now, not in the callback: by the time after_kill_callback runs the VM is
-  // torn down and Emu no longer reliably answers for the title that was playing.
-  const std::string title = Emu.GetTitleID();
-  const std::string boot = Emu.GetBoot();
-
-  if (title.empty()) {
-    rpcsx_android.error("saveState: no title id, cannot address a slot");
-    return false;
-  }
-
-  // Ask for a frame now, while there is still a renderer to draw one. It arrives at
-  // take_screenshot and is written out by emucorec_slot_capture once the state is on disk.
-  g_user_asked_for_screenshot = true;
-
-  Emu.CallFromMainThread([slot, title, boot]() {
-    // Outside suspend mode the game comes straight back up from the state it just
-    // wrote; in suspend mode it is meant to exit. Capture in both, resume in one.
-    const bool resume = !g_cfg.savestate.suspend_emu.get();
-
-    Emu.after_kill_callback = [slot, title, boot, resume]() {
-      emucorec_slot_capture(slot, title, boot);
-
-      if (resume) {
-        Emu.Restart(true, false);
-      }
-    };
-
-    if (resume) {
-      Emu.SetContinuousMode(true);
-    }
-
-    Emu.Kill(false, true);
-  });
-
-  return true;
-}
-
-extern "C" bool _rpcsx_loadStateFromSlot(unsigned int slot) {
-  const std::string path = emucorec_slot_find(Emu.GetTitleID(), slot);
-
-  // Checked before anything is torn down, matching loadState: a missing slot must
-  // report back, not kill a running game and then fail to boot.
-  if (path.empty()) {
-    rpcsx_android.error("loadState: slot %u is empty", slot);
-    return false;
-  }
-
-  Emu.CallFromMainThread([path]() {
-    // Boot from after_kill_callback rather than straight after GracefulShutdown.
-    //
-    // The obvious version -- SetContinuousMode, GracefulShutdown, BootGame, which is what
-    // boot_current_game_savestate does -- failed instantly, in the same millisecond it was
-    // called, without ever reading the file, and the "Emulation Join Thread is too sleepy"
-    // warnings then ran for seconds afterwards: the previous VM was still coming down while
-    // BootGame was already being asked to bring the next one up, so it bailed and the user
-    // was dropped to the library. That call site gets away with it because it runs from a
-    // shortcut handler, not from inside the emulation callback queue like this does.
-    //
-    // Kill first and boot from the callback, which is the same shape the save path uses and
-    // the reason that one works: the callback is the point teardown is actually finished.
-    Emu.SetContinuousMode(true);
-
-    Emu.after_kill_callback = [path]() {
-      if (const game_boot_result result = Emu.BootGame(path, "", true);
-          result != game_boot_result::no_errors) {
-        // The reason, not just the failure. A bare "failed to boot" cannot tell a corrupt
-        // state from a version mismatch from a path the loader never accepted.
-        rpcsx_android.error("loadState: failed to boot '%s': %s", path,
-                            fmt::format("%s", result));
-      }
-    };
-
-    Emu.Kill(false, false);
-  });
-
-  return true;
-}
-
-extern "C" bool _rpcsx_hasStateInSlot(unsigned int slot) {
-  return !emucorec_slot_find(Emu.GetTitleID(), slot).empty();
 }
 
 // ---------------------------------------------------------------------------
@@ -3676,10 +3532,13 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
   rpcsx_android.warning("surface event %p, %d", surface, event);
 
   if (event == 2) {
-    auto prevWindow = g_native_window.exchange(nullptr);
-    if (prevWindow != nullptr) {
-      ANativeWindow_release(prevWindow);
-      g_native_window_epoch.fetch_add(1);
+    {
+      std::lock_guard lock(g_native_window_mutex);
+      auto prevWindow = g_native_window.exchange(nullptr);
+      if (prevWindow != nullptr) {
+        ANativeWindow_release(prevWindow);
+        g_native_window_epoch.fetch_add(1);
+      }
     }
 
     // get_pad_thread() defaults to relaxed=false, which is
@@ -3697,6 +3556,7 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
     // window is already released above -- the only thing the SurfaceHolder contract
     // actually requires -- so hand the rest to a detached worker and return now.
     std::thread([] {
+      if (save_states::busy()) return;
       if (auto padThread = pad::get_pad_thread(true)) {
         padThread->open_home_menu();
       }
@@ -3733,7 +3593,9 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
       return false;
     }
 
-    auto prevWindow = g_native_window.exchange(newWindow);
+    {
+      std::lock_guard lock(g_native_window_mutex);
+      auto prevWindow = g_native_window.exchange(newWindow);
 
     if (prevWindow != nullptr) {
       ANativeWindow_release(prevWindow);
@@ -3746,6 +3608,7 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
       g_native_window_epoch.fetch_add(1);
       rpcsx_android.notice("native window replaced (%p -> %p), swapchain will be rebuilt",
                            prevWindow, newWindow);
+    }
     }
 
     if (event == 0 && g_paused_by_surface_loss && Emu.IsPaused()) {
@@ -3890,6 +3753,10 @@ static bool runStoppedInstall(JNIEnv *env, jlong progressId,
                               const std::function<bool()> &install) {
   std::lock_guard lifecycle_lock(g_emu_lifecycle_mutex);
   try {
+    if (save_states::busy()) {
+      Progress(env, progressId).failure("Wait for the save state operation to finish");
+      return false;
+    }
     if (!Emu.IsStopped(true)) {
       Progress(env, progressId).failure("Stop the current game before installing");
       return false;

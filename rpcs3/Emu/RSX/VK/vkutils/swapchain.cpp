@@ -147,6 +147,18 @@ namespace vk
 		}
 	}
 
+	void swapchain_WSI::reset_surface(VkSurfaceKHR surface)
+	{
+		// The caller has drained the queues and released framebuffers first.
+		if (m_vk_swapchain)
+		{
+			_vkDestroySwapchainKHR(dev, m_vk_swapchain, nullptr);
+			m_vk_swapchain = VK_NULL_HANDLE;
+		}
+		swapchain_images.clear();
+		m_surface = surface;
+	}
+
 	std::pair<VkSurfaceCapabilitiesKHR, bool> swapchain_WSI::init_surface_capabilities()
 	{
 #ifdef _WIN32
@@ -188,7 +200,9 @@ namespace vk
 		}
 #endif
 		VkSurfaceCapabilitiesKHR surface_descriptors = {};
-		CHECK_RESULT(vkGetPhysicalDeviceSurfaceCapabilitiesKHR(dev.gpu(), m_surface, &surface_descriptors));
+		const auto status = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(dev.gpu(), m_surface, &surface_descriptors);
+		if (status == VK_ERROR_SURFACE_LOST_KHR || status == VK_ERROR_OUT_OF_DATE_KHR) return {};
+		CHECK_RESULT(status);
 		return { surface_descriptors, false };
 	}
 
@@ -227,10 +241,14 @@ namespace vk
 		}
 
 		u32 nb_available_modes = 0;
-		CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(gpu, m_surface, &nb_available_modes, nullptr));
+		auto mode_status = vkGetPhysicalDeviceSurfacePresentModesKHR(gpu, m_surface, &nb_available_modes, nullptr);
+		if (mode_status == VK_ERROR_SURFACE_LOST_KHR || mode_status == VK_ERROR_OUT_OF_DATE_KHR) return false;
+		CHECK_RESULT(mode_status);
 
 		std::vector<VkPresentModeKHR> present_modes(nb_available_modes);
-		CHECK_RESULT(vkGetPhysicalDeviceSurfacePresentModesKHR(gpu, m_surface, &nb_available_modes, present_modes.data()));
+		mode_status = vkGetPhysicalDeviceSurfacePresentModesKHR(gpu, m_surface, &nb_available_modes, present_modes.data());
+		if (mode_status == VK_ERROR_SURFACE_LOST_KHR || mode_status == VK_ERROR_OUT_OF_DATE_KHR) return false;
+		CHECK_RESULT(mode_status);
 
 		VkPresentModeKHR swapchain_present_mode = VK_PRESENT_MODE_FIFO_KHR;
 		std::vector<VkPresentModeKHR> preferred_modes;
@@ -370,7 +388,10 @@ namespace vk
 		rsx_log.notice("Swapchain: requesting full screen exclusive mode %d.", static_cast<int>(full_screen_exclusive_info.fullScreenExclusive));
 #endif
 
-		_vkCreateSwapchainKHR(dev, &swap_info, nullptr, &m_vk_swapchain);
+		VkSwapchainKHR new_swapchain = VK_NULL_HANDLE;
+		const auto create_status = _vkCreateSwapchainKHR(dev, &swap_info, nullptr, &new_swapchain);
+		if (create_status != VK_SUCCESS) return false;
+		m_vk_swapchain = new_swapchain;
 
 		if (old_swapchain)
 		{
