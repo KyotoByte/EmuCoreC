@@ -46,6 +46,7 @@ namespace gl
 		bool ARB_shader_storage_buffer_object_supported = false;
 		bool GLES_texture_view_supported = false;
 		bool GLES_clip_distance_supported = false;
+		bool ARB_framebuffer_no_attachments_supported = false;
 
 		bool vendor_INTEL = false;  // has broken GLSL compiler
 		bool vendor_AMD = false;    // has broken ARB_multidraw

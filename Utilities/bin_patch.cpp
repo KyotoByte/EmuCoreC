@@ -964,7 +964,7 @@ static usz apply_modification(std::vector<u32>& applied, patch_engine::patch_inf
 			const u32 alloc_size = utils::align(static_cast<u32>(p.value.long_value) + alloc_at % 4096, 4096);
 
 			// Allocate map if needed, if allocated flags will indicate that bit 62 is set (unique identifier)
-			auto alloc_map = vm::reserve_map(vm::any, alloc_at & -0x10000, utils::align(alloc_size, 0x10000), vm::page_size_64k | (1ull << 62));
+			auto alloc_map = vm::reserve_map(vm::any, alloc_at & -0x10000, utils::align(alloc_size, 0x10000), vm::block_size_64k | (1ull << 62));
 
 			u64 flags = vm::alloc_unwritable;
 
@@ -1190,7 +1190,7 @@ static usz apply_modification(std::vector<u32>& applied, patch_engine::patch_inf
 
 			if (!addr)
 			{
-				patch_log.error("Failed to allocate 0x%x bytes for code (entry=0x%x)", alloc_size, addr, out_branch);
+				patch_log.error("Failed to allocate 0x%x bytes for code (entry=0x%x)", alloc_size, out_branch);
 				continue;
 			}
 
@@ -1267,9 +1267,10 @@ static usz apply_modification(std::vector<u32>& applied, patch_engine::patch_inf
 			if (func_name.starts_with("0x"sv))
 			{
 				// Raw hexadecimal-formatted FNID (real function name cannot contain a digit at the start, derived from C/CPP which were used in PS3 development)
-				const auto result = std::from_chars(func_name.data() + 2, func_name.data() + func_name.size() - 2, id, 16);
+				const std::string_view hex = func_name.substr(2);
+				const auto result = std::from_chars(hex.data(), hex.data() + hex.size(), id, 16);
 
-				if (result.ec != std::errc() || str.data() + sep_pos != result.ptr)
+				if (result.ec != std::errc() || result.ptr != hex.data() + hex.size())
 				{
 					continue;
 				}
@@ -1436,7 +1437,7 @@ static usz apply_modification(std::vector<u32>& applied, patch_engine::patch_inf
 
 			if (dest_path.empty())
 			{
-				patch_log.error("Failed to patch file path at '%s': destination is not mounted", original_vfs_path, dest_vfs_path);
+				patch_log.error("Failed to patch file path at '%s': destination is not mounted", original_vfs_path);
 				continue;
 			}
 

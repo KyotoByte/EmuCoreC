@@ -1874,4 +1874,6 @@ Questa impostazione viene applicata solo quando il decodificatore SPU è imposta
     <string name="core_update_reset_action">Ripristina impostazioni</string>
     <string name="core_update_reset_keep">Mantieni impostazioni</string>
     <string name="core_update_reset_done">Impostazioni ripristinate</string>
+    <string name="core_label_fighting_games">Giochi di combattimento</string>
+    <string name="core_label_shooter_games">Sparatutto</string>
 </resources>

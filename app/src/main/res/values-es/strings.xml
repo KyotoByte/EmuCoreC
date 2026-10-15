@@ -1878,4 +1878,6 @@ Esta configuración solo se aplica cuando SPU Decoder está configurado en Diná
     <string name="core_update_reset_action">Restablecer ajustes</string>
     <string name="core_update_reset_keep">Mantener ajustes</string>
     <string name="core_update_reset_done">Ajustes restablecidos</string>
+    <string name="core_label_fighting_games">Juegos de lucha</string>
+    <string name="core_label_shooter_games">Juegos de disparos</string>
 </resources>

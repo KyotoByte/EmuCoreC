@@ -1872,4 +1872,6 @@ Over-Under 更接近原生立体声输出，但不太受支持。</string>
     <string name="core_update_reset_action">重置设置</string>
     <string name="core_update_reset_keep">保留当前设置</string>
     <string name="core_update_reset_done">设置已重置</string>
+    <string name="core_label_fighting_games">格斗游戏</string>
+    <string name="core_label_shooter_games">射击游戏</string>
 </resources>

@@ -97,6 +97,7 @@ namespace gl
 		CHECK_EXTENSION_SUPPORT(EXT_texture_compression_s3tc);
 
 		CHECK_EXTENSION_SUPPORT(ARB_shader_storage_buffer_object);
+		CHECK_EXTENSION_SUPPORT(ARB_framebuffer_no_attachments);
 #undef CHECK_EXTENSION_SUPPORT
 
 #ifdef RSX_GLES
@@ -108,6 +109,7 @@ namespace gl
 		ARB_compute_shader_supported = true;
 		ARB_shader_texture_image_samples_supported = true;
 		ARB_shader_storage_buffer_object_supported = true;
+		ARB_framebuffer_no_attachments_supported = true;
 		GLES_texture_view_supported = all_extensions.contains("GL_OES_texture_view") || all_extensions.contains("GL_EXT_texture_view");
 		GLES_clip_distance_supported = all_extensions.contains("GL_EXT_clip_cull_distance");
 

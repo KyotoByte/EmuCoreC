@@ -1883,4 +1883,6 @@
     <string name="core_update_reset_action">إعادة تعيين الإعدادات</string>
     <string name="core_update_reset_keep">الاحتفاظ بالإعدادات</string>
     <string name="core_update_reset_done">تمت إعادة تعيين الإعدادات</string>
+    <string name="core_label_fighting_games">ألعاب القتال</string>
+    <string name="core_label_shooter_games">ألعاب التصويب</string>
 </resources>

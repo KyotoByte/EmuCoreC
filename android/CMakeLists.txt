@@ -34,7 +34,9 @@
 set(EMUCOREC_INPUT_SOURCES
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/pad_thread.cpp
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/product_info.cpp
+    ${CMAKE_SOURCE_DIR}/rpcs3/Input/hid_instance.cpp
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/hid_pad_handler.cpp
+    ${CMAKE_SOURCE_DIR}/rpcs3/Input/wiimote_handler.cpp
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/ds3_pad_handler.cpp
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/ds4_pad_handler.cpp
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/dualsense_pad_handler.cpp

@@ -57,6 +57,25 @@ R"(
 #define TEX_NAME_STENCIL_IMPL(index) tex##index##_stencil
 #define TEX_NAME_STENCIL(index) TEX_NAME_STENCIL_IMPL(index)
 
+#ifdef _EMULATED_DEPTH_STORAGE
+// Float depth surfaces hold the emulated encoding; recover the depth value when they are sampled directly
+vec4 _decode_depth_texel(const in vec4 texel, const in uint flags, const in uint remap)
+{
+	if (!_test_bit(flags, DEPTH_FLOAT))
+	{
+		return texel;
+	}
+
+	// Only channels sourced from the texture (remap select == 2) hold encoded depth
+	const uvec4 remap_select = (uvec4(remap) >> uvec4(10, 12, 14, 8)) & 3u;
+	const vec4 decoded = uintBitsToFloat(floatBitsToUint(texel) << 1u);
+	return _select(texel, decoded, equal(remap_select, uvec4(2u)));
+}
+#define _DEPTH_DECODE(index, texel) _decode_depth_texel(texel, TEX_PARAM(index).flags, TEX_PARAM(index).remap)
+#else
+#define _DEPTH_DECODE(index, texel) texel
+#endif
+
 #define COORD_SCALE1(index, coord1) _texcoord_xform(coord1, TEX_PARAM(index))
 #define COORD_SCALE2(index, coord2) _texcoord_xform(coord2, TEX_PARAM(index))
 #define COORD_SCALE3(index, coord3) _texcoord_xform(coord3, TEX_PARAM(index))
@@ -66,57 +85,57 @@ R"(
 
 #ifdef _ENABLE_TEX1D
 #ifdef RSX_GLES
-#define TEX1D(index, coord1) _process_texel(texture(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5)), TEX_FLAGS(index))
-#define TEX1D_0(coord1) _process_texel(texture(tex0, vec2(COORD_SCALE1(0, coord1), 0.5)), TEX_FLAGS(0))
-#define TEX1D_1(coord1) _process_texel(texture(tex1, vec2(COORD_SCALE1(1, coord1), 0.5)), TEX_FLAGS(1))
-#define TEX1D_2(coord1) _process_texel(texture(tex2, vec2(COORD_SCALE1(2, coord1), 0.5)), TEX_FLAGS(2))
-#define TEX1D_3(coord1) _process_texel(texture(tex3, vec2(COORD_SCALE1(3, coord1), 0.5)), TEX_FLAGS(3))
-#define TEX1D_4(coord1) _process_texel(texture(tex4, vec2(COORD_SCALE1(4, coord1), 0.5)), TEX_FLAGS(4))
-#define TEX1D_5(coord1) _process_texel(texture(tex5, vec2(COORD_SCALE1(5, coord1), 0.5)), TEX_FLAGS(5))
-#define TEX1D_6(coord1) _process_texel(texture(tex6, vec2(COORD_SCALE1(6, coord1), 0.5)), TEX_FLAGS(6))
-#define TEX1D_7(coord1) _process_texel(texture(tex7, vec2(COORD_SCALE1(7, coord1), 0.5)), TEX_FLAGS(7))
-#define TEX1D_8(coord1) _process_texel(texture(tex8, vec2(COORD_SCALE1(8, coord1), 0.5)), TEX_FLAGS(8))
-#define TEX1D_9(coord1) _process_texel(texture(tex9, vec2(COORD_SCALE1(9, coord1), 0.5)), TEX_FLAGS(9))
-#define TEX1D_10(coord1) _process_texel(texture(tex10, vec2(COORD_SCALE1(10, coord1), 0.5)), TEX_FLAGS(10))
-#define TEX1D_11(coord1) _process_texel(texture(tex11, vec2(COORD_SCALE1(11, coord1), 0.5)), TEX_FLAGS(11))
-#define TEX1D_12(coord1) _process_texel(texture(tex12, vec2(COORD_SCALE1(12, coord1), 0.5)), TEX_FLAGS(12))
-#define TEX1D_13(coord1) _process_texel(texture(tex13, vec2(COORD_SCALE1(13, coord1), 0.5)), TEX_FLAGS(13))
-#define TEX1D_14(coord1) _process_texel(texture(tex14, vec2(COORD_SCALE1(14, coord1), 0.5)), TEX_FLAGS(14))
-#define TEX1D_15(coord1) _process_texel(texture(tex15, vec2(COORD_SCALE1(15, coord1), 0.5)), TEX_FLAGS(15))
-#define TEX1D_BIAS(index, coord1, bias) _process_texel(texture(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), bias), TEX_FLAGS(index))
-#define TEX1D_LOD(index, coord1, lod) _process_texel(textureLod(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), lod), TEX_FLAGS(index))
-#define TEX1D_GRAD(index, coord1, dpdx, dpdy) _process_texel(textureGrad(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), vec2(dpdx, 0.0), vec2(dpdy, 0.0)), TEX_FLAGS(index))
-#define TEX1D_PROJ(index, coord4) _process_texel(texture(TEX_NAME(index), vec2(COORD_PROJ1(index, coord4.xw), 0.5)), TEX_FLAGS(index))
+#define TEX1D(index, coord1) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5))), TEX_FLAGS(index))
+#define TEX1D_0(coord1) _process_texel(_DEPTH_DECODE(0, texture(tex0, vec2(COORD_SCALE1(0, coord1), 0.5))), TEX_FLAGS(0))
+#define TEX1D_1(coord1) _process_texel(_DEPTH_DECODE(1, texture(tex1, vec2(COORD_SCALE1(1, coord1), 0.5))), TEX_FLAGS(1))
+#define TEX1D_2(coord1) _process_texel(_DEPTH_DECODE(2, texture(tex2, vec2(COORD_SCALE1(2, coord1), 0.5))), TEX_FLAGS(2))
+#define TEX1D_3(coord1) _process_texel(_DEPTH_DECODE(3, texture(tex3, vec2(COORD_SCALE1(3, coord1), 0.5))), TEX_FLAGS(3))
+#define TEX1D_4(coord1) _process_texel(_DEPTH_DECODE(4, texture(tex4, vec2(COORD_SCALE1(4, coord1), 0.5))), TEX_FLAGS(4))
+#define TEX1D_5(coord1) _process_texel(_DEPTH_DECODE(5, texture(tex5, vec2(COORD_SCALE1(5, coord1), 0.5))), TEX_FLAGS(5))
+#define TEX1D_6(coord1) _process_texel(_DEPTH_DECODE(6, texture(tex6, vec2(COORD_SCALE1(6, coord1), 0.5))), TEX_FLAGS(6))
+#define TEX1D_7(coord1) _process_texel(_DEPTH_DECODE(7, texture(tex7, vec2(COORD_SCALE1(7, coord1), 0.5))), TEX_FLAGS(7))
+#define TEX1D_8(coord1) _process_texel(_DEPTH_DECODE(8, texture(tex8, vec2(COORD_SCALE1(8, coord1), 0.5))), TEX_FLAGS(8))
+#define TEX1D_9(coord1) _process_texel(_DEPTH_DECODE(9, texture(tex9, vec2(COORD_SCALE1(9, coord1), 0.5))), TEX_FLAGS(9))
+#define TEX1D_10(coord1) _process_texel(_DEPTH_DECODE(10, texture(tex10, vec2(COORD_SCALE1(10, coord1), 0.5))), TEX_FLAGS(10))
+#define TEX1D_11(coord1) _process_texel(_DEPTH_DECODE(11, texture(tex11, vec2(COORD_SCALE1(11, coord1), 0.5))), TEX_FLAGS(11))
+#define TEX1D_12(coord1) _process_texel(_DEPTH_DECODE(12, texture(tex12, vec2(COORD_SCALE1(12, coord1), 0.5))), TEX_FLAGS(12))
+#define TEX1D_13(coord1) _process_texel(_DEPTH_DECODE(13, texture(tex13, vec2(COORD_SCALE1(13, coord1), 0.5))), TEX_FLAGS(13))
+#define TEX1D_14(coord1) _process_texel(_DEPTH_DECODE(14, texture(tex14, vec2(COORD_SCALE1(14, coord1), 0.5))), TEX_FLAGS(14))
+#define TEX1D_15(coord1) _process_texel(_DEPTH_DECODE(15, texture(tex15, vec2(COORD_SCALE1(15, coord1), 0.5))), TEX_FLAGS(15))
+#define TEX1D_BIAS(index, coord1, bias) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), bias)), TEX_FLAGS(index))
+#define TEX1D_LOD(index, coord1, lod) _process_texel(_DEPTH_DECODE(index, textureLod(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), lod)), TEX_FLAGS(index))
+#define TEX1D_GRAD(index, coord1, dpdx, dpdy) _process_texel(_DEPTH_DECODE(index, textureGrad(TEX_NAME(index), vec2(COORD_SCALE1(index, coord1), 0.5), vec2(dpdx, 0.0), vec2(dpdy, 0.0))), TEX_FLAGS(index))
+#define TEX1D_PROJ(index, coord4) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), vec2(COORD_PROJ1(index, coord4.xw), 0.5))), TEX_FLAGS(index))
 #else
-#define TEX1D(index, coord1) _process_texel(texture(TEX_NAME(index), COORD_SCALE1(index, coord1)), TEX_FLAGS(index))
-#define TEX1D_BIAS(index, coord1, bias) _process_texel(texture(TEX_NAME(index), COORD_SCALE1(index, coord1), bias), TEX_FLAGS(index))
-#define TEX1D_LOD(index, coord1, lod) _process_texel(textureLod(TEX_NAME(index), COORD_SCALE1(index, coord1), lod), TEX_FLAGS(index))
-#define TEX1D_GRAD(index, coord1, dpdx, dpdy) _process_texel(textureGrad(TEX_NAME(index), COORD_SCALE1(index, coord1), dpdx, dpdy), TEX_FLAGS(index))
-#define TEX1D_PROJ(index, coord4) _process_texel(texture(TEX_NAME(index), COORD_PROJ1(index, coord4.xw)), TEX_FLAGS(index))
+#define TEX1D(index, coord1) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE1(index, coord1))), TEX_FLAGS(index))
+#define TEX1D_BIAS(index, coord1, bias) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE1(index, coord1), bias)), TEX_FLAGS(index))
+#define TEX1D_LOD(index, coord1, lod) _process_texel(_DEPTH_DECODE(index, textureLod(TEX_NAME(index), COORD_SCALE1(index, coord1), lod)), TEX_FLAGS(index))
+#define TEX1D_GRAD(index, coord1, dpdx, dpdy) _process_texel(_DEPTH_DECODE(index, textureGrad(TEX_NAME(index), COORD_SCALE1(index, coord1), dpdx, dpdy)), TEX_FLAGS(index))
+#define TEX1D_PROJ(index, coord4) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_PROJ1(index, coord4.xw))), TEX_FLAGS(index))
 #endif
 #endif
 #ifdef _ENABLE_TEX2D
-#define TEX2D(index, coord2) _process_texel(texture(TEX_NAME(index), COORD_SCALE2(index, coord2)), TEX_FLAGS(index))
-#define TEX2D_0(coord2) _process_texel(texture(tex0, COORD_SCALE2(0, coord2)), TEX_FLAGS(0))
-#define TEX2D_1(coord2) _process_texel(texture(tex1, COORD_SCALE2(1, coord2)), TEX_FLAGS(1))
-#define TEX2D_2(coord2) _process_texel(texture(tex2, COORD_SCALE2(2, coord2)), TEX_FLAGS(2))
-#define TEX2D_3(coord2) _process_texel(texture(tex3, COORD_SCALE2(3, coord2)), TEX_FLAGS(3))
-#define TEX2D_4(coord2) _process_texel(texture(tex4, COORD_SCALE2(4, coord2)), TEX_FLAGS(4))
-#define TEX2D_5(coord2) _process_texel(texture(tex5, COORD_SCALE2(5, coord2)), TEX_FLAGS(5))
-#define TEX2D_6(coord2) _process_texel(texture(tex6, COORD_SCALE2(6, coord2)), TEX_FLAGS(6))
-#define TEX2D_7(coord2) _process_texel(texture(tex7, COORD_SCALE2(7, coord2)), TEX_FLAGS(7))
-#define TEX2D_8(coord2) _process_texel(texture(tex8, COORD_SCALE2(8, coord2)), TEX_FLAGS(8))
-#define TEX2D_9(coord2) _process_texel(texture(tex9, COORD_SCALE2(9, coord2)), TEX_FLAGS(9))
-#define TEX2D_10(coord2) _process_texel(texture(tex10, COORD_SCALE2(10, coord2)), TEX_FLAGS(10))
-#define TEX2D_11(coord2) _process_texel(texture(tex11, COORD_SCALE2(11, coord2)), TEX_FLAGS(11))
-#define TEX2D_12(coord2) _process_texel(texture(tex12, COORD_SCALE2(12, coord2)), TEX_FLAGS(12))
-#define TEX2D_13(coord2) _process_texel(texture(tex13, COORD_SCALE2(13, coord2)), TEX_FLAGS(13))
-#define TEX2D_14(coord2) _process_texel(texture(tex14, COORD_SCALE2(14, coord2)), TEX_FLAGS(14))
-#define TEX2D_15(coord2) _process_texel(texture(tex15, COORD_SCALE2(15, coord2)), TEX_FLAGS(15))
-#define TEX2D_BIAS(index, coord2, bias) _process_texel(texture(TEX_NAME(index), COORD_SCALE2(index, coord2), bias), TEX_FLAGS(index))
-#define TEX2D_LOD(index, coord2, lod) _process_texel(textureLod(TEX_NAME(index), COORD_SCALE2(index, coord2), lod), TEX_FLAGS(index))
-#define TEX2D_GRAD(index, coord2, dpdx, dpdy) _process_texel(textureGrad(TEX_NAME(index), COORD_SCALE2(index, coord2), dpdx, dpdy), TEX_FLAGS(index))
-#define TEX2D_PROJ(index, coord4) _process_texel(texture(TEX_NAME(index), COORD_PROJ2(index, coord4.xyw)), TEX_FLAGS(index))
+#define TEX2D(index, coord2) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE2(index, coord2))), TEX_FLAGS(index))
+#define TEX2D_0(coord2) _process_texel(_DEPTH_DECODE(0, texture(tex0, COORD_SCALE2(0, coord2))), TEX_FLAGS(0))
+#define TEX2D_1(coord2) _process_texel(_DEPTH_DECODE(1, texture(tex1, COORD_SCALE2(1, coord2))), TEX_FLAGS(1))
+#define TEX2D_2(coord2) _process_texel(_DEPTH_DECODE(2, texture(tex2, COORD_SCALE2(2, coord2))), TEX_FLAGS(2))
+#define TEX2D_3(coord2) _process_texel(_DEPTH_DECODE(3, texture(tex3, COORD_SCALE2(3, coord2))), TEX_FLAGS(3))
+#define TEX2D_4(coord2) _process_texel(_DEPTH_DECODE(4, texture(tex4, COORD_SCALE2(4, coord2))), TEX_FLAGS(4))
+#define TEX2D_5(coord2) _process_texel(_DEPTH_DECODE(5, texture(tex5, COORD_SCALE2(5, coord2))), TEX_FLAGS(5))
+#define TEX2D_6(coord2) _process_texel(_DEPTH_DECODE(6, texture(tex6, COORD_SCALE2(6, coord2))), TEX_FLAGS(6))
+#define TEX2D_7(coord2) _process_texel(_DEPTH_DECODE(7, texture(tex7, COORD_SCALE2(7, coord2))), TEX_FLAGS(7))
+#define TEX2D_8(coord2) _process_texel(_DEPTH_DECODE(8, texture(tex8, COORD_SCALE2(8, coord2))), TEX_FLAGS(8))
+#define TEX2D_9(coord2) _process_texel(_DEPTH_DECODE(9, texture(tex9, COORD_SCALE2(9, coord2))), TEX_FLAGS(9))
+#define TEX2D_10(coord2) _process_texel(_DEPTH_DECODE(10, texture(tex10, COORD_SCALE2(10, coord2))), TEX_FLAGS(10))
+#define TEX2D_11(coord2) _process_texel(_DEPTH_DECODE(11, texture(tex11, COORD_SCALE2(11, coord2))), TEX_FLAGS(11))
+#define TEX2D_12(coord2) _process_texel(_DEPTH_DECODE(12, texture(tex12, COORD_SCALE2(12, coord2))), TEX_FLAGS(12))
+#define TEX2D_13(coord2) _process_texel(_DEPTH_DECODE(13, texture(tex13, COORD_SCALE2(13, coord2))), TEX_FLAGS(13))
+#define TEX2D_14(coord2) _process_texel(_DEPTH_DECODE(14, texture(tex14, COORD_SCALE2(14, coord2))), TEX_FLAGS(14))
+#define TEX2D_15(coord2) _process_texel(_DEPTH_DECODE(15, texture(tex15, COORD_SCALE2(15, coord2))), TEX_FLAGS(15))
+#define TEX2D_BIAS(index, coord2, bias) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE2(index, coord2), bias)), TEX_FLAGS(index))
+#define TEX2D_LOD(index, coord2, lod) _process_texel(_DEPTH_DECODE(index, textureLod(TEX_NAME(index), COORD_SCALE2(index, coord2), lod)), TEX_FLAGS(index))
+#define TEX2D_GRAD(index, coord2, dpdx, dpdy) _process_texel(_DEPTH_DECODE(index, textureGrad(TEX_NAME(index), COORD_SCALE2(index, coord2), dpdx, dpdy)), TEX_FLAGS(index))
+#define TEX2D_PROJ(index, coord4) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_PROJ2(index, coord4.xyw))), TEX_FLAGS(index))
 #endif
 
 #ifdef _ENABLE_SHADOW
@@ -137,11 +156,11 @@ R"(
 #endif
 
 #ifdef _ENABLE_TEX3D
-#define TEX3D(index, coord3) _process_texel(texture(TEX_NAME(index), COORD_SCALE3(index, coord3)), TEX_FLAGS(index))
-#define TEX3D_BIAS(index, coord3, bias) _process_texel(texture(TEX_NAME(index), COORD_SCALE3(index, coord3), bias), TEX_FLAGS(index))
-#define TEX3D_LOD(index, coord3, lod) _process_texel(textureLod(TEX_NAME(index), COORD_SCALE3(index, coord3), lod), TEX_FLAGS(index))
-#define TEX3D_GRAD(index, coord3, dpdx, dpdy) _process_texel(textureGrad(TEX_NAME(index), COORD_SCALE3(index, coord3), dpdx, dpdy), TEX_FLAGS(index))
-#define TEX3D_PROJ(index, coord4) _process_texel(texture(TEX_NAME(index), COORD_PROJ3(index, coord4).xyz), TEX_FLAGS(index))
+#define TEX3D(index, coord3) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE3(index, coord3))), TEX_FLAGS(index))
+#define TEX3D_BIAS(index, coord3, bias) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_SCALE3(index, coord3), bias)), TEX_FLAGS(index))
+#define TEX3D_LOD(index, coord3, lod) _process_texel(_DEPTH_DECODE(index, textureLod(TEX_NAME(index), COORD_SCALE3(index, coord3), lod)), TEX_FLAGS(index))
+#define TEX3D_GRAD(index, coord3, dpdx, dpdy) _process_texel(_DEPTH_DECODE(index, textureGrad(TEX_NAME(index), COORD_SCALE3(index, coord3), dpdx, dpdy)), TEX_FLAGS(index))
+#define TEX3D_PROJ(index, coord4) _process_texel(_DEPTH_DECODE(index, texture(TEX_NAME(index), COORD_PROJ3(index, coord4).xyz)), TEX_FLAGS(index))
 #endif
 
 #ifdef _ENABLE_TEX1D
@@ -201,7 +220,12 @@ vec3 _texcoord_xform_shadow(const in vec3 coord3, const in sampler_info params)
 	if (_test_bit(params.flags, DEPTH_FLOAT))
 	{
 		// Depth-float buffer, extended range supported
+#ifdef _EMULATED_DEPTH_STORAGE
+		// The stored values are encoded; the encoding is monotonic so the hardware compare still holds
+		result.z = encode_emulated_depth(coord3.z);
+#else
 		result.z = coord3.z;
+#endif
 	}
 	else
 	{
@@ -221,7 +245,11 @@ vec4 _texcoord_xform_shadow(const in vec4 coord4, const in sampler_info params)
 	if (_test_bit(params.flags, DEPTH_FLOAT))
 	{
 		// Depth-float buffer, extended range supported
+#ifdef _EMULATED_DEPTH_STORAGE
+		result.w = encode_emulated_depth(coord4.w);
+#else
 		result.w = coord4.w;
+#endif
 	}
 	else
 	{

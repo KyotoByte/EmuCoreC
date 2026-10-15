@@ -686,6 +686,21 @@ inline void glFramebufferReadBufferEXT(GLuint framebuffer, GLenum buffer)
 	glNamedFramebufferReadBuffer(framebuffer, buffer);
 }
 
+// Adapt ARMSX3's DSA shim to preserve the read framebuffer binding as well.
+inline void glNamedFramebufferParameteri(GLuint framebuffer, GLenum pname, GLint param)
+{
+	GLint previous = 0;
+	glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &previous);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, framebuffer);
+	glFramebufferParameteri(GL_DRAW_FRAMEBUFFER, pname, param);
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, static_cast<GLuint>(previous));
+}
+
+inline void glNamedFramebufferParameteriEXT(GLuint framebuffer, GLenum pname, GLint param)
+{
+	glNamedFramebufferParameteri(framebuffer, pname, param);
+}
+
 inline GLenum glCheckNamedFramebufferStatus(GLuint framebuffer, GLenum target)
 {
 	return gl::gles::with_framebuffer(framebuffer, [&] { return glCheckFramebufferStatus(target); });

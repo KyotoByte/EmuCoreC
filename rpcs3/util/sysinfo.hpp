@@ -58,6 +58,15 @@ namespace utils
 	bool has_neon();
 	bool has_wfe_event_stream();
 
+#if defined(ARM_FEATURE_LSE2)
+	inline constexpr bool has_lse2()
+	{
+		return true;
+	}
+#else
+	bool has_lse2();
+#endif
+
 	bool has_sha3();
 
 	bool has_dotprod();
@@ -67,6 +76,8 @@ namespace utils
 	bool has_sve();
 
 	bool has_sve2();
+
+	bool has_sve2p2();
 
 	int sve_length();
 #endif

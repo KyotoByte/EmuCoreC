@@ -1878,4 +1878,6 @@ Ce paramètre n\'est appliqué que lorsque SPU Decoder est défini sur Dynamic o
     <string name="core_update_reset_action">Réinitialiser les paramètres</string>
     <string name="core_update_reset_keep">Conserver les paramètres</string>
     <string name="core_update_reset_done">Paramètres réinitialisés</string>
+    <string name="core_label_fighting_games">Jeux de combat</string>
+    <string name="core_label_shooter_games">Jeux de tir</string>
 </resources>

@@ -1873,4 +1873,6 @@ Diese Einstellung wird nur angewendet, wenn der SPU-Decoder auf „Dynamisch“ 
     <string name="core_update_reset_action">Einstellungen zurücksetzen</string>
     <string name="core_update_reset_keep">Einstellungen behalten</string>
     <string name="core_update_reset_done">Einstellungen zurückgesetzt</string>
+    <string name="core_label_fighting_games">Kampfspiele</string>
+    <string name="core_label_shooter_games">Shooter</string>
 </resources>

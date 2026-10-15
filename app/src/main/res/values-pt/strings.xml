@@ -1874,4 +1874,6 @@ Esta configuração só é aplicada quando o Decodificador SPU está definido co
     <string name="core_update_reset_action">Redefinir configurações</string>
     <string name="core_update_reset_keep">Manter configurações</string>
     <string name="core_update_reset_done">Configurações redefinidas</string>
+    <string name="core_label_fighting_games">Jogos de luta</string>
+    <string name="core_label_shooter_games">Jogos de tiro</string>
 </resources>

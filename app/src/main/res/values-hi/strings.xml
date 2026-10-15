@@ -1873,4 +1873,6 @@ PS3 नेटिव का उपयोग केवल तभी किया �
     <string name="core_update_reset_action">सेटिंग्स रीसेट करें</string>
     <string name="core_update_reset_keep">सेटिंग्स रखें</string>
     <string name="core_update_reset_done">सेटिंग्स रीसेट हो गईं</string>
+    <string name="core_label_fighting_games">लड़ाई वाले गेम</string>
+    <string name="core_label_shooter_games">शूटिंग गेम</string>
 </resources>

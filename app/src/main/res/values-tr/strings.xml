@@ -1873,4 +1873,6 @@ Bu ayar yalnızca SPU Kod Çözücü Dinamik veya LLVM olarak ayarlandığında 
     <string name="core_update_reset_action">Ayarları sıfırla</string>
     <string name="core_update_reset_keep">Ayarları koru</string>
     <string name="core_update_reset_done">Ayarlar sıfırlandı</string>
+    <string name="core_label_fighting_games">Dövüş oyunları</string>
+    <string name="core_label_shooter_games">Nişancı oyunları</string>
 </resources>

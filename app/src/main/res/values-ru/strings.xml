@@ -1879,4 +1879,6 @@ Over-Under ближе к собственному стереовыходу, но
     <string name="core_update_reset_action">Сбросить настройки</string>
     <string name="core_update_reset_keep">Оставить как есть</string>
     <string name="core_update_reset_done">Настройки сброшены</string>
+    <string name="core_label_fighting_games">Файтинги</string>
+    <string name="core_label_shooter_games">Шутеры</string>
 </resources>

@@ -57,15 +57,19 @@ enum class BootResult
     DecryptionError,
     FileCreationError,
     FirmwareMissing,
+    FirmwareVersion,
     UnsupportedDiscType,
+    DiscKeyMissing,
+    DiscKeyInvalid,
     SavestateCorrupted,
     SavestateVersionUnsupported,
     StillRunning,
     AlreadyAdded,
-    CurrentlyRestricted;
+    CurrentlyRestricted,
+    DatabaseConfigMissing;
 
     companion object {
-        fun fromInt(value: Int) = entries.first { it.ordinal == value }
+        fun fromInt(value: Int) = entries.getOrNull(value) ?: GenericError
     }
 };
 

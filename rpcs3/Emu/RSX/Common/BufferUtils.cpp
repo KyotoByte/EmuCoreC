@@ -8,6 +8,8 @@
 
 #if defined(ARCH_X64)
 #include "BufferUtils_avx512.h"
+#elif defined(ARCH_ARM64)
+#include "BufferUtils_neon.h"
 #endif
 
 #if !defined(_MSC_VER)
@@ -21,6 +23,9 @@
 #endif
 #undef FORCE_INLINE
 #include "Emu/CPU/sse2neon.h"
+#if defined(__GNUC__) || defined(__clang__)
+#include "BufferUtils_sve.h"
+#endif
 #endif
 
 #if defined(_MSC_VER) || !defined(__SSE2__)
@@ -67,6 +72,10 @@
 
 const v128 s_bswap_u32_mask = v128::from32(0x00010203, 0x04050607, 0x08090a0b, 0x0c0d0e0f);
 const v128 s_bswap_u16_mask = v128::from32(0x02030001, 0x06070405, 0x0a0b0809, 0x0e0f0c0d);
+
+#if defined(ARCH_X64) || defined(ARCH_ARM64)
+#include "BufferUtils_compact.h"
+#endif
 
 namespace utils
 {
@@ -183,6 +192,9 @@ namespace
 #if defined(ARCH_X64)
 DECLARE(copy_data_swap_u32) = build_function_asm<void(*)(u32*, const u32*, u32), asmjit::simd_builder>("copy_data_swap_u32", &build_copy_data_swap_u32<false>);
 DECLARE(copy_data_swap_u32_cmp) = build_function_asm<bool(*)(u32*, const u32*, u32), asmjit::simd_builder>("copy_data_swap_u32_cmp", &build_copy_data_swap_u32<true>);
+#elif defined(ARCH_ARM64)
+DECLARE(copy_data_swap_u32) = copy_data_swap_u32_neon<false>;
+DECLARE(copy_data_swap_u32_cmp) = copy_data_swap_u32_neon<true>;
 #else
 DECLARE(copy_data_swap_u32) = copy_data_swap_u32_naive<false>;
 DECLARE(copy_data_swap_u32_cmp) = copy_data_swap_u32_naive<true>;
@@ -299,6 +311,8 @@ namespace
 				r = upload_xi16(src.data(), dst.data(), count);
 			else
 				r = upload_xi32(src.data(), dst.data(), count);
+#elif defined(ARCH_ARM64)
+			r = upload_untouched_neon<T, false>(src.data(), dst.data(), count);
 #else
 			r = upload_untouched_naive(src.data(), dst.data(), count);
 #endif
@@ -327,85 +341,7 @@ namespace
 			return (u64{max_index} << 32) | u64{min_index};
 		}
 
-#if defined(ARCH_ARM64)
-		static inline u64 upload_untouched_neon(const be_t<u16>* src, u16* dst, u32 count, u16 restart_index)
-		{
-			u32 i = 0;
-			u16 min_index = index_limit<u16>();
-			u16 max_index = 0;
 
-			if (count >= 8)
-			{
-				static_assert(index_limit<u16>() == 0xffff);
-
-				const uint16x8_t vrestart = vdupq_n_u16(restart_index);
-				uint16x8_t vmin = vdupq_n_u16(0xffff);
-				uint16x8_t vmax = vdupq_n_u16(0);
-
-				for (; i + 8 <= count; i += 8)
-				{
-					const uint16x8_t v = vreinterpretq_u16_u8(vrev16q_u8(vreinterpretq_u8_u16(
-						vld1q_u16(reinterpret_cast<const u16*>(src) + i))));
-					const uint16x8_t eq = vceqq_u16(v, vrestart);
-					const uint16x8_t v_or_ones = vorrq_u16(v, eq);
-
-					vmin = vminq_u16(vmin, v_or_ones);
-					vmax = vmaxq_u16(vmax, vbicq_u16(v, eq));
-					vst1q_u16(dst + i, v_or_ones);
-				}
-
-				min_index = vminvq_u16(vmin);
-				max_index = vmaxvq_u16(vmax);
-			}
-
-			for (; i < count; ++i)
-			{
-				const u16 index = src[i].value();
-				dst[i] = index == restart_index ? index_limit<u16>() : min_max(min_index, max_index, index);
-			}
-
-			return (u64{max_index} << 32) | u64{min_index};
-		}
-
-		static inline u64 upload_untouched_neon(const be_t<u32>* src, u32* dst, u32 count, u32 restart_index)
-		{
-			u32 i = 0;
-			u32 min_index = index_limit<u32>();
-			u32 max_index = 0;
-
-			if (count >= 4)
-			{
-				static_assert(index_limit<u32>() == 0xffffffffu);
-
-				const uint32x4_t vrestart = vdupq_n_u32(restart_index);
-				uint32x4_t vmin = vdupq_n_u32(0xffffffffu);
-				uint32x4_t vmax = vdupq_n_u32(0);
-
-				for (; i + 4 <= count; i += 4)
-				{
-					const uint32x4_t v = vreinterpretq_u32_u8(vrev32q_u8(vreinterpretq_u8_u32(
-						vld1q_u32(reinterpret_cast<const u32*>(src) + i))));
-					const uint32x4_t eq = vceqq_u32(v, vrestart);
-					const uint32x4_t v_or_ones = vorrq_u32(v, eq);
-
-					vmin = vminq_u32(vmin, v_or_ones);
-					vmax = vmaxq_u32(vmax, vbicq_u32(v, eq));
-					vst1q_u32(dst + i, v_or_ones);
-				}
-
-				min_index = vminvq_u32(vmin);
-				max_index = vmaxvq_u32(vmax);
-			}
-
-			for (; i < count; ++i)
-			{
-				const u32 index = src[i].value();
-				dst[i] = index == restart_index ? index_limit<u32>() : min_max(min_index, max_index, index);
-			}
-
-			return (u64{max_index} << 32) | u64{min_index};
-		}
-#endif
 
 #ifdef ARCH_X64
 		template <typename T>
@@ -486,7 +422,7 @@ namespace
 			else
 				r = upload_xi32(src.data(), dst.data(), count, restart_index);
 #elif defined(ARCH_ARM64)
-			r = upload_untouched_neon(src.data(), dst.data(), count, restart_index);
+			r = upload_untouched_neon<T, true>(src.data(), dst.data(), count, restart_index);
 #else
 			r = upload_untouched_naive(src.data(), dst.data(), count, restart_index);
 #endif
@@ -527,7 +463,7 @@ namespace
 		return std::make_tuple(min_index, max_index, written);
 	}
 
-	const upload_untouched_skip_restart_dispatch s_generic_upload_untouched_skip_restart_dispatch =
+	[[maybe_unused]] const upload_untouched_skip_restart_dispatch s_generic_upload_untouched_skip_restart_dispatch =
 	{
 		upload_untouched_skip_restart<u16>,
 		upload_untouched_skip_restart<u32>,
@@ -536,7 +472,7 @@ namespace
 #if defined(ARCH_X64)
 	const upload_untouched_skip_restart_dispatch s_avx512_upload_untouched_skip_restart_dispatch =
 	{
-		upload_untouched_skip_restart<u16>,
+		upload_swapped_avx2_skip_restart<u16>,
 		upload_u32_swapped_avx3_skip_restart,
 	};
 
@@ -559,8 +495,41 @@ namespace
 		{
 			return s_avx512_upload_untouched_skip_restart_dispatch;
 		}
+
+		if (s_use_avx2)
+		{
+			static const upload_untouched_skip_restart_dispatch s_avx2 =
+			{
+				upload_swapped_avx2_skip_restart<u16>,
+				upload_swapped_avx2_skip_restart<u32>,
+			};
+			return s_avx2;
+		}
+#elif defined(ARCH_ARM64) && (defined(__GNUC__) || defined(__clang__))
+		if (utils::has_sve())
+		{
+			static const upload_untouched_skip_restart_dispatch s_sve =
+			{
+#ifdef BUFFERUTILS_HAS_SVE2P2
+				utils::has_sve2p2() ? upload_swapped_sve2p2_skip_restart : upload_swapped_neon_skip_restart<u16>,
+#else
+				upload_swapped_neon_skip_restart<u16>,
 #endif
+				upload_swapped_sve_skip_restart,
+			};
+			return s_sve;
+		}
+#endif
+#if defined(ARCH_ARM64)
+		static const upload_untouched_skip_restart_dispatch s_neon =
+		{
+			upload_swapped_neon_skip_restart<u16>,
+			upload_swapped_neon_skip_restart<u32>,
+		};
+		return s_neon;
+#else
 		return s_generic_upload_untouched_skip_restart_dispatch;
+#endif
 	}();
 
 	template<typename T, typename U = remove_be_t<T>>
@@ -594,25 +563,6 @@ namespace
 		}
 
 		return primitive_restart_impl::upload_untouched(src, dst, static_cast<U>(primitive_restart_index));
-	}
-
-	void iota16(u16* dst, u32 count)
-	{
-		unsigned i = 0;
-#if defined(ARCH_X64) || defined(ARCH_ARM64)
-		const unsigned step = 8;                          // We do 8 entries per step
-		const __m128i vec_step = _mm_set1_epi16(8);     // Constant to increment the raw values
-		__m128i values = _mm_set_epi16(7, 6, 5, 4, 3, 2, 1, 0);
-		__m128i* vec_ptr = utils::bless<__m128i>(dst);
-
-		for (; (i + step) <= count; i += step, vec_ptr++)
-		{
-			_mm_stream_si128(vec_ptr, values);
-			values = _mm_add_epi16(values,  vec_step);
-		}
-#endif
-		for (; i < count; ++i)
-			dst[i] = i;
 	}
 
 	template<typename T>
@@ -709,6 +659,161 @@ namespace
 	}
 }
 
+#if defined(ARCH_X64)
+namespace
+{
+	AVX2_FUNC void iota16_avx2(u16* dst, u32 count)
+	{
+		u32 i = 0;
+
+		// Force 32-byte alignment
+		const uptr mem_addr = reinterpret_cast<uptr>(dst);
+		const u32 head = std::min<u32>(count, ((0 - mem_addr) & 31) / sizeof(u16));
+		for (; i < head; ++i)
+		{
+			dst[i] = i;
+		}
+
+		constexpr u32 step = 32;                          // We do 32 entries per step
+		const __m256i vec_step = _mm256_set1_epi16(32);   // Constant to increment the raw values
+		__m256i values0 = _mm256_add_epi16(_mm256_set_epi16(15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0), _mm256_set1_epi16(static_cast<s16>(i)));
+		__m256i values1 = _mm256_add_epi16(values0, _mm256_set1_epi16(16));
+		__m256i* vec_ptr = utils::bless<__m256i>(dst + i);
+
+		for (; (i + step) <= count; i += step, vec_ptr += 2)
+		{
+			_mm256_store_si256(vec_ptr, values0);
+			_mm256_store_si256(vec_ptr + 1, values1);
+			values0 = _mm256_add_epi16(values0, vec_step);
+			values1 = _mm256_add_epi16(values1, vec_step);
+		}
+
+		// Half-line remainder
+		if ((i + step / 2) <= count)
+		{
+			_mm256_store_si256(vec_ptr, values0);
+			i += step / 2;
+		}
+
+		_mm256_zeroupper();
+
+		for (; i < count; ++i)
+			dst[i] = i;
+	}
+
+	AVX2_FUNC void iota32_avx2(u32* dst, u32 count)
+	{
+		u32 i = 0;
+
+		// Force 32-byte alignment
+		const uptr mem_addr = reinterpret_cast<uptr>(dst);
+		const u32 head = std::min<u32>(count, ((0 - mem_addr) & 31) / sizeof(u32));
+		for (; i < head; ++i)
+		{
+			dst[i] = i;
+		}
+
+		constexpr u32 step = 16;                          // We do 16 entries per step
+		const __m256i vec_step = _mm256_set1_epi32(16);   // Constant to increment the raw values
+		__m256i values0 = _mm256_add_epi32(_mm256_set_epi32(7, 6, 5, 4, 3, 2, 1, 0), _mm256_set1_epi32(i));
+		__m256i values1 = _mm256_add_epi32(values0, _mm256_set1_epi32(8));
+		__m256i* vec_ptr = utils::bless<__m256i>(dst + i);
+
+		for (; (i + step) <= count; i += step, vec_ptr += 2)
+		{
+			_mm256_store_si256(vec_ptr, values0);
+			_mm256_store_si256(vec_ptr + 1, values1);
+			values0 = _mm256_add_epi32(values0, vec_step);
+			values1 = _mm256_add_epi32(values1, vec_step);
+		}
+
+		// Half-line remainder
+		if ((i + step / 2) <= count)
+		{
+			_mm256_store_si256(vec_ptr, values0);
+			i += step / 2;
+		}
+
+		_mm256_zeroupper();
+
+		for (; i < count; ++i)
+			dst[i] = i;
+	}
+}
+#endif
+
+void iota16(u16* dst, u32 count)
+{
+#if defined(ARCH_X64)
+	if (s_use_avx2)
+	{
+		iota16_avx2(dst, count);
+		return;
+	}
+#endif
+
+	u32 i = 0;
+#if defined(ARCH_X64) || defined(ARCH_ARM64)
+	// Force 16-byte alignment
+	const uptr mem_addr = reinterpret_cast<uptr>(dst);
+	const u32 head = std::min<u32>(count, ((0 - mem_addr) & 15) / sizeof(u16));
+	for (; i < head; ++i)
+	{
+		dst[i] = i;
+	}
+
+	constexpr u32 step = 8;                         // We do 8 entries per step
+	const __m128i vec_step = _mm_set1_epi16(8);     // Constant to increment the raw values
+	__m128i values = _mm_set_epi16(7, 6, 5, 4, 3, 2, 1, 0);
+	__m128i* vec_ptr = utils::bless<__m128i>(dst + i);
+
+	values = _mm_add_epi16(values, _mm_set1_epi16(static_cast<s16>(i)));
+	for (; (i + step) <= count; i += step, vec_ptr++)
+	{
+		_mm_store_si128(vec_ptr, values);
+		values = _mm_add_epi16(values, vec_step);
+	}
+#endif
+	for (; i < count; ++i)
+		dst[i] = i;
+}
+
+void iota32(u32* dst, u32 count)
+{
+#if defined(ARCH_X64)
+	if (s_use_avx2)
+	{
+		iota32_avx2(dst, count);
+		return;
+	}
+#endif
+
+	u32 i = 0;
+#if defined(ARCH_X64) || defined(ARCH_ARM64)
+	// Force 16-byte alignment
+	const uptr mem_addr = reinterpret_cast<uptr>(dst);
+	const u32 head = std::min<u32>(count, ((0 - mem_addr) & 15) / sizeof(u32));
+	for (; i < head; ++i)
+	{
+		dst[i] = i;
+	}
+
+	constexpr u32 step = 4;                           // We do 4 entries per step
+	const __m128i vec_step = _mm_set1_epi32(4);       // Constant to increment the raw values
+	__m128i values = _mm_set_epi32(3, 2, 1, 0);
+	__m128i* vec_ptr = utils::bless<__m128i>(dst + i);
+
+	values = _mm_add_epi32(values, _mm_set1_epi32(i));
+	for (; (i + step) <= count; i += step, vec_ptr++)
+	{
+		_mm_store_si128(vec_ptr, values);
+		values = _mm_add_epi32(values, vec_step);
+	}
+#endif
+	for (; i < count; ++i)
+		dst[i] = i;
+}
+
 // Only handle quads and triangle fan now
 bool is_primitive_native(rsx::primitive_type draw_mode)
 {
@@ -779,11 +884,11 @@ u32 get_index_type_size(rsx::index_array_type type)
 
 void write_index_array_for_non_indexed_non_native_primitive_to_buffer(char* dst, rsx::primitive_type draw_mode, unsigned count)
 {
-	auto typedDst = reinterpret_cast<u16*>(dst);
+	auto typedDst = reinterpret_cast<u32*>(dst);
 	switch (draw_mode)
 	{
 	case rsx::primitive_type::line_loop:
-		iota16(typedDst, count);
+		iota32(typedDst, count);
 		typedDst[count] = 0;
 		return;
 	case rsx::primitive_type::triangle_fan:

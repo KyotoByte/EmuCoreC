@@ -56,6 +56,8 @@
 #include "Utilities/JIT.h"
 
 #include "Emu/IPC_socket.h"
+#include "Emu/Io/SkylanderPortalIPC.h"
+#include "Emu/Io/SkylanderPortalIPC_config.h"
 
 #if defined(HAVE_VULKAN)
 #include "Emu/RSX/VK/VulkanAPI.h"
@@ -162,6 +164,8 @@ void fmt_class_string<game_boot_result>::format(std::string& out, u64 arg)
 		case game_boot_result::firmware_missing: return "Firmware is missing";
 		case game_boot_result::firmware_version: return "Firmware is too old";
 		case game_boot_result::unsupported_disc_type: return "This disc type is not supported yet";
+		case game_boot_result::disc_key_missing: return "Missing decryption key for the disc";
+		case game_boot_result::disc_key_invalid: return "Wrong decryption key for the disc";
 		case game_boot_result::savestate_corrupted: return "Savestate data is corrupted or it's not an RPCS3 savestate";
 		case game_boot_result::savestate_version_unsupported: return "Savestate versioning data differs from your RPCS3 build.\nTry to use an older or newer RPCS3 build.\nEspecially if you know the build that created the savestate.";
 		case game_boot_result::still_running: return "Game is still running";
@@ -824,6 +828,15 @@ void Emulator::Init()
 	{
 		g_fxo->init<IPC_socket::IPC_server_manager>(true);
 	}
+
+	// Load Skylanders IPC config and start server if enabled
+	g_cfg_sky_ipc.load();
+	sys_log.notice("Using Skylanders IPC config:\n%s", g_cfg_sky_ipc.to_string());
+
+	if (g_cfg_sky_ipc.get_server_enabled())
+	{
+		g_fxo->init<SkylanderPortalIPCServerManager>(true);
+	}
 }
 
 void Emulator::SetUsr(const std::string& user)
@@ -937,7 +950,7 @@ bool Emulator::BootRsxCapture(const std::string& path)
 	g_cfg.video.disable_on_disk_shader_cache.set(true);
 
 	vm::init();
-	vm::reserve_map(vm::main, 0, 0x1FFF0000, vm::page_64k_size);
+	vm::reserve_map(vm::main, 0x10000, 0x1FFF0000, vm::page_64k_size);
 	g_fxo->init(false);
 
 	// Initialize progress dialog
@@ -998,7 +1011,7 @@ bool Emulator::BootBigPictureMode()
 	g_cfg.video.disable_on_disk_shader_cache.set(true);
 
 	vm::init();
-	vm::reserve_map(vm::main, 0, 0x1FFF0000, vm::page_64k_size);
+	vm::reserve_map(vm::main, 0x10000, 0x1FFF0000, vm::page_64k_size);
 	g_fxo->init(false);
 
 	// Initialize progress dialog
@@ -1118,7 +1131,7 @@ game_boot_result Emulator::BootGame(const std::string& path, const std::string& 
 	m_db_config = db_config;
 
 	// Handle files and special paths inside Load unmodified
-	if (direct || !fs::is_dir(path) || fs::get_optical_raw_device(path))
+	if (direct || !fs::is_dir(path) || is_iso_file(path))
 	{
 		m_path = path;
 
@@ -1162,6 +1175,32 @@ void Emulator::SetContinuousMode(bool continuous_mode)
 	{
 		render->set_continuous_mode(continuous_mode);
 	}
+}
+
+// Tells whether the image that was just loaded can be read back at all, dropping it and reporting why when it cannot:
+// every file of an encrypted disc whose key is missing, or wrong, comes back as garbage, which would otherwise
+// surface much later as an unrelated boot failure
+static game_boot_result check_disc_key(const std::string& path)
+{
+	const iso_key_status key_status = get_iso_key_status();
+
+	if (key_status == iso_key_status::OK)
+	{
+		return game_boot_result::no_errors;
+	}
+
+	unload_iso();
+
+	if (key_status == iso_key_status::INVALID)
+	{
+		sys_log.error("The key file found for the disc image '%s' does not decrypt it: it belongs to another disc", path);
+
+		return game_boot_result::disc_key_invalid;
+	}
+
+	sys_log.error("The disc image '%s' is encrypted and no matching decryption key was found in '%s'", path, rpcs3::utils::get_redump_key_dir());
+
+	return game_boot_result::disc_key_missing;
 }
 
 game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch, usz recursion_count)
@@ -1467,6 +1506,12 @@ game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch,
 				sys_log.notice("Savestate: Loading iso archive");
 
 				load_iso(disc_info);
+
+				if (const game_boot_result result = check_disc_key(disc_info); is_error(result))
+				{
+					return result;
+				}
+
 				m_path = iso_device::virtual_device_name + "/" + argv[0];
 
 				resolve_path_as_vfs_path = false;
@@ -1502,7 +1547,7 @@ game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch,
 			if (m_title_id.size() < 3 && m_title_id.find_first_not_of('.') == umax)
 			{
 				// Do not allow if TITLE_ID result in path redirection
-				sys_log.fatal("Game directory not found using GAMEID token. (m_path='%s', title_id='%s')", m_title_id);
+				sys_log.fatal("Game directory not found using GAMEID token. (m_path='%s', title_id='%s')", m_path, m_title_id);
 				return game_boot_result::invalid_file_or_folder;
 			}
 
@@ -1647,37 +1692,17 @@ game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch,
 
 			load_iso(m_path);
 
-			// load_iso() cannot report failure: it mounts the device whether or not the archive
-			// opened. An unreadable or undecryptable image therefore used to sail past here and
-			// die much further down as a bare "invalid file or folder", with nothing in the log
-			// saying which of a dozen causes it was. Decide it here, while the reason is knowable.
+			if (const game_boot_result result = check_disc_key(m_path); is_error(result))
 			{
-				const auto device = fs::get_virtual_device(iso_device::virtual_device_name + "/");
-				const auto iso_dev = dynamic_cast<const iso_device*>(device.get());
+				return result;
+			}
 
-				if (!iso_dev || !iso_dev->archive_valid())
-				{
-					std::string key_path;
-
-					switch (iso_file_decryption::check_type(m_path, &key_path))
-					{
-					case iso_type_status::ERROR_OPENING_KEY:
-						sys_log.error("Cannot read ISO '%s'. If this is an encrypted (redump) disc "
-							"image, put its matching '.dkey' or '.key' file next to the ISO, or in '%s'.",
-							m_path, rpcs3::utils::get_redump_key_dir());
-						return game_boot_result::decryption_error;
-
-					case iso_type_status::ERROR_PROCESSING_KEY:
-						sys_log.error("Cannot read ISO '%s': the disc key '%s' was rejected.", m_path, key_path);
-						return game_boot_result::decryption_error;
-
-					default:
-						sys_log.error("Cannot read ISO '%s': the disc filesystem did not parse. The "
-							"image may be truncated or incomplete -- check that it copied whole, and "
-							"that the volume holding it can store a file that large.", m_path);
-						return game_boot_result::invalid_file_or_folder;
-					}
-				}
+			const auto device = fs::get_virtual_device(iso_device::virtual_device_name + "/");
+			const auto* iso_dev = dynamic_cast<const iso_device*>(device.get());
+			if (!iso_dev || !iso_dev->archive_valid())
+			{
+				sys_log.error("Cannot read disc image '%s': its filesystem is invalid or incomplete", m_path);
+				return game_boot_result::invalid_file_or_folder;
 			}
 
 			launching_from_disc_archive = true;
@@ -1946,7 +1971,7 @@ game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch,
 			g_emu_callbacks.on_ready();
 			ensure(g_fxo->init<main_ppu_module<lv2_obj>>());
 			vm::init();
-			vm::reserve_map(vm::main, 0, 0x1FFF0000, vm::page_64k_size);
+			vm::reserve_map(vm::main, 0x10000, 0x1FFF0000, vm::page_64k_size);
 			m_force_boot = false;
 
 			// Force LLVM recompiler
@@ -2174,6 +2199,12 @@ game_boot_result Emulator::Load(const std::string& title_id, bool is_disc_patch,
 					sys_log.notice("Loading iso archive for patch ('%s')", game_path);
 
 					load_iso(game_path);
+
+					if (const game_boot_result result = check_disc_key(game_path); is_error(result))
+					{
+						return result;
+					}
+
 					launching_from_disc_archive = true;
 					game_path = iso_device::virtual_device_name + "/PS3_GAME/./";
 				}
@@ -4573,7 +4604,7 @@ game_boot_result Emulator::AddGame(std::string path, bool is_iso)
 	fmt::trim_back(path, fs::delim);
 
 	// Handle files directly
-	if (!fs::is_dir(path) || fs::get_optical_raw_device(path))
+	if (!fs::is_dir(path) || is_iso_file(path))
 	{
 		return AddGameToYml(path, is_iso);
 	}
