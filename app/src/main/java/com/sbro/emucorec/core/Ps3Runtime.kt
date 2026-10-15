@@ -258,8 +258,8 @@ object Ps3Runtime {
     fun stop() {
         detachSurface()
         if (RPCSX.initialized) runCatching { RPCSX.instance.kill() }
-        mainPumpThread = null
-        compilePumpThread = null
+        // Both JNI processors are process-lifetime loops. Retain their handles
+        // so initialization after an install or game stop cannot duplicate them.
     }
 
     fun state(): EmulatorState =

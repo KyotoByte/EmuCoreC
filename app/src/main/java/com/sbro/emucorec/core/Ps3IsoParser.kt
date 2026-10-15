@@ -258,7 +258,7 @@ object Ps3IsoParser {
         }.getOrDefault(emptyList())
     }
 
-    private fun scanForSfoBytes(raf: RandomAccessFile): ByteArray? {
+    internal fun scanForSfoBytes(raf: RandomAccessFile): ByteArray? {
         val maxScan = 64L * 1024L * 1024L // 64 MB
         val limit = raf.length().coerceAtMost(maxScan).toInt()
         if (limit < 20) return null
@@ -272,7 +272,7 @@ object Ps3IsoParser {
             raf.seek(offset)
             raf.readFully(buffer, 0, toRead)
 
-            for (i in 0 until toRead - 20) {
+            for (i in 0..toRead - 20) {
                 if (buffer[i] == 0.toByte() && buffer[i + 1] == 0x50.toByte() &&
                     buffer[i + 2] == 0x53.toByte() && buffer[i + 3] == 0x46.toByte() &&
                     buffer[i + 4] == 0x01.toByte() && buffer[i + 5] == 0x01.toByte()) {
@@ -286,7 +286,8 @@ object Ps3IsoParser {
                     }
                 }
             }
-            offset += (toRead - 1024)
+            if (offset + toRead >= limit) break
+            offset += (toRead - 1024).coerceAtLeast(1)
         }
         return null
     }

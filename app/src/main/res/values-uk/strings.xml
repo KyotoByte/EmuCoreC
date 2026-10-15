@@ -831,6 +831,7 @@
     <string name="core_label_exclusive_fullscreen_mode">Ексклюзивний повноекранний режим</string>
     <string name="core_label_exit_rpcs3_when_process_finishes">Вийдіть із RPCS3, коли процес завершиться</string>
     <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
     <string name="core_label_fake">Підробка</string>
     <string name="core_label_fake_move_rotation_cone">Підроблений конус обертання</string>
     <string name="core_label_fake_move_rotation_cone_vertical">Фальшивий конус обертання руху (вертикальний)</string>
@@ -1874,7 +1875,7 @@ Over-Under ближче до рідного стереовиходу, але п�
     <string name="settings_ra_points_label">Очки</string>
     <string name="core_update_reset_title">Оновлення ядра</string>
     <string name="core_update_reset_body">Це оновлення містить зміни в ядрі емулятора. Скиньте кеш і конфігурацію емулятора, щоб нове ядро працювало без збоїв.</string>
-    <string name="core_update_reset_kept">BIOS, папки ігор, керування, збереження, карти пам’яті та обкладинки залишаться.</string>
+    <string name="core_update_reset_kept">Прошивка PS3, папки ігор, керування, збереження та обкладинки залишаться.</string>
     <string name="core_update_reset_action">Скинути налаштування</string>
     <string name="core_update_reset_keep">Залишити як є</string>
     <string name="core_update_reset_done">Налаштування скинуто</string>

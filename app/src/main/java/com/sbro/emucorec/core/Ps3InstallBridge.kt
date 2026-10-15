@@ -1,12 +1,8 @@
 package com.sbro.emucorec.core
 
 import android.content.Context
-import kotlinx.coroutines.suspendCancellableCoroutine
 import net.rpcsx.NativeProgress
-import net.rpcsx.ProgressRepository
 import java.io.File
-import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.coroutines.resume
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -142,25 +138,8 @@ object Ps3InstallBridge {
         totalUnits: Int,
         fallbackDetail: String,
         start: (Long) -> Boolean,
-    ): Boolean = suspendCancellableCoroutine { continuation ->
-        val settled = AtomicBoolean(false)
-        val progressId = ProgressRepository.create { progress ->
-            emitNative(stage, unitIndex, totalUnits, fallbackDetail, progress)
-            if ((progress.failed || progress.completed) && settled.compareAndSet(false, true) && continuation.isActive) {
-                continuation.resume(!progress.failed)
-            }
-        }
-        continuation.invokeOnCancellation {
-            if (settled.compareAndSet(false, true)) ProgressRepository.cancel(progressId)
-        }
-        val accepted = runCatching { start(progressId) }.getOrDefault(false)
-        if (!settled.get()) {
-            if (accepted) {
-                ProgressRepository.onProgressEvent(progressId, 1, 1, null)
-            } else {
-                ProgressRepository.onProgressEvent(progressId, -1, 0, "Installation failed")
-            }
-        }
+    ): Boolean = awaitNativeInstallCompletion(start) { progress ->
+        emitNative(stage, unitIndex, totalUnits, fallbackDetail, progress)
     }
 
     private fun emitNative(

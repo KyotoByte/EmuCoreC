@@ -830,6 +830,7 @@
     <string name="core_label_exclusive_fullscreen_mode">Mode plein écran exclusif</string>
     <string name="core_label_exit_rpcs3_when_process_finishes">Quittez RPCS3 une fois le processus terminé</string>
     <string name="core_label_eyetoy">OeilJouet</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
     <string name="core_label_fake">Faux</string>
     <string name="core_label_fake_move_rotation_cone">Cône de rotation de faux mouvement</string>
     <string name="core_label_fake_move_rotation_cone_vertical">Cône de rotation de faux mouvement (vertical)</string>
@@ -1873,7 +1874,7 @@ Ce paramètre n\'est appliqué que lorsque SPU Decoder est défini sur Dynamic o
     <string name="settings_ra_points_label">Points</string>
     <string name="core_update_reset_title">Mise à jour du cœur</string>
     <string name="core_update_reset_body">Cette mise à jour contient des modifications du cœur de l’émulateur. Réinitialisez le cache et la configuration pour éviter tout dysfonctionnement.</string>
-    <string name="core_update_reset_kept">Le BIOS, les dossiers de jeux, les contrôles, les sauvegardes, les cartes mémoire et les jaquettes sont conservés.</string>
+    <string name="core_update_reset_kept">Le micrologiciel PS3, les dossiers de jeux, les contrôles, les sauvegardes et les jaquettes sont conservés.</string>
     <string name="core_update_reset_action">Réinitialiser les paramètres</string>
     <string name="core_update_reset_keep">Conserver les paramètres</string>
     <string name="core_update_reset_done">Paramètres réinitialisés</string>

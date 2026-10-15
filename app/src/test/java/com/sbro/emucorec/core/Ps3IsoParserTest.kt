@@ -5,8 +5,36 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
+import java.io.RandomAccessFile
 
 class Ps3IsoParserTest {
+    @Test
+    fun metadataScanFindsAHeaderAtTheLastPossibleOffset() {
+        val image = File.createTempFile("emucorec-tail-metadata", ".iso")
+        val header = byteArrayOf(0, 0x50, 0x53, 0x46, 1, 1) + ByteArray(14)
+        try {
+            image.writeBytes(ByteArray(1024) + header)
+            RandomAccessFile(image, "r").use { file ->
+                org.junit.Assert.assertArrayEquals(header, Ps3IsoParser.scanForSfoBytes(file))
+            }
+        } finally {
+            image.delete()
+        }
+    }
+
+    @Test(timeout = 3_000)
+    fun metadataScanFinishesWhenTheImageHasNoSfo() {
+        val image = File.createTempFile("emucorec-no-metadata", ".iso")
+        try {
+            RandomAccessFile(image, "rw").use { file ->
+                file.setLength(64L * 1024 * 1024)
+                assertEquals(null, Ps3IsoParser.scanForSfoBytes(file))
+            }
+        } finally {
+            image.delete()
+        }
+    }
+
 
     @Test
     fun isIsoImageDetectsValidExtensions() {

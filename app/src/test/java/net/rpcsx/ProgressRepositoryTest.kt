@@ -7,6 +7,20 @@ import org.junit.Test
 
 class ProgressRepositoryTest {
     @Test
+    fun reachingStageMaximumDoesNotCompleteTheInstallation() {
+        val updates = mutableListOf<NativeProgress>()
+        val id = ProgressRepository.create(updates::add)
+        try {
+            assertTrue(ProgressRepository.onProgressEvent(id, 100, 100, "Compiling firmware"))
+            assertFalse("A full progress bar is not a terminal native event", updates.last().completed)
+            assertTrue("The next compilation stage must still receive callbacks", id in ProgressRepository.progress.value)
+            assertTrue(ProgressRepository.onProgressEvent(id, 0, 0, "Finalizing"))
+        } finally {
+            ProgressRepository.cancel(id)
+        }
+    }
+
+    @Test
     fun listenerReceivesNativeValuesAndTerminalEventCleansUp() {
         val updates = mutableListOf<NativeProgress>()
         val id = ProgressRepository.create(updates::add)
@@ -16,7 +30,7 @@ class ProgressRepositoryTest {
         assertEquals(4, ProgressRepository.progress.value.getValue(id).value)
         assertFalse(updates.last().completed)
 
-        assertTrue(ProgressRepository.onProgressEvent(id, 10, 10, "Done"))
+        assertTrue(ProgressRepository.onProgressCompleted(id, 10, 10, "Done"))
         assertTrue(updates.last().completed)
         assertFalse(id in ProgressRepository.progress.value)
         assertFalse(ProgressRepository.onProgressEvent(id, 11, 10, null))

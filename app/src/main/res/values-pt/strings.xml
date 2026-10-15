@@ -830,6 +830,7 @@
     <string name="core_label_exclusive_fullscreen_mode">Modo de tela cheia exclusivo</string>
     <string name="core_label_exit_rpcs3_when_process_finishes">Saia do RPCS3 quando o processo terminar</string>
     <string name="core_label_eyetoy">Eye Toy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
     <string name="core_label_fake">Falso</string>
     <string name="core_label_fake_move_rotation_cone">Cone de rotação de movimento falso</string>
     <string name="core_label_fake_move_rotation_cone_vertical">Cone de rotação de movimento falso (vertical)</string>
@@ -1869,7 +1870,7 @@ Esta configuração só é aplicada quando o Decodificador SPU está definido co
     <string name="settings_ra_points_label">Pontos</string>
     <string name="core_update_reset_title">Atualização do núcleo</string>
     <string name="core_update_reset_body">Esta atualização inclui alterações no núcleo do emulador. Redefina a cache e a configuração para evitar falhas.</string>
-    <string name="core_update_reset_kept">BIOS, pastas de jogos, controles, saves, cartões de memória e capas são mantidos.</string>
+    <string name="core_update_reset_kept">O firmware do PS3, as pastas de jogos, os controles, os jogos salvos e as capas são mantidos.</string>
     <string name="core_update_reset_action">Redefinir configurações</string>
     <string name="core_update_reset_keep">Manter configurações</string>
     <string name="core_update_reset_done">Configurações redefinidas</string>

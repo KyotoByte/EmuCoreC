@@ -46,16 +46,24 @@ class ProgressRepository {
 
         @Keep
         @JvmStatic
-        fun onProgressEvent(id: Long, value: Long, maximum: Long, message: String?): Boolean {
+        fun onProgressEvent(id: Long, value: Long, maximum: Long, message: String?): Boolean =
+            update(id, value, maximum, message, completed = false)
+
+        @Keep
+        @JvmStatic
+        fun onProgressCompleted(id: Long, value: Long, maximum: Long, message: String?): Boolean =
+            update(id, value, maximum, message, completed = true)
+
+        private fun update(id: Long, value: Long, maximum: Long, message: String?, completed: Boolean): Boolean {
             val failed = value < 0
-            val completed = !failed && maximum > 0 && value >= maximum
+            val succeeded = completed && !failed
             val update = NativeProgress(
                 id = id,
                 value = value.coerceAtLeast(0),
                 maximum = maximum.coerceAtLeast(0),
                 message = message,
                 failed = failed,
-                completed = completed,
+                completed = succeeded,
             )
             val listener = synchronized(lock) {
                 // Check and update while holding the same lock. A cancellation
@@ -66,7 +74,7 @@ class ProgressRepository {
                 listeners[id]
             }
             listener?.invoke(update)
-            if (failed || completed) cancel(id)
+            if (failed || succeeded) cancel(id)
             return true
         }
     }

@@ -830,6 +830,7 @@
     <string name="core_label_exclusive_fullscreen_mode">Modalità a schermo intero esclusiva</string>
     <string name="core_label_exit_rpcs3_when_process_finishes">Uscire da RPCS3 al termine del processo</string>
     <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
     <string name="core_label_fake">Falso</string>
     <string name="core_label_fake_move_rotation_cone">Cono di rotazione del movimento falso</string>
     <string name="core_label_fake_move_rotation_cone_vertical">Cono di rotazione con movimento falso (verticale)</string>
@@ -1869,7 +1870,7 @@ Questa impostazione viene applicata solo quando il decodificatore SPU è imposta
     <string name="settings_ra_points_label">Punti</string>
     <string name="core_update_reset_title">Aggiornamento del core</string>
     <string name="core_update_reset_body">Questo aggiornamento contiene modifiche al core dell’emulatore. Reimposta cache e configurazione per evitare problemi.</string>
-    <string name="core_update_reset_kept">BIOS, cartelle dei giochi, controlli, salvataggi, memory card e copertine vengono conservati.</string>
+    <string name="core_update_reset_kept">Il firmware PS3, le cartelle dei giochi, i controlli, i salvataggi e le copertine vengono conservati.</string>
     <string name="core_update_reset_action">Ripristina impostazioni</string>
     <string name="core_update_reset_keep">Mantieni impostazioni</string>
     <string name="core_update_reset_done">Impostazioni ripristinate</string>

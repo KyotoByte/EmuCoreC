@@ -1251,6 +1251,7 @@ class Progress {
   jlong progressId;
   jclass progressRepositoryClass;
   jmethodID onProgressEventMethodId;
+  jmethodID onProgressCompletedMethodId;
 
 public:
   // Every JNI object handed back to native code is a LOCAL reference, and local
@@ -1270,6 +1271,8 @@ public:
         ensure(env->FindClass("net/rpcsx/ProgressRepository"));
     onProgressEventMethodId = env->GetStaticMethodID(
         progressRepositoryClass, "onProgressEvent", "(JJJLjava/lang/String;)Z");
+    onProgressCompletedMethodId = ensure(env->GetStaticMethodID(
+        progressRepositoryClass, "onProgressCompleted", "(JJJLjava/lang/String;)Z"));
   }
 
   ~Progress() {
@@ -1284,10 +1287,15 @@ public:
   Progress &operator=(const Progress &) = delete;
 
   bool report(jlong value, jlong max, const std::string &message = {}) {
+    return send(onProgressEventMethodId, value, max, message);
+  }
+
+private:
+  bool send(jmethodID method, jlong value, jlong max, const std::string &message) {
     jstring text = message.empty() ? nullptr : wrap(env, message);
 
     const bool result = env->CallStaticBooleanMethod(
-        progressRepositoryClass, onProgressEventMethodId, progressId, value,
+        progressRepositoryClass, method, progressId, value,
         max, text);
 
     if (text != nullptr) {
@@ -1297,11 +1305,12 @@ public:
     return result;
   }
 
+public:
   void failure(const std::string &message = {}) { report(-1, 0, message); }
 
   void success(jlong value, const std::string &message = {}) {
     value = std::max<jlong>(value, 1);
-    report(value, value, message);
+    send(onProgressCompletedMethodId, value, value, message);
   }
 
   jlong getProgressId() const { return progressId; }
@@ -1970,10 +1979,12 @@ extern bool ppu_initialize(const ppu_module<lv2_obj> &, bool check_only = false,
 extern void ppu_finalize(const ppu_module<lv2_obj> &);
 extern bool ppu_load_rel_exec(const ppu_rel_object &);
 
+// Compilation, disc probing, boot and shutdown all own the same VM/VFS state.
+static std::mutex g_emu_lifecycle_mutex;
+
 class CompilationQueue {
-  std::atomic<std::uint64_t> nextWorkTag{0};
-  std::uint64_t lastProcessedTag = 0;
   std::mutex queueMutex;
+  std::condition_variable queueReady;
   std::deque<CompilationWorkload> queue;
 
 public:
@@ -1983,7 +1994,7 @@ public:
       queue.push_back(std::move(workload));
     }
 
-    nextWorkTag.fetch_add(1);
+    queueReady.notify_one();
   }
 
   void push(Progress &progress, std::string path) {
@@ -1997,31 +2008,23 @@ public:
 
   void process(JNIEnv *env) {
     while (true) {
-      auto nextWorkTagValue = nextWorkTag.load();
-
-      if (nextWorkTagValue == lastProcessedTag) {
-        nextWorkTag.wait(lastProcessedTag);
-      }
-
-      if (nextWorkTagValue == lastProcessedTag || queue.empty()) {
-        continue;
-      }
-
       CompilationWorkload workload;
 
       {
-        std::lock_guard lock(queueMutex);
-
-        if (queue.empty()) {
-          continue;
-        }
+        std::unique_lock lock(queueMutex);
+        queueReady.wait(lock, [this] { return !queue.empty(); });
 
         workload = std::move(queue.front());
         queue.pop_front();
       }
 
-      impl(env, std::move(workload));
-      lastProcessedTag++;
+      const jlong progressId = workload.progressId;
+      try {
+        impl(env, std::move(workload));
+      } catch (const std::exception &error) {
+        rpcsx_android.error("Compilation failed: %s", error.what());
+        Progress(env, progressId).failure("Compilation failed");
+      }
     }
   }
 
@@ -2035,13 +2038,16 @@ private:
     rpcsx_android.notice("Creating cache initiated, state %d",
                         (int)Emu.GetStatus(false));
 
+    std::unique_lock lifecycle_lock(g_emu_lifecycle_mutex, std::defer_lock);
     while (true) {
+      lifecycle_lock.lock();
       auto state = Emu.GetStatus(false);
 
-      if (state == system_state::stopped || state == system_state::ready) {
+      if (state == system_state::stopped) {
         break;
       }
 
+      lifecycle_lock.unlock();
       rpcsx_android.notice("Creating cache wait, state %d", (int)state);
       std::this_thread::sleep_for(std::chrono::seconds(1));
     }
@@ -2050,6 +2056,20 @@ private:
 
 
     MessageDialog::pushPendingProgressId(workload.progressId);
+    bool cleanup_done = false;
+    auto cleanup = [&] {
+      if (cleanup_done) return;
+      cleanup_done = true;
+      Emu.Kill(false);
+      while (!Emu.IsStopped(true)) {
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+      }
+      MessageDialog::popPendingProgressId(workload.progressId);
+    };
+    AtExit cleanup_on_failure{cleanup};
+    // The compiler observes the emulator state as its cancellation signal.
+    // Use the core's offline execution mode and pair it with normal teardown.
+    Emu.SetTestMode();
 
     g_fxo->init<named_thread<progress_dialog_server>>();
     g_fxo->init<main_ppu_module<lv2_obj>>();
@@ -2184,7 +2204,6 @@ private:
       if (_main.analyse(0, _main.elf_entry, _main.seg0_code_end,
                         _main.applied_patches, std::vector<u32>{})) {
         Emu.ConfigurePPUCache();
-        Emu.SetTestMode();
         rpcsx_android.error("Going to precompile main PPU module");
         ppu_initialize(_main);
         mod_list.emplace_back(&_main);
@@ -2194,24 +2213,11 @@ private:
     ppu_precompile(dir_queue, mod_list.empty() ? nullptr : &mod_list, false);
 
     rpcsx_android.notice("Finalization");
-    g_fxo->reset();
-
-    // Pairs with the vm::init() above. Nothing else unmaps it, since vm::close()
-    // is only reached from Emu.Stop() and precompilation never boots, so the
-    // blocks this pass mapped outlive it and stay valid.
-    //
-    // The next vm::init(), either the next workload or Emulator::Load() booting
-    // a game, assigns over g_locations. That destroys blocks that are still
-    // valid and aborts the process in ~block_t()'s ensure(!is_valid()).
-    //
-    // Has to come after g_fxo->reset(): vm::close() requires each block to be
-    // uniquely owned, and _unmap_block throws "External memory usage at block"
-    // if anything still holds one of its shm references.
-    vm::close();
-
-
-    MessageDialog::popPendingProgressId(workload.progressId);
-
+    // Complete only after the core has joined its threads and closed the VM.
+    cleanup();
+    if (is_vsh) {
+      sendFirmwareCompiled(env, utils::get_firmware_version());
+    }
     Progress(env, workload.progressId).success(0);
   }
 } static g_compilationQueue;
@@ -2973,8 +2979,6 @@ extern "C" bool _rpcsx_collectGameInfo(JNIEnv *env, std::string_view rootDir,
 //
 // An Emu.IsStopped() check alone is not enough. It is a plain read, the state reaches
 // stopped before g_fxo teardown has finished, and a boot or kill can start right after it.
-static std::mutex g_emu_lifecycle_mutex;
-
 // Held so a probe cannot be inside vfs::mount while this resets g_fxo underneath it.
 extern "C" void _rpcsx_shutdown() {
   std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
@@ -3002,18 +3006,19 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   // (System.cpp, "Verification failed (object: 0x0)").
   //
   // Kill() is idempotent and returns quickly when already stopped. The bound is generous
-  // because a real teardown joins the RSX and SPU threads and flushes caches; past it we
-  // boot anyway and let BootGame report a normal error rather than hanging the UI.
-  if (!Emu.IsStopped()) {
+  // because a real teardown joins the RSX and SPU threads and flushes caches.
+  // A timeout leaves the old VM alone and reports still_running to the caller.
+  if (!Emu.IsStopped(true)) {
     rpcsx_android.notice("boot: previous VM still running, stopping it first");
     Emu.Kill();
 
-    for (int waited = 0; !Emu.IsStopped() && waited < 10000; waited += 20) {
+    for (int waited = 0; !Emu.IsStopped(true) && waited < 10000; waited += 20) {
       std::this_thread::sleep_for(std::chrono::milliseconds(20));
     }
 
-    if (!Emu.IsStopped()) {
-      rpcsx_android.error("boot: previous VM did not stop in time, booting anyway");
+    if (!Emu.IsStopped(true)) {
+      rpcsx_android.error("boot: previous VM did not stop in time");
+      return static_cast<int>(game_boot_result::still_running);
     }
   }
 
@@ -3469,7 +3474,7 @@ static std::string read_sfo_game_info(const std::string &root,
 
 extern "C" std::string _rpcsx_probeDiscInfo(std::string_view isoPath,
                                             std::string_view iconOut) {
-  if (isoPath.empty() || !Emu.IsStopped()) {
+  if (isoPath.empty() || !Emu.IsStopped(true)) {
     return "{}";
   }
 
@@ -3504,7 +3509,7 @@ extern "C" std::string _rpcsx_probeDiscInfo(std::string_view isoPath,
 
   // Re-checked under the lock: a boot may have started while we were waiting for it,
   // and mounting into a live VM's vfs would shadow the disc it is running from.
-  if (!Emu.IsStopped()) {
+  if (!Emu.IsStopped(true)) {
     return "{}";
   }
 
@@ -3961,6 +3966,25 @@ extern "C" bool _rpcsx_usbDeviceEvent(int fd, int vendorId, int productId,
   return true;
 }
 
+static bool runStoppedInstall(JNIEnv *env, jlong progressId,
+                              const std::function<bool()> &install) {
+  std::lock_guard lifecycle_lock(g_emu_lifecycle_mutex);
+  try {
+    if (!Emu.IsStopped(true)) {
+      Progress(env, progressId).failure("Stop the current game before installing");
+      return false;
+    }
+    // A completed boot or precompile tears down the VFS and JIT. Restore the
+    // configured mounts before TAR/PKG extraction, including on reinstall.
+    Emu.Init();
+    return install();
+  } catch (const std::exception &error) {
+    rpcsx_android.error("Installation failed: %s", error.what());
+    Progress(env, progressId).failure("Installation failed");
+    return false;
+  }
+}
+
 static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
   Progress progress(env, progressId);
 
@@ -4173,6 +4197,7 @@ static bool installPkg(JNIEnv *env, std::vector<fs::file> &&files,
   // normal compile screen, exactly as a disc game does. RPCS3 desktop does not
   // precompile on install either.
 
+  progress.success(0);
   return true;
 }
 
@@ -4619,11 +4644,14 @@ static bool installIso(JNIEnv *env, fs::file &&file, jlong progressId) {
     progress.report(processedBytes, totalBytes);
   }
 
+  progress.success(processedBytes);
   return true;
 }
 
 extern "C" bool _rpcsx_installFw(JNIEnv *env, int fd, long progressId) {
-  return installPup(env, fs::file::from_native_handle(fd), progressId);
+  return runStoppedInstall(env, progressId, [&] {
+    return installPup(env, fs::file::from_native_handle(fd), progressId);
+  });
 }
 
 extern "C" bool _rpcsx_isInstallableFile(jint fd) {
@@ -4653,35 +4681,37 @@ extern "C" jstring _rpcsx_getDirInstallPath(JNIEnv *env, jint fd) {
 // PUP/EDAT/ISO by sniffing the file type.
 extern "C" bool _rpcsx_installSplitPkg(JNIEnv *env, const int *fds, int count,
                                        long progressId) {
-  if (fds == nullptr || count <= 0) {
-    Progress(env, progressId).failure("No package files selected");
-    return false;
-  }
-
-  std::vector<fs::file> files;
-  files.reserve(count);
-  for (int i = 0; i < count; ++i) {
-    files.push_back(fs::file::from_native_handle(fds[i]));
-  }
-
-  // The Java side owns every fd; release each handle so closing the
-  // ParcelFileDescriptors there is not a double close.
-  AtExit atExit{[&] {
-    for (auto &f : files) {
-      f.release_handle();
-    }
-  }};
-
-  for (auto &f : files) {
-    if (getFileType(f) != FileType::Pkg) {
-      Progress(env, progressId)
-          .failure("Every selected file must be a .pkg part");
+  return runStoppedInstall(env, progressId, [&] {
+    if (fds == nullptr || count <= 0) {
+      Progress(env, progressId).failure("No package files selected");
       return false;
     }
-    f.seek(0);
-  }
 
-  return installPkg(env, std::move(files), progressId);
+    std::vector<fs::file> files;
+    files.reserve(count);
+    for (int i = 0; i < count; ++i) {
+      files.push_back(fs::file::from_native_handle(fds[i]));
+    }
+
+    // The Java side owns every fd; release each handle so closing the
+    // ParcelFileDescriptors there is not a double close.
+    AtExit atExit{[&] {
+      for (auto &f : files) {
+        f.release_handle();
+      }
+    }};
+
+    for (auto &f : files) {
+      if (getFileType(f) != FileType::Pkg) {
+        Progress(env, progressId)
+            .failure("Every selected file must be a .pkg part");
+        return false;
+      }
+      f.seek(0);
+    }
+
+    return installPkg(env, std::move(files), progressId);
+  });
 }
 
 // Delete an installed title's directory (dev_hdd0/game/<TITLEID> and its
@@ -4713,60 +4743,64 @@ extern "C" bool _rpcsx_uninstallGame(std::string_view path) {
 }
 
 extern "C" bool _rpcsx_install(JNIEnv *env, int fd, long progressId) {
-  auto file = fs::file::from_native_handle(fd);
-  AtExit atExit{[&] { file.release_handle(); }};
+  return runStoppedInstall(env, progressId, [&] {
+    auto file = fs::file::from_native_handle(fd);
+    AtExit atExit{[&] { file.release_handle(); }};
 
-  auto type = getFileType(file);
-  file.seek(0);
+    auto type = getFileType(file);
+    file.seek(0);
 
-  switch (type) {
-  case FileType::Unknown:
-    Progress(env, progressId).failure("Unsupported file type");
-    return false;
+    switch (type) {
+    case FileType::Unknown:
+      Progress(env, progressId).failure("Unsupported file type");
+      return false;
 
-  case FileType::Pup:
-    return installPup(env, std::move(file), progressId);
+    case FileType::Pup:
+      return installPup(env, std::move(file), progressId);
 
-  case FileType::Pkg: {
-    std::vector<fs::file> files;
-    files.push_back(std::move(file));
-    return installPkg(env, std::move(files), progressId);
-  }
+    case FileType::Pkg: {
+      std::vector<fs::file> files;
+      files.push_back(std::move(file));
+      return installPkg(env, std::move(files), progressId);
+    }
 
-  case FileType::Edat:
-    return installEdat(env, std::move(file), progressId);
+    case FileType::Edat:
+      return installEdat(env, std::move(file), progressId);
 
-  case FileType::Iso:
-    return installIso(env, std::move(file), progressId);
+    case FileType::Iso:
+      return installIso(env, std::move(file), progressId);
 
-  case FileType::Rap:
-    Progress(env, progressId)
-        .failure("RAP file cannot be preinstalled. Use lock button on "
-                 "installed game instead");
-    return false;
-  }
+    case FileType::Rap:
+      Progress(env, progressId)
+          .failure("RAP file cannot be preinstalled. Use lock button on "
+                   "installed game instead");
+      return false;
+    }
 
-  return true;
+    return true;
+  });
 }
 
 extern "C" bool _rpcsx_installKey(JNIEnv *env, int fd, long progressId,
                                   std::string_view gamePath) {
-  auto file = fs::file::from_native_handle(fd);
-  AtExit atExit{[&] { file.release_handle(); }};
+  return runStoppedInstall(env, progressId, [&] {
+    auto file = fs::file::from_native_handle(fd);
+    AtExit atExit{[&] { file.release_handle(); }};
 
-  auto type = getFileType(file);
-  file.seek(0);
+    auto type = getFileType(file);
+    file.seek(0);
 
-  if (type == FileType::Rap) {
-    return installRap(env, std::move(file), progressId, gamePath);
-  }
+    if (type == FileType::Rap) {
+      return installRap(env, std::move(file), progressId, gamePath);
+    }
 
-  if (type == FileType::Edat) {
-    return installEdat(env, std::move(file), progressId, gamePath);
-  }
+    if (type == FileType::Edat) {
+      return installEdat(env, std::move(file), progressId, gamePath);
+    }
 
-  Progress(env, progressId).failure("Unsupported key type");
-  return false;
+    Progress(env, progressId).failure("Unsupported key type");
+    return false;
+  });
 }
 
 extern "C" std::string _rpcsx_systemInfo() {

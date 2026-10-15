@@ -829,6 +829,7 @@
     <string name="core_label_exclusive_fullscreen_mode">Exclusive Fullscreen Mode</string>
     <string name="core_label_exit_rpcs3_when_process_finishes">Exit RPCS3 when process finishes</string>
     <string name="core_label_eyetoy">EyeToy</string>
+    <string name="core_label_eye_toy">@string/core_label_eyetoy</string>
     <string name="core_label_fake">Fake</string>
     <string name="core_label_fake_move_rotation_cone">Fake Move Rotation Cone</string>
     <string name="core_label_fake_move_rotation_cone_vertical">Fake Move Rotation Cone (Vertical)</string>
@@ -1868,7 +1869,7 @@ This setting is only applied when SPU Decoder is set to Dynamic or LLVM.</string
     <string name="settings_ra_points_label">Points</string>
     <string name="core_update_reset_title">Core update</string>
     <string name="core_update_reset_body">This update includes changes to the emulator core. Reset the emulator cache and configuration so the new core runs without glitches.</string>
-    <string name="core_update_reset_kept">BIOS, game folders, controls, saves, memory cards and covers are kept.</string>
+    <string name="core_update_reset_kept">PS3 firmware, game folders, controls, saves and covers are kept.</string>
     <string name="core_update_reset_action">Reset settings</string>
     <string name="core_update_reset_keep">Keep current settings</string>
     <string name="core_update_reset_done">Settings have been reset</string>

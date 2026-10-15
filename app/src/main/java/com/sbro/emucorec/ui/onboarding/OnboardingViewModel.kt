@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.jakewharton.processphoenix.ProcessPhoenix
+import com.sbro.emucorec.core.CoreBinaryFingerprint
 import com.sbro.emucorec.core.EmulatorStorage
 import com.sbro.emucorec.core.InstallStateBus
 import com.sbro.emucorec.core.NativeLibraryLoader
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 data class OnboardingUiState(
     val currentPage: Int = 0,
@@ -56,7 +58,8 @@ class OnboardingViewModel(application: Application) : AndroidViewModel(applicati
         )
     }
 
-    fun completeOnboarding() {
+    suspend fun completeOnboarding() = withContext(Dispatchers.IO) {
+        preferences.lastCoreBinaryFingerprint = CoreBinaryFingerprint.current(getApplication())
         preferences.onboardingCompleted = true
     }
 
