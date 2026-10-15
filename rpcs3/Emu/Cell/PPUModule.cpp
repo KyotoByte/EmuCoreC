@@ -1565,9 +1565,11 @@ struct prx_names_table
 
 			// Doesn't support addresses above 256MB because it wastes memory and is very unlikely (if somehow does occur increase it)
 			const u32 max0 = (seg.addr + seg.size - 1) >> 16;
-			const u32 max = std::min<u32>(::size32(lut), max0);
+			// max0 is inclusive; use an exclusive bound to keep the last page
+			// without writing past the name table.
+			const u32 max = std::min<u32>(::size32(lut), max0 + 1);
 
-			if (max0 > max)
+			if (max0 >= ::size32(lut))
 			{
 				ppu_loader.error("Skipping PRX name registeration: %s, max=0x%x", name, max0 << 16);
 			}

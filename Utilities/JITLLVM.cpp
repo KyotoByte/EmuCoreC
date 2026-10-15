@@ -245,15 +245,52 @@ struct MemoryManager1 : llvm::RTDyldMemoryManager
 	std::vector<std::pair<u8*, uptr>> m_code_ranges;
 #endif
 
-	MemoryManager1(std::function<u64(const std::string&)> symbols_cement = {}) noexcept
+	// Give the address space back when destroyed. Only for an auxiliary JIT, whose code is
+	// written to the object cache and never run from this memory (see the destructor).
+	bool m_release_on_destroy = false;
+
+	// Reservations alive right now, for the note in reserve_once().
+	static inline atomic_t<u64> s_held_count{0};
+
+	MemoryManager1(std::function<u64(const std::string&)> symbols_cement = {}, bool release_on_destroy = false) noexcept
 		: m_symbols_cement(std::move(symbols_cement))
+		, m_release_on_destroy(release_on_destroy)
 	{
+	}
+
+	// Reserve on first use, not on construction.
+	//
+	// 768 MiB of address space per instance, and the destructor deliberately keeps the
+	// reservation (see below). An SPU thread builds one of these whether or not it ever
+	// compiles anything (SPUThread.cpp makes a recompiler per thread), so a SPURS title that
+	// cycles through thread groups burns the space a few hundred times over. A 64 bit Android
+	// process has 512 GiB of it, against 128 TiB on desktop, so what is harmless upstream ran
+	// Assassin's Creed IV out of ADDRESS SPACE, not memory: commits failed with ENOMEM while
+	// the device still had 6 GB free and the process held 1.4 GB.
+	void reserve_once()
+	{
+		if (m_code_mems)
+		{
+			return;
+		}
+
 		auto ptr = reinterpret_cast<u8*>(utils::memory_reserve(c_max_size * 3, true));
 		m_code_mems = ptr;
 		// ptr += c_max_size;
 		// m_data_ro_mems = ptr;
 		 ptr += c_max_size;
 		m_data_rw_mems = ptr;
+
+		// Every 64 instances, because the ceiling is the thing worth seeing coming: this is what
+		// ran out on Assassin's Creed IV, and the number says how close a long session is.
+		static atomic_t<u64> s_reserved_count{0};
+
+		const u64 held = ++s_held_count;
+
+		if (const u64 n = ++s_reserved_count; n % 64 == 0)
+		{
+			jit_log.notice("JIT: %u reservations made, %u held now: %u GiB of address space", n, held, held * c_max_size * 3 / (1024 * 1024 * 1024));
+		}
 	}
 
 	MemoryManager1(const MemoryManager1&) = delete;
@@ -262,6 +299,27 @@ struct MemoryManager1 : llvm::RTDyldMemoryManager
 
 	~MemoryManager1() override
 	{
+		if (!m_code_mems)
+		{
+			// Never compiled anything, so nothing was ever reserved.
+			return;
+		}
+
+		// An auxiliary JIT only writes objects to the cache; the code it emitted is loaded
+		// again from disk into a long-lived JIT before anything runs it, so no pointer into
+		// this memory survives it. Keeping its reservation, as below, only spends address
+		// space, and a phone has 512 GiB of it. Metal Gear Solid V: The Phantom Pain
+		// (BLUS31491) compiles about 500 PPU modules on a cold cache, each through one of
+		// these: at 768 MiB apiece the log read "576 instances hold 432 GiB" when commits
+		// started failing with ENOMEM and 1.5 GB still free, and scudo then died unable to
+		// map anything at all, closing the app (Odin 3).
+		if (m_release_on_destroy)
+		{
+			utils::memory_release(m_code_mems, c_max_size * 3);
+			s_held_count--;
+			return;
+		}
+
 		// Hack: don't release to prevent reuse of address space, see jit_announce
 		// constexpr auto how_much = [](u64 pos) { return utils::align(pos, pos < c_page_size ? c_page_size / 4 : c_page_size); };
 		// utils::memory_decommit(m_code_mems, how_much(code_ptr));
@@ -292,8 +350,11 @@ struct MemoryManager1 : llvm::RTDyldMemoryManager
 		return {addr, llvm::JITSymbolFlags::Exported};
 	}
 
-	u8* allocate(u64& alloc_pos, void* block, uptr size, u64 align, utils::protection prot)
+	u8* allocate(u64& alloc_pos, void*& block, uptr size, u64 align, utils::protection prot)
 	{
+		// block is a reference to the member this instance allocates from, so reserving here
+		// gives the caller the address it was passed a reference to.
+		reserve_once();
 		align = align ? align : 16;
  
 		const u64 sizea = utils::align(size, align);
@@ -817,7 +878,7 @@ jit_compiler::jit_compiler(const std::unordered_map<std::string, u64>& _link, st
 		// Auxiliary JIT (does not use custom memory manager, only writes the objects)
 		if (flags & 0x1)
 		{
-			mem = std::make_unique<MemoryManager1>(std::move(symbols_cement));
+			mem = std::make_unique<MemoryManager1>(std::move(symbols_cement), true);
 		}
 		else
 		{
