@@ -54,7 +54,9 @@ namespace gl
 
 			// Extension directives must precede precision declarations in ESSL.
 			const auto header_end = source.find('\n');
-			source.insert(header_end + 1, "#extension GL_EXT_clip_cull_distance : require\n");
+			// Compute/helper shaders do not need clip distances. Keep the
+			// extension optional so their compilation does not require it.
+			source.insert(header_end + 1, "#extension GL_EXT_clip_cull_distance : enable\n");
 			std::size_t declarations_at = header_end + 1;
 			while (source.compare(declarations_at, 11, "#extension ") == 0)
 			{

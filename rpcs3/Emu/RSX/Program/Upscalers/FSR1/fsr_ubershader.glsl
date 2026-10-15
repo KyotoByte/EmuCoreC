@@ -6,6 +6,10 @@ R"(
 
 %FFX_DEFINITIONS%
 
+#ifndef A_HALF
+#define A_HALF 0
+#endif
+
 #if defined(SAMPLE_EASU) || defined(SAMPLE_RCAS)
 	layout(%push_block%) uniform const_buffer
 	{
@@ -64,13 +68,13 @@ void CurrFilter(AU2 pos)
 	#if SAMPLE_SLOW_FALLBACK
 		AF3 c;
 		FsrEasuF(c, pos, Const0, Const1, Const2, Const3);
-		if( Sample.x == 1 )
+		if( Sample.x == 1u )
 			c *= c;
 		imageStore(OutputTexture, ASU2(pos), AF4(c, 1));
 	#else
 		AH3 c;
 		FsrEasuH(c, pos, Const0, Const1, Const2, Const3);
-		if( Sample.x == 1 )
+		if( Sample.x == 1u )
 			c *= c;
 		imageStore(OutputTexture, ASU2(pos), AH4(c, 1));
 	#endif
@@ -79,13 +83,13 @@ void CurrFilter(AU2 pos)
 	#if SAMPLE_SLOW_FALLBACK
 		AF3 c;
 		FsrRcasF(c.r, c.g, c.b, pos, Const0);
-		if( Sample.x == 1 )
+		if( Sample.x == 1u )
 			c *= c;
 		imageStore(OutputTexture, ASU2(pos), AF4(c, 1));
 	#else
 		AH3 c;
 		FsrRcasH(c.r, c.g, c.b, pos, Const0);
-		if( Sample.x == 1 )
+		if( Sample.x == 1u )
 			c *= c;
 		imageStore(OutputTexture, ASU2(pos), AH4(c, 1));
 	#endif
