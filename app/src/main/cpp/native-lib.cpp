@@ -49,6 +49,7 @@ struct RPCSXApi {
   std::string (*settingsGet)(std::string_view path);
   bool (*settingsSet)(std::string_view path, std::string_view valueString);
   std::string (*getVersion)();
+  std::string (*probeDiscInfo)(std::string_view path, std::string_view iconOut);
   void (*setAppInfo)(std::string_view version, std::string_view build,
                      std::string_view device);
   void *(*setCustomDriver)(void *driverHandle);
@@ -122,6 +123,7 @@ struct RPCSXLibrary : RPCSXApi {
     result.settingsGet = reinterpret_cast<decltype(settingsGet)>(dlsym(handle, "_rpcsx_settingsGet"));
     result.settingsSet = reinterpret_cast<decltype(settingsSet)>(dlsym(handle, "_rpcsx_settingsSet"));
     result.getVersion = reinterpret_cast<decltype(getVersion)>(dlsym(handle, "_rpcsx_getVersion"));
+    result.probeDiscInfo = reinterpret_cast<decltype(probeDiscInfo)>(dlsym(handle, "_rpcsx_probeDiscInfo"));
     result.setAppInfo = reinterpret_cast<decltype(setAppInfo)>(dlsym(handle, "_rpcsx_setAppInfo"));
     result.setCustomDriver = reinterpret_cast<decltype(setCustomDriver)>(dlsym(handle, "_rpcsx_setCustomDriver"));
     result.patchEngineVersion = reinterpret_cast<decltype(patchEngineVersion)>(dlsym(handle, "_rpcsx_patchEngineVersion"));
@@ -398,6 +400,13 @@ Java_net_rpcsx_RPCSX_patchEngineVersion(JNIEnv *env, jobject) {
     return wrap(env, rpcsxLib.patchEngineVersion());
   }
   return wrap(env, "1.2");
+}
+
+extern "C" JNIEXPORT jstring JNICALL
+Java_net_rpcsx_RPCSX_probeDiscInfo(JNIEnv *env, jobject, jstring path, jstring iconOut) {
+  return wrap(env, rpcsxLib.probeDiscInfo
+      ? rpcsxLib.probeDiscInfo(unwrap(env, path), unwrap(env, iconOut))
+      : "{}");
 }
 
 extern "C" JNIEXPORT jint JNICALL

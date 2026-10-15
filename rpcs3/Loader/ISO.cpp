@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "ISO.h"
+#include "CHD.h"
 #include "Emu/VFS.h"
 #include "Emu/system_utils.hpp"
 #include "Emu/System.h"
@@ -122,7 +123,7 @@ bool is_iso_file(const std::string& path, u64* size, bool* is_raw_device)
 
 	iso_file file(new_path);
 
-	return is_iso_file(file, size);
+	return is_iso_file(file, size) || (!raw_device && chd::probe(new_path, size));
 }
 
 // Reset the iv to a particular LBA
@@ -249,7 +250,7 @@ static iso_type_status read_magic_blocks(iso_archive& archive, std::vector<iso_m
 
 	// One handle serves every block: it is pointed at each of the files in turn, which costs nothing but the
 	// metadata of the node, while building a file object per node would open the image again for each of them
-	iso_file iso_file(archive.path());
+	iso_file iso_file = archive.open_raw_file();
 
 	if (!iso_file)
 	{
@@ -511,7 +512,7 @@ bool iso_file_decryption::init(const std::string& path, iso_archive* archive)
 	// Store the ISO region information (needed by both the "Redump" type (only on "decrypt()" method) and "3k3y" type)
 	//
 
-	iso_file iso_file(path);
+	iso_file iso_file = archive ? archive->open_raw_file() : ::iso_file(path);
 
 	if (!is_iso_file(iso_file))
 	{
@@ -829,6 +830,11 @@ bool iso_file_decryption::decrypt(u64 offset, const std::span<u8> buffer, const 
 
 iso_file_encrypted::iso_file_encrypted(const std::string& path, bs_t<fs::open_mode> mode, const iso_fs_node& node, std::shared_ptr<iso_file_decryption> dec)
 	: iso_file(path, mode, node), m_dec(dec)
+{
+}
+
+iso_file_encrypted::iso_file_encrypted(fs::file image, const iso_fs_node& node, std::shared_ptr<iso_file_decryption> dec)
+	: iso_file(std::move(image), node), m_dec(std::move(dec))
 {
 }
 
@@ -1371,12 +1377,22 @@ iso_archive::iso_archive(const std::string& path)
 	m_path = path;
 
 	// "m_path" is updated with the raw device path in case "path" points to a BD drive
-	fs::get_optical_raw_device(path, &m_path);
+	const bool raw_device = fs::get_optical_raw_device(path, &m_path);
+	if (!raw_device && chd::is_chd_file(m_path))
+	{
+		m_chd = chd::open(m_path);
+		if (!m_chd)
+		{
+			invalidate();
+			return;
+		}
+	}
 
 	// NOTE: the file is opened once here and then handed over to the parsing below. Recognizing the ISO through its
 	//       path (i.e. "is_iso_file(m_path)") would open it and read its volume descriptor a second time, which is a
 	//       physical read when the path points to an optical drive
-	auto file = std::make_unique<iso_file>(m_path);
+	auto file = m_chd ? std::make_unique<iso_file>(chd::make_file(m_chd), m_path)
+	                  : std::make_unique<iso_file>(m_path);
 
 	if (!is_iso_file(*file))
 	{
@@ -1409,6 +1425,11 @@ iso_archive::iso_archive(const std::string& path)
 bool iso_archive::set_disc_key(const std::array<u8, 16>& disc_key)
 {
 	return m_dec && m_dec->set_key_from_d1(*this, disc_key);
+}
+
+iso_file iso_archive::open_raw_file() const
+{
+	return m_chd ? iso_file(chd::make_file(m_chd), m_path) : iso_file(m_path);
 }
 
 iso_fs_node* iso_archive::retrieve(const std::string& path)
@@ -1491,6 +1512,7 @@ void iso_archive::invalidate()
 {
 	m_root = {};
 	m_dec.reset();
+	m_chd.reset();
 }
 
 bool iso_archive::is_valid() const
@@ -1517,6 +1539,19 @@ bool iso_archive::is_file(const std::string& path)
 
 std::unique_ptr<fs::file_base> iso_archive::get_iso_file(const std::string& path, bs_t<fs::open_mode> mode, const iso_fs_node& node)
 {
+	if (m_chd)
+	{
+		if (mode & (fs::write + fs::append + fs::create + fs::trunc))
+		{
+			fs::g_tls_error = fs::error::readonly;
+			return nullptr;
+		}
+		if (m_dec->get_enc_type() == iso_encryption_type::NONE)
+		{
+			return std::make_unique<iso_file>(chd::make_file(m_chd), node);
+		}
+		return std::make_unique<iso_file_encrypted>(chd::make_file(m_chd), node, m_dec);
+	}
 	if (!is_valid())
 	{
 		return nullptr;
@@ -1602,6 +1637,18 @@ void iso_file::rebind(const iso_fs_node& node)
 	{
 		m_file.seek(m_meta.extents.front().start * ISO_SECTOR_SIZE);
 	}
+}
+
+iso_file::iso_file(fs::file image, const std::string& name)
+	: m_file(std::move(image))
+{
+	m_meta.name = name;
+	m_meta.extents.push_back({0, m_file.size()});
+}
+
+iso_file::iso_file(fs::file image, const iso_fs_node& node)
+	: m_file(std::move(image)), m_meta(node.metadata)
+{
 }
 
 fs::stat_t iso_file::get_stat()

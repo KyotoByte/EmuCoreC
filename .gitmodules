@@ -116,3 +116,6 @@
 [submodule "app/src/main/cpp/libadrenotools"]
 	path = app/src/main/cpp/libadrenotools
 	url = https://github.com/bylaws/libadrenotools.git
+[submodule "3rdparty/libchdr"]
+	path = 3rdparty/libchdr
+	url = https://github.com/rtissera/libchdr.git

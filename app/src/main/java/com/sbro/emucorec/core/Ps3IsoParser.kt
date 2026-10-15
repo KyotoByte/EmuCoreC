@@ -6,6 +6,9 @@ import java.io.File
 import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import java.security.MessageDigest
+import net.rpcsx.RPCSX
+import org.json.JSONObject
 
 object Ps3IsoParser {
     private val TITLE_ID_REGEX = Regex("([A-Za-z]{4}[0-9]{5})", RegexOption.IGNORE_CASE)
@@ -17,6 +20,8 @@ object Ps3IsoParser {
 
     fun parse(context: Context, file: File): InstalledPs3Game? {
         if (!file.isFile) return null
+
+        if (isChdImage(file)) return parseChd(context, file)
 
         val sfoDataAndIcon = extractSfoAndIconFromIso(context, file)
         val sfo = sfoDataAndIcon?.first
@@ -41,6 +46,37 @@ object Ps3IsoParser {
             installPath = file.absolutePath
         )
     }
+
+    private fun isChdImage(file: File): Boolean {
+        if (file.extension.equals("chd", ignoreCase = true)) return true
+        return runCatching {
+            file.inputStream().use { input ->
+                val magic = ByteArray(8)
+                input.read(magic) == magic.size && magic.contentEquals("MComprHD".toByteArray(Charsets.US_ASCII))
+            }
+        }.getOrDefault(false)
+    }
+
+    private fun parseChd(context: Context, file: File): InstalledPs3Game? = runCatching {
+        if (!Ps3Runtime.ensureInitialized(context)) return null
+        val identity = "${file.absolutePath}:${file.length()}:${file.lastModified()}"
+        val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
+            .joinToString("") { "%02x".format(it) }
+        val icon = File(File(context.cacheDir, "iso_icons").apply { mkdirs() }, "$key.png")
+        val metadata = JSONObject(RPCSX.instance.probeDiscInfo(file.absolutePath, icon.absolutePath))
+        val titleId = metadata.optString("titleId").takeIf(String::isNotBlank) ?: return null
+        InstalledPs3Game(
+            titleId = titleId.uppercase(),
+            title = metadata.optString("title").ifBlank { cleanTitleFromFilename(file.name) },
+            contentId = metadata.optString("contentId").takeIf(String::isNotBlank),
+            saveDataId = metadata.optString("saveDataId").ifBlank { titleId.uppercase() },
+            version = metadata.optString("version").ifBlank { "01.00" },
+            category = metadata.optString("category").ifBlank { "DG" },
+            iconPath = icon.takeIf { metadata.optBoolean("icon") && it.isFile && it.length() > 0 }?.absolutePath,
+            catalogCoverUrl = null,
+            installPath = file.absolutePath,
+        )
+    }.getOrNull()
 
     fun extractTitleIdFromFilename(filename: String): String? {
         return TITLE_ID_REGEX.find(filename)?.value?.uppercase()

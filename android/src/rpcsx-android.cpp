@@ -3413,144 +3413,64 @@ extern "C" int _rpcsx_patchesImport(std::string_view content) {
  * Emitted by hand rather than with a JSON library because the core does not link
  * one, and the shape is small and fixed.
  */
-/**
- * Read a PS3 disc image's identity without booting it.
- *
- * The library scanner had no way to identify a PS3 game: the EmuCoreC probe it
- * inherited looks for a PS2 SYSTEM.CNF, so every ISO came back with no serial,
- * and no serial means no title, no compatibility entry and no cover art.
- *
- * Mounts the ISO through the core's own reader (which also handles 3k3y and
- * Redump-encrypted images) and reads PS3_GAME/PARAM.SFO for TITLE_ID / TITLE.
- * ICON0.PNG is copied out to `iconOut` when present -- that is the artwork the
- * disc itself carries and what desktop RPCS3 shows in its game grid, so covers
- * need no network and always match the disc in the drive.
- *
- * Returns a JSON object, or "{}" when the image is not a readable PS3 disc.
- * Must not run while a game is loaded: load_iso installs a process-wide virtual
- * device, so probing mid-session would swap the running title's disc.
- */
-// Read TITLE_ID/TITLE out of <root>/PARAM.SFO and, when iconOut is set, copy
-// <root>/ICON0.PNG next to it. Returns "{}" when the folder has no usable SFO.
-// Shared by the ISO path (root inside the mounted virtual device) and the
-// folder path (root on real storage), which read identically once mounted.
+// A local archive owns its image and decryption state. Probing metadata never
+// mounts /dev_bdvd or changes the running game's VFS or emulator state.
+static bool copy_game_icon(fs::file icon, std::string_view iconOut) {
+  if (!icon || iconOut.empty() || !icon.size() || icon.size() > 10 * 1024 * 1024) {
+    return false;
+  }
+  const auto bytes = icon.to_vector<u8>();
+  if (bytes.empty()) return false;
+  fs::pending_file out{iconOut};
+  return out.file && out.file.write(bytes.data(), bytes.size()) == bytes.size() && out.commit();
+}
+
+static std::string sfo_game_info_json(const psf::registry &psf, bool haveIcon) {
+  const auto field = [&](std::string_view name) {
+    return json_quote(std::string(safe_psf_get_string(psf, name)));
+  };
+  const auto version = safe_psf_get_string(psf, "APP_VER",
+      safe_psf_get_string(psf, "VERSION", "01.00"));
+  if (safe_psf_get_string(psf, "TITLE_ID").empty()) return "{}";
+  return "{\"titleId\":" + field("TITLE_ID") + ",\"title\":" + field("TITLE") +
+      ",\"version\":" + json_quote(std::string(version)) + ",\"category\":" + field("CATEGORY") +
+      ",\"contentId\":" + field("CONTENT_ID") + ",\"saveDataId\":" + field("INSTALL_DIR_SAVEDATA") +
+      ",\"icon\":" + (haveIcon ? "true" : "false") + "}";
+}
+
 static std::string read_sfo_game_info(const std::string &root,
                                       std::string_view iconOut) {
-  if (!fs::is_file(root + "/PARAM.SFO")) {
-    return "{}";
-  }
-
   fs::file sfo{root + "/PARAM.SFO"};
-  if (!sfo) {
-    return "{}";
-  }
-
+  if (!sfo) return "{}";
   const auto psf = psf::load_object(sfo, root + "/PARAM.SFO");
-  const auto titleId = std::string(safe_psf_get_string(psf, "TITLE_ID"));
-  const auto title = std::string(safe_psf_get_string(psf, "TITLE"));
-
-  if (titleId.empty()) {
-    return "{}";
-  }
-
-  bool haveIcon = false;
-
-  if (!iconOut.empty() && fs::is_file(root + "/ICON0.PNG")) {
-    if (fs::file icon{root + "/ICON0.PNG"}) {
-      const auto bytes = icon.to_vector<u8>();
-      if (!bytes.empty()) {
-        if (fs::file out{std::string(iconOut), fs::rewrite}) {
-          out.write(bytes.data(), bytes.size());
-          haveIcon = true;
-        }
-      }
-    }
-  }
-
-  // json_quote() supplies the surrounding quotes itself.
-  return "{\"titleId\":" + json_quote(titleId) + ",\"title\":" +
-         json_quote(title) + ",\"icon\":" + (haveIcon ? "true" : "false") + "}";
+  if (safe_psf_get_string(psf, "TITLE_ID").empty()) return "{}";
+  const bool haveIcon = !iconOut.empty() &&
+      copy_game_icon(fs::file{root + "/ICON0.PNG"}, iconOut);
+  return sfo_game_info_json(psf, haveIcon);
 }
 
 extern "C" std::string _rpcsx_probeDiscInfo(std::string_view isoPath,
                                             std::string_view iconOut) {
-  if (isoPath.empty() || !Emu.IsStopped(true)) {
-    return "{}";
-  }
-
+  if (isoPath.empty()) return "{}";
   const std::string path(isoPath);
-
-  // Folder-format games need no mount at all: a JB folder dump keeps its
-  // metadata in <dir>/PS3_GAME, and an installed/HDD game folder (what
-  // RPCS3's own games directory holds, and the shape some prototype dumps
-  // ship in) keeps it at the top level next to USRDIR.
-  if (fs::is_dir(path)) {
-    std::string result = "{}";
-    try {
-      result = read_sfo_game_info(path + "/PS3_GAME", iconOut);
-      if (result == "{}") {
-        result = read_sfo_game_info(path, iconOut);
-      }
-    } catch (const std::exception &e) {
-      rpcsx_android.error("probeDiscInfo('%s') [folder] failed: %s", path,
-                          e.what());
-    }
-    return result;
-  }
-
-  if (!is_iso_file(path)) {
-    return "{}";
-  }
-
-  std::string result = "{}";
-
-  // Held across the whole mount/read/unmount so a boot cannot mount underneath us.
-  std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
-
-  // Re-checked under the lock: a boot may have started while we were waiting for it,
-  // and mounting into a live VM's vfs would shadow the disc it is running from.
-  if (!Emu.IsStopped(true)) {
-    return "{}";
-  }
-
-  // g_fxo has to be set up before anything mounts, and being STOPPED is exactly when it is not.
-  //
-  // vfs::mount() lazily constructs vfs_manager through manual_typemap::init<T>(), and init<T>()
-  // writes `*m_order++ = data`. clear() frees those arrays and sets m_order/m_info to nullptr, and
-  // g_fxo is cleared when a game stops -- so a scan that probes an ISO after any game has run this
-  // session wrote through a null pointer. RPCS3's signal handler caught it and turned it into a
-  // fatal exit: reported as "I scanned the library and the app crashed", and it is why the same
-  // scan is harmless on a fresh launch and lethal after playing something.
-  //
-  // The Emu.IsStopped() check above cannot catch this, because stopped IS the cleared state. The
-  // predicate that matters is is_init(), which is m_info != nullptr.
-  //
-  // Set up and hand it back exactly as found: reset() allocates the bookkeeping without
-  // constructing anything, the mount then constructs vfs_manager on demand, and clear() destroys
-  // it and frees the arrays again. Safe under g_emu_lifecycle_mutex, which no boot can cross.
-  const bool fxo_needs_setup = !g_fxo->is_init();
-
-  if (fxo_needs_setup) {
-    g_fxo->reset();
-  }
-
-  // unload_iso() on every exit: leaving the device mounted would shadow the
-  // next boot's disc with whichever image was scanned last.
   try {
-    load_iso(path);
-    result = read_sfo_game_info("/dev_bdvd/PS3_GAME",
-                                iconOut);
+    if (fs::is_dir(path)) {
+      const auto info = read_sfo_game_info(path + "/PS3_GAME", iconOut);
+      return info != "{}" ? info : read_sfo_game_info(path, iconOut);
+    }
+    iso_archive archive(path);
+    if (!archive.is_valid() || archive.get_key_status() != iso_key_status::OK) {
+      return "{}";
+    }
+    const auto psf = archive.open_psf("PS3_GAME/PARAM.SFO");
+    if (safe_psf_get_string(psf, "TITLE_ID").empty()) return "{}";
+    const bool haveIcon = !iconOut.empty() &&
+        copy_game_icon(fs::file{archive.open("PS3_GAME/ICON0.PNG")}, iconOut);
+    return sfo_game_info_json(psf, haveIcon);
   } catch (const std::exception &e) {
     rpcsx_android.error("probeDiscInfo('%s') failed: %s", path, e.what());
+    return "{}";
   }
-
-  unload_iso();
-
-  if (fxo_needs_setup) {
-    g_fxo->clear();
-  }
-
-  return result;
 }
 
 extern "C" std::string _rpcsx_patchesList(std::string_view serial) {

@@ -76,6 +76,11 @@ enum class iso_type_status
 
 class iso_archive;
 
+namespace chd
+{
+	class image;
+}
+
 // ISO file decryption class
 class iso_file_decryption
 {
@@ -157,6 +162,8 @@ protected:
 public:
 	iso_file(const std::string& path, bs_t<fs::open_mode> mode = fs::read);
 	iso_file(const std::string& path, bs_t<fs::open_mode> mode, const iso_fs_node& node);
+	iso_file(fs::file image, const std::string& name);
+	iso_file(fs::file image, const iso_fs_node& node);
 
 	// Points the object at another node of the same image, keeping the handle it already holds open: a caller
 	// walking many files of an image pays for a single open instead of one per file, which on a disc held by a
@@ -185,6 +192,7 @@ private:
 
 public:
 	iso_file_encrypted(const std::string& path, bs_t<fs::open_mode> mode, const iso_fs_node& node, std::shared_ptr<iso_file_decryption> dec);
+	iso_file_encrypted(fs::file image, const iso_fs_node& node, std::shared_ptr<iso_file_decryption> dec);
 
 	u64 read_at(u64 offset, void* buffer, u64 size) override;
 };
@@ -213,6 +221,7 @@ private:
 	std::string m_path;
 	iso_fs_node m_root {};
 	std::shared_ptr<iso_file_decryption> m_dec;
+	std::shared_ptr<chd::image> m_chd;
 
 public:
 	// Parses the volume descriptor set and the directory records of an ISO9660 file system out of an already
@@ -228,6 +237,8 @@ public:
 	bool set_disc_key(const std::array<u8, 16>& disc_key);
 
 	const std::string& path() const { return m_path; }
+	// The decompressed image, before disc decryption, for header and key checks.
+	iso_file open_raw_file() const;
 	const iso_fs_node& root() const { return m_root; }
 	iso_key_status get_key_status() { return m_dec ? m_dec->get_key_status(*this) : iso_key_status::OK; }
 
