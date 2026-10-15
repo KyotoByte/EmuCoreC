@@ -1745,7 +1745,7 @@ OpenGL을 사용하는 경우에는 필요하지 않습니다.</string>
     <string name="emulation_savestate_confirm_save_title">세이브 스테이트를 덮어쓸까요?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s에 이미 스테이트가 있습니다. 현재 순간으로 대체됩니다.</string>
     <string name="emulation_savestate_confirm_load_title">세이브 스테이트를 불러올까요?</string>
-    <string name="emulation_savestate_confirm_load_body">%1$s에서 이 스냅샷 이후의 진행 상황이 사라집니다.</string>
+    <string name="emulation_savestate_confirm_load_body">«%1$s» 상태를 불러옵니다. 저장하지 않은 진행 상황은 사라집니다.</string>
     <string name="emulation_savestate_startup_loading">세이브 스테이트 불러오는 중…</string>
     <string name="emulation_savestate_saving">세이브 스테이트 저장 중…</string>
     <string name="emulation_savestate_unavailable">이 코어에서는 상태 저장을 사용할 수 없습니다.</string>
@@ -1807,4 +1807,5 @@ OpenGL을 사용하는 경우에는 필요하지 않습니다.</string>
     <string name="savestate_manager_empty_body">플레이 중 에뮬레이터 메뉴를 열거나 빠른 저장 버튼을 눌러 생성하세요.</string>
     <string name="savestate_manager_empty_title">아직 세이브 스테이트가 없습니다</string>
     <string name="savestate_manager_refresh">새로 고침</string>
+    <string name="shell_quick_actions">내비게이션</string>
 </resources>

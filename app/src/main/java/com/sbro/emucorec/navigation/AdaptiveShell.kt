@@ -35,6 +35,7 @@ import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Inventory2
 import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.History
 import androidx.compose.material.icons.rounded.Save
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
@@ -460,6 +461,12 @@ private fun SideNavigation(
                         .padding(start = 14.dp)
                 )
             }
+            Text(
+                text = stringResource(R.string.shell_quick_actions),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
             ShellItem(
                 icon = Icons.Rounded.Games,
                 label = stringResource(R.string.nav_library),
@@ -479,10 +486,22 @@ private fun SideNavigation(
                 onClick = navigateSearch
             )
             ShellItem(
-                icon = Icons.Rounded.Settings,
-                label = stringResource(R.string.nav_settings),
-                selected = selected == PrimaryDestination.Settings,
-                onClick = navigateSettings
+                icon = Icons.Rounded.EmojiEvents,
+                label = stringResource(R.string.nav_achievements),
+                selected = selected == PrimaryDestination.Achievements,
+                onClick = navigateAchievements
+            )
+            ShellItem(
+                icon = Icons.Rounded.AccountCircle,
+                label = stringResource(R.string.nav_profile),
+                selected = selected == PrimaryDestination.Profile,
+                onClick = navigateProfile
+            )
+            ShellItem(
+                icon = Icons.Rounded.Forum,
+                label = stringResource(R.string.discord_title),
+                selected = selected == PrimaryDestination.Discord,
+                onClick = navigateDiscord
             )
 
             if (hasSetupActions) {
@@ -548,34 +567,28 @@ private fun SideNavigation(
                     onClick = navigateGameManager
                 )
                 ShellItem(
-                    icon = Icons.Rounded.Build,
-                    label = stringResource(R.string.nav_patches),
-                    selected = selected == PrimaryDestination.Patches,
-                    onClick = navigatePatches
-                )
-                ShellItem(
                     icon = Icons.Rounded.QueryStats,
                     label = stringResource(R.string.nav_play_time),
                     selected = selected == PrimaryDestination.PlayTime,
                     onClick = navigatePlayTime
                 )
                 ShellItem(
-                    icon = Icons.Rounded.EmojiEvents,
-                    label = stringResource(R.string.nav_achievements),
-                    selected = selected == PrimaryDestination.Achievements,
-                    onClick = navigateAchievements
+                    icon = Icons.Rounded.Save,
+                    label = stringResource(R.string.nav_save_manager),
+                    selected = selected == PrimaryDestination.SaveData,
+                    onClick = navigateSaveData
                 )
                 ShellItem(
-                    icon = Icons.Rounded.Save,
+                    icon = Icons.Rounded.History,
                     label = stringResource(R.string.nav_save_states),
                     selected = selected == PrimaryDestination.SaveStates,
                     onClick = navigateSaveStates
                 )
                 ShellItem(
-                    icon = Icons.Rounded.Save,
-                    label = stringResource(R.string.nav_save_manager),
-                    selected = selected == PrimaryDestination.SaveData,
-                    onClick = navigateSaveData
+                    icon = Icons.Rounded.Build,
+                    label = stringResource(R.string.nav_patches),
+                    selected = selected == PrimaryDestination.Patches,
+                    onClick = navigatePatches
                 )
             }
 
@@ -584,16 +597,10 @@ private fun SideNavigation(
                 color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.45f)
             )
             ShellItem(
-                icon = Icons.Rounded.AccountCircle,
-                label = stringResource(R.string.nav_profile),
-                selected = selected == PrimaryDestination.Profile,
-                onClick = navigateProfile
-            )
-            ShellItem(
-                icon = Icons.Rounded.Forum,
-                label = stringResource(R.string.discord_title),
-                selected = selected == PrimaryDestination.Discord,
-                onClick = navigateDiscord
+                icon = Icons.Rounded.Settings,
+                label = stringResource(R.string.nav_settings),
+                selected = selected == PrimaryDestination.Settings,
+                onClick = navigateSettings
             )
             ShellItem(
                 icon = Icons.Rounded.Feedback,

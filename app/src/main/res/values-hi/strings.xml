@@ -1889,7 +1889,7 @@ PS3 नेटिव का उपयोग केवल तभी किया �
     <string name="emulation_savestate_confirm_save_title">सेव स्टेट बदलें?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s में पहले से एक स्टेट है। इसे वर्तमान क्षण से बदल दिया जाएगा।</string>
     <string name="emulation_savestate_confirm_load_title">सेव स्टेट लोड करें?</string>
-    <string name="emulation_savestate_confirm_load_body">%1$s में इस स्नैपशॉट के बाद की प्रगति खो जाएगी।</string>
+    <string name="emulation_savestate_confirm_load_body">«%1$s» की स्थिति लोड की जाएगी। सहेजी न गई प्रगति खो जाएगी।</string>
     <string name="emulation_savestate_startup_loading">सेव स्टेट लोड हो रहा है…</string>
     <string name="emulation_savestate_saving">सेव स्टेट सहेजा जा रहा है…</string>
     <string name="emulation_savestate_unavailable">इस कोर में सेव स्टेट उपलब्ध नहीं हैं।</string>
@@ -1951,4 +1951,5 @@ PS3 नेटिव का उपयोग केवल तभी किया �
     <string name="savestate_manager_empty_body">इन-गेम मेनू या क्विक सेव बटन से एक बनाएँ।</string>
     <string name="savestate_manager_empty_title">अभी कोई सेव स्टेट नहीं</string>
     <string name="savestate_manager_refresh">रीफ़्रेश करें</string>
+    <string name="shell_quick_actions">नेविगेशन</string>
 </resources>

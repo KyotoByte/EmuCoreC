@@ -550,14 +550,13 @@ private fun MenuSelectedContent(
     ) {
         when (selectedTab) {
             EmulationMenuTab.Game -> {
-                GameTab(sessionElapsedMs = sessionElapsedMs)
+                GameTab(gameId = gameId, sessionElapsedMs = sessionElapsedMs)
             }
             EmulationMenuTab.SaveStates -> SaveStatesTab(saveStates = saveStates, callbacks = callbacks)
             EmulationMenuTab.Graphics -> {
                 InGameCoreSettings(
                     Ps3CoreSettingsCategory.Graphics,
                     gameId,
-                    additionalCategories = setOf(Ps3CoreSettingsCategory.Overlay),
                 )
             }
             EmulationMenuTab.Audio -> InGameCoreSettings(Ps3CoreSettingsCategory.Audio, gameId)
@@ -613,6 +612,7 @@ private fun Modifier.horizontalBleed(horizontalPadding: Dp): Modifier = layout {
 
 @Composable
 private fun GameTab(
+    gameId: String,
     sessionElapsedMs: Long,
 ) {
     MenuSection(
@@ -625,6 +625,7 @@ private fun GameTab(
             value = formatPlayDuration(sessionElapsedMs)
         )
     }
+    InGameCoreSettings(Ps3CoreSettingsCategory.Overlay, gameId)
 }
 
 @Composable

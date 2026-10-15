@@ -1888,7 +1888,7 @@ Over-Under 更接近原生立体声输出，但不太受支持。</string>
     <string name="emulation_savestate_confirm_save_title">覆盖即时存档？</string>
     <string name="emulation_savestate_confirm_save_body">%1$s 已有存档。它将被当前时刻替换。</string>
     <string name="emulation_savestate_confirm_load_title">读取即时存档？</string>
-    <string name="emulation_savestate_confirm_load_body">%1$s 中此快照之后的进度将会丢失。</string>
+    <string name="emulation_savestate_confirm_load_body">將載入「%1$s」的狀態。尚未儲存的進度將會遺失。</string>
     <string name="emulation_savestate_startup_loading">正在加载即时存档…</string>
     <string name="emulation_savestate_saving">正在保存即时存档…</string>
     <string name="emulation_savestate_unavailable">此核心不支持即时存档。</string>
@@ -1950,4 +1950,5 @@ Over-Under 更接近原生立体声输出，但不太受支持。</string>
     <string name="savestate_manager_empty_body">可在游戏内菜单或使用快速保存按钮创建。</string>
     <string name="savestate_manager_empty_title">尚无即时存档</string>
     <string name="savestate_manager_refresh">刷新</string>
+    <string name="shell_quick_actions">導覽</string>
 </resources>

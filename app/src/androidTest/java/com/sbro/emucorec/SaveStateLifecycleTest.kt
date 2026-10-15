@@ -12,12 +12,17 @@ import com.sbro.emucorec.core.Ps3IsoParser
 import com.sbro.emucorec.core.Ps3Runtime
 import com.sbro.emucorec.core.SaveStateController
 import com.sbro.emucorec.core.SaveStateOutcome
+import com.sbro.emucorec.core.SaveStateRepository
 import com.sbro.emucorec.core.ps3.Emulator
+import com.sbro.emucorec.ui.emulation.captureSaveStateThumbnail
+import com.sbro.emucorec.ui.emulation.commitSaveStateThumbnail
 import java.io.File
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.withContext
 import net.rpcsx.EmulatorState
 import net.rpcsx.ProgressRepository
 import net.rpcsx.RPCSX
@@ -76,6 +81,7 @@ class SaveStateLifecycleTest {
             .putExtra(Emulator.EXTRA_GAME_PATH, path)
             .putExtra(Emulator.EXTRA_TITLE_ID, game.titleId))
         val createdFiles = mutableListOf<File>()
+        val retainedFiles = mutableSetOf<File>()
         try {
             waitForState(EmulatorState.Running)
             SystemClock.sleep(20_000)
@@ -116,8 +122,21 @@ class SaveStateLifecycleTest {
             assertEquals(SaveStateOutcome.Success, withTimeout(120_000) { controller.save(slot) })
             waitForState(EmulatorState.Running)
             assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            // Exercise replacement of an already authenticated slot too.
+            assertEquals(SaveStateOutcome.Success, withTimeout(120_000) { controller.save(slot) })
+            waitForState(EmulatorState.Running)
             val saved = controller.slots.value.single { it.index == slot }
             assertTrue(saved.sizeBytes > 1024)
+
+            SystemClock.sleep(500)
+            val preview = SaveStateRepository(context).thumbnailFile(game.titleId, slot)
+            createdFiles += preview
+            val temporary = withContext(Dispatchers.Main) {
+                captureSaveStateThumbnail(activity as Emulator, preview)
+            }
+            assertNotNull("A real gameplay surface must produce a preview", temporary)
+            commitSaveStateThumbnail(requireNotNull(temporary), preview)
+            assertTrue(preview.length() > 1024)
 
             assertTrue("The numbered slot must be committed", savedFile.isFile)
             assertTrue("The slot must include committed integrity metadata", savedIntegrity.isFile)
@@ -180,11 +199,15 @@ class SaveStateLifecycleTest {
             SystemClock.sleep(1000)
             screenshot("save-cold-restored")
             assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            // Optional fixture retention for the subsequent manual menu checks.
+            if (InstrumentationRegistry.getArguments().getString("keepSaveState") == "true") {
+                retainedFiles += listOf(savedFile, savedIntegrity, preview)
+            }
         } finally {
             instrumentation.runOnMainSync { activity.finish() }
             waitForDestroyed(activity)
             waitForState(EmulatorState.Stopped)
-            createdFiles.filter(File::exists).forEach { assertTrue(it.delete()) }
+            createdFiles.filter { it.exists() && it !in retainedFiles }.forEach { assertTrue(it.delete()) }
         }
     }
 

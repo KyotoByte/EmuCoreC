@@ -1890,7 +1890,7 @@ Questa impostazione viene applicata solo quando il decodificatore SPU è imposta
     <string name="emulation_savestate_confirm_save_title">Sovrascrivere lo stato?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s contiene già uno stato. Verrà sostituito con il momento attuale.</string>
     <string name="emulation_savestate_confirm_load_title">Caricare lo stato?</string>
-    <string name="emulation_savestate_confirm_load_body">I progressi successivi a questo snapshot in %1$s andranno persi.</string>
+    <string name="emulation_savestate_confirm_load_body">Verrà caricato lo stato «%1$s». I progressi non salvati andranno persi.</string>
     <string name="emulation_savestate_startup_loading">Caricamento dello stato salvato…</string>
     <string name="emulation_savestate_saving">Salvataggio dello stato di gioco…</string>
     <string name="emulation_savestate_unavailable">I salvataggi di stato non sono disponibili in questo core.</string>
@@ -1952,4 +1952,5 @@ Questa impostazione viene applicata solo quando il decodificatore SPU è imposta
     <string name="savestate_manager_empty_body">Creane uno dal menu in gioco o con il pulsante di salvataggio rapido.</string>
     <string name="savestate_manager_empty_title">Nessuno stato salvato</string>
     <string name="savestate_manager_refresh">Aggiorna</string>
+    <string name="shell_quick_actions">Navigazione</string>
 </resources>

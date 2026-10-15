@@ -1889,7 +1889,7 @@ Bu ayar yalnızca SPU Kod Çözücü Dinamik veya LLVM olarak ayarlandığında 
     <string name="emulation_savestate_confirm_save_title">Durum değiştirilsin mi?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s zaten bir durum içeriyor. Geçerli anla değiştirilecek.</string>
     <string name="emulation_savestate_confirm_load_title">Durum yüklensin mi?</string>
-    <string name="emulation_savestate_confirm_load_body">%1$s içinde bu anlık görüntüden sonraki ilerleme kaybolacak.</string>
+    <string name="emulation_savestate_confirm_load_body">«%1$s» durumu yüklenecek. Kaydedilmemiş ilerleme kaybolacak.</string>
     <string name="emulation_savestate_startup_loading">Kayıt durumu yükleniyor…</string>
     <string name="emulation_savestate_saving">Oyun durumu kaydediliyor…</string>
     <string name="emulation_savestate_unavailable">Bu çekirdekte durum kaydı kullanılamıyor.</string>
@@ -1951,4 +1951,5 @@ Bu ayar yalnızca SPU Kod Çözücü Dinamik veya LLVM olarak ayarlandığında 
     <string name="savestate_manager_empty_body">Oyun içi menüden veya hızlı kaydet düğmesiyle bir tane oluşturun.</string>
     <string name="savestate_manager_empty_title">Henüz kayıt durumu yok</string>
     <string name="savestate_manager_refresh">Yenile</string>
+    <string name="shell_quick_actions">Gezinme</string>
 </resources>

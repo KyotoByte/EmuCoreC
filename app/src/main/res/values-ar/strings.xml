@@ -1899,7 +1899,7 @@
     <string name="emulation_savestate_confirm_save_title">استبدال حالة الحفظ؟</string>
     <string name="emulation_savestate_confirm_save_body">تحتوي %1$s بالفعل على حالة. سيتم استبدالها باللحطة الحالية.</string>
     <string name="emulation_savestate_confirm_load_title">تحميل حالة الحفظ؟</string>
-    <string name="emulation_savestate_confirm_load_body">سيُفقد التقدم بعد هذه اللقطة في %1$s.</string>
+    <string name="emulation_savestate_confirm_load_body">ستتم استعادة الحالة «%1$s». سيُفقد التقدم غير المحفوظ.</string>
     <string name="emulation_savestate_startup_loading">جارٍ تحميل حالة الحفظ…</string>
     <string name="emulation_savestate_saving">جارٍ حفظ الحالة…</string>
     <string name="emulation_savestate_unavailable">حالات الحفظ غير متاحة في هذه النواة.</string>
@@ -1961,4 +1961,5 @@
     <string name="savestate_manager_empty_body">أنشئ واحدة من قائمة اللعبة أو بزر الحفظ السريع.</string>
     <string name="savestate_manager_empty_title">لا توجد حالات حفظ بعد</string>
     <string name="savestate_manager_refresh">تحديث</string>
+    <string name="shell_quick_actions">التنقل</string>
 </resources>

@@ -1647,7 +1647,7 @@
     <string name="emulation_savestate_confirm_save_title">سیو استیت بازنویسی شود؟</string>
     <string name="emulation_savestate_confirm_save_body">%1$s از قبل حاوی یک استیت است. با وضعیت فعلی جایگزین می‌شود.</string>
     <string name="emulation_savestate_confirm_load_title">سیو استیت بارگذاری شود؟</string>
-    <string name="emulation_savestate_confirm_load_body">پیشرفت پس از این عکس لحظه‌ای در %1$s از بین می‌رود.</string>
+    <string name="emulation_savestate_confirm_load_body">وضعیت «%1$s» بازیابی می‌شود. پیشرفت ذخیره‌نشده از بین می‌رود.</string>
     <string name="emulation_savestate_startup_loading">در حال بارگذاری سیو استیت…</string>
     <string name="emulation_savestate_saving">در حال ذخیرهٔ سیو استیت…</string>
     <string name="emulation_savestate_unavailable">ذخیره و بارگذاری وضعیت در این هسته در دسترس نیست.</string>
@@ -1709,4 +1709,5 @@
     <string name="savestate_manager_empty_body">از منوی شبیه‌ساز هنگام بازی یا با دکمهٔ ذخیرهٔ سریع، یک وضعیت ذخیره کنید.</string>
     <string name="savestate_manager_empty_title">هنوز وضعیت ذخیره‌شده‌ای وجود ندارد</string>
     <string name="savestate_manager_refresh">بازخوانی</string>
+    <string name="shell_quick_actions">ناوبری</string>
 </resources>

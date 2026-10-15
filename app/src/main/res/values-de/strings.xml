@@ -1889,7 +1889,7 @@ Diese Einstellung wird nur angewendet, wenn der SPU-Decoder auf „Dynamisch“ 
     <string name="emulation_savestate_confirm_save_title">Spielstand überschreiben?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s enthält bereits einen Stand. Er wird durch den aktuellen Moment ersetzt.</string>
     <string name="emulation_savestate_confirm_load_title">Spielstand laden?</string>
-    <string name="emulation_savestate_confirm_load_body">Fortschritt nach diesem Snapshot in %1$s geht verloren.</string>
+    <string name="emulation_savestate_confirm_load_body">Der Zustand „%1$s“ wird geladen. Nicht gespeicherter Fortschritt geht verloren.</string>
     <string name="emulation_savestate_startup_loading">Spielstand wird geladen…</string>
     <string name="emulation_savestate_saving">Spielstand wird gespeichert…</string>
     <string name="emulation_savestate_unavailable">Spielstände sind in diesem Kern nicht verfügbar.</string>
@@ -1951,4 +1951,5 @@ Diese Einstellung wird nur angewendet, wenn der SPU-Decoder auf „Dynamisch“ 
     <string name="savestate_manager_empty_body">Erstelle einen im Spielmenü oder über die Schnellspeichern-Taste.</string>
     <string name="savestate_manager_empty_title">Noch keine Spielstände</string>
     <string name="savestate_manager_refresh">Aktualisieren</string>
+    <string name="shell_quick_actions">Navigation</string>
 </resources>

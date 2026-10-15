@@ -1745,7 +1745,7 @@ OpenGL を使用する場合、これは必要ありません。</string>
     <string name="emulation_savestate_confirm_save_title">セーブステートを上書きしますか？</string>
     <string name="emulation_savestate_confirm_save_body">%1$sにはすでにステートがあります。現在の瞬間で置き換えられます。</string>
     <string name="emulation_savestate_confirm_load_title">セーブステートを読み込みますか？</string>
-    <string name="emulation_savestate_confirm_load_body">%1$sのこのスナップショット以降の進行状況は失われます。</string>
+    <string name="emulation_savestate_confirm_load_body">「%1$s」の状態を読み込みます。保存していない進行状況は失われます。</string>
     <string name="emulation_savestate_startup_loading">セーブステートを読み込み中…</string>
     <string name="emulation_savestate_saving">セーブステートを保存中…</string>
     <string name="emulation_savestate_unavailable">このコアではセーブステートを利用できません。</string>
@@ -1807,4 +1807,5 @@ OpenGL を使用する場合、これは必要ありません。</string>
     <string name="savestate_manager_empty_body">プレイ中にエミュレーターのメニューを開くか、クイックセーブボタンを押すと作成できます。</string>
     <string name="savestate_manager_empty_title">セーブステートはまだありません</string>
     <string name="savestate_manager_refresh">更新</string>
+    <string name="shell_quick_actions">ナビゲーション</string>
 </resources>

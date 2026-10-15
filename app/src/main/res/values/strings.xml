@@ -1889,7 +1889,7 @@ This setting is only applied when SPU Decoder is set to Dynamic or LLVM.</string
     <string name="emulation_savestate_confirm_save_title">Overwrite save state?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s already contains a state. It will be replaced with the current moment.</string>
     <string name="emulation_savestate_confirm_load_title">Load save state?</string>
-    <string name="emulation_savestate_confirm_load_body">Progress after this snapshot in %1$s will be lost.</string>
+    <string name="emulation_savestate_confirm_load_body">Loading “%1$s” will replace the current game state. Unsaved progress will be lost.</string>
     <string name="emulation_savestate_startup_loading">Loading save state…</string>
     <string name="emulation_savestate_saving">Saving save state…</string>
     <string name="emulation_savestate_unavailable">Save states are unavailable in this core.</string>
@@ -1951,4 +1951,5 @@ This setting is only applied when SPU Decoder is set to Dynamic or LLVM.</string
     <string name="savestate_manager_empty_body">Create one from the in-game menu or with the quick save button.</string>
     <string name="savestate_manager_empty_title">No save states yet</string>
     <string name="savestate_manager_refresh">Refresh</string>
+    <string name="shell_quick_actions">Navigation</string>
 </resources>

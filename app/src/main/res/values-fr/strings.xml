@@ -1894,7 +1894,7 @@ Ce paramètre n\'est appliqué que lorsque SPU Decoder est défini sur Dynamic o
     <string name="emulation_savestate_confirm_save_title">Remplacer l\'état ?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s contient déjà un état. Il sera remplacé par le moment actuel.</string>
     <string name="emulation_savestate_confirm_load_title">Charger l\'état ?</string>
-    <string name="emulation_savestate_confirm_load_body">La progression après cet instantané dans %1$s sera perdue.</string>
+    <string name="emulation_savestate_confirm_load_body">L’état « %1$s » sera chargé. La progression non sauvegardée sera perdue.</string>
     <string name="emulation_savestate_startup_loading">Chargement de l’état sauvegardé…</string>
     <string name="emulation_savestate_saving">Enregistrement de l’état sauvegardé…</string>
     <string name="emulation_savestate_unavailable">Les sauvegardes instantanées ne sont pas disponibles dans ce cœur.</string>
@@ -1956,4 +1956,5 @@ Ce paramètre n\'est appliqué que lorsque SPU Decoder est défini sur Dynamic o
     <string name="savestate_manager_empty_body">Créez-en un depuis le menu en jeu ou avec le bouton de sauvegarde rapide.</string>
     <string name="savestate_manager_empty_title">Aucun état sauvegardé</string>
     <string name="savestate_manager_refresh">Actualiser</string>
+    <string name="shell_quick_actions">Navigation</string>
 </resources>

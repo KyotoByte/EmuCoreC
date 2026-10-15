@@ -1894,7 +1894,7 @@ Esta configuración solo se aplica cuando SPU Decoder está configurado en Diná
     <string name="emulation_savestate_confirm_save_title">¿Sobrescribir estado?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s ya contiene un estado. Se reemplazará con el momento actual.</string>
     <string name="emulation_savestate_confirm_load_title">¿Cargar estado?</string>
-    <string name="emulation_savestate_confirm_load_body">El progreso posterior a esta instantánea en %1$s se perderá.</string>
+    <string name="emulation_savestate_confirm_load_body">Se cargará el estado «%1$s». Se perderá el progreso no guardado.</string>
     <string name="emulation_savestate_startup_loading">Cargando estado guardado…</string>
     <string name="emulation_savestate_saving">Guardando el estado guardado…</string>
     <string name="emulation_savestate_unavailable">Los estados de guardado no están disponibles en este núcleo.</string>
@@ -1956,4 +1956,5 @@ Esta configuración solo se aplica cuando SPU Decoder está configurado en Diná
     <string name="savestate_manager_empty_body">Crea uno desde el menú del juego o con el botón de guardado rápido.</string>
     <string name="savestate_manager_empty_title">Aún no hay estados</string>
     <string name="savestate_manager_refresh">Actualizar</string>
+    <string name="shell_quick_actions">Navegación</string>
 </resources>

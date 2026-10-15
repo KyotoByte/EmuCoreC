@@ -1751,7 +1751,7 @@ Toto nikdy nepoužívejte.</string>
     <string name="emulation_savestate_confirm_save_title">Přepsat uložený stav?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s již obsahuje stav. Bude nahrazen aktuálním okamžikem.</string>
     <string name="emulation_savestate_confirm_load_title">Načíst uložený stav?</string>
-    <string name="emulation_savestate_confirm_load_body">Pokrok po tomto snímku v %1$s bude ztracen.</string>
+    <string name="emulation_savestate_confirm_load_body">Načte se stav „%1$s“. Neuložený postup bude ztracen.</string>
     <string name="emulation_savestate_startup_loading">Načítání uloženého stavu…</string>
     <string name="emulation_savestate_saving">Ukládání uloženého stavu…</string>
     <string name="emulation_savestate_unavailable">Ukládání stavů není v tomto jádru dostupné.</string>
@@ -1813,4 +1813,5 @@ Toto nikdy nepoužívejte.</string>
     <string name="savestate_manager_empty_body">Vytvořte uložený stav v nabídce emulátoru během hry nebo tlačítkem rychlého uložení.</string>
     <string name="savestate_manager_empty_title">Zatím žádné uložené stavy</string>
     <string name="savestate_manager_refresh">Aktualizovat</string>
+    <string name="shell_quick_actions">Navigace</string>
 </resources>

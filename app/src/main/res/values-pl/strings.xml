@@ -1653,7 +1653,7 @@
     <string name="emulation_savestate_confirm_save_title">Nadpisać zapis stanu?</string>
     <string name="emulation_savestate_confirm_save_body">%1$s zawiera już zapis stanu. Zostanie on zastąpiony bieżącym stanem gry.</string>
     <string name="emulation_savestate_confirm_load_title">Wczytać zapis stanu?</string>
-    <string name="emulation_savestate_confirm_load_body">Postęp uzyskany po utworzeniu migawki %1$s zostanie utracony.</string>
+    <string name="emulation_savestate_confirm_load_body">Zostanie wczytany stan „%1$s”. Niezapisane postępy zostaną utracone.</string>
     <string name="emulation_savestate_startup_loading">Wczytywanie zapisu stanu…</string>
     <string name="emulation_savestate_saving">Zapisywanie stanu gry…</string>
     <string name="emulation_savestate_unavailable">Zapisy stanu są niedostępne w tym rdzeniu.</string>
@@ -1715,4 +1715,5 @@
     <string name="savestate_manager_empty_body">Utwórz stan w menu emulatora podczas gry lub przyciskiem szybkiego zapisu.</string>
     <string name="savestate_manager_empty_title">Brak stanów zapisu</string>
     <string name="savestate_manager_refresh">Odśwież</string>
+    <string name="shell_quick_actions">Nawigacja</string>
 </resources>

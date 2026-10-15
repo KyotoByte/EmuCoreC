@@ -525,26 +525,6 @@ fun EmulationOverlayHost(
             onGamepadInvertRightY = { enabled -> persistConfig { it.copy(gamepadInvertRightY = enabled) } }
         )
 
-        AnimatedVisibility(
-            visible = !controlsEditMode && menuButtonVisible,
-            enter = fadeIn(tween(180)),
-            exit = fadeOut(tween(140)),
-            modifier = Modifier.align(Alignment.TopCenter)
-        ) {
-            EmulationQuickBar(
-                paused = effectivePaused,
-                quickActionsEnabled = saveSlotsLoaded && !saveStateBusy && !saveRequesting && !launchingSaveState,
-                onPauseToggle = menuCallbacks.onPauseToggle,
-                onQuickSave = { requestSaveAction(SaveAction.Save, SaveStateRepository.QUICK_SLOT) },
-                onQuickLoad = { requestSaveAction(SaveAction.Load, SaveStateRepository.QUICK_SLOT) },
-                onOpenCoreHomeMenu = { activity.openCoreHomeMenu() },
-                onOpenMenu = {
-                    menuOpen = !menuOpen
-                    menuButtonVisible = true
-                }
-            )
-        }
-
         AnimatedVisibility(visible = menuOpen, enter = fadeIn(tween(220)), exit = fadeOut(tween(180))) {
             Box(
                 modifier = Modifier
@@ -592,6 +572,26 @@ fun EmulationOverlayHost(
                     saveSlotsLoaded && RPCSX.initialized && RPCSX.instance.saveStatesSupported() && !launchingSaveState,
                     busyDeleting = saveRequestDeleting),
                 callbacks = menuCallbacks
+            )
+        }
+
+        AnimatedVisibility(
+            visible = !controlsEditMode && menuButtonVisible,
+            enter = fadeIn(tween(180)),
+            exit = fadeOut(tween(140)),
+            modifier = Modifier.align(Alignment.TopCenter)
+        ) {
+            EmulationQuickBar(
+                paused = effectivePaused,
+                quickActionsEnabled = saveSlotsLoaded && !saveStateBusy && !saveRequesting && !launchingSaveState,
+                onPauseToggle = menuCallbacks.onPauseToggle,
+                onQuickSave = { requestSaveAction(SaveAction.Save, SaveStateRepository.QUICK_SLOT) },
+                onQuickLoad = { requestSaveAction(SaveAction.Load, SaveStateRepository.QUICK_SLOT) },
+                onOpenCoreHomeMenu = { activity.openCoreHomeMenu() },
+                onOpenMenu = {
+                    menuOpen = !menuOpen
+                    menuButtonVisible = true
+                }
             )
         }
 
