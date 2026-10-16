@@ -113,7 +113,13 @@ namespace vk
 		op_flags flags)
 	{
 		auto program = std::make_unique<glsl::program>(*m_device, create_info, cs_inputs);
-		program->link(m_pipeline_cache, flags & SEPARATE_SHADER_OBJECTS);
+		if (!program->link(m_pipeline_cache, flags & SEPARATE_SHADER_OBJECTS))
+		{
+			// Driver rejected the pipeline (see program::link). Returning null
+			// lets the caller skip this dispatch instead of dying. The program
+			// cache already treats a null pipeline as "not ready".
+			return nullptr;
+		}
 		return program;
 	}
 
@@ -124,7 +130,14 @@ namespace vk
 		op_flags flags)
 	{
 		auto program = std::make_unique<glsl::program>(*m_device, create_info, vs_inputs, fs_inputs);
-		program->link(m_pipeline_cache, flags & SEPARATE_SHADER_OBJECTS);
+		if (!program->link(m_pipeline_cache, flags & SEPARATE_SHADER_OBJECTS))
+		{
+			// Driver rejected the pipeline (see program::link). Returning null
+			// makes get_graphics_pipeline() report "not ready" so the draw is
+			// skipped (or served by the shader interpreter) instead of killing
+			// the emulator.
+			return nullptr;
+		}
 		return program;
 	}
 

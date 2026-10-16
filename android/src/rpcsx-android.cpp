@@ -2510,8 +2510,9 @@ static void setupCallbacks() {
       // GameMode is a Linux desktop daemon and has no Android equivalent.
       .enable_gamemode = [](bool) {},
       // Recommended settings for this title, as config YAML content. The app
-      // downloads and splits the database into one file per title because the
-      // Qt downloader used by desktop RPCS3 is not part of this build.
+      // splits the bundled api.rpcs3.net snapshot (see ConfigDatabaseSeeder)
+      // into one file per title because the Qt downloader used by desktop
+      // RPCS3 is not part of this build.
       .get_database_config =
           [](const std::string &title_id) -> std::string {
             if (title_id.empty()) {

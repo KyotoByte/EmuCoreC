@@ -38,6 +38,9 @@ object Ps3Runtime {
 
         val appContext = context.applicationContext
         EmulatorStorage.prepareRuntime(appContext)
+        // Per-title database configs must exist before the first boot so the
+        // core can apply them (see ConfigDatabaseSeeder).
+        ConfigDatabaseSeeder.ensureSeeded(appContext)
         val nativeDir = appContext.applicationInfo.nativeLibraryDir
         val core = File(nativeDir, "libemucorec-core.so")
         if (!core.isFile) {

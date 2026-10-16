@@ -141,6 +141,13 @@ namespace vk
 			m_program = compiler->compile(create_info, vk::pipe_compiler::COMPILE_INLINE, {}, get_inputs());
 		}
 
+		if (!m_program)
+		{
+			// The driver rejected this pipeline (see program::link). Skipping
+			// the dispatch is preferable to crashing the whole emulator.
+			return;
+		}
+
 		bind_resources(cmd);
 		m_program->bind(cmd, VK_PIPELINE_BIND_POINT_COMPUTE);
 	}
@@ -154,6 +161,12 @@ namespace vk
 		}
 
 		load_program(cmd);
+		if (!m_program)
+		{
+			// The driver rejected this pipeline (see program::link). Skipping
+			// the dispatch is preferable to crashing the whole emulator.
+			return;
+		}
 		vkCmdDispatch(cmd, invocations_x, invocations_y, invocations_z);
 	}
 

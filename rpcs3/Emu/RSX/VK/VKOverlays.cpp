@@ -153,6 +153,14 @@ namespace vk
 
 		auto compiler = vk::get_pipe_compiler();
 		auto program = compiler->compile(info, vk::pipe_compiler::COMPILE_INLINE, {}, get_vertex_inputs(), get_fragment_inputs());
+		if (!program)
+		{
+			// The driver rejected this pipeline (see program::link). The
+			// overlay using it will be skipped this frame.
+			rsx_log.error("Overlay pipeline compilation failed, skipping.");
+			return nullptr;
+		}
+
 		auto result = program.get();
 		m_program_cache[storage_key] = std::move(program);
 
@@ -169,6 +177,13 @@ namespace vk
 			program = found->second.get();
 		else
 			program = build_pipeline(key, pass);
+
+		if (!program)
+		{
+			// Pipeline compilation failed (see build_pipeline). Skip drawing
+			// this overlay instead of crashing.
+			return nullptr;
+		}
 
 		if (!m_sampler && !src.empty())
 		{
@@ -260,6 +275,13 @@ namespace vk
 		cmd.flags |= vk::command_buffer::cb_reload_dynamic_state;
 
 		auto program = load_program(cmd, render_pass, src);
+		if (!program)
+		{
+			// Pipeline compilation failed (see build_pipeline). Skip drawing
+			// this overlay instead of issuing draws with no pipeline bound.
+			return;
+		}
+
 		set_up_viewport(cmd, viewport.x1, viewport.y1, viewport.width(), viewport.height());
 
 		vk::begin_renderpass(cmd, render_pass, fbo->value, { positionu{0u, 0u}, sizeu{fbo->width(), fbo->height()} });

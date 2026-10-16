@@ -81,6 +81,25 @@ val rpcs3Root  = rootProject.layout.projectDirectory.asFile.absolutePath
 val buildDir2  = layout.buildDirectory.dir("emucorec-core-build").get().asFile
 
 // ---------------------------------------------------------------------------
+// Refresh the bundled RPCS3 per-title config database snapshot.
+// Downloads https://api.rpcs3.net/config/?api=v1 into
+// src/main/assets/rpcs3_config_db.json; ConfigDatabaseSeeder splits it into
+// config_db/<TITLE_ID>.yml on device at runtime. Run manually when the
+// snapshot gets stale. Regular builds use the committed file as-is (offline
+// safe) and never touch the network.
+// ---------------------------------------------------------------------------
+val updateConfigDb by tasks.registering(Exec::class) {
+    description = "Refresh bundled RPCS3 per-title config database snapshot"
+    group = "emucorec"
+    workingDir = projectDir
+    commandLine(
+        "curl", "-fsSL",
+        "https://api.rpcs3.net/config/?api=v1",
+        "-o", "src/main/assets/rpcs3_config_db.json",
+    )
+}
+
+// ---------------------------------------------------------------------------
 // Build FFmpeg 8.x for Android (aarch64) from source: the RPCS3 submodule only
 // carries headers, and the old 5.1 prebuilts are too old for the FFmpeg 6+ APIs
 // RPCS3 master uses. Output lands in app/build/ffmpeg-android, consumed by
