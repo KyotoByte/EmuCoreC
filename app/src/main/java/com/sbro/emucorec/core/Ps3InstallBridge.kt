@@ -28,7 +28,10 @@ object Ps3InstallBridge {
         val success = awaitNativeInstall("firmware", 0, 1, "Installing PS3 system software") { progressId ->
             Ps3Runtime.installFirmware(context, firmwarePath, progressId)
         }
-        Ps3Runtime.stop()
+        // Deliberately NO stop() here. Installing requires a stopped emulator,
+        // so there is nothing to tear down -- and kill() takes the same
+        // lifecycle lock the background VSH cache build holds for minutes,
+        // which used to freeze this dialog at 100% until compilation finished.
         emit("firmware", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
         // "Installed" means the PUP is on disk. The VSH PPU cache finishes in
         // the background (the native side completes this progress at extraction
@@ -42,7 +45,8 @@ object Ps3InstallBridge {
         val success = awaitNativeInstall("content", 0, 1, File(contentPath).name) { progressId ->
             Ps3Runtime.installPackage(context, contentPath, progressId)
         }
-        Ps3Runtime.stop()
+        // No stop(): see installFirmware -- the install path already requires a
+        // stopped emulator, and kill() would block behind a background compile.
         emit("content", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
         return if (success) 1 else 0
     }
@@ -128,7 +132,8 @@ object Ps3InstallBridge {
             }
             unitIndex++
         }
-        Ps3Runtime.stop()
+        // No stop(): a RAP install queues a background cache build that holds
+        // the lifecycle lock; kill() would block this dialog behind it.
         emit("content", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
         success
     }

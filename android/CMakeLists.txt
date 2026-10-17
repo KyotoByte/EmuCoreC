@@ -54,7 +54,7 @@ set(EMUCOREC_INPUT_SOURCES
     # pad_thread references mouse_gyro_handler directly, so it is not optional
     # despite the "mouse" name. Upstream's implementation is Qt-only; EmuCoreC
     # provides a Qt-free one under android/Input/.
-    ${CMAKE_SOURCE_DIR}/android/Input/mouse_gyro_handler.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Input/mouse_gyro_handler.cpp
     # Ours: on-screen touch controls.
     ${CMAKE_SOURCE_DIR}/rpcs3/Input/virtual_pad_handler.cpp
 )
@@ -186,7 +186,7 @@ if(DISCORD_SDK_DIR AND EXISTS "${DISCORD_SDK_SO}" AND EXISTS "${DISCORD_SDK_INCL
         IMPORTED_LOCATION "${DISCORD_SDK_SO}"
         INTERFACE_INCLUDE_DIRECTORIES "${DISCORD_SDK_INCLUDE}")
 
-    add_library(emucorec_discord SHARED "${CMAKE_SOURCE_DIR}/app/src/main/cpp/discord_bridge.cpp")
+    add_library(emucorec_discord SHARED "${CMAKE_CURRENT_SOURCE_DIR}/../app/src/main/cpp/discord_bridge.cpp")
     target_link_libraries(emucorec_discord PRIVATE discord_partner_sdk log)
     set_target_properties(emucorec_discord PROPERTIES OUTPUT_NAME "emucorec_discord")
     message(STATUS "Discord Social SDK enabled: ${DISCORD_SDK_SO}")
