@@ -26,6 +26,7 @@ struct EmuCoreCApi {
   bool (*overlayPadData)(int port, int digital1, int digital2, int leftStickX,
                          int leftStickY, int rightStickX, int rightStickY);
   void (*setSocInfo)(std::string_view socInfo);
+  void (*setLogLevelFloor)(int level);
   bool (*initialize)(std::string_view rootDir, std::string_view user);
   bool (*processCompilationQueue)(JNIEnv *env);
   bool (*startMainThreadProcessor)(JNIEnv *env);
@@ -112,6 +113,7 @@ struct EmuCoreCLibrary : EmuCoreCApi {
     // clang-format off
     result.overlayPadData = reinterpret_cast<decltype(overlayPadData)>(dlsym(handle, "emucorec_overlayPadData"));
     result.setSocInfo = reinterpret_cast<decltype(setSocInfo)>(dlsym(handle, "emucorec_setSocInfo"));
+    result.setLogLevelFloor = reinterpret_cast<decltype(setLogLevelFloor)>(dlsym(handle, "emucorec_setLogLevelFloor"));
     result.initialize = reinterpret_cast<decltype(initialize)>(dlsym(handle, "emucorec_initialize"));
     result.processCompilationQueue = reinterpret_cast<decltype(processCompilationQueue)>(dlsym(handle, "emucorec_processCompilationQueue"));
     result.startMainThreadProcessor = reinterpret_cast<decltype(startMainThreadProcessor)>(dlsym(handle, "emucorec_startMainThreadProcessor"));
@@ -205,6 +207,14 @@ extern "C" JNIEXPORT void JNICALL Java_com_sbro_emucorec_core_Ps3Core_setSocInfo
     return;
   }
   emucorecLib.setSocInfo(unwrap(env, jsocInfo));
+}
+
+extern "C" JNIEXPORT void JNICALL Java_com_sbro_emucorec_core_Ps3Core_setLogLevelFloor(
+    JNIEnv *, jobject, jint level) {
+  if (emucorecLib.setLogLevelFloor == nullptr) {
+    return;
+  }
+  emucorecLib.setLogLevelFloor(level);
 }
 
 extern "C" JNIEXPORT jboolean JNICALL Java_com_sbro_emucorec_core_Ps3Core_initialize(

@@ -19,6 +19,13 @@
 
 LOG_CHANNEL(sys_log, "SYS");
 
+#ifdef ANDROID
+// EmuCoreC: log verbosity floor applied in configure_logs(). Defined in the
+// Android glue (android/src/emucorec-android.cpp), which is linked into the
+// same core library. Negative value means "leave the upstream defaults".
+extern "C" int emucorec_log_level_floor();
+#endif
+
 namespace rpcs3::utils
 {
 	u32 get_max_threads()
@@ -47,6 +54,18 @@ namespace rpcs3::utils
 		else
 		{
 			logs::reset();
+
+#ifdef ANDROID
+			// EmuCoreC: the app tunes the log floor per build variant (release:
+			// errors only, debug: warnings). Applied before the configured map
+			// so an explicit per-channel level in the settings tree still wins.
+			const int floor = emucorec_log_level_floor();
+			if (floor >= 0)
+			{
+				logs::set_level(".*", static_cast<logs::level>(floor));
+			}
+#endif
+
 			logs::set_channel_levels(g_cfg.log.get_map());
 
 			if (was_silenced)

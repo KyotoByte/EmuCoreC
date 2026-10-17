@@ -410,7 +410,10 @@ public:
 					return nullptr;
 				}
 
-				rsx_log.success("Program compiled successfully");
+				// EmuCoreC: notice, not success. Compiles happen on demand during
+				// gameplay, and the app's log floor hides notice on device unless
+				// the RSX channel is explicitly raised.
+				rsx_log.notice("Program compiled successfully");
 				notify_pipeline_compiled(key.properties, vertex_shader, fragment_shader_);
 
 				std::lock_guard lock(m_pipeline_mutex);

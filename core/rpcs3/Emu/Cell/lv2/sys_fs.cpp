@@ -1451,7 +1451,10 @@ error_code sys_fs_open(ppu_thread& ppu, vm::cptr<char> path, s32 flags, vm::ptr<
 {
 	lv2_obj::sleep(ppu);
 
-	sys_fs.warning("sys_fs_open(path=%s, flags=%#o, fd=*0x%x, mode=%#o, arg=*0x%x, size=0x%llx)", path, flags, fd, mode, arg, size);
+	// EmuCoreC: trace, not warning. This fires on every file open -- including
+	// per-frame data probes on Android -- so at warning level it poured into
+	// the on-device log. Failures below are still reported at error level.
+	sys_fs.trace("sys_fs_open(path=%s, flags=%#o, fd=*0x%x, mode=%#o, arg=*0x%x, size=0x%llx)", path, flags, fd, mode, arg, size);
 
 	const auto [path_error, vpath] = translate_to_str(path);
 
@@ -1482,7 +1485,7 @@ error_code sys_fs_open(ppu_thread& ppu, vm::cptr<char> path, s32 flags, vm::ptr<
 		}
 
 		result = stx::make_shared<lv2_file>(ppath, std::move(file), mode, flags, real, type);
-		sys_fs.warning("sys_fs_open(): fd=%u, %s", idm::last_id(), *result);
+		sys_fs.trace("sys_fs_open(): fd=%u, %s", idm::last_id(), *result);
 		return result;
 	}))
 	{
@@ -1740,7 +1743,7 @@ error_code sys_fs_opendir(ppu_thread& ppu, vm::cptr<char> path, vm::ptr<u32> fd)
 {
 	lv2_obj::sleep(ppu);
 
-	sys_fs.warning("sys_fs_opendir(path=%s, fd=*0x%x)", path, fd);
+	sys_fs.trace("sys_fs_opendir(path=%s, fd=*0x%x)", path, fd);
 
 	const auto [path_error, vpath] = translate_to_str(path);
 

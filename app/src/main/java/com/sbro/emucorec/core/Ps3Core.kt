@@ -82,6 +82,7 @@ enum class BootResult {
 class Ps3Core {
     external fun openLibrary(path: String): Boolean
     external fun setSocInfo(socInfo: String)
+    external fun setLogLevelFloor(level: Int)
     external fun initialize(rootDir: String, user: String): Boolean
     external fun installFw(fd: Int, progressId: Long): Boolean
     external fun install(fd: Int, progressId: Long): Boolean

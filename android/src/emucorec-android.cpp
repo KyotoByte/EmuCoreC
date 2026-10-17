@@ -134,6 +134,22 @@ extern std::string g_android_cache_dir;
 // Exact SoC identity as reported by Android (Build.SOC_MANUFACTURER/SOC_MODEL),
 // handed in through emucorec_setSocInfo. MIDRs cannot identify the SoC.
 static std::string g_android_soc_info;
+
+// Log verbosity floor, set from the app per build variant (-1 = leave the
+// upstream defaults). The phone has no log window: the file is evidence for
+// bug reports, not a live console, and several upstream channels are periodic
+// by design (PERF logs every 10s, VFS/PPU notices per event) which added up to
+// megabytes per session. Values match logs::level. The user's explicit
+// per-channel levels in the settings tree still win -- see configure_logs().
+static std::atomic<int> g_log_level_floor{-1};
+
+extern "C" void emucorec_setLogLevelFloor(int level) {
+  g_log_level_floor.store(level, std::memory_order_relaxed);
+}
+
+extern "C" int emucorec_log_level_floor() {
+  return g_log_level_floor.load(std::memory_order_relaxed);
+}
 static std::mutex g_virtual_pad_mutex;
 // One per PS3 pad port. This was a single pad, which silently capped local
 // co-op at one player: every port above the first registered a Pad the app
@@ -1410,7 +1426,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   ProgressMessageDialog(jlong progressId) : progressId(progressId) {}
 
   void Create(const std::string &msg, const std::string &title) override {
-    emucorec_android.warning("ProgressMessageDialog::Create(%s, %s)", msg, title);
     max = 100;
     invokeSync([this, &msg](JNIEnv *env) {
       Progress progress(env, progressId);
@@ -1423,7 +1438,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void Close(bool success) override {
-    emucorec_android.warning("ProgressMessageDialog::Close(%s)", success);
     invokeSync([this](JNIEnv *env) {
       Progress progress(env, progressId);
       progress.report(0, 0);
@@ -1439,7 +1453,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void SetMsg(const std::string &msg) override {
-    emucorec_android.warning("ProgressMessageDialog::SetMsg(%s)", msg);
     invokeSync([this, msg](JNIEnv *env) {
       Progress(env, progressId).report(getValue(), max, msg);
     });
@@ -1447,8 +1460,6 @@ struct ProgressMessageDialog : MsgDialogBase {
 
   void ProgressBarSetMsg(u32 progressBarIndex,
                          const std::string &msg) override {
-    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetMsg(%d, %s)",
-                          progressBarIndex, msg);
     if (progressBarIndex != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
     }
@@ -1459,9 +1470,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarReset(u32 progressBarIndex) override {
-    emucorec_android.warning("ProgressMessageDialog::ProgressBarReset(%d)",
-                          progressBarIndex);
-
     if (progressBarIndex != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
     }
@@ -1472,9 +1480,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarInc(u32 progressBarIndex, u32 delta) override {
-    emucorec_android.warning("ProgressMessageDialog::ProgressBarInc(%d, %d)",
-                          progressBarIndex, delta);
-
     if (progressBarIndex != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
     }
@@ -1487,9 +1492,6 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarSetValue(u32 progressBarIndex, u32 value) override {
-    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetValue(%d, %d)",
-                          progressBarIndex, value);
-
     if (progressBarIndex != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
     }
@@ -1501,9 +1503,6 @@ struct ProgressMessageDialog : MsgDialogBase {
     });
   }
   void ProgressBarSetLimit(u32 index, u32 limit) override {
-    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetLimit(%d, %d)",
-                          index, limit);
-
     if (index != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
     }
@@ -1754,7 +1753,9 @@ private:
       }
 
       lifecycle_lock.unlock();
-      emucorec_android.notice("Creating cache wait, state %d", (int)state);
+      // No per-second log here: a game boot right after an install can leave
+      // this loop waiting for the compiler for a while, and a line per tick is
+      // exactly the kind of periodic noise the log must not carry.
       std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
@@ -1860,13 +1861,13 @@ private:
 
         if (!sfoPath.empty()) {
           const auto psf = psf::load_object(sfoPath);
-          emucorec_android.warning("title id is %s",
-                                safe_psf_get_string(psf, "TITLE_ID"));
+          emucorec_android.notice("title id is %s",
+                                  safe_psf_get_string(psf, "TITLE_ID"));
 
           // EmuCoreC: title id is set by Emu.BootGame on the real boot; this
           // precompilation pass does not own the running game title.
         } else {
-          emucorec_android.warning("param.sfo not found");
+          emucorec_android.notice("param.sfo not found");
         }
       }
 
@@ -2458,7 +2459,7 @@ extern "C" bool emucorec_initialize(std::string_view rootDir,
         // Read it back rather than echoing what we meant to set. /proc/<pid>/environ is the
         // snapshot taken at exec and never reflects a runtime setenv, and Mesa's own logging
         // may go to stderr, which Android drops, so this is the only honest confirmation.
-        emucorec_android.warning("driver_env: %s=%s", name, getenv(name.c_str()));
+        emucorec_android.notice("driver_env: %s=%s", name, getenv(name.c_str()));
       }
     }
   }
@@ -2575,7 +2576,7 @@ extern "C" bool emucorec_initialize(std::string_view rootDir,
 
   g_cfg.core.llvm_cpu.from_string("");
 
-  emucorec_android.warning("LLVM JIT target: '%s'",
+    emucorec_android.notice("LLVM JIT target: '%s'",
                         g_cfg.core.llvm_cpu.to_string().empty()
                             ? "<host-detected>"
                             : g_cfg.core.llvm_cpu.to_string());
@@ -3092,7 +3093,7 @@ extern "C" void emucorec_surfaceSizeChanged(int width, int height) {
 }
 
 extern "C" bool emucorec_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
-  emucorec_android.warning("surface event %p, %d", surface, event);
+    emucorec_android.notice("surface event %p, %d", surface, event);
 
   if (event == 2) {
     {
@@ -3281,7 +3282,7 @@ extern "C" bool emucorec_usbDeviceEvent(int fd, int vendorId, int productId,
     }
 
     if (selectedHandler != g_cfg_input.player1.handler.get()) {
-      emucorec_android.warning("install %s pad handler", selectedHandler);
+      emucorec_android.notice("install %s pad handler", selectedHandler);
 
       g_cfg_input.player1.handler.set(selectedHandler);
 

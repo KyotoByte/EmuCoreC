@@ -2755,14 +2755,17 @@ void ppu_thread::cpu_on_stop()
 
 	if (is_stopped())
 	{
+		// EmuCoreC: trace. This runs for every stopped PPU thread, so a game
+		// that churns through threads emitted a line per thread at notice --
+		// pure developer telemetry, not something a bug report needs.
 		if (last_succ == 0 && last_fail == 0 && exec_bytes == 0)
 		{
-			perf_log.notice("PPU thread perf stats are not available.");
+			perf_log.trace("PPU thread perf stats are not available.");
 		}
 		else
 		{
-			perf_log.notice("Perf stats for STCX reload: success %u, failure %u", last_succ, last_fail);
-			perf_log.notice("Perf stats for instructions: total %u", exec_bytes / 4);
+			perf_log.trace("Perf stats for STCX reload: success %u, failure %u", last_succ, last_fail);
+			perf_log.trace("Perf stats for instructions: total %u", exec_bytes / 4);
 		}
 	}
 }
@@ -5951,7 +5954,11 @@ bool ppu_initialize(const ppu_module<lv2_obj>& info, bool check_only, u64 file_s
 					// Keep allocating workload
 					const auto& [obj_name, part] = std::as_const(workload)[i];
 
-					ppu_log.warning("LLVM: Compiling module %s%s", cache_path, obj_name);
+					// EmuCoreC: notice, not warning. This fires once per object
+					// compiled by the live JIT -- including every module a game
+					// loads on demand -- so at warning level it flooded the log
+					// on Android. A user who needs it can raise the PPU channel.
+					ppu_log.notice("LLVM: Compiling module %s%s", cache_path, obj_name);
 
 #ifdef __ANDROID__
 					struct claim_guard_t

@@ -480,6 +480,12 @@ void Emulator::Init()
 
 	if (!g_tty)
 	{
+#ifdef ANDROID
+		// EmuCoreC: no TTY viewer exists on Android, and a game that prints
+		// every frame turned this into a constant write stream on flash.
+		// g_tty stays closed; every TTY write is already guarded by `if (g_tty)`.
+		make_path_verbose(fs::get_log_dir(), true);
+#else
 		make_path_verbose(fs::get_log_dir(), true);
 
 		const auto tty_path = fs::get_log_dir() + "TTY.log";
@@ -489,6 +495,7 @@ void Emulator::Init()
 		{
 			sys_log.fatal("Failed to create TTY log: %s (%s)", tty_path, fs::g_tls_error);
 		}
+#endif
 	}
 
 	g_fxo->reset();

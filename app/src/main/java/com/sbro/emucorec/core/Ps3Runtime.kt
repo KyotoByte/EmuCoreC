@@ -16,6 +16,11 @@ import java.util.concurrent.atomic.AtomicBoolean
 object Ps3Runtime {
     private const val TAG = "Ps3Runtime"
     private const val USER_ID = "00000001"
+    // Core log channel levels (logs::level: always=0 .. trace=7). Warnings in
+    // debug builds, errors only in release; the settings tree can raise a
+    // specific channel on top of this.
+    private const val LOG_FLOOR_DEBUG = 5
+    private const val LOG_FLOOR_RELEASE = 2
     private const val SURFACE_CREATED = 0
     private const val SURFACE_CHANGED = 1
     private const val SURFACE_DESTROYED = 2
@@ -63,6 +68,11 @@ object Ps3Runtime {
 
         // Exact SoC identity for the startup banner; must precede initialize().
         runCatching { Ps3Core.instance.setSocInfo(MobileSocNameMapper.currentDeviceName()) }
+
+        // Keep the on-device log useful without letting periodic channels fill
+        // flash: debug apps keep warnings and errors, release apps keep errors
+        // only. Explicit per-channel levels from the settings tree still win.
+        runCatching { Ps3Core.instance.setLogLevelFloor(if (BuildConfig.DEBUG) LOG_FLOOR_DEBUG else LOG_FLOOR_RELEASE) }
 
         if (!Ps3Core.instance.initialize(root, USER_ID)) {
             Log.e(TAG, "Core initialization failed for $root")
