@@ -46,9 +46,13 @@ fun UrlImage(
 ) {
     val context = LocalContext.current
     val decodeEdge = decodeEdgePx.coerceAtLeast(64)
-    // Start from whatever is already decoded at this render size so tiles do
-    // not flash placeholders.
-    val initial = imageUrl?.let { UrlBitmapMemoryCache.get(memoryCacheKey(igdbMaximumQualityUrl(it), decodeEdge)) }
+    // Memory entries are keyed by URL alone, never by size: the same cover is
+    // rendered as a grid tile, a list thumbnail and a hero across screens, and
+    // size-specific keys made every switch between those layouts miss the cache
+    // and re-decode from disk. Whatever size is already decoded is shown
+    // immediately; if it is smaller than asked, the producer upgrades it below.
+    val memoryKey = imageUrl?.let(::igdbMaximumQualityUrl)
+    val initial = memoryKey?.let { UrlBitmapMemoryCache.get(it) }
     val bitmapState = produceState<Bitmap?>(
         initialValue = initial,
         imageUrl,
@@ -69,14 +73,18 @@ fun UrlImage(
             }
 
             for (candidate in candidates) {
-                val cacheKey = memoryCacheKey(candidate, decodeEdge)
-                UrlBitmapMemoryCache.get(cacheKey)?.let { return@withContext it }
+                UrlBitmapMemoryCache.get(candidate)?.let { cached ->
+                    if (isLargeEnough(cached, decodeEdge)) {
+                        // Already displayed via initialValue; nothing to do.
+                        return@withContext cached
+                    }
+                }
 
                 val cachedFile = UrlImageDiskCache.getCachedFile(context, candidate)
                 if (cachedFile != null) {
                     val diskBitmap = decodeBounded(cachedFile.absolutePath, decodeEdge)
                     if (diskBitmap != null) {
-                        UrlBitmapMemoryCache.put(cacheKey, diskBitmap, pinned = pinInMemory)
+                        UrlBitmapMemoryCache.put(candidate, diskBitmap, pinned = pinInMemory)
                         return@withContext diskBitmap
                     }
                 }
@@ -95,7 +103,7 @@ fun UrlImage(
                 }.getOrNull()
 
                 if (fetched != null) {
-                    UrlBitmapMemoryCache.put(cacheKey, fetched, pinned = pinInMemory)
+                    UrlBitmapMemoryCache.put(candidate, fetched, pinned = pinInMemory)
                     return@withContext fetched
                 }
             }
@@ -149,9 +157,9 @@ private fun decodeBounded(path: String, maxEdgePx: Int): Bitmap? {
 private fun decodeBounded(stream: InputStream): Bitmap? =
     runCatching { BitmapFactory.decodeStream(stream) }.getOrNull()
 
-/** One decoded bitmap per (URL, render size): a tile and the detail hero must
- * not evict each other's entries. */
-private fun memoryCacheKey(url: String, decodeEdgePx: Int) = "$url|$decodeEdgePx"
+/** True when the decoded bitmap is at least as large as this render needs. */
+private fun isLargeEnough(bitmap: Bitmap, decodeEdgePx: Int): Boolean =
+    maxOf(bitmap.width, bitmap.height) >= decodeEdgePx
 
 object UrlImageDiskCache {
     private const val CACHE_DIR_NAME = "image_cache"
@@ -246,9 +254,13 @@ object UrlBitmapMemoryCache {
             pinnedCache[url] = bitmap
             return
         }
-        if (pinnedCache[url] == null && cache.get(url) == null) {
-            cache.put(url, bitmap)
+        // Keep the largest decode seen for this URL; a later, larger decode
+        // (thumb upgraded to tile or hero) replaces a smaller entry.
+        val existing = pinnedCache[url] ?: cache.get(url)
+        if (existing != null && maxOf(existing.width, existing.height) >= maxOf(bitmap.width, bitmap.height)) {
+            return
         }
+        cache.put(url, bitmap)
     }
 
     @Synchronized
