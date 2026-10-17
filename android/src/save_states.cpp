@@ -265,6 +265,14 @@ namespace
             Emu.after_kill_callback = nullptr;
             Emu.Kill();
         }
+        else
+        {
+            // The operation is over and the game is back up: continuous mode has
+            // done its job. Leaving it set survives every later Kill(), which
+            // skips unload_iso() while it is on -- the disc overlay then outlives
+            // the game, and the next image boots with the previous disc's files.
+            Emu.SetContinuousMode(false);
+        }
     }
 
     template <typename F>

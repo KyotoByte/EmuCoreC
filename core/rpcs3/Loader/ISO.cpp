@@ -2083,6 +2083,15 @@ void load_iso(const std::string& path)
 {
 	sys_log.notice("Loading ISO '%s'", path);
 
+	// Drop any overlay left over from a previous boot before registering the new
+	// one. iso_device registers under a single fixed name and set_device() keeps
+	// the FIRST device when the name is taken, so a stale registration (anything
+	// that skipped unload_iso(), e.g. a continuous-mode teardown) made the new
+	// image unreachable: the mount kept serving the PREVIOUS disc's EBOOT and
+	// PARAM.SFO, and the next game booted as the old title until a process
+	// restart cleared the registry.
+	fs::set_virtual_device("iso_overlay_fs_dev", stx::shared_ptr<iso_device>());
+
 	stx::shared_ptr<iso_device> device = stx::make_shared<iso_device>(path);
 
 	s_iso_key_status = device->get_key_status();
