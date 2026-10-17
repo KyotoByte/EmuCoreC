@@ -26,8 +26,8 @@ import java.security.MessageDigest
 
 /**
  * Default longest edge a downloaded image is decoded at. Call sites that know
- * their layout size pass a tighter bound: decoding a 1000+px IGDB original for
- * a 150dp tile evicts most of the memory cache, and every mode switch or scroll
+ * their layout size pass a tighter bound: decoding art much larger than the
+ * tile renders evicts most of the memory cache, and every mode switch or scroll
  * then re-decodes from disk -- visible as tiles that are empty and then pop in.
  * Decoding at the size the tile actually renders keeps the cache holding whole
  * screens and looks identical.
@@ -46,69 +46,65 @@ fun UrlImage(
 ) {
     val context = LocalContext.current
     val decodeEdge = decodeEdgePx.coerceAtLeast(64)
-    // Memory entries are keyed by URL alone, never by size: the same cover is
-    // rendered as a grid tile, a list thumbnail and a hero across screens, and
-    // size-specific keys made every switch between those layouts miss the cache
-    // and re-decode from disk. Whatever size is already decoded is shown
-    // immediately; if it is smaller than asked, the producer upgrades it below.
-    val memoryKey = imageUrl?.let(::igdbMaximumQualityUrl)
-    val initial = memoryKey?.let { UrlBitmapMemoryCache.get(it) }
+    // One canonical URL for the memory key, the disk key and the request, so
+    // the same cover rendered as a grid tile, a list thumbnail or a hero never
+    // misses the cache and never re-downloads. Keys are URL-only (not size):
+    // whatever decode is already available is shown immediately and upgraded
+    // in place below if the current layout needs a bigger one.
+    val canonicalUrl = imageUrl?.takeIf { it.isNotBlank() }?.let(::igdbCoverUrl)
+    val initial = canonicalUrl?.let { UrlBitmapMemoryCache.get(it) }
     val bitmapState = produceState<Bitmap?>(
         initialValue = initial,
-        imageUrl,
+        canonicalUrl,
         fallbackPath,
         context,
         decodeEdge
     ) {
         val loadedBitmap = withContext(Dispatchers.IO) {
-            // IGDB images are served as transforms of one original upload, so
-            // the original is the maximum quality and the transformed tiers are
-            // the graceful degradation ladder when it cannot be fetched.
-            val candidates = buildList {
-                if (!imageUrl.isNullOrBlank()) {
-                    val best = igdbMaximumQualityUrl(imageUrl)
-                    add(best)
-                    addAll(igdbImageFallbackUrls(best))
-                }
-            }
-
-            for (candidate in candidates) {
-                UrlBitmapMemoryCache.get(candidate)?.let { cached ->
-                    if (isLargeEnough(cached, decodeEdge)) {
-                        // Already displayed via initialValue; nothing to do.
-                        return@withContext cached
-                    }
+            if (canonicalUrl != null) {
+                val cachedInMemory = UrlBitmapMemoryCache.get(canonicalUrl)
+                if (cachedInMemory != null && isLargeEnough(cachedInMemory, decodeEdge)) {
+                    // Already displayed via initialValue; nothing to do.
+                    return@withContext cachedInMemory
                 }
 
-                val cachedFile = UrlImageDiskCache.getCachedFile(context, candidate)
+                val cachedFile = UrlImageDiskCache.getCachedFile(context, canonicalUrl)
                 if (cachedFile != null) {
                     val diskBitmap = decodeBounded(cachedFile.absolutePath, decodeEdge)
                     if (diskBitmap != null) {
-                        UrlBitmapMemoryCache.put(candidate, diskBitmap, pinned = pinInMemory)
+                        UrlBitmapMemoryCache.put(canonicalUrl, diskBitmap, pinned = pinInMemory)
                         return@withContext diskBitmap
                     }
                 }
 
                 val fetched = runCatching {
-                    if (candidate.startsWith("content://") || candidate.startsWith("file://")) {
-                        context.contentResolver.openInputStream(Uri.parse(candidate))?.use(::decodeBounded)
+                    if (canonicalUrl.startsWith("content://") || canonicalUrl.startsWith("file://")) {
+                        context.contentResolver.openInputStream(Uri.parse(canonicalUrl))
+                            ?.use { stream -> decodeBounded(stream) }
                     } else {
-                        val downloaded = UrlImageDiskCache.downloadToCache(context, candidate)
+                        val downloaded = UrlImageDiskCache.downloadToCache(context, canonicalUrl)
                         if (downloaded != null) {
                             decodeBounded(downloaded.absolutePath, decodeEdge)
                         } else {
-                            URL(candidate).openStream().use(::decodeBounded)
+                            URL(canonicalUrl).openStream().use { stream -> decodeBounded(stream) }
                         }
                     }
                 }.getOrNull()
 
                 if (fetched != null) {
-                    UrlBitmapMemoryCache.put(candidate, fetched, pinned = pinInMemory)
+                    UrlBitmapMemoryCache.put(canonicalUrl, fetched, pinned = pinInMemory)
                     return@withContext fetched
+                }
+
+                // The remote cover could not be loaded: keep showing the
+                // smaller decode we already have instead of downgrading to the
+                // local icon.
+                if (cachedInMemory != null) {
+                    return@withContext cachedInMemory
                 }
             }
 
-            // Local file fallback if no remote tier could be loaded
+            // Local file fallback if the remote cover could not be loaded
             if (!fallbackPath.isNullOrBlank()) {
                 decodeBounded(fallbackPath, decodeEdge)
             } else {

@@ -667,8 +667,8 @@ fun GameDetailScreen(
 }
 
 private fun catalogDetailImageUrl(catalog: Ps3CatalogDetails?): String? {
-    // UrlImage itself lifts any IGDB URL to the maximum-quality original, so
-    // the stored cover (or hero) can be handed over as-is.
+    // UrlImage itself maps any IGDB cover URL to the canonical t_cover_big_2x
+    // tier, so the stored cover (or hero) can be handed over as-is.
     return catalog?.coverUrl ?: catalog?.heroUrl
 }
 
