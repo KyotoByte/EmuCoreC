@@ -46,6 +46,13 @@
 # Emulator restarts itself through ProcessPhoenix.
 -keep class com.jakewharton.processphoenix.** { *; }
 
+# WorkManager persists enqueued work in its own database and restores it by
+# class name, so the worker constructors must survive shrinking; a missing
+# worker would silently drop scheduled backups and feedback uploads.
+-keep class com.sbro.emucorec.feedback.FeedbackUploadWorker { *; }
+-keep class com.sbro.emucorec.data.drive.DriveScheduleWorker { *; }
+-keep class com.sbro.emucorec.data.drive.DriveBackupWorker { *; }
+
 # Keep Kotlin metadata and annotations that Compose / reflection-adjacent code
 # may rely on when stack traces or external libraries inspect them.
 -keepattributes *Annotation*, InnerClasses, Signature, EnclosingMethod

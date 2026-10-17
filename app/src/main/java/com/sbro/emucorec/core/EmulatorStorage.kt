@@ -2,6 +2,7 @@ package com.sbro.emucorec.core
 
 import android.content.Context
 import android.os.Environment
+import com.sbro.emucorec.BuildConfig
 import com.sbro.emucorec.data.AppPreferences
 import java.io.File
 
@@ -119,6 +120,13 @@ object EmulatorStorage {
         return File(storageRoot(context), "cache/install_cache").apply { mkdirs() }
     }
 
+    /**
+     * Synchronized: the app process seeds the runtime on startup, and the
+     * emulator boot thread runs it again right before initializing the core.
+     * Without the lock the two could copy the bundled Icons tree at the same
+     * time.
+     */
+    @Synchronized
     fun prepareRuntime(context: Context) {
         val runtimeRoot = runtimeRoot(context)
         migrateLegacyRuntimeData(context, storageRoot(context))
@@ -151,7 +159,22 @@ object EmulatorStorage {
     }
 
     private fun installBundledResources(context: Context, ps3Root: File) {
+        // The Icons tree is hundreds of PNGs. This used to recopy all of them on
+        // every call -- app start, emulator start, core init -- which on a cold
+        // first launch (running on the UI thread back then) alone exceeded the
+        // input-dispatch timeout. Seeded once per app version is enough.
+        val marker = File(ps3Root, "config/Icons/.seeded-version")
+        val version = BuildConfig.VERSION_CODE.toString()
+        if (runCatching { marker.readText().trim() }.getOrNull() == version) {
+            return
+        }
+
         copyAssetTree(context, "Icons", File(ps3Root, "config/Icons"))
+
+        runCatching {
+            marker.parentFile?.mkdirs()
+            marker.writeText(version)
+        }
     }
 
     private fun copyAssetTree(context: Context, assetPath: String, destination: File) {

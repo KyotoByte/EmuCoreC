@@ -72,6 +72,7 @@ import com.sbro.emucorec.ui.common.NavigationBackButton
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
 import com.sbro.emucorec.ui.theme.ScreenHorizontalPadding
 import com.sbro.emucorec.ui.theme.neon.neonButtonShape
@@ -126,6 +127,10 @@ fun SaveStatesScreen(
         }
     }
 
+    // Only the genuinely empty first load shows the spinner, and only if it
+    // takes long enough to see; refreshing with slots already on screen just
+    // updates the list. This is what made the animation "blink" here.
+    val showLoading = rememberDelayedLoading(uiState.isLoading && uiState.games.isEmpty())
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -167,7 +172,7 @@ fun SaveStatesScreen(
         }
 
         when {
-            uiState.isLoading -> item {
+            showLoading -> item {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -1,6 +1,7 @@
 package com.sbro.emucorec.ui.gamemanager
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
@@ -70,6 +71,7 @@ import com.sbro.emucorec.ui.common.LocalImage
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.ScreenTopBar
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.common.SectionCard
 import com.sbro.emucorec.ui.common.SettingHelpButton
 import com.sbro.emucorec.ui.settings.Ps3CoreSettingsCategory
@@ -84,7 +86,7 @@ import com.sbro.emucorec.ui.theme.neon.neonShape
 import com.sbro.emucorec.ui.theme.neon.neonChipShape
 import com.sbro.emucorec.ui.theme.neon.neonButtonShape
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun GameManagerScreen(
     initialTitleId: String? = null,
@@ -114,7 +116,23 @@ fun GameManagerScreen(
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
+    val listState = rememberLazyListState()
+    // Switching tabs used to leave the list at whatever scroll offset the
+    // previous tab was read at, so the new tab's content appeared mid-screen.
+    // Bring the (sticky) tab header back to the top on every change instead.
+    var lastSelectedTab by remember { mutableStateOf(selectedTab) }
+    LaunchedEffect(selectedTab, uiState.games.size) {
+        if (lastSelectedTab != selectedTab) {
+            lastSelectedTab = selectedTab
+            if (listState.layoutInfo.totalItemsCount > GAME_MANAGER_TABS_ITEM_INDEX) {
+                listState.animateScrollToItem(GAME_MANAGER_TABS_ITEM_INDEX)
+            }
+        }
+    }
+
+    val showLoading = rememberDelayedLoading(uiState.isLoading && !uiState.hasLoadedOnce)
     LazyColumn(
+        state = listState,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -134,7 +152,7 @@ fun GameManagerScreen(
             )
         }
 
-        if (uiState.isLoading && !uiState.hasLoadedOnce) {
+        if (showLoading) {
             item {
                 Box(
                     modifier = Modifier
@@ -160,8 +178,14 @@ fun GameManagerScreen(
                     onSelect = viewModel::selectGame
                 )
             }
-            item {
-                GameManagerTabs(selectedTab = selectedTab, onSelected = { selectedTab = it })
+            stickyHeader(key = "game-manager-tabs") {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(MaterialTheme.colorScheme.background)
+                ) {
+                    GameManagerTabs(selectedTab = selectedTab, onSelected = { selectedTab = it })
+                }
             }
             item {
                 when (selectedTab) {
@@ -201,6 +225,9 @@ fun GameManagerScreen(
         }
     }
 }
+
+// LazyColumn layout: 0 = top bar, 1 = game picker, 2 = (sticky) tab header.
+private const val GAME_MANAGER_TABS_ITEM_INDEX = 2
 
 private enum class GameManagerTab {
     General,

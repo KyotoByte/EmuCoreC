@@ -22,15 +22,26 @@ object Ps3LaunchBridge {
         }.getOrDefault(LaunchResult.Failure)
     }
 
-    fun launchInstalledTitle(context: Context, titleId: String): LaunchResult {
+    /**
+     * Launches an installed title.
+     *
+     * The caller usually already holds the [installPath] from the library item
+     * it is rendering; passing it skips a full library rescan. That rescan
+     * walks every game directory and probes disc images through the core, which
+     * is far too much work for a UI click -- it ran on the main thread here and
+     * was part of the launch ANR. The lookup remains only as a fallback.
+     */
+    fun launchInstalledTitle(context: Context, titleId: String, installPath: String? = null): LaunchResult {
         if (!EmulatorStorage.hasInstalledFirmware(context)) return LaunchResult.MissingFirmware
-        val game = InstalledGameRepository().findByTitleId(context, titleId) ?: return LaunchResult.Failure
+        val resolvedPath = installPath?.takeIf(String::isNotBlank)
+            ?: InstalledGameRepository().findByTitleId(context, titleId)?.installPath
+            ?: return LaunchResult.Failure
         return runCatching {
             context.startActivity(
                 Intent(context, Emulator::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    putExtra(Emulator.EXTRA_TITLE_ID, game.titleId)
-                    putExtra(Emulator.EXTRA_GAME_PATH, game.installPath)
+                    putExtra(Emulator.EXTRA_TITLE_ID, titleId)
+                    putExtra(Emulator.EXTRA_GAME_PATH, resolvedPath)
                     action = ACTION_LAUNCH
                 }
             )

@@ -272,7 +272,7 @@ fun GameDetailScreen(
                     val description = catalog?.summary?.takeIf { it.isNotBlank() }
                     val launchGameClick = game?.let {
                         rememberDebouncedClick {
-                            when (Ps3LaunchBridge.launchInstalledTitle(context, it.titleId)) {
+                            when (Ps3LaunchBridge.launchInstalledTitle(context, it.titleId, it.installPath)) {
                                 LaunchResult.Success -> Unit
                                 LaunchResult.MissingFirmware -> Toast.makeText(context, launchRequiresFirmwareMessage, Toast.LENGTH_SHORT).show()
                                 LaunchResult.Failure -> Toast.makeText(context, launchFailedMessage, Toast.LENGTH_SHORT).show()

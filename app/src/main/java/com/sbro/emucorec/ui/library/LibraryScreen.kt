@@ -88,6 +88,7 @@ import com.sbro.emucorec.ui.common.NavigationMenuButton
 import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.LocalCustomizationSettings
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
@@ -106,7 +107,7 @@ private enum class LibraryLayoutMode {
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LibraryScreen(
-    onLaunchGame: (String) -> Unit,
+    onLaunchGame: (String, String) -> Unit,
     onOpenSaveManager: (String) -> Unit,
     onOpenGameManager: (String) -> Unit,
     onOpenPatches: (String) -> Unit,
@@ -190,6 +191,7 @@ fun LibraryScreen(
                     .background(MaterialTheme.colorScheme.background.copy(alpha = 0.72f))
             )
         }
+        val showLoading = rememberDelayedLoading(uiState.isLoading && !uiState.hasLoadedOnce)
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -284,7 +286,7 @@ fun LibraryScreen(
             }
         }
 
-        if (uiState.isLoading && !uiState.hasLoadedOnce) {
+        if (showLoading) {
             item {
                 Box(
                     modifier = Modifier
@@ -329,7 +331,7 @@ fun LibraryScreen(
             }
         } else if (layoutMode == LibraryLayoutMode.LIST) {
             items(uiState.items, key = { it.titleId }) { game ->
-                val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId) }
+                val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId, game.installPath) }
                 val shape = neonShape(24.dp)
                 var menuExpanded by remember(game.titleId) { mutableStateOf(false) }
                 Box {
@@ -505,7 +507,7 @@ fun LibraryScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     rowItems.forEach { game ->
-                        val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId) }
+                        val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId, game.installPath) }
                         val shape = neonShape(24.dp)
                         var menuExpanded by remember(game.titleId) { mutableStateOf(false) }
                         Box(modifier = Modifier.weight(1f)) {

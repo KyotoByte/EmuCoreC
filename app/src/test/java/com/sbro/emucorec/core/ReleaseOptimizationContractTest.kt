@@ -20,6 +20,9 @@ class ReleaseOptimizationContractTest {
         listOf(
             "com.sbro.emucorec.core.Ps3Core",
             "com.sbro.emucorec.core.Ps3CoreCallbacks",
+            "com.sbro.emucorec.feedback.FeedbackUploadWorker",
+            "com.sbro.emucorec.data.drive.DriveScheduleWorker",
+            "com.sbro.emucorec.data.drive.DriveBackupWorker",
             "org.libsdl.app.**",
         ).forEach { nativeName ->
             assertTrue("Missing R8 keep rule for $nativeName", nativeName in rules)

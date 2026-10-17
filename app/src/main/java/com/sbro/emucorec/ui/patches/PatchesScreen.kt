@@ -63,6 +63,7 @@ import com.sbro.emucorec.data.PatchRepository
 import com.sbro.emucorec.data.Ps3PatchInfo
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.LocalImage
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.settings.animateScrollToCenterItem
@@ -98,6 +99,7 @@ fun PatchesScreen(
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
+    val showLoading = rememberDelayedLoading(uiState.isLoading && !uiState.hasLoadedOnce)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -137,7 +139,7 @@ fun PatchesScreen(
             )
         }
 
-        if (uiState.isLoading && !uiState.hasLoadedOnce) {
+        if (showLoading) {
             item {
                 Box(
                     modifier = Modifier

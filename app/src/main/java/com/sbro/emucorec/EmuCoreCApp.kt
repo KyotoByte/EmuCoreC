@@ -22,7 +22,15 @@ class EmuCoreCApp : Application() {
         // Apply the persisted locale before any activity is created so
         // AppCompat can attach the correctly localized resource context.
         AppPreferences(this).applyAppLanguage()
-        runCatching { EmulatorStorage.prepareRuntime(this) }
+        // First-run work (creating the runtime tree and extracting the Icons
+        // assets) is disk I/O that can take seconds on a fresh install, and it
+        // used to run on the main thread right here: the launcher then hit the
+        // input-dispatch timeout and the app got its ANR before it even drew.
+        // prepareRuntime is synchronized, so this thread and the emulator boot
+        // thread can race it safely.
+        Thread({
+            runCatching { EmulatorStorage.prepareRuntime(this) }
+        }, "EmuCoreC-PrepareRuntime").apply { isDaemon = true; start() }
         runCatching { PlayTimeRepository(this).finishOpenSessions() }
         DiscordIntegration.initialize(this)
         ProfilePlayTimeSyncer.syncPendingAsync(this)

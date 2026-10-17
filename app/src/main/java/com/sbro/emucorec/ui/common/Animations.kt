@@ -18,7 +18,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,11 +32,34 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sbro.emucorec.ui.theme.neon.neonShape
+import kotlinx.coroutines.delay
+
+/**
+ * Delays a full-screen loading state so fast work never flashes the spinner.
+ *
+ * Lists that reload in a few dozen milliseconds (the common case for local
+ * scans) used to blink their progress animation on every screen entry and
+ * refresh. Only work that actually exceeds [delayMillis] becomes visible;
+ * stopping the work hides it immediately.
+ */
+@Composable
+fun rememberDelayedLoading(active: Boolean, delayMillis: Long = 300): Boolean {
+    var visible by remember { mutableStateOf(false) }
+    LaunchedEffect(active) {
+        if (active) {
+            delay(delayMillis)
+            visible = true
+        } else {
+            visible = false
+        }
+    }
+    return active && visible
+}
 
 @Composable
 fun EmuCoreLoadingAnimation(
     modifier: Modifier = Modifier,
-    size: Dp = 110.dp,
+    size: Dp = 64.dp,
     color: Color = MaterialTheme.colorScheme.primary
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "EmuCoreCLoading")
@@ -48,8 +75,8 @@ fun EmuCoreLoadingAnimation(
     )
 
     val pulseScale by infiniteTransition.animateFloat(
-        initialValue = 0.92f,
-        targetValue = 1.25f,
+        initialValue = 0.94f,
+        targetValue = 1.08f,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = FastOutSlowInEasing),
             repeatMode = RepeatMode.Reverse
@@ -58,7 +85,7 @@ fun EmuCoreLoadingAnimation(
     )
 
     val glowOpacity by infiniteTransition.animateFloat(
-        initialValue = 0.35f,
+        initialValue = 0.40f,
         targetValue = 0.85f,
         animationSpec = infiniteRepeatable(
             animation = tween(1000, easing = LinearOutSlowInEasing),
@@ -67,16 +94,22 @@ fun EmuCoreLoadingAnimation(
         label = "glowPulse"
     )
 
+    // Strokes follow the requested size so the mark stays legible on phones
+    // without turning into a wall of neon: a fixed 5dp ring looked absurd at
+    // the old 110dp default.
+    val stroke = (size.value / 13f).coerceIn(2f, 4f).dp
+    val innerStroke = (stroke.value * 0.7f).dp
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(36.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         Text(
             text = "EMUCOREC",
-            style = MaterialTheme.typography.headlineSmall.copy(
+            style = MaterialTheme.typography.labelMedium.copy(
                 fontWeight = FontWeight.ExtraBold,
-                letterSpacing = 8.sp,
+                letterSpacing = 4.sp,
                 color = color.copy(alpha = glowOpacity)
             )
         )
@@ -87,38 +120,37 @@ fun EmuCoreLoadingAnimation(
         ) {
             Box(
                 modifier = Modifier
-                    .size(size * 1.15f)
+                    .size(size * 1.10f)
                     .graphicsLayer {
-                        scaleX = pulseScale * 1.35f
-                        scaleY = pulseScale * 1.35f
-                        alpha = glowOpacity * 0.45f
+                        scaleX = pulseScale * 1.12f
+                        scaleY = pulseScale * 1.12f
+                        alpha = glowOpacity * 0.30f
                     }
-                    .background(color.copy(alpha = 0.25f), CircleShape)
+                    .background(color.copy(alpha = 0.22f), CircleShape)
             )
 
             Box(
                 modifier = Modifier
-                    .size(size * 0.90f)
+                    .size(size * 0.92f)
                     .graphicsLayer { rotationZ = rotation }
-                    .border(5.dp, color.copy(alpha = 0.90f), neonShape(22.dp))
+                    .border(stroke, color.copy(alpha = 0.90f), neonShape(size * 0.30f))
             )
 
             Box(
                 modifier = Modifier
-                    .size(size * 0.68f)
+                    .size(size * 0.66f)
                     .graphicsLayer { rotationZ = -rotation * 1.7f }
-                    .border(3.5.dp, color.copy(alpha = 0.65f), neonShape(16.dp))
+                    .border(innerStroke, color.copy(alpha = 0.65f), neonShape(size * 0.22f))
             )
 
             Text(
                 text = "C",
-                fontSize = (size.value * 0.52f).sp,
+                fontSize = (size.value * 0.46f).sp,
                 fontWeight = FontWeight.Black,
                 color = color,
                 modifier = Modifier.graphicsLayer {
-                    val baseScale = 1.35f
-                    scaleX = pulseScale * baseScale
-                    scaleY = pulseScale * baseScale
+                    scaleX = pulseScale
+                    scaleY = pulseScale
                 }
             )
         }

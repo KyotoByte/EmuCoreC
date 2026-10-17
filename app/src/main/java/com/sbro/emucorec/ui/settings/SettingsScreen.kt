@@ -178,11 +178,18 @@ fun SettingsScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        // The top bar and the tab row stay put; only the tab's content scrolls,
+        // and it starts at the top on every tab switch. Previously all three
+        // shared one scroll position, so a tab opened at whatever offset the
+        // previous one was left at -- which is what looked broken.
+        val contentScrollState = rememberScrollState()
+        LaunchedEffect(selectedTab) {
+            contentScrollState.scrollTo(0)
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarsPadding()
-                .verticalScroll(rememberScrollState())
         ) {
             SettingsCompactTopBar(
                 title = stringResource(R.string.settings_title),
@@ -199,7 +206,9 @@ fun SettingsScreen(
 
             Column(
                 modifier = Modifier
+                    .weight(1f)
                     .fillMaxWidth()
+                    .verticalScroll(contentScrollState)
                     .padding(top = 12.dp, bottom = 110.dp),
                 verticalArrangement = Arrangement.spacedBy(18.dp)
             ) {

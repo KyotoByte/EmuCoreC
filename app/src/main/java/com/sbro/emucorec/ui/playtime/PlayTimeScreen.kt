@@ -64,6 +64,7 @@ import com.sbro.emucorec.ui.common.LocalImage
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
 import com.sbro.emucorec.ui.theme.ScreenHorizontalPadding
@@ -97,6 +98,7 @@ fun PlayTimeScreen(
         onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
     }
 
+    val showLoading = rememberDelayedLoading(uiState.isLoading && !uiState.hasLoadedOnce)
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -117,7 +119,7 @@ fun PlayTimeScreen(
             )
         }
 
-        if (uiState.isLoading && !uiState.hasLoadedOnce) {
+        if (showLoading) {
             item {
                 Box(
                     modifier = Modifier

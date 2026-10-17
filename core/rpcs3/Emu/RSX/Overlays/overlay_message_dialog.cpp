@@ -3,6 +3,7 @@
 #include "overlay_message_dialog.h"
 #include "Emu/emu_callbacks.h"
 #include "Emu/System.h"
+#include "Emu/VFS.h"
 #include "Emu/system_config.h"
 #include "Emu/system_utils.hpp"
 #include "Emu/Cell/ErrorCodes.h"
@@ -373,6 +374,20 @@ namespace rsx
 						{
 							background_overlay_image = std::make_unique<image_info>(picture_path);
 							dirty |= !!background_overlay_image->get_data();
+						}
+					}
+
+					if (!background_image || !background_image->get_data())
+					{
+						// EmuCoreC: one line, so the on-device log can explain a
+						// black loading screen (no picture found for this title,
+						// or the found picture failed to decode). Prints where
+						// the search looked, which is what makes it actionable.
+						static atomic_t<bool> reported;
+						if (!reported.exchange(true))
+						{
+							rsx_log.error("Custom background: no usable picture for title '%s' (sfo_dir='%s', disc_dir='%s')",
+								Emu.GetTitleID(), Emu.GetSfoDir(false), vfs::get("/dev_bdvd/PS3_GAME"));
 						}
 					}
 				}

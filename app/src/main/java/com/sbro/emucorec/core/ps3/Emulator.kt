@@ -100,7 +100,10 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         super.onCreate(savedInstanceState)
 
         Ps3Runtime.stop()
-        EmulatorStorage.prepareRuntime(this)
+        // No EmulatorStorage.prepareRuntime here: it does disk work (dirs, the
+        // bundled resources) and used to run on this UI thread during launch.
+        // Ps3Runtime.ensureInitialized performs it on the boot worker before the
+        // core initializes, which is also the only place it is required.
         Ps3CoreConfigRepository(this).ensureDefaultsPersisted()
         _currentGameId = gameIdFromIntent(intent)
         inputOverlay = InputOverlay(this)

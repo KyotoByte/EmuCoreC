@@ -180,8 +180,8 @@ fun AppNavigation(navController: NavHostController = rememberNavController()) {
     }
 
 
-    val launchInstalledGame: (String) -> Unit = { titleId ->
-        when (Ps3LaunchBridge.launchInstalledTitle(context, titleId)) {
+    val launchInstalledGame: (String, String) -> Unit = { titleId, installPath ->
+        when (Ps3LaunchBridge.launchInstalledTitle(context, titleId, installPath)) {
             Ps3LaunchBridge.LaunchResult.Success -> Unit
             Ps3LaunchBridge.LaunchResult.MissingFirmware -> Toast.makeText(context, launchRequiresFirmwareMessage, Toast.LENGTH_SHORT).show()
             Ps3LaunchBridge.LaunchResult.Failure -> Toast.makeText(context, gameLaunchFailed, Toast.LENGTH_SHORT).show()

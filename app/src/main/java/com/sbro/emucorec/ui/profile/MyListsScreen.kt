@@ -89,6 +89,7 @@ import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.CompactCardContentPadding
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
@@ -131,10 +132,11 @@ fun MyListsScreen(
             .background(MaterialTheme.colorScheme.background)
             .navigationBarsPadding()
     ) {
+        val showLoading = rememberDelayedLoading(uiState.isLoading)
         when {
-            uiState.isLoading -> {
+            showLoading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            EmuCoreLoadingAnimation(size = 64.dp)
+                    EmuCoreLoadingAnimation()
                 }
             }
 
