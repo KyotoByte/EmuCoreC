@@ -55,6 +55,7 @@ import com.sbro.emucorec.R
 import com.sbro.emucorec.data.AppFont
 import com.sbro.emucorec.data.AppPreferences
 import com.sbro.emucorec.data.CustomizationSettings
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.SectionCard
 import com.sbro.emucorec.ui.theme.ThemeMode
 import com.sbro.emucorec.ui.library.LibraryGridSizing
@@ -379,7 +380,7 @@ private fun CustomizationPreview(settings: CustomizationSettings) {
                         Surface(
                             modifier = Modifier
                                 .width(52.dp * coverScale)
-                                .aspectRatio(0.72f),
+                                .aspectRatio(COVER_ART_ASPECT_RATIO),
                             shape = neonShape(12.dp),
                             color = colors[index % colors.size]
                         ) {}

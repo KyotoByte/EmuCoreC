@@ -89,6 +89,7 @@ import com.sbro.emucorec.ui.common.NavigationMenuButton
 import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.LocalCustomizationSettings
@@ -360,7 +361,7 @@ fun LibraryScreen(
                                 coverUrl = game.catalogCoverUrl,
                                 title = game.title,
                                 modifier = Modifier.width(66.dp),
-                                artworkAspectRatio = 3f / 4f
+                                artworkAspectRatio = COVER_ART_ASPECT_RATIO
                             )
                             Column(
                                 modifier = Modifier.weight(1f),
@@ -510,9 +511,9 @@ fun LibraryScreen(
                     rowItems.forEach { game ->
                         val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId, game.installPath) }
                         // The card IS the cover: full-bleed artwork, no inner
-                        // frame and no title block under it. The title still
-                        // lives in the detail screen and the accessibility
-                        // description.
+                        // frame, no border ring and no title block under it. The
+                        // title still lives in the detail screen and the
+                        // accessibility description.
                         val shape = neonShape(20.dp)
                         var menuExpanded by remember(game.titleId) { mutableStateOf(false) }
                         Box(modifier = Modifier.weight(1f)) {
@@ -527,8 +528,9 @@ fun LibraryScreen(
                                         onClick = selectGameClick,
                                         onLongClick = { menuExpanded = true }
                                     ),
-                                artworkAspectRatio = 3f / 4f,
+                                artworkAspectRatio = COVER_ART_ASPECT_RATIO,
                                 shape = shape,
+                                border = null,
                             )
                             DropdownMenu(
                                 expanded = menuExpanded,
@@ -728,14 +730,15 @@ private fun LibraryGameArtwork(
     coverUrl: String?,
     title: String,
     modifier: Modifier = Modifier,
-    artworkAspectRatio: Float = 3f / 4f,
+    artworkAspectRatio: Float = COVER_ART_ASPECT_RATIO,
     shape: Shape = neonShape(18.dp),
+    border: BorderStroke? = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
 ) {
     Surface(
         modifier = modifier,
         shape = shape,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+        border = border,
     ) {
         val imageModifier = Modifier
             .fillMaxWidth()

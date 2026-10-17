@@ -81,6 +81,7 @@ import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
@@ -461,7 +462,7 @@ private fun SaveDataCard(
                         ) {
                             val artworkModifier = Modifier
                                 .fillMaxWidth()
-                                .aspectRatio(3f / 4f)
+                                .aspectRatio(COVER_ART_ASPECT_RATIO)
                             if (!save.coverUrl.isNullOrBlank()) {
                                 UrlImage(
                                     imageUrl = save.coverUrl,

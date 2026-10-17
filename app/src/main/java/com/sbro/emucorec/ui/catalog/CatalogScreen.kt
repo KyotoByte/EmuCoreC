@@ -93,6 +93,7 @@ import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.CompactCardContentPadding
@@ -565,7 +566,7 @@ private fun CatalogGameCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(3f / 4f)
+                    .aspectRatio(COVER_ART_ASPECT_RATIO)
                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f))
             ) {
                 UrlImage(

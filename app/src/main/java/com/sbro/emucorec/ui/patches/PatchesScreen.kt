@@ -63,6 +63,7 @@ import com.sbro.emucorec.data.PatchRepository
 import com.sbro.emucorec.data.Ps3PatchInfo
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.LocalImage
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.UrlImage
@@ -420,7 +421,7 @@ private fun PatchGamePicker(
                         ) {
                             val artworkModifier = Modifier
                                 .fillMaxWidth()
-                                .aspectRatio(3f / 4f)
+                                .aspectRatio(COVER_ART_ASPECT_RATIO)
                             if (!game.catalogCoverUrl.isNullOrBlank()) {
                                 UrlImage(
                                     imageUrl = game.catalogCoverUrl,

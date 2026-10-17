@@ -20,8 +20,17 @@ import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import java.io.InputStream
 import java.net.URL
 import java.security.MessageDigest
+
+/**
+ * Longest edge a downloaded image is decoded at. The largest consumer is the
+ * detail hero, well under this bound; decoding an IGDB original (often
+ * 1000-1500px) at full size would multiply the memory cache for no visible
+ * gain and slow scrolling.
+ */
+private const val MAX_DECODED_EDGE_PX = 1024
 
 @Composable
 fun UrlImage(
@@ -33,51 +42,61 @@ fun UrlImage(
     pinInMemory: Boolean = false
 ) {
     val context = LocalContext.current
+    // Start from whatever is already decoded (the max-quality variant, since
+    // that is what the producer stores) so tiles do not flash placeholders.
+    val initial = imageUrl?.let { UrlBitmapMemoryCache.get(igdbMaximumQualityUrl(it)) }
     val bitmapState = produceState<Bitmap?>(
-        initialValue = imageUrl?.let { UrlBitmapMemoryCache.get(it) }
-            ?: fallbackPath?.let { path -> runCatching { BitmapFactory.decodeFile(path) }.getOrNull() },
+        initialValue = initial,
         imageUrl,
         fallbackPath,
         context
     ) {
         val loadedBitmap = withContext(Dispatchers.IO) {
-            if (!imageUrl.isNullOrBlank()) {
-                // 1. Check in-memory RAM cache
-                UrlBitmapMemoryCache.get(imageUrl)?.let { return@withContext it }
+            // IGDB images are served as transforms of one original upload, so
+            // the original is the maximum quality and the transformed tiers are
+            // the graceful degradation ladder when it cannot be fetched.
+            val candidates = buildList {
+                if (!imageUrl.isNullOrBlank()) {
+                    val best = igdbMaximumQualityUrl(imageUrl)
+                    add(best)
+                    addAll(igdbImageFallbackUrls(best))
+                }
+            }
 
-                // 2. Check disk cache
-                val cachedFile = UrlImageDiskCache.getCachedFile(context, imageUrl)
-                if (cachedFile != null && cachedFile.exists() && cachedFile.length() > 0) {
-                    val diskBitmap = runCatching { BitmapFactory.decodeFile(cachedFile.absolutePath) }.getOrNull()
+            for (candidate in candidates) {
+                UrlBitmapMemoryCache.get(candidate)?.let { return@withContext it }
+
+                val cachedFile = UrlImageDiskCache.getCachedFile(context, candidate)
+                if (cachedFile != null) {
+                    val diskBitmap = decodeBounded(cachedFile.absolutePath)
                     if (diskBitmap != null) {
-                        UrlBitmapMemoryCache.put(imageUrl, diskBitmap, pinned = pinInMemory)
+                        UrlBitmapMemoryCache.put(candidate, diskBitmap, pinned = pinInMemory)
                         return@withContext diskBitmap
                     }
                 }
 
-                // 3. Fetch from network or content URI and save to disk cache
-                val fetchedBitmap = runCatching {
-                    if (imageUrl.startsWith("content://") || imageUrl.startsWith("file://")) {
-                        context.contentResolver.openInputStream(Uri.parse(imageUrl))?.use(BitmapFactory::decodeStream)
+                val fetched = runCatching {
+                    if (candidate.startsWith("content://") || candidate.startsWith("file://")) {
+                        context.contentResolver.openInputStream(Uri.parse(candidate))?.use(::decodeBounded)
                     } else {
-                        val downloadedFile = UrlImageDiskCache.downloadToCache(context, imageUrl)
-                        if (downloadedFile != null && downloadedFile.exists()) {
-                            BitmapFactory.decodeFile(downloadedFile.absolutePath)
+                        val downloaded = UrlImageDiskCache.downloadToCache(context, candidate)
+                        if (downloaded != null) {
+                            decodeBounded(downloaded.absolutePath)
                         } else {
-                            URL(imageUrl).openStream().use(BitmapFactory::decodeStream)
+                            URL(candidate).openStream().use(::decodeBounded)
                         }
                     }
                 }.getOrNull()
 
-                if (fetchedBitmap != null) {
-                    UrlBitmapMemoryCache.put(imageUrl, fetchedBitmap, pinned = pinInMemory)
-                    return@withContext fetchedBitmap
+                if (fetched != null) {
+                    UrlBitmapMemoryCache.put(candidate, fetched, pinned = pinInMemory)
+                    return@withContext fetched
                 }
             }
 
-            // 4. Fallback local file if network/disk cover is not available
+            // Local file fallback if no remote tier could be loaded
             if (!fallbackPath.isNullOrBlank()) {
-                runCatching { BitmapFactory.decodeFile(fallbackPath) }.getOrNull()
+                decodeBounded(fallbackPath)
             } else {
                 null
             }
@@ -105,6 +124,24 @@ fun UrlImage(
         }
     }
 }
+
+private fun decodeBounded(path: String): Bitmap? {
+    val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+    BitmapFactory.decodeFile(path, bounds)
+    if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
+
+    var sample = 1
+    while (bounds.outWidth / (sample * 2) >= MAX_DECODED_EDGE_PX ||
+        bounds.outHeight / (sample * 2) >= MAX_DECODED_EDGE_PX
+    ) {
+        sample *= 2
+    }
+
+    return BitmapFactory.decodeFile(path, BitmapFactory.Options().apply { inSampleSize = sample })
+}
+
+private fun decodeBounded(stream: InputStream): Bitmap? =
+    runCatching { BitmapFactory.decodeStream(stream) }.getOrNull()
 
 object UrlImageDiskCache {
     private const val CACHE_DIR_NAME = "image_cache"

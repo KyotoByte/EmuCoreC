@@ -114,6 +114,7 @@ import com.sbro.emucorec.core.Ps3LaunchBridge.LaunchResult
 import com.sbro.emucorec.data.Ps3CompatibilityState
 import com.sbro.emucorec.data.Ps3CompatibilitySummary
 import com.sbro.emucorec.data.Ps3CatalogDetails
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.LocalImage
 import com.sbro.emucorec.ui.common.ImmersiveMode
 import com.sbro.emucorec.ui.common.NavigationBackButton
@@ -293,7 +294,7 @@ fun GameDetailScreen(
                                 modifier = Modifier
                                     .padding(top = 10.dp, bottom = 10.dp, start = 8.dp)
                                     .width(heroMaxWidth)
-                                    .aspectRatio(3f / 4f)
+                                    .aspectRatio(COVER_ART_ASPECT_RATIO)
                                     .clip(neonShape(28.dp))
                                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
                             ) {
@@ -368,7 +369,7 @@ fun GameDetailScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .widthIn(max = heroMaxWidth)
-                                    .aspectRatio(3f / 4f)
+                                    .aspectRatio(COVER_ART_ASPECT_RATIO)
                                     .clip(neonShape(28.dp))
                                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
                             ) {
@@ -666,12 +667,9 @@ fun GameDetailScreen(
 }
 
 private fun catalogDetailImageUrl(catalog: Ps3CatalogDetails?): String? {
-    val sourceUrl = catalog?.coverUrl ?: catalog?.heroUrl ?: return null
-    return if (sourceUrl.contains("/image/upload/", ignoreCase = true)) {
-        sourceUrl.replace(Regex("/t_[^/]+/"), "/t_1080p/")
-    } else {
-        sourceUrl
-    }
+    // UrlImage itself lifts any IGDB URL to the maximum-quality original, so
+    // the stored cover (or hero) can be handed over as-is.
+    return catalog?.coverUrl ?: catalog?.heroUrl
 }
 
 @Composable
@@ -684,7 +682,7 @@ private fun DetailSkeleton(horizontalInset: Dp) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = horizontalInset)
-                .aspectRatio(2f / 3f)
+                .aspectRatio(COVER_ART_ASPECT_RATIO)
                 .clip(neonShape(28.dp))
         )
         SkeletonBlock(

@@ -89,6 +89,7 @@ import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.UrlImage
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.CompactCardContentPadding
@@ -762,7 +763,7 @@ private fun ProfileGridGameCard(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(2f / 3f)
+                    .aspectRatio(COVER_ART_ASPECT_RATIO)
                     .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f))
             ) {
                 UrlImage(

@@ -80,6 +80,7 @@ import com.sbro.emucorec.data.Ps3TrophySet
 import com.sbro.emucorec.ui.common.LocalImage
 import com.sbro.emucorec.ui.common.ScreenTopBar
 import com.sbro.emucorec.ui.common.UrlImage
+import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.theme.ScreenContentBottomPadding
 import com.sbro.emucorec.ui.theme.ScreenHorizontalPadding
@@ -286,7 +287,7 @@ private fun TrophySetHeader(
             ) {
                 val artworkModifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(3f / 4f)
+                    .aspectRatio(COVER_ART_ASPECT_RATIO)
                 if (!set.coverUrl.isNullOrBlank()) {
                     UrlImage(
                         imageUrl = set.coverUrl,
