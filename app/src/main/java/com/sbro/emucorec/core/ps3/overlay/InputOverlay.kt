@@ -7,12 +7,12 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.sbro.emucorec.core.Digital1Flags
+import com.sbro.emucorec.core.Digital2Flags
+import com.sbro.emucorec.core.Ps3Core
 import com.sbro.emucorec.core.Ps3CoreConfig
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
 import com.sbro.emucorec.core.ps3.Emulator
-import net.rpcsx.Digital1Flags
-import net.rpcsx.Digital2Flags
-import net.rpcsx.RPCSX
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
@@ -247,9 +247,9 @@ class InputOverlay(context: Context) {
     }
 
     private fun pushLocked(): Boolean {
-        if (!attached || !RPCSX.initialized) return false
+        if (!attached || !Ps3Core.initialized) return false
         val pushed = runCatching {
-            RPCSX.instance.overlayPadData(digital1, digital2, leftX, leftY, rightX, rightY)
+            Ps3Core.instance.overlayPadData(digital1, digital2, leftX, leftY, rightX, rightY)
         }.getOrDefault(false)
         if (!pushed && !pushFailureLogged) {
             pushFailureLogged = true

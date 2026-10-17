@@ -3,7 +3,6 @@ package com.sbro.emucorec.core
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import net.rpcsx.ProgressRepository
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -18,11 +17,11 @@ class NativeInstallCompletionTest {
         try {
             assertTrue(progressId > 0)
             assertFalse("Accepting a queued install must not report success", operation.isCompleted)
-            ProgressRepository.onProgressEvent(progressId, -1, 0, "Compilation failed")
+            NativeProgressBus.onEvent(progressId, -1, 0, "Compilation failed", completed = false)
             assertFalse(operation.await())
         } finally {
             operation.cancel()
-            ProgressRepository.cancel(progressId)
+            NativeProgressBus.cancel(progressId)
         }
     }
 
@@ -33,16 +32,16 @@ class NativeInstallCompletionTest {
             awaitNativeInstallCompletion({ id -> progressId = id; true })
         }
         try {
-            ProgressRepository.onProgressEvent(progressId, 100, 100, "Compiling")
+            NativeProgressBus.onEvent(progressId, 100, 100, "Compiling", completed = false)
             assertFalse(operation.isCompleted)
-            ProgressRepository.onProgressEvent(progressId, 0, 0, "Finalizing")
+            NativeProgressBus.onEvent(progressId, 0, 0, "Finalizing", completed = false)
             assertFalse(operation.isCompleted)
-            ProgressRepository.onProgressCompleted(progressId, 1, 1, "Done")
+            NativeProgressBus.onEvent(progressId, 1, 1, "Done", completed = true)
             assertTrue(operation.await())
-            assertFalse(progressId in ProgressRepository.progress.value)
+            assertFalse(progressId in NativeProgressBus.progress.value)
         } finally {
             operation.cancel()
-            ProgressRepository.cancel(progressId)
+            NativeProgressBus.cancel(progressId)
         }
     }
 
@@ -50,13 +49,13 @@ class NativeInstallCompletionTest {
     fun nativeRejectionCompletesWithFailure() = runBlocking {
         var progressId = 0L
         assertFalse(awaitNativeInstallCompletion({ id -> progressId = id; false }))
-        assertFalse(progressId in ProgressRepository.progress.value)
+        assertFalse(progressId in NativeProgressBus.progress.value)
     }
 
     @Test
     fun synchronousCompletionDoesNotLoseTheResult() = runBlocking {
         assertTrue(awaitNativeInstallCompletion({ id ->
-            ProgressRepository.onProgressCompleted(id, 1, 1, "Done")
+            NativeProgressBus.onEvent(id, 1, 1, "Done", completed = true)
             true
         }))
     }
@@ -69,7 +68,7 @@ class NativeInstallCompletionTest {
         }
         operation.cancel()
         operation.join()
-        assertFalse(progressId in ProgressRepository.progress.value)
-        assertFalse(ProgressRepository.onProgressCompleted(progressId, 1, 1, "Done"))
+        assertFalse(progressId in NativeProgressBus.progress.value)
+        assertFalse(NativeProgressBus.onEvent(progressId, 1, 1, "Done", completed = true))
     }
 }

@@ -6,12 +6,6 @@ import android.os.ParcelFileDescriptor
 import android.util.Log
 import android.view.Surface
 import com.sbro.emucorec.data.InstalledGameRepository
-import net.rpcsx.BootResult
-import net.rpcsx.EmulatorState
-import net.rpcsx.FirmwareRepository
-import net.rpcsx.GameRepository
-import net.rpcsx.ProgressRepository
-import net.rpcsx.RPCSX
 import com.sbro.emucorec.BuildConfig
 import java.io.File
 import java.nio.file.Files
@@ -31,7 +25,7 @@ object Ps3Runtime {
     @Volatile private var currentSurface: Surface? = null
 
     fun ensureInitialized(context: Context): Boolean = synchronized(this) {
-        if (RPCSX.initialized) {
+        if (Ps3Core.initialized) {
             ensurePumpsRunning()
             return true
         }
@@ -44,20 +38,19 @@ object Ps3Runtime {
         val nativeDir = appContext.applicationInfo.nativeLibraryDir
         val core = File(nativeDir, "libemucorec-core.so")
         if (!core.isFile) {
-            Log.e(TAG, "RPCS3 core is missing: ${core.absolutePath}")
+            Log.e(TAG, "EmuCoreC core is missing: ${core.absolutePath}")
             return false
         }
 
-        RPCSX.nativeLibDirectory = nativeDir
-        if (RPCSX.activeLibrary.value == null && !RPCSX.openLibrary(core.absolutePath)) {
-            Log.e(TAG, "Could not load RPCS3 core: ${core.absolutePath}")
+        if (Ps3Core.activeLibrary.value == null && !Ps3Core.openLibrary(core.absolutePath)) {
+            Log.e(TAG, "Could not load EmuCoreC core: ${core.absolutePath}")
             return false
         }
 
         // Feed the core the identity strings shown in the performance overlay header
         // (app version | build | core version, plus the device name).
         runCatching {
-            RPCSX.instance.setAppInfo(
+            Ps3Core.instance.setAppInfo(
                 BuildConfig.VERSION_NAME,
                 BuildConfig.VERSION_CODE.toString(),
                 MobileSocNameMapper.currentDeviceName(),
@@ -65,26 +58,29 @@ object Ps3Runtime {
         }
 
         val root = EmulatorStorage.ps3Root(appContext).absolutePath.trimEnd('/') + "/"
-        RPCSX.rootDirectory = root
+        Ps3Core.rootDirectory = root
         File(root, ".nomedia").runCatching { parentFile?.mkdirs(); createNewFile() }
 
-        if (!RPCSX.instance.initialize(root, USER_ID)) {
-            Log.e(TAG, "RPCS3 initialization failed for $root")
+        // Exact SoC identity for the startup banner; must precede initialize().
+        runCatching { Ps3Core.instance.setSocInfo(MobileSocNameMapper.currentDeviceName()) }
+
+        if (!Ps3Core.instance.initialize(root, USER_ID)) {
+            Log.e(TAG, "Core initialization failed for $root")
             return false
         }
 
-        RPCSX.initialized = true
-        runCatching { FirmwareRepository.load() }
+        Ps3Core.initialized = true
+        runCatching { FirmwareState.load() }
         ensurePumpsRunning()
         true
     }
 
     fun ensurePumpsRunning() {
         synchronized(this) {
-            if (!RPCSX.initialized) return
+            if (!Ps3Core.initialized) return
             if (mainPumpThread?.isAlive != true) {
                 mainPumpThread = Thread({
-                    runCatching { RPCSX.instance.startMainThreadProcessor() }
+                    runCatching { Ps3Core.instance.startMainThreadProcessor() }
                 }, "ps3-main-pump").apply {
                     isDaemon = true
                     start()
@@ -92,7 +88,7 @@ object Ps3Runtime {
             }
             if (compilePumpThread?.isAlive != true) {
                 compilePumpThread = Thread({
-                    runCatching { RPCSX.instance.processCompilationQueue() }
+                    runCatching { Ps3Core.instance.processCompilationQueue() }
                 }, "ps3-compile-pump").apply {
                     isDaemon = true
                     start()
@@ -103,14 +99,14 @@ object Ps3Runtime {
 
     fun installFirmware(context: Context, uri: Uri): Boolean {
         if (!ensureInitialized(context)) return false
-        val progressId = ProgressRepository.create()
+        val progressId = NativeProgressBus.create()
         return (context.contentResolver.openFileDescriptor(uri, "r")?.use { descriptor ->
-            RPCSX.instance.installFw(descriptor.fd, progressId)
+            Ps3Core.instance.installFw(descriptor.fd, progressId)
         } ?: false).also { accepted -> rejectProgressIfNeeded(progressId, accepted) }
     }
 
     fun installFirmware(context: Context, source: String): Boolean {
-        val progressId = ProgressRepository.create()
+        val progressId = NativeProgressBus.create()
         return installFirmware(context, source, progressId).also { accepted ->
             rejectProgressIfNeeded(progressId, accepted)
         }
@@ -119,20 +115,19 @@ object Ps3Runtime {
     fun installFirmware(context: Context, source: String, progressId: Long): Boolean =
         openDescriptor(context, source)?.use { descriptor ->
             if (!ensureInitialized(context)) return@use false
-            RPCSX.instance.installFw(descriptor.fd, progressId)
+            Ps3Core.instance.installFw(descriptor.fd, progressId)
         } ?: false
 
     fun installPackage(context: Context, uri: Uri): Boolean {
         if (!ensureInitialized(context)) return false
-        val progressId = ProgressRepository.create()
-        GameRepository.createGameInstallEntry(progressId)
+        val progressId = NativeProgressBus.create()
         return (context.contentResolver.openFileDescriptor(uri, "r")?.use { descriptor ->
-            RPCSX.instance.install(descriptor.fd, progressId)
+            Ps3Core.instance.install(descriptor.fd, progressId)
         } ?: false).also { accepted -> rejectProgressIfNeeded(progressId, accepted) }
     }
 
     fun installPackage(context: Context, source: String): Boolean {
-        val progressId = ProgressRepository.create()
+        val progressId = NativeProgressBus.create()
         return installPackage(context, source, progressId).also { accepted ->
             rejectProgressIfNeeded(progressId, accepted)
         }
@@ -141,12 +136,11 @@ object Ps3Runtime {
     fun installPackage(context: Context, source: String, progressId: Long): Boolean =
         openDescriptor(context, source)?.use { descriptor ->
             if (!ensureInitialized(context)) return@use false
-            GameRepository.createGameInstallEntry(progressId)
-            RPCSX.instance.install(descriptor.fd, progressId)
+            Ps3Core.instance.install(descriptor.fd, progressId)
         } ?: false
 
     fun installSplitPackages(context: Context, sources: List<String>): Boolean {
-        val progressId = ProgressRepository.create()
+        val progressId = NativeProgressBus.create()
         return installSplitPackages(context, sources, progressId).also { accepted ->
             rejectProgressIfNeeded(progressId, accepted)
         }
@@ -159,8 +153,7 @@ object Ps3Runtime {
             sources.forEach { source ->
                 descriptors += openDescriptor(context, source) ?: return false
             }
-            GameRepository.createGameInstallEntry(progressId)
-            RPCSX.instance.installSplitPkg(
+            Ps3Core.instance.installSplitPkg(
                 descriptors.map(ParcelFileDescriptor::getFd).toIntArray(),
                 progressId,
             )
@@ -173,7 +166,7 @@ object Ps3Runtime {
         if (File(source).extension.equals("rap", true) && gamePath.isBlank()) {
             installRap(context, source)
         } else {
-            val progressId = ProgressRepository.create()
+            val progressId = NativeProgressBus.create()
             installLicense(context, source, gamePath, progressId).also { accepted ->
                 rejectProgressIfNeeded(progressId, accepted)
             }
@@ -182,7 +175,7 @@ object Ps3Runtime {
     fun installLicense(context: Context, source: String, gamePath: String, progressId: Long): Boolean =
         openDescriptor(context, source)?.use { descriptor ->
             if (!ensureInitialized(context)) return@use false
-            RPCSX.instance.installKey(descriptor.fd, progressId, gamePath)
+            Ps3Core.instance.installKey(descriptor.fd, progressId, gamePath)
         } ?: false
 
     /** Installs a standalone RAP by its content-id filename, as RPCS3's exdata import does. */
@@ -195,8 +188,8 @@ object Ps3Runtime {
             InstalledGameRepository().loadInstalledGames(context),
         ) ?: return false
 
-        val user = runCatching { RPCSX.instance.getUser() }.getOrNull().orEmpty().ifBlank { USER_ID }
-        val directory = File(RPCSX.getHdd0Dir(), "home/$user/exdata").canonicalFile
+        val user = runCatching { Ps3Core.instance.getUser() }.getOrNull().orEmpty().ifBlank { USER_ID }
+        val directory = File(Ps3Core.getHdd0Dir(), "home/$user/exdata").canonicalFile
         if (!directory.isDirectory && !directory.mkdirs()) return false
         val destination = File(directory, "$contentId.rap").canonicalFile
         if (destination.parentFile != directory) return false
@@ -223,38 +216,38 @@ object Ps3Runtime {
     }.getOrDefault(false)
 
     private fun rejectProgressIfNeeded(progressId: Long, accepted: Boolean) {
-        if (!accepted) ProgressRepository.onProgressEvent(progressId, -1, 0, "Installation failed")
+        if (!accepted) NativeProgressBus.onEvent(progressId, -1, 0, "Installation failed", completed = false)
     }
 
     fun boot(context: Context, path: String, titleId: String? = null): BootResult {
         if (!ensureInitialized(context)) return BootResult.GenericError
         ensurePumpsRunning()
         Ps3CoreSettingOverrides.applyForGame(context, titleId)
-        return RPCSX.boot(path)
+        return Ps3Core.boot(path)
     }
 
     fun attachSurface(surface: Surface, width: Int, height: Int, refreshRate: Double) {
-        if (!RPCSX.initialized) return
+        if (!Ps3Core.initialized) return
         val event = if (currentSurface == null) SURFACE_CREATED else SURFACE_CHANGED
         currentSurface = surface
-        RPCSX.instance.surfaceSizeChanged(width, height)
-        RPCSX.instance.displayRefreshRateChanged(refreshRate)
-        RPCSX.instance.surfaceEvent(surface, event)
+        Ps3Core.instance.surfaceSizeChanged(width, height)
+        Ps3Core.instance.displayRefreshRateChanged(refreshRate)
+        Ps3Core.instance.surfaceEvent(surface, event)
     }
 
     fun detachSurface() {
         currentSurface?.let { surface ->
-            if (RPCSX.initialized) RPCSX.instance.surfaceEvent(surface, SURFACE_DESTROYED)
+            if (Ps3Core.initialized) Ps3Core.instance.surfaceEvent(surface, SURFACE_DESTROYED)
         }
         currentSurface = null
     }
 
     fun pause() {
-        if (RPCSX.initialized) runCatching { RPCSX.instance.pause() }
+        if (Ps3Core.initialized) runCatching { Ps3Core.instance.pause() }
     }
 
     fun resume() {
-        if (RPCSX.initialized) runCatching { RPCSX.instance.resume() }
+        if (Ps3Core.initialized) runCatching { Ps3Core.instance.resume() }
     }
 
     fun stop() {
@@ -265,11 +258,11 @@ object Ps3Runtime {
     }
 
     fun requestStop() {
-        if (RPCSX.initialized) runCatching { RPCSX.instance.kill() }
+        if (Ps3Core.initialized) runCatching { Ps3Core.instance.kill() }
     }
 
     fun state(): EmulatorState =
-        if (RPCSX.initialized) runCatching { RPCSX.getState() }.getOrDefault(EmulatorState.Stopped)
+        if (Ps3Core.initialized) runCatching { Ps3Core.getState() }.getOrDefault(EmulatorState.Stopped)
         else EmulatorState.Stopped
 
     private fun openDescriptor(context: Context, source: String): ParcelFileDescriptor? {

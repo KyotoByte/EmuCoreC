@@ -121,7 +121,7 @@ class FeedbackUploadWorker(
             "appVersion" to "EmuCoreC ${BuildConfig.VERSION_NAME}",
             "appBuild" to BuildConfig.VERSION_CODE.toString(),
             "coreProject" to "RPCS3 core · RPCS3 upstream core",
-            "coreVersion" to runCatching { net.rpcsx.RPCSX.instance.getVersion() }.getOrDefault("RPCS3 core"),
+            "coreVersion" to runCatching { com.sbro.emucorec.core.Ps3Core.instance.getVersion() }.getOrDefault("RPCS3 core"),
             "coreSource" to "https://github.com/RPCS3/rpcs3",
             "upstreamCore" to "https://github.com/RPCS3/rpcs3",
             "androidVersion" to "${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})",

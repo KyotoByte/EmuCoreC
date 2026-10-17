@@ -20,11 +20,12 @@ if (file("google-services.json").exists()) {
 // Build libemucorec-core.so from C++ sources automatically before every build.
 //
 // The .so lives in jniLibs/arm64-v8a/ as a prebuilt, but the core sources live
-// IN THIS REPOSITORY (this repo is a fork of RPCS3/rpcs3; the android/ CMake
-// subdirectory, added to the root CMake project behind if(ANDROID), builds the
-// core). This task uses the NDK's own CMake + Ninja to compile the library
-// (target emucorec-core) and copies the result into jniLibs so Android Studio
-// always picks up the latest binary. The recipe mirrors android/configure.sh.
+// IN THIS REPOSITORY (this repo is a fork of RPCS3/rpcs3; the emulator core is
+// under core/, whose CMakeLists.txt is the CMake project root, and android/ at
+// the repository root is added back in from there behind if(ANDROID)). This
+// task uses the NDK's own CMake + Ninja to compile the library (target
+// emucorec-core) and copies the result into jniLibs so Android Studio always
+// picks up the latest binary. The recipe mirrors android/configure.sh.
 // ---------------------------------------------------------------------------
 val androidSdkRoot: String = run {
     val local = Properties()
@@ -75,9 +76,11 @@ val discordSdkDirectory = localBuildProperties.getProperty("emucorec.discord.sdk
             sdkDir.resolve("discord_partner_sdk.aar").isFile
     }
 
-// The RPCS3 root CMake project (this repo is a fork of RPCS3/rpcs3; the
-// android/ subdirectory is added behind if(ANDROID)).
-val rpcs3Root  = rootProject.layout.projectDirectory.asFile.absolutePath
+// Repository root. The CMake project root itself is core/ (this repo is a fork
+// of RPCS3/rpcs3); android/ at this root is added back in from core's
+// CMakeLists behind if(ANDROID).
+val repoRoot   = rootProject.layout.projectDirectory.asFile.absolutePath
+val coreRoot   = "$repoRoot/core"
 val buildDir2  = layout.buildDirectory.dir("emucorec-core-build").get().asFile
 
 // ---------------------------------------------------------------------------
@@ -131,9 +134,10 @@ val configureEmuCorecCore by tasks.registering(Exec::class) {
     // Skip entirely when the core sources are not present: the app then builds
     // with whatever libemucorec-core.so is already staged in jniLibs.
     onlyIf {
-        val sourceCmake = File(rpcs3Root, "android/CMakeLists.txt")
-        if (!sourceCmake.exists()) {
-            logger.warn("Core sources missing at $rpcs3Root/android; using staged jniLibs core instead.")
+        val glueCmake = File(repoRoot, "android/CMakeLists.txt")
+        val coreCmake = File(coreRoot, "CMakeLists.txt")
+        if (!glueCmake.exists() || !coreCmake.exists()) {
+            logger.warn("Core sources missing at $coreRoot; using staged jniLibs core instead.")
             return@onlyIf false
         }
         !File(buildDir2, "build.ninja").exists()
@@ -147,7 +151,7 @@ val configureEmuCorecCore by tasks.registering(Exec::class) {
     workingDir = buildDir2
     val configureArgs = mutableListOf(
         "cmd", "/c",
-        "$rpcs3Root/android/configure-core.cmd",
+        "$repoRoot/android/configure-core.cmd",
         cmakeExe,
         ninjaExe,
         ndkDir,
@@ -264,8 +268,9 @@ android {
             java.setSrcDirs(listOf("src/main/java"))
             res.setSrcDirs(listOf("src/main/res"))
             // RPCS3 native overlays resolve resources from the runtime tree,
-            // so package the upstream Icons directory for first-run extraction.
-            assets.setSrcDirs(listOf("src/main/assets", "../bin"))
+            // so package the upstream Icons directory for first-run extraction
+            // (bin/ lives inside the core/ tree now).
+            assets.setSrcDirs(listOf("src/main/assets", "../core/bin"))
             jniLibs.setSrcDirs(listOf("src/main/jniLibs"))
             discordSdkDirectory?.let(jniLibs::srcDir)
         }

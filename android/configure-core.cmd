@@ -48,9 +48,10 @@ set "NDK_DIR=%~3"
 set "BUILD_DIR=%~4"
 shift /4
 
-rem %~dp0.. is the repository root; the android/ subdirectory is added to the
-rem root CMake project behind if(ANDROID).
-"%CMAKE_EXE%" -S "%~dp0.." -B "%BUILD_DIR%" -G Ninja ^
+rem %~dp0..\core is the CMake project root (the emulator core lives under
+rem core/); this android/ directory at the repository root is added back in
+rem from core/CMakeLists.txt behind if(ANDROID).
+"%CMAKE_EXE%" -S "%~dp0..\core" -B "%BUILD_DIR%" -G Ninja ^
   -DCMAKE_TOOLCHAIN_FILE="%NDK_DIR%\build\cmake\android.toolchain.cmake" ^
   -DANDROID_ABI=arm64-v8a ^
   -DANDROID_PLATFORM=android-29 ^

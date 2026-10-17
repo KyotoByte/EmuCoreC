@@ -10,8 +10,8 @@ import com.sbro.emucorec.core.Ps3IsoParser
 import com.sbro.emucorec.core.Ps3Runtime
 import com.sbro.emucorec.core.ps3.Emulator
 import java.io.File
-import net.rpcsx.EmulatorState
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.EmulatorState
+import com.sbro.emucorec.core.Ps3Core
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -39,18 +39,18 @@ class ChdGameplayProbeTest {
         val activity = instrumentation.startActivitySync(intent)
         try {
             val deadline = SystemClock.elapsedRealtime() + 120_000
-            while (RPCSX.instance.getState() != EmulatorState.Running.ordinal &&
+            while (Ps3Core.instance.getState() != EmulatorState.Running.ordinal &&
                 SystemClock.elapsedRealtime() < deadline) {
                 SystemClock.sleep(100)
             }
-            assertEquals("The real CHD must boot", EmulatorState.Running.ordinal, RPCSX.instance.getState())
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals("The real CHD must boot", EmulatorState.Running.ordinal, Ps3Core.instance.getState())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
             ChdLibraryTest().concurrentDiscReadsPreserveEmulatorState()
             val rescanned = Ps3IsoParser.parse(context, File(path))
             assertEquals(game.titleId, rescanned?.titleId)
             assertEquals(game.title, rescanned?.title)
-            assertEquals(EmulatorState.Running.ordinal, RPCSX.instance.getState())
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals(EmulatorState.Running.ordinal, Ps3Core.instance.getState())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
         } finally {
             instrumentation.runOnMainSync { activity.finish() }
             // finish() returns before onDestroy(), which stops the native game.
@@ -65,11 +65,11 @@ class ChdGameplayProbeTest {
                 if (!destroyed) SystemClock.sleep(50)
             }
             assertTrue("The game activity must finish native teardown", destroyed)
-            while (RPCSX.instance.getState() != EmulatorState.Stopped.ordinal &&
+            while (Ps3Core.instance.getState() != EmulatorState.Stopped.ordinal &&
                 SystemClock.elapsedRealtime() < deadline) {
                 SystemClock.sleep(50)
             }
-            assertEquals(EmulatorState.Stopped.ordinal, RPCSX.instance.getState())
+            assertEquals(EmulatorState.Stopped.ordinal, Ps3Core.instance.getState())
         }
     }
 }

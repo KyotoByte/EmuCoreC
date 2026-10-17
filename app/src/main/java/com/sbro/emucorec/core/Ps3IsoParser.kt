@@ -7,7 +7,6 @@ import java.io.RandomAccessFile
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.security.MessageDigest
-import net.rpcsx.RPCSX
 import org.json.JSONObject
 
 object Ps3IsoParser {
@@ -63,7 +62,7 @@ object Ps3IsoParser {
         val key = MessageDigest.getInstance("SHA-256").digest(identity.toByteArray())
             .joinToString("") { "%02x".format(it) }
         val icon = File(File(context.cacheDir, "iso_icons").apply { mkdirs() }, "$key.png")
-        val metadata = JSONObject(RPCSX.instance.probeDiscInfo(file.absolutePath, icon.absolutePath))
+        val metadata = JSONObject(Ps3Core.instance.probeDiscInfo(file.absolutePath, icon.absolutePath))
         val titleId = metadata.optString("titleId").takeIf(String::isNotBlank) ?: return null
         InstalledPs3Game(
             titleId = titleId.uppercase(),

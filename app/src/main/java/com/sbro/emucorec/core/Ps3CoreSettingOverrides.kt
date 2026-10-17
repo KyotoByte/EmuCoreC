@@ -2,7 +2,6 @@ package com.sbro.emucorec.core
 
 import android.content.Context
 import android.util.Log
-import net.rpcsx.RPCSX
 import org.json.JSONObject
 
 /**
@@ -169,7 +168,7 @@ object Ps3CoreSettingOverrides {
         val baseline = read(prefs.getString(KEY_BASELINE, null))
         val global = read(prefs.getString(KEY_GLOBAL, null))
         val restored = global[path] ?: baseline[path] ?: coreDefaultEncodedValue
-        val applied = runCatching { RPCSX.instance.settingsSet(path, restored) }.getOrDefault(false)
+        val applied = runCatching { Ps3Core.instance.settingsSet(path, restored) }.getOrDefault(false)
         if (applied) CoreSettingsTreeCache.invalidateTree()
         return applied
     }
@@ -177,7 +176,7 @@ object Ps3CoreSettingOverrides {
     /** Restore every live RPCS3 setting to the default reported by this core build. */
     fun resetAllToCoreDefaults(context: Context): Boolean {
         if (!Ps3Runtime.ensureInitialized(context)) return false
-        val tree = runCatching { JSONObject(RPCSX.instance.settingsGet("")) }.getOrNull()
+        val tree = runCatching { JSONObject(Ps3Core.instance.settingsGet("")) }.getOrNull()
             ?: return false
         val defaults = linkedMapOf<String, String>()
         collectDefaults(tree, "", defaults)
@@ -186,7 +185,7 @@ object Ps3CoreSettingOverrides {
 
         var accepted = true
         defaults.forEach { (path, value) ->
-            if (!runCatching { RPCSX.instance.settingsSet(path, value) }.getOrDefault(false)) {
+            if (!runCatching { Ps3Core.instance.settingsSet(path, value) }.getOrDefault(false)) {
                 accepted = false
                 Log.w(TAG, "RPCS3 rejected default for $path")
             }
@@ -199,7 +198,7 @@ object Ps3CoreSettingOverrides {
 
     /** Apply the global baseline and then the selected title's values before boot. */
     fun applyForGame(context: Context, titleId: String?) {
-        if (!RPCSX.initialized) return
+        if (!Ps3Core.initialized) return
         val prefs = prefs(context)
         val baseline = read(prefs.getString(KEY_BASELINE, null))
         val global = read(prefs.getString(KEY_GLOBAL, null))
@@ -217,7 +216,7 @@ object Ps3CoreSettingOverrides {
     }
 
     private fun set(path: String, value: String, tier: String) {
-        val applied = runCatching { RPCSX.instance.settingsSet(path, value) }.getOrDefault(false)
+        val applied = runCatching { Ps3Core.instance.settingsSet(path, value) }.getOrDefault(false)
         if (applied) CoreSettingsTreeCache.invalidateTree()
         if (!applied) Log.w(TAG, "RPCS3 rejected [$tier] $path")
     }

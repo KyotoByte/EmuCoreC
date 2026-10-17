@@ -1,16 +1,16 @@
-package net.rpcsx
+package com.sbro.emucorec.core
 
 import java.nio.file.Files
 import java.nio.file.Path
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
-class BootResultTest {
+class Ps3CoreBootResultTest {
     @Test
     fun everyNativeBootResultIsDecodedWithoutChangingItsMeaning() {
         val workingDirectory = Path.of(System.getProperty("user.dir"))
         val header = sequenceOf(workingDirectory, workingDirectory.parent)
-            .map { it.resolve("rpcs3/Emu/System.h") }
+            .map { it.resolve("core/rpcs3/Emu/System.h") }
             .first(Files::isRegularFile)
         val declaration = Files.readString(header)
             .substringAfter("enum class game_boot_result : u32")

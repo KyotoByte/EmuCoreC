@@ -115,8 +115,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withTimeoutOrNull
-import net.rpcsx.EmulatorState
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.EmulatorState
+import com.sbro.emucorec.core.Ps3Core
 import com.sbro.emucorec.core.ps3.Emulator
 import com.sbro.emucorec.core.ps3.overlay.InputOverlay
 import com.sbro.emucorec.data.InstalledGameRepository
@@ -569,7 +569,7 @@ fun EmulationOverlayHost(
                 physicalGamepadConnected = hasPhysicalGamepad,
                 saveStates = SaveStateMenuState(saveSlots, selectedSaveSlot,
                     saveStateBusy || saveRequesting, saveRequestSaving,
-                    saveSlotsLoaded && RPCSX.initialized && RPCSX.instance.saveStatesSupported() && !launchingSaveState,
+                    saveSlotsLoaded && Ps3Core.initialized && Ps3Core.instance.saveStatesSupported() && !launchingSaveState,
                     busyDeleting = saveRequestDeleting),
                 callbacks = menuCallbacks
             )
@@ -621,12 +621,18 @@ fun EmulationOverlayHost(
                 dismissButton = { TextButton(onClick = { pendingSaveRequest = null }) { Text(stringResource(R.string.common_cancel)) } })
         }
 
+        // Saving stops and resumes the running game in the core, but the screen
+        // never leaves the game the user is playing -- a full-screen progress
+        // overlay for a save just flashes in and out. It stays for loads and
+        // savestate launches, which genuinely restart emulation and take time.
         LaunchStateLoadingOverlay(
-            state = LaunchStateLoadingState(launchingSaveState || (!saveRequestDeleting && (saveRequesting || saveStateBusy))),
+            state = LaunchStateLoadingState(
+                launchingSaveState ||
+                    (!saveRequestSaving && !saveRequestDeleting && (saveRequesting || saveStateBusy))
+            ),
             indeterminate = true,
             scrimAlpha = if (launchingSaveState) 1f else 0.78f,
-            messageRes = if (saveRequestSaving && !launchingSaveState) R.string.emulation_savestate_saving
-                else R.string.emulation_savestate_startup_loading,
+            messageRes = R.string.emulation_savestate_startup_loading,
         )
 
         if (exitDialogVisible) {

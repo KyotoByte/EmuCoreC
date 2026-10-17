@@ -3,7 +3,6 @@ package com.sbro.emucorec.core
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import net.rpcsx.ProgressRepository
 import org.junit.Assert.*
 import org.junit.Test
 
@@ -37,10 +36,10 @@ class SaveStateControllerTest {
             assertEquals(9, backend.requestedSlot)
             assertTrue(controller.busy.value)
             assertFalse(save.isCompleted)
-            ProgressRepository.onProgressEvent(backend.requestId, 1, 1, "Writing")
+            NativeProgressBus.onEvent(backend.requestId, 1, 1, "Writing", completed = false)
             assertFalse(save.isCompleted)
             backend.entries = listOf(SaveStateSlot(9, 123, 4096))
-            ProgressRepository.onProgressCompleted(backend.requestId, 1, 1, "Saved")
+            NativeProgressBus.onEvent(backend.requestId, 1, 1, "Saved", completed = true)
             assertEquals(SaveStateOutcome.Success, save.await())
             assertEquals(backend.entries, controller.slots.value)
             assertFalse(controller.busy.value)
@@ -53,7 +52,7 @@ class SaveStateControllerTest {
         val controller = SaveStateController(backend)
         controller.refresh()
         val save = async(start = CoroutineStart.UNDISPATCHED) { controller.save(2) }
-        ProgressRepository.onProgressEvent(backend.requestId, -1, 0, "Write failed")
+        NativeProgressBus.onEvent(backend.requestId, -1, 0, "Write failed", completed = false)
         assertEquals(SaveStateOutcome.Failed, save.await())
         assertEquals(backend.entries, controller.slots.value)
         assertFalse(controller.busy.value)
@@ -75,7 +74,7 @@ class SaveStateControllerTest {
             val firstId = backend.requestId
             assertEquals(SaveStateOutcome.Busy, controller.save(1))
             assertEquals(firstId, backend.requestId)
-            ProgressRepository.onProgressCompleted(firstId, 1, 1, "Saved")
+            NativeProgressBus.onEvent(firstId, 1, 1, "Saved", completed = true)
             assertEquals(SaveStateOutcome.Success, first.await())
         } finally { first.cancel() }
     }
@@ -86,7 +85,7 @@ class SaveStateControllerTest {
         val controller = SaveStateController(backend)
         assertEquals(SaveStateOutcome.Failed, controller.save(0))
         assertFalse(controller.busy.value)
-        assertFalse(backend.requestId in ProgressRepository.progress.value)
+        assertFalse(backend.requestId in NativeProgressBus.progress.value)
     }
 
     @Test
@@ -97,6 +96,6 @@ class SaveStateControllerTest {
         save.cancel()
         save.join()
         assertFalse(controller.busy.value)
-        assertFalse(ProgressRepository.onProgressCompleted(backend.requestId, 1, 1, "Saved"))
+        assertFalse(NativeProgressBus.onEvent(backend.requestId, 1, 1, "Saved", completed = true))
     }
 }

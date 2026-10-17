@@ -6,7 +6,7 @@ on:
     branches:
       - master
     paths:
-      - 'rpcs3/**'
+      - 'core/rpcs3/**'
 
 jobs:
   Generate_Translation_Template:

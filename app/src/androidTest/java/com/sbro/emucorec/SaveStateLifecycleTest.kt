@@ -23,9 +23,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.withContext
-import net.rpcsx.EmulatorState
-import net.rpcsx.ProgressRepository
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.EmulatorState
+import com.sbro.emucorec.core.NativeProgressBus
+import com.sbro.emucorec.core.Ps3Core
 import org.junit.Assert.*
 import org.junit.Assume.assumeNotNull
 import org.junit.Assume.assumeTrue
@@ -48,7 +48,7 @@ class SaveStateLifecycleTest {
         try {
             file.writeBytes(header)
             assertNotEquals("A supported version table does not make a truncated payload valid", 0,
-                RPCSX.instance.boot(file.absolutePath))
+                Ps3Core.instance.boot(file.absolutePath))
             assertEquals(EmulatorState.Stopped, Ps3Runtime.state())
         } finally { file.delete(); directory.delete(); directory.parentFile?.delete() }
     }
@@ -57,12 +57,12 @@ class SaveStateLifecycleTest {
     fun stoppedCoreRejectsSaveWithoutLeavingProgressPending() = runBlocking {
         val context = InstrumentationRegistry.getInstrumentation().targetContext
         assertTrue(Ps3Runtime.ensureInitialized(context))
-        assertTrue("This core must expose the save-state bridge", RPCSX.instance.saveStatesSupported())
-        assertEquals(EmulatorState.Stopped.ordinal, RPCSX.instance.getState())
+        assertTrue("This core must expose the save-state bridge", Ps3Core.instance.saveStatesSupported())
+        assertEquals(EmulatorState.Stopped.ordinal, Ps3Core.instance.getState())
         val controller = SaveStateController(NativeSaveStateBackend())
         assertEquals(SaveStateOutcome.Failed, controller.save(0))
         assertFalse(controller.busy.value)
-        assertTrue(ProgressRepository.progress.value.isEmpty())
+        assertTrue(NativeProgressBus.progress.value.isEmpty())
     }
 
     /** Opt in with -e saveGamePath <a playable GTA San Andreas disc>. */
@@ -73,7 +73,7 @@ class SaveStateLifecycleTest {
         assumeNotNull(path)
         val context = instrumentation.targetContext
         assertTrue(Ps3Runtime.ensureInitialized(context))
-        assertTrue(RPCSX.instance.saveStatesSupported())
+        assertTrue(Ps3Core.instance.saveStatesSupported())
         val game = requireNotNull(Ps3IsoParser.parse(context, File(requireNotNull(path))))
         val controller = SaveStateController(NativeSaveStateBackend())
         var activity = instrumentation.startActivitySync(Intent(context, Emulator::class.java)
@@ -85,23 +85,23 @@ class SaveStateLifecycleTest {
         try {
             waitForState(EmulatorState.Running)
             SystemClock.sleep(20_000)
-            RPCSX.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
             SystemClock.sleep(200)
-            RPCSX.instance.overlayPadData(0, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 128, 128, 128)
             SystemClock.sleep(20_000)
             // The first press skips the intro; the second starts from the title menu.
-            RPCSX.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
             SystemClock.sleep(200)
-            RPCSX.instance.overlayPadData(0, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 128, 128, 128)
             SystemClock.sleep(25_000)
-            RPCSX.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0x40, 128, 128, 128, 128)
             SystemClock.sleep(200)
-            RPCSX.instance.overlayPadData(0, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 128, 128, 128)
             SystemClock.sleep(25_000)
             // Skip the opening cinematic so the snapshot contains controllable gameplay.
-            RPCSX.instance.overlayPadData(0x08, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0x08, 0, 128, 128, 128, 128)
             SystemClock.sleep(200)
-            RPCSX.instance.overlayPadData(0, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 128, 128, 128)
             SystemClock.sleep(15_000)
             controller.refresh()
             val empty = (0 until SaveStateController.SLOT_COUNT)
@@ -116,12 +116,12 @@ class SaveStateLifecycleTest {
             val savedIntegrity = File(savedFile.path + ".integrity")
             createdFiles += savedIntegrity
             assertEquals(SaveStateOutcome.Empty, controller.load(slot))
-            RPCSX.instance.pause()
+            Ps3Core.instance.pause()
             waitForState(EmulatorState.Paused)
             screenshot("save-before")
             assertEquals(SaveStateOutcome.Success, withTimeout(120_000) { controller.save(slot) })
             waitForState(EmulatorState.Running)
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
             // Exercise replacement of an already authenticated slot too.
             assertEquals(SaveStateOutcome.Success, withTimeout(120_000) { controller.save(slot) })
             waitForState(EmulatorState.Running)
@@ -145,8 +145,8 @@ class SaveStateLifecycleTest {
             corrupt.writeBytes(ByteArray(2048))
             createdFiles += corrupt
             assertEquals(SaveStateOutcome.Failed, withTimeout(10_000) { controller.load(corruptSlot) })
-            assertEquals(EmulatorState.Running.ordinal, RPCSX.instance.getState())
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals(EmulatorState.Running.ordinal, Ps3Core.instance.getState())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
 
             // An intact compressed prefix and supported version table still
             // cannot prove a complete body. The original digest must reject it.
@@ -157,15 +157,15 @@ class SaveStateLifecycleTest {
             assertEquals(SaveStateOutcome.Failed, withTimeout(10_000) { controller.load(corruptSlot) })
             assertEquals(EmulatorState.Running, Ps3Runtime.state())
 
-            RPCSX.instance.overlayPadData(0, 0, 128, 0, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 0, 128, 128)
             SystemClock.sleep(1500)
-            RPCSX.instance.overlayPadData(0, 0, 128, 128, 128, 128)
+            Ps3Core.instance.overlayPadData(0, 0, 128, 128, 128, 128)
             screenshot("save-moved")
             assertEquals(SaveStateOutcome.Success, withTimeout(120_000) { controller.load(slot) })
             waitForState(EmulatorState.Running)
             SystemClock.sleep(1000)
             screenshot("save-restored")
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
             assertEquals(saved, controller.slots.value.single { it.index == slot })
 
             val load = async(start = CoroutineStart.UNDISPATCHED) { controller.load(slot) }
@@ -179,7 +179,7 @@ class SaveStateLifecycleTest {
                 SystemClock.elapsedRealtime() - exitStart < 4000)
             assertEquals(SaveStateOutcome.Failed, withTimeout(120_000) { load.await() })
             waitForState(EmulatorState.Stopped)
-            assertTrue(ProgressRepository.progress.value.isEmpty())
+            assertTrue(NativeProgressBus.progress.value.isEmpty())
             waitForDestroyed(activity)
 
             // The manager uses ordinary activity boot, a separate entry point
@@ -198,7 +198,7 @@ class SaveStateLifecycleTest {
             waitForState(EmulatorState.Running)
             SystemClock.sleep(1000)
             screenshot("save-cold-restored")
-            assertEquals(game.titleId, RPCSX.instance.getTitleId())
+            assertEquals(game.titleId, Ps3Core.instance.getTitleId())
             // Optional fixture retention for the subsequent manual menu checks.
             if (InstrumentationRegistry.getArguments().getString("keepSaveState") == "true") {
                 retainedFiles += listOf(savedFile, savedIntegrity, preview)
@@ -227,10 +227,10 @@ class SaveStateLifecycleTest {
 
     private fun waitForState(state: EmulatorState) {
         val deadline = SystemClock.elapsedRealtime() + 30_000
-        while (RPCSX.instance.getState() != state.ordinal && SystemClock.elapsedRealtime() < deadline) {
+        while (Ps3Core.instance.getState() != state.ordinal && SystemClock.elapsedRealtime() < deadline) {
             SystemClock.sleep(50)
         }
-        assertEquals(state.ordinal, RPCSX.instance.getState())
+        assertEquals(state.ordinal, Ps3Core.instance.getState())
     }
 
     private fun screenshot(name: String) {

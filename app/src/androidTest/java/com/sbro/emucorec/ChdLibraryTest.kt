@@ -8,7 +8,7 @@ import com.sbro.emucorec.core.Ps3Runtime
 import java.io.File
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.Ps3Core
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertNotNull
@@ -66,8 +66,8 @@ class ChdLibraryTest {
     fun concurrentDiscReadsPreserveEmulatorState() = withFixtures { context, directory ->
         val images = listOf("dvd-lzma.chd", "dvd-zlib.chd", "dvd-zstd.chd", "cd.chd")
             .map { copyFixture(it, directory) }
-        val state = RPCSX.instance.getState()
-        val titleId = RPCSX.instance.getTitleId()
+        val state = Ps3Core.instance.getState()
+        val titleId = Ps3Core.instance.getTitleId()
         val executor = Executors.newFixedThreadPool(3)
         try {
             executor.invokeAll(List(12) { index -> Callable { assertDisc(context, images[index % images.size]) } })
@@ -75,8 +75,8 @@ class ChdLibraryTest {
         } finally {
             executor.shutdownNow()
         }
-        assertEquals(state, RPCSX.instance.getState())
-        assertEquals(titleId, RPCSX.instance.getTitleId())
+        assertEquals(state, Ps3Core.instance.getState())
+        assertEquals(titleId, Ps3Core.instance.getTitleId())
     }
 
     private fun assertDisc(context: Context, image: File) {

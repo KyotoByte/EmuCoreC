@@ -52,7 +52,7 @@ import com.sbro.emucorec.ui.common.SectionCard
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.Ps3Core
 import org.json.JSONObject
 import java.util.Locale
 import kotlin.math.roundToLong
@@ -114,7 +114,7 @@ fun Ps3CoreSettingsSection(
         val result = withContext(Dispatchers.IO) {
             runCatching {
                 check(Ps3Runtime.ensureInitialized(context))
-                val raw = CoreSettingsTreeCache.tree { RPCSX.instance.settingsGet("") }
+                val raw = CoreSettingsTreeCache.tree { Ps3Core.instance.settingsGet("") }
                 val gameOverrides = if (
                     scope == Ps3CoreSettingsScope.Game && !titleId.isNullOrBlank()
                 ) {
@@ -154,7 +154,7 @@ fun Ps3CoreSettingsSection(
     fun write(setting: Ps3CoreSetting, raw: String) {
         coroutineScope.launch(Dispatchers.IO) {
             val encoded = setting.encodedValue(raw)
-            val applied = runCatching { RPCSX.instance.settingsSet(setting.path, encoded) }
+            val applied = runCatching { Ps3Core.instance.settingsSet(setting.path, encoded) }
                 .getOrDefault(false)
             withContext(Dispatchers.Main) {
                 if (applied) {

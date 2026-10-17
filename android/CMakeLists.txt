@@ -14,6 +14,12 @@
 # option overrides are passed on the cmake command line (-D...) rather than
 # set() here, since they must be visible before add_subdirectory(3rdparty).
 #
+# The emulator core lives under core/ (rpcs3/, 3rdparty/, Utilities/, bin/,
+# buildfiles/ ...); core/CMakeLists.txt is the CMake project root, so
+# CMAKE_SOURCE_DIR points there. This android/ directory stays at the repository
+# root and is added back in from there. Everything below therefore addresses
+# sources through ${CMAKE_SOURCE_DIR}, which is core/ -- not the repository root.
+#
 # Upstream's core target is `rpcs3_emu`. Upstream's rpcs3/CMakeLists.txt already
 # guards Qt / rpcs3qt / rpcs3_lib / the rpcs3 executable behind `if (NOT ANDROID)`
 # while calling `add_subdirectory(Emu)` unconditionally, so a core-only Android
@@ -54,7 +60,7 @@ set(EMUCOREC_INPUT_SOURCES
 )
 
 add_library(emucorec-core SHARED
-    src/rpcsx-android.cpp
+    src/emucorec-android.cpp
     src/save_states.cpp
     # Android OpenGL ES context ownership. This is compiled independently of
     # the renderer while the desktop GL backend is being ported to GLES.
@@ -77,7 +83,7 @@ target_compile_features(emucorec-core PRIVATE cxx_std_23)
 target_include_directories(emucorec-core PRIVATE
     ${CMAKE_SOURCE_DIR}
     ${CMAKE_SOURCE_DIR}/rpcs3
-    # rpcsx-android.cpp pulls in Input/hid_pad_handler.h (DS3/DS4/DualSense
+    # emucorec-android.cpp pulls in Input/hid_pad_handler.h (DS3/DS4/DualSense
     # over USB) and hidapi_libusb.h/libusb.h directly. rpcs3_emu links these
     # PRIVATE, so their include dirs do not propagate to us.
     ${CMAKE_SOURCE_DIR}/3rdparty/hidapi/hidapi/hidapi
@@ -132,7 +138,7 @@ if(EMUCOREC_PGO STREQUAL "generate")
         target_link_options(${pgo_target} PRIVATE -fprofile-generate)
     endforeach()
 
-    # Tells src/rpcsx-android.cpp to name the profile somewhere the app can
+    # Tells src/emucorec-android.cpp to name the profile somewhere the app can
     # actually write, and to flush it when the app goes to the background.
     # Without that the runtime writes to the process CWD, which on Android is /
     # and is not writable, so a whole play session produces nothing.

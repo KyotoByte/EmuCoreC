@@ -3,14 +3,12 @@
     native <methods>;
 }
 
-# RPCSX exports JNI symbols with the concrete net.rpcsx.RPCSX class name.
-# Native code also resolves these repository classes and callback methods by
-# fully-qualified name, so neither class names nor constructors may be changed.
--keep class net.rpcsx.RPCSX { *; }
--keep class net.rpcsx.ProgressRepository { *; }
--keep class net.rpcsx.FirmwareRepository { *; }
--keep class net.rpcsx.GameRepository { *; }
--keep class net.rpcsx.GameInfo { *; }
+# The JNI glue in app/src/main/cpp exports symbols named after
+# com.sbro.emucorec.core.Ps3Core, and the native core resolves the static
+# call-ins on com.sbro.emucorec.core.Ps3CoreCallbacks by fully-qualified name.
+# Neither class name nor its signatures may change under shrinking.
+-keep class com.sbro.emucorec.core.Ps3Core { *; }
+-keep class com.sbro.emucorec.core.Ps3CoreCallbacks { *; }
 
 -keep @androidx.annotation.Keep class * { *; }
 -keepclasseswithmembers class * {

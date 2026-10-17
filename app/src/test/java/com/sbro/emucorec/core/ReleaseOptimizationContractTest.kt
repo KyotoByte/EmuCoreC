@@ -18,11 +18,8 @@ class ReleaseOptimizationContractTest {
         assertTrue("Release resource shrinking must stay enabled", "isShrinkResources = true" in gradle)
         assertTrue("Use the optimized Android defaults", "proguard-android-optimize.txt" in gradle)
         listOf(
-            "net.rpcsx.RPCSX",
-            "net.rpcsx.ProgressRepository",
-            "net.rpcsx.FirmwareRepository",
-            "net.rpcsx.GameRepository",
-            "net.rpcsx.GameInfo",
+            "com.sbro.emucorec.core.Ps3Core",
+            "com.sbro.emucorec.core.Ps3CoreCallbacks",
             "org.libsdl.app.**",
         ).forEach { nativeName ->
             assertTrue("Missing R8 keep rule for $nativeName", nativeName in rules)

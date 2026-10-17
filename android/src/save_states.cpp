@@ -431,19 +431,11 @@ namespace save_states
     }
 }
 
-extern "C" bool _rpcsx_requestSaveState(unsigned slot, long progress_id) { return request(slot, progress_id, true); }
-extern "C" bool _rpcsx_saveStateBusy() { return save_states::busy(); }
-extern "C" bool _rpcsx_requestLoadState(unsigned slot, long progress_id) { return request(slot, progress_id, false); }
-extern "C" bool _rpcsx_saveStateToSlot(unsigned slot) { return request(slot, 0, true); }
-extern "C" bool _rpcsx_loadStateFromSlot(unsigned slot) { return request(slot, 0, false); }
+extern "C" bool emucorec_requestSaveState(unsigned slot, long progress_id) { return request(slot, progress_id, true); }
+extern "C" bool emucorec_saveStateBusy() { return save_states::busy(); }
+extern "C" bool emucorec_requestLoadState(unsigned slot, long progress_id) { return request(slot, progress_id, false); }
 
-extern "C" bool _rpcsx_hasStateInSlot(unsigned slot)
-{
-    std::lock_guard lock(g_emu_lifecycle_mutex);
-    return !find_slot(Emu.GetTitleID(), slot).empty();
-}
-
-extern "C" std::string _rpcsx_getSaveStateSlots()
+extern "C" std::string emucorec_getSaveStateSlots()
 {
     std::string title;
     {

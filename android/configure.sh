@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # EmuCoreC Android arm64 configure.
 #
-# Configures from the REPO ROOT, not from android/ -- upstream RPCS3 assumes
-# CMAKE_SOURCE_DIR is the repo root (FindWolfSSL.cmake, FindZLIB.cmake,
-# 3rdparty/protobuf, 3rdparty/llvm all build paths off it).
+# Configures from core/, the emulator core project root, not from android/ --
+# upstream RPCS3 assumes CMAKE_SOURCE_DIR is its tree root (FindWolfSSL.cmake,
+# FindZLIB.cmake, 3rdparty/protobuf, 3rdparty/llvm all build paths off it).
+# The android/ glue at the repository root is added from core/CMakeLists.txt.
 #
 # Usage:  android/configure.sh [extra cmake args...]
 set -euo pipefail
@@ -30,7 +31,7 @@ CM="$ANDROID_HOME/cmake/$CMAKE_VERSION/bin"
 [ -d "$NDK" ] || { echo "NDK not found: $NDK" >&2; exit 1; }
 [ -x "$CM/cmake" ] || { echo "cmake not found: $CM/cmake" >&2; exit 1; }
 
-exec "$CM/cmake" -S "$ROOT" -B "$BUILD_DIR" -G Ninja \
+exec "$CM/cmake" -S "$ROOT/core" -B "$BUILD_DIR" -G Ninja \
   -DCMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake" \
   -DANDROID_ABI=arm64-v8a \
   -DANDROID_PLATFORM="android-$ANDROID_API" \

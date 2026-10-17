@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 import kotlinx.serialization.json.booleanOrNull
-import net.rpcsx.RPCSX
+import com.sbro.emucorec.core.Ps3Core
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
@@ -23,7 +23,7 @@ class PatchRepository(private val context: Context) {
 
     suspend fun downloadPatches(): DownloadResult = withContext(Dispatchers.IO) {
         try {
-            val version = RPCSX.instance.patchEngineVersion()
+            val version = Ps3Core.instance.patchEngineVersion()
             val url = "https://rpcs3.net/compatibility?patch&api=v1&v=$version"
 
             val connection = (URL(url).openConnection() as HttpURLConnection).apply {
@@ -49,7 +49,7 @@ class PatchRepository(private val context: Context) {
                         if (patchContent.isEmpty()) {
                             DownloadResult.Error("Empty patch data")
                         } else {
-                            val imported = RPCSX.instance.patchesImport(patchContent)
+                            val imported = Ps3Core.instance.patchesImport(patchContent)
                             if (imported < 0) {
                                 DownloadResult.Error("Failed to import patches")
                             } else {
@@ -68,7 +68,7 @@ class PatchRepository(private val context: Context) {
 
     fun listPatches(serial: String): List<Ps3PatchInfo> {
         return try {
-            PatchListParser.parse(RPCSX.instance.patchesList(serial))
+            PatchListParser.parse(Ps3Core.instance.patchesList(serial))
         } catch (e: Exception) {
             emptyList()
         }
@@ -82,7 +82,7 @@ class PatchRepository(private val context: Context) {
         enabled: Boolean
     ): Boolean {
         return try {
-            RPCSX.instance.patchSetEnabled(hash, name, serial, appVersion, enabled)
+            Ps3Core.instance.patchSetEnabled(hash, name, serial, appVersion, enabled)
         } catch (e: Exception) {
             false
         }

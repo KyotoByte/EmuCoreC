@@ -77,14 +77,14 @@ class CoreLocaleContractTest {
     fun everyNativeEnumDisplayValueHasAStringResource() {
         val resourceRoot = locateResourceRoot()
         val defaultKeys = parse(resourceRoot.resolve("values/strings.xml")).keys
-        // This repo is a fork of RPCSX/rpcsx: the core sources live at the repo root.
-        // Walk up from the resource root until the rpcs3/ source tree is found,
-        // which keeps this working regardless of the Gradle working directory.
+        // The core sources live under core/rpcs3/. Walk up from the resource
+        // root until that tree is found, which keeps this working regardless of
+        // the Gradle working directory.
         var repoRoot: Path = resourceRoot
-        while (repoRoot.parent != null && !Files.isDirectory(repoRoot.resolve("rpcs3"))) {
+        while (repoRoot.parent != null && !Files.isDirectory(repoRoot.resolve("core/rpcs3"))) {
             repoRoot = repoRoot.parent
         }
-        val coreRoot = repoRoot.resolve("rpcs3")
+        val coreRoot = repoRoot.resolve("core/rpcs3")
         val systemTypes = coreRoot.resolve("Emu/system_config_types.cpp").toFile().readText()
         val keyboardTypes = coreRoot.resolve("Emu/Io/KeyboardHandler.cpp").toFile().readText()
             .substringBefore("fmt_class_string<keyboard_consumer")

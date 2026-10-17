@@ -12,9 +12,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
-import net.rpcsx.FirmwareRepository
-import net.rpcsx.FirmwareStatus
-import net.rpcsx.ProgressRepository
+import com.sbro.emucorec.core.FirmwareState
+import com.sbro.emucorec.core.FirmwareStatus
+import com.sbro.emucorec.core.NativeProgressBus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
@@ -66,12 +66,17 @@ class FirmwareLifecycleTest {
                         val version = Ps3InstallBridge.installFirmware(context, firmware.absolutePath)
                         assertNotNull("The firmware operation must finish successfully", version)
                         assertTrue(EmulatorStorage.hasInstalledFirmware(context))
-                        assertEquals(FirmwareStatus.Compiled, FirmwareRepository.status.value)
+                        // The dialog completes at extraction time; the VSH cache
+                        // build continues in the background and only then flips
+                        // the status to Compiled.
+                        assertEquals(FirmwareStatus.Installed, FirmwareState.status.value)
+                        assertTrue("The background VSH cache build must finish",
+                            awaitFirmwareCompiled(120_000))
                         assertTrue("Firmware compilation must produce executable cache files",
                             File(EmulatorStorage.ps3Root(context), "cache").walkTopDown()
                                 .any { file -> file.isFile && file.length() > 0 &&
                                     (file.name.endsWith(".obj") || file.name.endsWith(".obj.gz")) })
-                        assertTrue("No install operation may be stranded", ProgressRepository.progress.value.isEmpty())
+                        assertTrue("No install operation may be stranded", NativeProgressBus.progress.value.isEmpty())
                         val library = InstalledGameRepository().loadInstalledGames(context)
                         discImages.forEach { image ->
                             assertTrue("Missing image after installation: ${image.name}",
@@ -90,5 +95,14 @@ class FirmwareLifecycleTest {
         } finally {
             preferences.gameDirectories = previousDirectories
         }
+    }
+
+    private fun awaitFirmwareCompiled(timeoutMs: Long): Boolean {
+        val deadline = System.currentTimeMillis() + timeoutMs
+        while (System.currentTimeMillis() < deadline) {
+            if (FirmwareState.status.value == FirmwareStatus.Compiled) return true
+            Thread.sleep(250)
+        }
+        return FirmwareState.status.value == FirmwareStatus.Compiled
     }
 }

@@ -1,11 +1,10 @@
 package com.sbro.emucorec.core
 
-import net.rpcsx.RPCSX
 import org.json.JSONArray
 
 internal class NativeSaveStateBackend : SaveStateBackend {
     override fun slots(): List<SaveStateSlot> {
-        val entries = JSONArray(RPCSX.instance.saveStateSlots())
+        val entries = JSONArray(Ps3Core.instance.saveStateSlots())
         return buildList {
             for (index in 0 until entries.length()) {
                 val entry = entries.getJSONObject(index)
@@ -17,6 +16,6 @@ internal class NativeSaveStateBackend : SaveStateBackend {
         }
     }
 
-    override fun save(slot: Int, progressId: Long) = RPCSX.instance.requestSaveState(slot, progressId)
-    override fun load(slot: Int, progressId: Long) = RPCSX.instance.requestLoadState(slot, progressId)
+    override fun save(slot: Int, progressId: Long) = Ps3Core.instance.requestSaveState(slot, progressId)
+    override fun load(slot: Int, progressId: Long) = Ps3Core.instance.requestLoadState(slot, progressId)
 }

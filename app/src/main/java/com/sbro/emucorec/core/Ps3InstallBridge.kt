@@ -1,7 +1,6 @@
 package com.sbro.emucorec.core
 
 import android.content.Context
-import net.rpcsx.NativeProgress
 import java.io.File
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -31,7 +30,11 @@ object Ps3InstallBridge {
         }
         Ps3Runtime.stop()
         emit("firmware", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
-        if (success) net.rpcsx.FirmwareRepository.version.value ?: "installed" else null
+        // "Installed" means the PUP is on disk. The VSH PPU cache finishes in
+        // the background (the native side completes this progress at extraction
+        // time and queues the cache build separately), so the firmware dialog
+        // must not wait here; FirmwareState flips to Compiled later.
+        if (success) FirmwareState.version.value ?: "installed" else null
     }
 
     private suspend fun installPackage(context: Context, contentPath: String): Int {
@@ -39,7 +42,6 @@ object Ps3InstallBridge {
         val success = awaitNativeInstall("content", 0, 1, File(contentPath).name) { progressId ->
             Ps3Runtime.installPackage(context, contentPath, progressId)
         }
-        if (success) NativeLib.refreshAppsList()
         Ps3Runtime.stop()
         emit("content", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
         return if (success) 1 else 0
@@ -126,7 +128,6 @@ object Ps3InstallBridge {
             }
             unitIndex++
         }
-        if (success) NativeLib.refreshAppsList()
         Ps3Runtime.stop()
         emit("content", if (success) 1f else 0f, if (success) "Installed" else "Installation failed")
         success

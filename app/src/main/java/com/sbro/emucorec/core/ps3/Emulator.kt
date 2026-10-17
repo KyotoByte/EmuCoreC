@@ -46,9 +46,9 @@ import com.sbro.emucorec.discord.DiscordIntegration
 import com.sbro.emucorec.ui.common.ImmersiveMode
 import com.sbro.emucorec.ui.emulation.EmulationOverlayHost
 import com.sbro.emucorec.ui.theme.EmuCoreCTheme
-import net.rpcsx.BootResult
-import net.rpcsx.RPCSX
-import net.rpcsx.EmulatorState
+import com.sbro.emucorec.core.BootResult
+import com.sbro.emucorec.core.EmulatorState
+import com.sbro.emucorec.core.Ps3Core
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -72,6 +72,12 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
     private var exiting = false
     @Volatile private var finishPending = false
     private val bootGate = Any()
+    // Generations are guarded by bootGate. bootGeneration identifies the newest
+    // requested launch; a boot thread may only start its title while its own
+    // generation is still current. finishGeneration invalidates an in-flight
+    // exit when a new launch supersedes it.
+    private var bootGeneration = 0
+    private var finishGeneration = 0
     private var menuPaused = false
     private var lifecyclePaused = false
 
@@ -120,6 +126,16 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         super.onNewIntent(intent)
         finishPlayTimeSessionIfNeeded()
         setIntent(intent)
+        synchronized(bootGate) {
+            // A launch supersedes any pending exit: the exit coroutine watches
+            // finishGeneration and must not tear the activity down under the
+            // game the user just asked for. This is the singleInstance reuse
+            // path -- tapping another game while this activity still exists.
+            finishGeneration++
+            finishPending = false
+            bootGeneration++
+        }
+        exiting = false
         Ps3Runtime.stop()
         _currentGameId = gameIdFromIntent(intent)
         bootStarted.set(false)
@@ -160,20 +176,37 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
     }
 
     override fun finish() {
-        if (finishPending || isFinishing) return
-        finishPending = true
-        if (!RPCSX.initialized) {
-            super.finish()
+        if (isFinishing) return
+        val token: Int
+        synchronized(bootGate) {
+            if (finishPending) return
+            finishPending = true
+            token = ++finishGeneration
+        }
+        if (!Ps3Core.initialized) {
+            finishAfterStop()
             return
         }
         // Android abandons SurfaceView as soon as the activity finishes. Keep
         // its producer alive until a pending restore and VM shutdown settle.
+        // Bounded: a teardown that never converges must not pin the activity
+        // (and the library behind it) forever.
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
                 synchronized(bootGate) { Ps3Runtime.requestStop() }
-                while (RPCSX.instance.saveStateBusy() || Ps3Runtime.state() != EmulatorState.Stopped) delay(25)
+                var waitedMs = 0L
+                while (Ps3Core.instance.saveStateBusy() || Ps3Runtime.state() != EmulatorState.Stopped) {
+                    if (waitedMs >= STOP_WAIT_LIMIT_MS) {
+                        Log.w(TAG, "Emulator did not reach stopped within ${STOP_WAIT_LIMIT_MS}ms; finishing anyway")
+                        break
+                    }
+                    delay(25)
+                    waitedMs += 25
+                }
             }
-            finishAfterStop()
+            if (synchronized(bootGate) { finishPending && finishGeneration == token }) {
+                finishAfterStop()
+            }
         }
     }
 
@@ -196,15 +229,19 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         val currentHeight = surfaceView.height
         if (currentWidth <= 1 || currentHeight <= 1) return
         if (!bootStarted.compareAndSet(false, true)) return
+        // Bind this boot to its request. The singleInstance activity is reused
+        // for the next game (onNewIntent), so two boot threads can overlap: the
+        // generation makes sure only the newest one actually starts a title,
+        // and the last requested launch always wins.
+        val generation = synchronized(bootGate) { ++bootGeneration }
 
-        val gamePath = gamePathFromIntent(intent)
         bootThread = thread(name = "emucorec-ps3-boot") {
             if (!Ps3Runtime.ensureInitialized(this)) {
-                showBootFailure("RPCS3 core is missing or could not be initialized")
+                showBootFailure("EmuCoreC core is missing or could not be initialized")
                 return@thread
             }
             surfaceView.post {
-                if (!surfaceView.holder.surface.isValid || isFinishing || finishPending) return@post
+                if (!surfaceView.holder.surface.isValid || isFinishing) return@post
                 val width = surfaceView.width.coerceAtLeast(1)
                 val height = surfaceView.height.coerceAtLeast(1)
                 Ps3Runtime.attachSurface(
@@ -216,14 +253,18 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
                 )
                 bootThread = thread(name = "emucorec-ps3-game") {
                     val result = synchronized(bootGate) {
-                        if (finishPending) return@thread
-                        Ps3Runtime.boot(this, gamePath, currentGameIdOrIntent())
+                        if (finishPending || isFinishing || generation != bootGeneration) {
+                            // Superseded by a newer launch (or an exit) while
+                            // this thread was starting: never boot a stale title.
+                            return@thread
+                        }
+                        Ps3Runtime.boot(this, gamePathFromIntent(intent), currentGameIdOrIntent())
                     }
                     if (result != BootResult.NoErrors && result != BootResult.AlreadyAdded) {
                         showBootFailure(result.name)
                     } else {
                         bootSucceeded = true
-                        runCatching { RPCSX.instance.getTitleId() }
+                        runCatching { Ps3Core.instance.getTitleId() }
                             .getOrDefault("")
                             .takeIf(String::isNotBlank)
                             ?.let(::setCurrentGameId)
@@ -308,8 +349,8 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
 
     /** Opens the native RPCS3 home menu exposed by the RPCS3 Android bridge. */
     fun openCoreHomeMenu(): Boolean = runCatching {
-        if (!RPCSX.initialized) return false
-        RPCSX.instance.openHomeMenu()
+        if (!Ps3Core.initialized) return false
+        Ps3Core.instance.openHomeMenu()
         true
     }.getOrDefault(false)
 
@@ -550,6 +591,7 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         private const val TAG = "EmuCoreCEmulator"
         private const val EMULATION_OVERLAY_ELEVATION = 64f
         private const val HAT_THRESHOLD = 0.25f
+        private const val STOP_WAIT_LIMIT_MS = 20_000L
         private val GAMEPAD_SOURCES =
             InputDevice.SOURCE_GAMEPAD or InputDevice.SOURCE_JOYSTICK or InputDevice.SOURCE_DPAD
     }

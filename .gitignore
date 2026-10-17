@@ -36,25 +36,25 @@
 /tmp
 /ipch
 /packages
-/rpcs3/Debug
-/rpcs3/Release
+/core/rpcs3/Debug
+/core/rpcs3/Release
 
-!/bin
-/bin/*
+!/core/bin
+/core/bin/*
 
 # Audio DLLs
-!/bin/soft_oal.dll
-!/bin/xaudio2_9redist.dll
+!/core/bin/soft_oal.dll
+!/core/bin/xaudio2_9redist.dll
 
 # Test Programs
-!/bin/test/
+!/core/bin/test/
 
 # Themes
-!/bin/GuiConfigs/
-/bin/GuiConfigs/*.ini
-/bin/GuiConfigs/*.ini.*
-/bin/GuiConfigs/*.dat
-/bin/GuiConfigs/*.dat.*
+!/core/bin/GuiConfigs/
+/core/bin/GuiConfigs/*.ini
+/core/bin/GuiConfigs/*.ini.*
+/core/bin/GuiConfigs/*.dat
+/core/bin/GuiConfigs/*.dat.*
 
 # Visual Studio Files
 .vs/*
@@ -74,8 +74,8 @@ PVS/*
 
 # Ignore other system generated files
 x64/*
-rpcs3/x64/*
-rpcs3/git-version.h
+core/rpcs3/x64/*
+core/rpcs3/git-version.h
 
 # cmake
 Makefile
@@ -87,10 +87,10 @@ CPackSourceConfig.cmake
 compile_commands.json
 
 # cotire
-rpcs3/cotire/*
-rpcs3/rpcs3_*_cotire.cmake
-rpcs3/Emu/rpcs3_emu_CXX_Release_cotire.cmake
-rpcs3/Emu/rpcs3_emu_CXX_cotire.cmake
+core/rpcs3/cotire/*
+core/rpcs3/rpcs3_*_cotire.cmake
+core/rpcs3/Emu/rpcs3_emu_CXX_Release_cotire.cmake
+core/rpcs3/Emu/rpcs3_emu_CXX_cotire.cmake
 
 # kdevelop
 *.kdev4
@@ -101,7 +101,7 @@ moc_*.cpp
 qrc_*.cpp
 rpcs3_automoc.cpp
 ui_*.h
-rpcs3/rpcs3_autogen/*
+core/rpcs3/rpcs3_autogen/*
 
 # QtCreator
 CMakeLists.txt.user

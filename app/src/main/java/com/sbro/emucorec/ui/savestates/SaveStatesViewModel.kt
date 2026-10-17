@@ -3,6 +3,8 @@ package com.sbro.emucorec.ui.savestates
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.sbro.emucorec.core.EmulatorState
+import com.sbro.emucorec.core.Ps3Core
 import com.sbro.emucorec.core.Ps3LaunchBridge
 import com.sbro.emucorec.core.Ps3Runtime
 import com.sbro.emucorec.core.SaveStateOutcome
@@ -17,8 +19,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.rpcsx.EmulatorState
-import net.rpcsx.RPCSX
 
 data class SaveStatesGame(val titleId: String, val title: String, val iconPath: String?, val slots: List<SaveStateSlot>)
 data class SaveStatesUiState(val games: List<SaveStatesGame> = emptyList(), val isLoading: Boolean = true, val busyKey: String? = null, val refreshFailed: Boolean = false)
@@ -73,7 +73,7 @@ class SaveStatesViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             val success = try {
                 withContext(Dispatchers.IO) {
-                    if (RPCSX.initialized && (RPCSX.instance.saveStateBusy() || Ps3Runtime.state() != EmulatorState.Stopped)) false
+                    if (Ps3Core.initialized && (Ps3Core.instance.saveStateBusy() || Ps3Runtime.state() != EmulatorState.Stopped)) false
                     else repository.delete(titleId, slot)
                 }
             } catch (cancelled: CancellationException) { throw cancelled }

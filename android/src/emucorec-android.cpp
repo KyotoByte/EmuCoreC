@@ -132,7 +132,7 @@ extern std::string g_android_executable_dir;
 extern std::string g_android_config_dir;
 extern std::string g_android_cache_dir;
 // Exact SoC identity as reported by Android (Build.SOC_MANUFACTURER/SOC_MODEL),
-// handed in through _rpcsx_setSocInfo. MIDRs cannot identify the SoC.
+// handed in through emucorec_setSocInfo. MIDRs cannot identify the SoC.
 static std::string g_android_soc_info;
 static std::mutex g_virtual_pad_mutex;
 // One per PS3 pad port. This was a single pad, which silently capped local
@@ -140,67 +140,10 @@ static std::mutex g_virtual_pad_mutex;
 // could never address, so its input was assembled and then dropped.
 static std::array<std::shared_ptr<Pad>, CELL_PAD_MAX_PORT_NUM> g_virtual_pads;
 
-// Analog pressure for the twelve pressure-capable buttons, per port, 1..255.
-//
-// 0 means "nothing analog is driving this one, use the digital value". That is a
-// safe sentinel rather than a lost level: a button that is not pressed already
-// reports 0 below, so a pressed button whose pressure is 0 cannot occur, and the
-// zero-initialised array is exactly the pre-existing all-digital behaviour.
-//
-// Kept beside the pad rather than pushed through _rpcsx_overlayPadData because
-// that export's signature is frozen: the core is dlopen()ed and can be updated
-// independently of the JNI glue, so widening an existing export would make older
-// glue call it with a garbage argument. Glue that predates _rpcsx_overlayPadPressure
-// simply never calls it and every button keeps its old digital behaviour.
-//
-// Indexed by press offset minus CELL_PAD_BTN_OFFSET_PRESS_RIGHT, so the array
-// order is the one pad_types.h already defines (offsets 8..19, contiguous).
-inline constexpr int PRESSURE_COUNT =
-    CELL_PAD_BTN_OFFSET_PRESS_R2 - CELL_PAD_BTN_OFFSET_PRESS_RIGHT + 1;
-static std::array<std::array<std::atomic<int>, PRESSURE_COUNT>,
-                  CELL_PAD_MAX_PORT_NUM>
-    g_virtual_pad_pressure;
-
-// Digital button -> its press-value slot. The pairing is cellPad's own, from the
-// switch that copies m_value into output.button[CELL_PAD_BTN_OFFSET_PRESS_*].
-// Returns -1 for buttons the PS3 pad reports with no pressure (Select, Start,
-// L3, R3 and the PS button).
-static int pressure_index_for(u32 offset, u32 outKeyCode) {
-  const auto slot = [](int press_offset) {
-    return press_offset - CELL_PAD_BTN_OFFSET_PRESS_RIGHT;
-  };
-
-  if (offset == CELL_PAD_BTN_OFFSET_DIGITAL1) {
-    switch (outKeyCode) {
-    case CELL_PAD_CTRL_RIGHT: return slot(CELL_PAD_BTN_OFFSET_PRESS_RIGHT);
-    case CELL_PAD_CTRL_LEFT:  return slot(CELL_PAD_BTN_OFFSET_PRESS_LEFT);
-    case CELL_PAD_CTRL_UP:    return slot(CELL_PAD_BTN_OFFSET_PRESS_UP);
-    case CELL_PAD_CTRL_DOWN:  return slot(CELL_PAD_BTN_OFFSET_PRESS_DOWN);
-    default: return -1;
-    }
-  }
-
-  if (offset == CELL_PAD_BTN_OFFSET_DIGITAL2) {
-    switch (outKeyCode) {
-    case CELL_PAD_CTRL_TRIANGLE: return slot(CELL_PAD_BTN_OFFSET_PRESS_TRIANGLE);
-    case CELL_PAD_CTRL_CIRCLE:   return slot(CELL_PAD_BTN_OFFSET_PRESS_CIRCLE);
-    case CELL_PAD_CTRL_CROSS:    return slot(CELL_PAD_BTN_OFFSET_PRESS_CROSS);
-    case CELL_PAD_CTRL_SQUARE:   return slot(CELL_PAD_BTN_OFFSET_PRESS_SQUARE);
-    case CELL_PAD_CTRL_L1:       return slot(CELL_PAD_BTN_OFFSET_PRESS_L1);
-    case CELL_PAD_CTRL_R1:       return slot(CELL_PAD_BTN_OFFSET_PRESS_R1);
-    case CELL_PAD_CTRL_L2:       return slot(CELL_PAD_BTN_OFFSET_PRESS_L2);
-    case CELL_PAD_CTRL_R2:       return slot(CELL_PAD_BTN_OFFSET_PRESS_R2);
-    default: return -1;
-    }
-  }
-
-  return -1;
-}
-
 std::string g_input_config_override;
 cfg_input_configurations g_cfg_input_configs;
 
-LOG_CHANNEL(rpcsx_android, "ANDROID");
+LOG_CHANNEL(emucorec_android, "ANDROID");
 
 #ifdef EMUCOREC_PGO_GENERATE
 // PGO instrumentation support. Present only in a -DEMUCOREC_PGO=generate build.
@@ -219,7 +162,7 @@ static void pgo_set_output_path()
 
     const std::string pattern = dir + "/emucorec-%p.profraw";
     __llvm_profile_set_filename(pattern.c_str());
-    rpcsx_android.success("PGO: writing profiles to %s", pattern);
+    emucorec_android.success("PGO: writing profiles to %s", pattern);
 }
 
 // Counters live in memory until the runtime writes them, and that normally
@@ -231,17 +174,17 @@ static void pgo_flush()
 {
     if (__llvm_profile_write_file() == 0)
     {
-        rpcsx_android.success("PGO: profile written");
+        emucorec_android.success("PGO: profile written");
     }
     else
     {
-        rpcsx_android.error("PGO: failed to write profile");
+        emucorec_android.error("PGO: failed to write profile");
     }
 }
 #endif
 
 // Severity threshold for the logcat mirror. Defaults to warning: notice/trace still reach
-// RPCSX.log, they just stop costing a logd round trip each. Lower it at runtime when
+// emucorec.log, they just stop costing a logd round trip each. Lower it at runtime when
 // actively debugging on a device.
 static std::atomic<int> g_logcat_min_level{static_cast<int>(logs::level::warning)};
 
@@ -286,7 +229,7 @@ struct LogListener : logs::listener {
     // It should not have to be. The FILE log is the artifact that gets attached to a bug
     // report; logcat is a live-debugging convenience for whoever is holding the device. So
     // mirror only what that person needs -- warnings and worse -- and let the rest go to the
-    // file alone, which is buffered and cheap. Nothing is lost from RPCSX.log.
+    // file alone, which is buffered and cheap. Nothing is lost from emucorec.log.
     //
     // Severity is INVERTED in logs::level (always=0 .. trace=7), so '>' drops the noisy end.
     if (static_cast<int>(static_cast<logs::level>(msg)) >
@@ -423,7 +366,7 @@ struct GraphicsFrame : GSFrameBase {
       waited_ms += 100;
 
       if (waited_ms % 3000 == 0) {
-        rpcsx_android.error("Still waiting for a Surface after %u ms -- the renderer cannot start "
+        emucorec_android.error("Still waiting for a Surface after %u ms -- the renderer cannot start "
                             "until surfaceChanged reaches native.", waited_ms);
       }
     }
@@ -570,8 +513,8 @@ struct GraphicsFrame : GSFrameBase {
 
   bool can_consume_frame() const override { return false; }
 
-  // Upstream takes the buffer by rvalue ref (it moves it); RPCSX's lvalue-ref
-  // signature no longer overrides, which left GraphicsFrame abstract.
+  // Upstream takes the buffer by rvalue ref (it moves it); the old bridge's
+  // lvalue-ref signature no longer overrides, which left GraphicsFrame abstract.
   void present_frame(std::vector<u8> &&data, u32 pitch, u32 width, u32 height,
                      bool is_bgra) const override {}
   // Save slot thumbnails. RPCS3 already renders and hands over the finished frame here
@@ -583,7 +526,7 @@ struct GraphicsFrame : GSFrameBase {
                        u32 sshot_height, bool is_bgra) override {
     emucorec_store_thumbnail(sshot_data, sshot_width, sshot_height, is_bgra);
   }
-  // Added upstream after RPCSX forked. The Android UI draws its own FPS via
+  // Added upstream after this fork diverged. The Android UI draws its own FPS via
   // the perf overlay, so there is no host window title to update.
   void update_title(double fps = 0.0) override {}
 };
@@ -1227,7 +1170,7 @@ find_localized_string(localized_string_id id) {
   const std::size_t index = std::size_t(id);
 
   if (index >= std::size(g_strings)) {
-    rpcsx_android.error("No localized string for id %d", int(id));
+    emucorec_android.error("No localized string for id %d", int(id));
     return nullptr;
   }
 
@@ -1235,25 +1178,13 @@ find_localized_string(localized_string_id id) {
   // a hole.
   if (g_strings[index].first.empty() &&
       id != localized_string_id::RSX_OVERLAYS_SPINNER_NO_TEXT) {
-    rpcsx_android.error("Localized string %d is missing from g_strings",
+    emucorec_android.error("Localized string %d is missing from g_strings",
                         int(id));
     return nullptr;
   }
 
   return &g_strings[index];
 }
-
-enum GameFlags {
-  kGameFlagLocked = 1 << 0,
-  kGameFlagTrial = 1 << 1,
-};
-
-struct GameInfo {
-  std::string path;
-  std::string name;
-  std::string iconPath;
-  int flags = 0;
-};
 
 class Progress {
   JNIEnv *env;
@@ -1277,7 +1208,7 @@ public:
   // long installs and not on fast ones.
   Progress(JNIEnv *env, jlong progressId) : env(env), progressId(progressId) {
     progressRepositoryClass =
-        ensure(env->FindClass("net/rpcsx/ProgressRepository"));
+        ensure(env->FindClass("com/sbro/emucorec/core/Ps3CoreCallbacks"));
     onProgressEventMethodId = env->GetStaticMethodID(
         progressRepositoryClass, "onProgressEvent", "(JJJLjava/lang/String;)Z");
     onProgressCompletedMethodId = ensure(env->GetStaticMethodID(
@@ -1327,7 +1258,7 @@ public:
 
 static void sendFirmwareInstalled(JNIEnv *env, const std::string &version) {
   auto fwRepositoryClass =
-      ensure(env->FindClass("net/rpcsx/FirmwareRepository"));
+      ensure(env->FindClass("com/sbro/emucorec/core/Ps3CoreCallbacks"));
   auto methodId = ensure(env->GetStaticMethodID(
       fwRepositoryClass, "onFirmwareInstalled", "(Ljava/lang/String;)V"));
 
@@ -1336,59 +1267,11 @@ static void sendFirmwareInstalled(JNIEnv *env, const std::string &version) {
 
 static void sendFirmwareCompiled(JNIEnv *env, const std::string &version) {
   auto fwRepositoryClass =
-      ensure(env->FindClass("net/rpcsx/FirmwareRepository"));
+      ensure(env->FindClass("com/sbro/emucorec/core/Ps3CoreCallbacks"));
   auto methodId = ensure(env->GetStaticMethodID(
       fwRepositoryClass, "onFirmwareCompiled", "(Ljava/lang/String;)V"));
 
   env->CallStaticVoidMethod(fwRepositoryClass, methodId, wrap(env, version));
-}
-
-static void sendGameInfo(JNIEnv *env, jlong progressId,
-                         std::span<const GameInfo> infos) {
-  auto gameRepositoryClass = ensure(env->FindClass("net/rpcsx/GameRepository"));
-  auto addMethodId = ensure(env->GetStaticMethodID(
-      gameRepositoryClass, "add", "([Lnet/rpcsx/GameInfo;J)V"));
-  auto gameClass = ensure(env->FindClass("net/rpcsx/GameInfo"));
-
-  jmethodID gameConstructor = ensure(env->GetMethodID(
-      gameClass, "<init>",
-      "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V"));
-
-  std::vector<jobject> objects;
-  objects.reserve(infos.size());
-
-  for (const auto &info : infos) {
-    auto path = g_emu_callbacks.resolve_path(info.path);
-    if (path.ends_with('/')) {
-      path.resize(path.size() - 1);
-    }
-
-    objects.push_back(env->NewObject(
-        gameClass, gameConstructor, wrap(env, path), wrap(env, info.name),
-        wrap(env, g_emu_callbacks.resolve_path(info.iconPath)),
-        jint(info.flags)));
-  }
-
-  auto result = env->NewObjectArray(objects.size(), gameClass, nullptr);
-
-  for (std::size_t i = 0; i < objects.size(); ++i) {
-    env->SetObjectArrayElement(result, i, objects[i]);
-  }
-
-  env->CallStaticVoidMethod(gameRepositoryClass, addMethodId, result,
-                            progressId);
-}
-
-static void sendVshBootable(JNIEnv *env, jlong progressId) {
-  auto dev_flash = g_cfg_vfs.get_dev_flash();
-
-  sendGameInfo(
-      env, progressId,
-      {{GameInfo{
-          .path = dev_flash + "/vsh/module/vsh.self",
-          .name = "VSH",
-          .iconPath = dev_flash + "vsh/resource/explore/icon/icon_home.png",
-      }}});
 }
 
 // psf::get_string aborts via ensure() when an entry carries a non-string type,
@@ -1409,68 +1292,6 @@ static std::string_view safe_psf_get_string(const psf::registry& psf,
   }
 
   return entry.as_string();
-}
-
-static bool tryUnlockGame(const psf::registry &psf) {
-  auto contentId = safe_psf_get_string(psf, "CONTENT_ID");
-
-  if (contentId.empty()) {
-    return true;
-  }
-
-  const auto licenseDir = fmt::format(
-      "%shome/%s/exdata/", rpcs3::utils::get_hdd0_dir(), Emu.GetUsr());
-
-  const auto licenseFile = fmt::format("%s%s", licenseDir, contentId);
-  if (std::filesystem::is_regular_file(licenseFile + ".rap")) {
-    return true;
-  }
-
-  if (std::filesystem::is_regular_file(licenseFile + ".edat")) {
-    return true;
-  }
-
-  return false;
-}
-
-static void collectGamePaths(std::vector<std::string> &paths,
-                             const std::string &rootDir) {
-  std::error_code ec;
-  std::vector<std::filesystem::path> workList;
-  workList.reserve(32);
-  if (!std::filesystem::is_directory(rootDir)) {
-    auto rootPath = std::filesystem::path(rootDir).parent_path();
-    if (rootPath.filename() == "USRDIR") {
-      rootPath = rootPath.parent_path();
-    }
-    if (rootPath.filename() == "PS3_GAME") {
-      rootPath = rootPath.parent_path();
-    }
-
-    workList.push_back(rootPath);
-  } else {
-    workList.push_back(rootDir);
-  }
-
-  while (!workList.empty()) {
-    auto dir = std::move(workList.back());
-    workList.pop_back();
-
-    for (auto &entry : std::filesystem::directory_iterator(dir, ec)) {
-      if (entry.is_directory()) {
-        if (entry.path().filename() != "C00") {
-          workList.push_back(entry.path());
-        }
-
-        continue;
-      }
-
-      if (entry.is_regular_file() && entry.path().filename() == "PARAM.SFO") {
-        paths.push_back(entry.path().parent_path().string());
-        continue;
-      }
-    }
-  }
 }
 
 static std::string locateEbootPath(std::string_view root) {
@@ -1513,153 +1334,6 @@ static std::string locateParamSfoPath(std::string_view root) {
   }
 
   return {};
-}
-
-static std::optional<GameInfo>
-fetchGameInfo(const psf::registry &psf,
-              std::filesystem::path psfRootPath = {}) {
-  auto titleId = std::string(safe_psf_get_string(psf, "TITLE_ID"));
-  auto name = std::string(safe_psf_get_string(psf, "TITLE"));
-  auto bootable = psf::get_integer(psf, "BOOTABLE", 0);
-  auto category = safe_psf_get_string(psf, "CATEGORY");
-
-  if (!bootable || titleId.empty()) {
-    return {};
-  }
-
-  bool isDiscGame = category == "DG";
-
-  std::string path;
-
-  if (!isDiscGame) {
-    path = rpcs3::utils::get_hdd0_dir() + "game/" + titleId + "/";
-  } else {
-    if (psfRootPath.empty()) {
-      path = fs::get_config_dir() + "games/" + titleId + "/";
-    } else {
-      // Locate game root path
-      if (psfRootPath.filename() == "USRDIR") {
-        psfRootPath = psfRootPath.parent_path();
-      }
-
-      if (psfRootPath.filename() == "PS3_GAME") {
-        psfRootPath = psfRootPath.parent_path();
-      }
-
-      path = psfRootPath;
-      if (!path.ends_with('/')) {
-        path += '/';
-      }
-    }
-  }
-
-  auto dataPath = isDiscGame ? path + "PS3_GAME/" : path;
-  auto iconPath = dataPath + "ICON0.PNG";
-  auto moviePath = dataPath + "ICON1.PAM";
-
-  int flags = 0;
-
-  if (!isDiscGame) {
-    auto ebootPath = locateEbootPath(path);
-
-    bool isLocked = false;
-
-    if (!ebootPath.empty()) {
-      if (fs::file eboot{ebootPath};
-          eboot && eboot.size() >= 4 && eboot.read<u32>() == "SCE\0"_u32) {
-        isLocked = !decrypt_self(eboot);
-      }
-    }
-
-    if (isLocked) {
-      flags |= kGameFlagLocked;
-      rpcsx_android.warning("game %s is locked", path);
-    }
-
-    auto c00Path = path + "/C00";
-
-    bool isTrial = std::filesystem::is_directory(c00Path);
-
-    if (isTrial) {
-      if (!tryUnlockGame(psf)) {
-        flags |= kGameFlagTrial;
-        rpcsx_android.warning("game %s is trial", path);
-      } else {
-        auto c00IconPath = c00Path + "/ICON0.PNG";
-        if (std::filesystem::is_regular_file(c00IconPath)) {
-          iconPath = c00IconPath;
-        }
-
-        auto c00SfoPath = c00Path + "/PARAM.SFO";
-
-        if (std::filesystem::is_regular_file(c00IconPath)) {
-          auto c00Sfo = psf::load_object(c00SfoPath);
-          titleId = safe_psf_get_string(c00Sfo, "TITLE_ID", titleId);
-          name = safe_psf_get_string(c00Sfo, "TITLE", name);
-        }
-      }
-    }
-  }
-
-  return GameInfo{
-      .path = std::move(path),
-      .name = std::move(name),
-      .iconPath = std::move(iconPath),
-      .flags = flags,
-  };
-}
-
-static void collectGameInfo(JNIEnv *env, jlong progressId,
-                            const std::vector<std::string> &rootDirs) {
-  std::vector<std::string> paths;
-  for (auto &&rootDir : rootDirs) {
-    collectGamePaths(paths, rootDir);
-
-    rpcsx_android.notice("collectGameInfo: processed %s", rootDir);
-  }
-
-  rpcsx_android.notice("collectGameInfo: found %d paths", paths.size());
-
-  Progress progress(env, progressId);
-  progress.report(0, paths.size());
-
-  std::vector<GameInfo> gameInfos;
-  gameInfos.reserve(10);
-  std::size_t processed = 0;
-
-  auto submit = [&] {
-    if (gameInfos.empty()) {
-      return;
-    }
-
-    sendGameInfo(env, progressId, gameInfos);
-    progress.report(processed, paths.size());
-    gameInfos.clear();
-  };
-
-  for (auto &&path : paths) {
-    processed++;
-
-    if (!std::filesystem::is_regular_file(path + "/PARAM.SFO")) {
-      continue;
-    }
-
-    const auto psf = psf::load_object(path + "/PARAM.SFO");
-
-    rpcsx_android.notice("collectGameInfo: sfo at %s", path);
-
-    if (auto gameInfo = fetchGameInfo(psf, path)) {
-      gameInfos.push_back(std::move(*gameInfo));
-
-      if (gameInfos.size() >= 10) {
-        submit();
-      }
-    }
-  }
-
-  submit();
-
-  progress.success(processed);
 }
 
 class MainThreadProcessor {
@@ -1736,7 +1410,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   ProgressMessageDialog(jlong progressId) : progressId(progressId) {}
 
   void Create(const std::string &msg, const std::string &title) override {
-    rpcsx_android.warning("ProgressMessageDialog::Create(%s, %s)", msg, title);
+    emucorec_android.warning("ProgressMessageDialog::Create(%s, %s)", msg, title);
     max = 100;
     invokeSync([this, &msg](JNIEnv *env) {
       Progress progress(env, progressId);
@@ -1749,7 +1423,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void Close(bool success) override {
-    rpcsx_android.warning("ProgressMessageDialog::Close(%s)", success);
+    emucorec_android.warning("ProgressMessageDialog::Close(%s)", success);
     invokeSync([this](JNIEnv *env) {
       Progress progress(env, progressId);
       progress.report(0, 0);
@@ -1765,7 +1439,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void SetMsg(const std::string &msg) override {
-    rpcsx_android.warning("ProgressMessageDialog::SetMsg(%s)", msg);
+    emucorec_android.warning("ProgressMessageDialog::SetMsg(%s)", msg);
     invokeSync([this, msg](JNIEnv *env) {
       Progress(env, progressId).report(getValue(), max, msg);
     });
@@ -1773,7 +1447,7 @@ struct ProgressMessageDialog : MsgDialogBase {
 
   void ProgressBarSetMsg(u32 progressBarIndex,
                          const std::string &msg) override {
-    rpcsx_android.warning("ProgressMessageDialog::ProgressBarSetMsg(%d, %s)",
+    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetMsg(%d, %s)",
                           progressBarIndex, msg);
     if (progressBarIndex != 0) {
       report_fatal_error("Unexpected progress index in progress dialog");
@@ -1785,7 +1459,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarReset(u32 progressBarIndex) override {
-    rpcsx_android.warning("ProgressMessageDialog::ProgressBarReset(%d)",
+    emucorec_android.warning("ProgressMessageDialog::ProgressBarReset(%d)",
                           progressBarIndex);
 
     if (progressBarIndex != 0) {
@@ -1798,7 +1472,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarInc(u32 progressBarIndex, u32 delta) override {
-    rpcsx_android.warning("ProgressMessageDialog::ProgressBarInc(%d, %d)",
+    emucorec_android.warning("ProgressMessageDialog::ProgressBarInc(%d, %d)",
                           progressBarIndex, delta);
 
     if (progressBarIndex != 0) {
@@ -1813,7 +1487,7 @@ struct ProgressMessageDialog : MsgDialogBase {
   }
 
   void ProgressBarSetValue(u32 progressBarIndex, u32 value) override {
-    rpcsx_android.warning("ProgressMessageDialog::ProgressBarSetValue(%d, %d)",
+    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetValue(%d, %d)",
                           progressBarIndex, value);
 
     if (progressBarIndex != 0) {
@@ -1827,7 +1501,7 @@ struct ProgressMessageDialog : MsgDialogBase {
     });
   }
   void ProgressBarSetLimit(u32 index, u32 limit) override {
-    rpcsx_android.warning("ProgressMessageDialog::ProgressBarSetLimit(%d, %d)",
+    emucorec_android.warning("ProgressMessageDialog::ProgressBarSetLimit(%d, %d)",
                           index, limit);
 
     if (index != 0) {
@@ -1862,7 +1536,7 @@ struct MessageDialog : MsgDialogBase {
   void Create(const std::string &msg, const std::string &title) override {
     auto progressId = s_pendingProgressId.load();
 
-    rpcsx_android.warning("MessageDialog::Create(%s, %s): source %s, id %d",
+    emucorec_android.warning("MessageDialog::Create(%s, %s): source %s, id %d",
                           msg, title, source, progressId);
 
     if (progressId != -1) {
@@ -1923,7 +1597,7 @@ struct OverlaySaveDialog : SaveDialogBase {
                        std::vector<SaveDataEntry> &save_entries, s32 focused,
                        u32 op, vm::ptr<CellSaveDataListSet> listSet,
                        bool enable_overlay) override {
-    rpcsx_android.notice("ShowSaveDataList(save_entries=%d, focused=%d, "
+    emucorec_android.notice("ShowSaveDataList(save_entries=%d, focused=%d, "
                          "op=0x%x, listSet=*0x%x, enable_overlay=%d)",
                          save_entries.size(), focused, op, listSet,
                          enable_overlay);
@@ -1937,26 +1611,26 @@ struct OverlaySaveDialog : SaveDialogBase {
     });
 
     if (!use_end) {
-      rpcsx_android.error(
+      emucorec_android.error(
           "ShowSaveDataList(): Not able to notify DRAWING_BEGIN callback "
           "because one has already been sent!");
     }
 
     if (auto manager = g_fxo->try_get<rsx::overlays::display_manager>()) {
-      rpcsx_android.notice("ShowSaveDataList: Showing native UI dialog");
+      emucorec_android.notice("ShowSaveDataList: Showing native UI dialog");
 
       s32 result = manager->create<rsx::overlays::save_dialog>()->show(
           base_dir, save_entries, focused, op, listSet, enable_overlay);
 
       if (result != rsx::overlays::user_interface::selection_code::error) {
-        rpcsx_android.notice(
+        emucorec_android.notice(
             "ShowSaveDataList: Native UI dialog returned with selection %d",
             result);
 
         return result;
       }
 
-      rpcsx_android.error("ShowSaveDataList: Native UI dialog returned error");
+      emucorec_android.error("ShowSaveDataList: Native UI dialog returned error");
     }
 
     return -2;
@@ -1988,7 +1662,7 @@ extern bool ppu_load_exec(const ppu_exec_object &, bool virtual_load,
                           const std::string &, utils::serial * = nullptr);
 extern void spu_load_exec(const spu_exec_object &);
 extern void spu_load_rel_exec(const spu_rel_object &);
-// Upstream gained a third parameter (is_fast_compilation) after RPCSX forked.
+// Upstream gained a third parameter (is_fast_compilation) after this fork diverged.
 extern void ppu_precompile(std::vector<std::string> &dir_queue,
                            std::vector<ppu_module<lv2_obj> *> *loaded_prx,
                            bool is_fast_compilation);
@@ -2024,6 +1698,16 @@ public:
     });
   }
 
+  // Fire-and-forget cache build with no progress id attached: nothing in the
+  // app waits for it and no dialog owns it. Used for the VSH cache after a
+  // firmware install, which must not keep the installer busy (see installPup).
+  void pushDetached(std::string path) {
+    push({
+        .progressId = -1,
+        .path = std::move(path),
+    });
+  }
+
   void process(JNIEnv *env) {
     while (true) {
       CompilationWorkload workload;
@@ -2040,8 +1724,10 @@ public:
       try {
         impl(env, std::move(workload));
       } catch (const std::exception &error) {
-        rpcsx_android.error("Compilation failed: %s", error.what());
-        Progress(env, progressId).failure("Compilation failed");
+        emucorec_android.error("Compilation failed: %s", error.what());
+        if (progressId >= 0) {
+          Progress(env, progressId).failure("Compilation failed");
+        }
       }
     }
   }
@@ -2049,11 +1735,13 @@ public:
 private:
   void impl(JNIEnv *env, CompilationWorkload workload) {
     if (workload.path.empty()) {
-      Progress(env, workload.progressId).success(0);
+      if (workload.progressId >= 0) {
+        Progress(env, workload.progressId).success(0);
+      }
       return;
     }
 
-    rpcsx_android.notice("Creating cache initiated, state %d",
+    emucorec_android.notice("Creating cache initiated, state %d",
                         (int)Emu.GetStatus(false));
 
     std::unique_lock lifecycle_lock(g_emu_lifecycle_mutex, std::defer_lock);
@@ -2066,14 +1754,16 @@ private:
       }
 
       lifecycle_lock.unlock();
-      rpcsx_android.notice("Creating cache wait, state %d", (int)state);
+      emucorec_android.notice("Creating cache wait, state %d", (int)state);
       std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
     bool is_vsh = workload.path.ends_with("/vsh.self");
 
 
-    MessageDialog::pushPendingProgressId(workload.progressId);
+    if (workload.progressId >= 0) {
+      MessageDialog::pushPendingProgressId(workload.progressId);
+    }
     bool cleanup_done = false;
     auto cleanup = [&] {
       if (cleanup_done) return;
@@ -2082,7 +1772,9 @@ private:
       while (!Emu.IsStopped(true)) {
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
       }
-      MessageDialog::popPendingProgressId(workload.progressId);
+      if (workload.progressId >= 0) {
+        MessageDialog::popPendingProgressId(workload.progressId);
+      }
     };
     AtExit cleanup_on_failure{cleanup};
     // The compiler observes the emulator state as its cancellation signal.
@@ -2168,18 +1860,18 @@ private:
 
         if (!sfoPath.empty()) {
           const auto psf = psf::load_object(sfoPath);
-          rpcsx_android.warning("title id is %s",
+          emucorec_android.warning("title id is %s",
                                 safe_psf_get_string(psf, "TITLE_ID"));
 
           // EmuCoreC: title id is set by Emu.BootGame on the real boot; this
           // precompilation pass does not own the running game title.
         } else {
-          rpcsx_android.warning("param.sfo not found");
+          emucorec_android.warning("param.sfo not found");
         }
       }
 
       // Compile binary first
-      rpcsx_android.notice("Trying to load binary: %s", workload.path);
+      emucorec_android.notice("Trying to load binary: %s", workload.path);
 
       fs::file src{workload.path};
       src = decrypt_self(src);
@@ -2189,7 +1881,7 @@ private:
       if (obj == elf_error::ok && ppu_load_exec(obj, true, workload.path)) {
         _main.path = workload.path;
       } else {
-        rpcsx_android.error("Failed to load binary '%s' (%s)", workload.path,
+        emucorec_android.error("Failed to load binary '%s' (%s)", workload.path,
                             obj.get_error());
       }
     }
@@ -2215,14 +1907,14 @@ private:
     }
 
     std::vector<ppu_module<lv2_obj> *> mod_list;
-    rpcsx_android.notice("Going to analyze executable");
+    emucorec_android.notice("Going to analyze executable");
 
     // FIXME: split states
     if (!is_vsh) {
       if (_main.analyse(0, _main.elf_entry, _main.seg0_code_end,
                         _main.applied_patches, std::vector<u32>{})) {
         Emu.ConfigurePPUCache();
-        rpcsx_android.error("Going to precompile main PPU module");
+        emucorec_android.error("Going to precompile main PPU module");
         ppu_initialize(_main);
         mod_list.emplace_back(&_main);
       }
@@ -2230,13 +1922,15 @@ private:
 
     ppu_precompile(dir_queue, mod_list.empty() ? nullptr : &mod_list, false);
 
-    rpcsx_android.notice("Finalization");
+    emucorec_android.notice("Finalization");
     // Complete only after the core has joined its threads and closed the VM.
     cleanup();
     if (is_vsh) {
       sendFirmwareCompiled(env, utils::get_firmware_version());
     }
-    Progress(env, workload.progressId).success(0);
+    if (workload.progressId >= 0) {
+      Progress(env, workload.progressId).success(0);
+    }
   }
 } static g_compilationQueue;
 
@@ -2291,9 +1985,9 @@ static struct main_thread_dispatcher {
       try {
         cb();
       } catch (const std::exception &e) {
-        rpcsx_android.error("Main-thread callback threw: %s", e.what());
+        emucorec_android.error("Main-thread callback threw: %s", e.what());
       } catch (...) {
-        rpcsx_android.error("Main-thread callback threw an unknown exception");
+        emucorec_android.error("Main-thread callback threw an unknown exception");
       }
     }
   }
@@ -2339,7 +2033,7 @@ static void setupCallbacks() {
               return;
             }
 
-            rpcsx_android.error(
+            emucorec_android.error(
                 "Emulation has not stopped after %d seconds. A thread is not "
                 "responding to the stop request; the app will stay on the last "
                 "frame until it does.",
@@ -2354,7 +2048,7 @@ static void setupCallbacks() {
             // never left its initial stopped state, which is what a thread with no CPU time
             // at all suggests.
             idm::select<named_thread<spu_thread>>([](u32 id, spu_thread &spu) {
-              rpcsx_android.error("  SPU 0x%x has not stopped, state = %s", id,
+              emucorec_android.error("  SPU 0x%x has not stopped, state = %s", id,
                                   spu.state.load());
             });
           },
@@ -2392,7 +2086,7 @@ static void setupCallbacks() {
           [](auto...) { return std::make_shared<null_camera_handler>(); },
       .get_music_handler =
           [](auto...) { return std::make_shared<null_music_handler>(); },
-      // EmuCoreC: RPCSX injected a pad-handler FACTORY here via a
+      // EmuCoreC: the old bridge injected a pad-handler FACTORY here via a
       // `create_pad_handler` callback that no longer exists -- upstream's
       // EmuCallbacks only has `init_pad_handler(std::string_view title_id)`,
       // and pad_thread::GetHandler() owns construction now. The Android-only
@@ -2437,7 +2131,7 @@ static void setupCallbacks() {
             }
 
             if (!result->Initialized()) {
-              rpcsx_android.error(
+              emucorec_android.error(
                   "Audio renderer %s could not be initialized, using a Null "
                   "renderer instead. Make sure that no other application is "
                   "running that might block audio access (e.g. Netflix).",
@@ -2493,7 +2187,7 @@ static void setupCallbacks() {
           [](const std::vector<std::string> &pkgs, bool from_optical_drive) {
             for (const std::string &pkg : pkgs) {
               if (!rpcs3::utils::install_pkg(pkg, from_optical_drive)) {
-                rpcsx_android.error("cd install pkgs: failed to install %s",
+                emucorec_android.error("cd install pkgs: failed to install %s",
                                     pkg);
                 return false;
               }
@@ -2531,7 +2225,7 @@ static void setupCallbacks() {
               return {};
             }
 
-            rpcsx_android.notice("using database config for %s", title_id);
+            emucorec_android.notice("using database config for %s", title_id);
             return config.to_string();
           },
   };
@@ -2607,7 +2301,7 @@ static bool initVirtualPad(const std::shared_ptr<Pad> &pad) {
   return true;
 }
 
-extern "C" bool _rpcsx_overlayPadData(int port, int digital1, int digital2,
+extern "C" bool emucorec_overlayPadData(int port, int digital1, int digital2,
                                       int leftStickX, int leftStickY,
                                       int rightStickX, int rightStickY) {
 
@@ -2626,8 +2320,6 @@ extern "C" bool _rpcsx_overlayPadData(int port, int digital1, int digital2,
     return false;
   }
 
-  const auto &pressure = g_virtual_pad_pressure[port];
-
   for (auto &btn : pad->m_buttons) {
     if (btn.m_offset == CELL_PAD_BTN_OFFSET_DIGITAL1) {
       btn.m_pressed = (digital1 & btn.m_outKeyCode) != 0;
@@ -2642,18 +2334,10 @@ extern "C" bool _rpcsx_overlayPadData(int port, int digital1, int digital2,
       btn.m_pressed = (digital2 & btn.m_outKeyCode) != 0;
     }
 
-    // A pressed button was worth exactly 255, which is what cellPad copies into
-    // the press byte a game reads for analog buttons -- so every pressure-capable
-    // button on this port was fully digital no matter what the hardware sent. A
-    // physical L2/R2 went 0 to 100 with no half-press (reported on Iron Man's
-    // hover tutorial, which cannot be passed without one), and the touch overlay's
-    // pressure modifier set a value that was discarded here.
-    const int idx = pressure_index_for(btn.m_offset, btn.m_outKeyCode);
-    const int analog = idx < 0 ? 0 : pressure[idx].load(std::memory_order_relaxed);
-
-    // 0 means no analog source is driving this button -- every button on a pad
-    // without analog buttons -- so the digital answer stays the default.
-    btn.m_value = !btn.m_pressed ? 0 : (analog <= 0 ? 255 : analog);
+    // 255 is what cellPad copies into the press byte for a fully pressed
+    // button. Triggers are thresholded in the app (InputOverlay), so every
+    // button this export drives is digital by design.
+    btn.m_value = btn.m_pressed ? 255 : 0;
   }
 
   pad->m_sticks[0].m_value = leftStickX;
@@ -2663,46 +2347,20 @@ extern "C" bool _rpcsx_overlayPadData(int port, int digital1, int digital2,
   return true;
 }
 
-// Analog pressure for this port's pressure-capable buttons. `values` is in press
-// offset order (CELL_PAD_BTN_OFFSET_PRESS_RIGHT..PRESS_R2), each 1..255, or 0 to
-// leave that button digital.
-//
-// Separate from _rpcsx_overlayPadData so the pressure survives a snapshot push
-// that does not carry it: the caller sets pressure when a trigger moves and pushes
-// the whole pad on every input event, and the two orders must both work.
-extern "C" bool _rpcsx_overlayPadPressure(int port, const int *values,
-                                          int count) {
-  if (port < 0 || static_cast<usz>(port) >= g_virtual_pad_pressure.size() ||
-      values == nullptr) {
-    return false;
-  }
-
-  // Tolerate a shorter or longer array than this core knows about, so glue and
-  // core can be updated independently without one truncating the other's pad.
-  const int n = std::min(count, PRESSURE_COUNT);
-
-  for (int i = 0; i < n; i++) {
-    g_virtual_pad_pressure[port][i].store(std::clamp(values[i], 0, 255),
-                                          std::memory_order_relaxed);
-  }
-
-  return true;
-}
-
 // Hand the core Android's exact SoC identity. Deliberately a separate export
-// rather than an extra _rpcsx_initialize parameter: the core is dlopen()ed and
+// rather than an extra emucorec_initialize parameter: the core is dlopen()ed and
 // can be updated independently of the JNI glue that calls it, so changing an
 // existing export's signature would make older glue call it with a garbage
 // argument. Glue that predates this export simply never calls it, and glue that
 // has it null-checks the symbol against older cores.
 //
-// Must be called before _rpcsx_initialize, which is where the startup messages
+// Must be called before emucorec_initialize, which is where the startup messages
 // are assembled.
-extern "C" void _rpcsx_setSocInfo(std::string_view socInfo) {
+extern "C" void emucorec_setSocInfo(std::string_view socInfo) {
   g_android_soc_info = std::string(socInfo);
 }
 
-extern "C" bool _rpcsx_initialize(std::string_view rootDir,
+extern "C" bool emucorec_initialize(std::string_view rootDir,
                                   std::string_view user) {
   auto rootDirStr = fix_dir_path(std::string(rootDir));
 
@@ -2732,7 +2390,7 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
   if (int r = libusb_set_option(nullptr, LIBUSB_OPTION_NO_DEVICE_DISCOVERY,
                                 nullptr);
       r != 0) {
-    rpcsx_android.warning(
+    emucorec_android.warning(
         "libusb_set_option(LIBUSB_OPTION_NO_DEVICE_DISCOVERY) -> %d", r);
   }
 
@@ -2750,15 +2408,22 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
     }
 
     // preserve old log file
-    if (std::filesystem::exists(fs::get_log_dir() + "RPCSX.log")) {
+    if (std::filesystem::exists(fs::get_log_dir() + "emucorec.log")) {
       std::error_code ec;
-      std::filesystem::remove(fs::get_log_dir() + "RPCSX.old.log", ec);
-      std::filesystem::rename(fs::get_log_dir() + "RPCSX.log",
-                              fs::get_log_dir() + "RPCSX.old.log", ec);
+      std::filesystem::remove(fs::get_log_dir() + "emucorec.old.log", ec);
+      std::filesystem::rename(fs::get_log_dir() + "emucorec.log",
+                              fs::get_log_dir() + "emucorec.old.log", ec);
+    } else if (std::filesystem::exists(fs::get_log_dir() + "emucorec.log")) {
+      // One-time migration: keep the previous session's log readable under the
+      // new name instead of orphaning the file the old release wrote.
+      std::error_code ec;
+      std::filesystem::remove(fs::get_log_dir() + "emucorec.old.log", ec);
+      std::filesystem::rename(fs::get_log_dir() + "emucorec.log",
+                              fs::get_log_dir() + "emucorec.old.log", ec);
     }
 
     // Limit log size to ~25% of free space
-    log_file = logs::make_file_listener(fs::get_log_dir() + "RPCSX.log",
+    log_file = logs::make_file_listener(fs::get_log_dir() + "emucorec.log",
                                         stats.avail_free / 4);
   }
 
@@ -2793,29 +2458,29 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
         // Read it back rather than echoing what we meant to set. /proc/<pid>/environ is the
         // snapshot taken at exec and never reflects a runtime setenv, and Mesa's own logging
         // may go to stderr, which Android drops, so this is the only honest confirmation.
-        rpcsx_android.warning("driver_env: %s=%s", name, getenv(name.c_str()));
+        emucorec_android.warning("driver_env: %s=%s", name, getenv(name.c_str()));
       }
     }
   }
 
-  logs::stored_message ver{rpcsx_android.always()};
+  logs::stored_message ver{emucorec_android.always()};
   ver.text = fmt::format("EmuCoreC-ps3-android v%s", rpcs3::get_version().to_string());
 
   // Write exact SoC identity (from Android, not inferred from MIDRs)
-  logs::stored_message soc{rpcsx_android.always()};
+  logs::stored_message soc{emucorec_android.always()};
   soc.text = fmt::format(
       "SoC: %s", g_android_soc_info.empty() ? "unknown" : g_android_soc_info);
 
   // Write System information
-  logs::stored_message sys{rpcsx_android.always()};
+  logs::stored_message sys{emucorec_android.always()};
   sys.text = utils::get_system_info();
 
   // Write OS version
-  logs::stored_message os{rpcsx_android.always()};
+  logs::stored_message os{emucorec_android.always()};
   os.text = utils::get_OS_version_string();
 
   // Write current time
-  logs::stored_message time{rpcsx_android.always()};
+  logs::stored_message time{emucorec_android.always()};
   time.text = fmt::format("Current Time: %s", std::chrono::system_clock::now());
 
   logs::set_init({std::move(ver), std::move(soc), std::move(sys), std::move(os),
@@ -2824,16 +2489,16 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
   auto set_rlim = [](int resource, std::uint64_t limit) {
     rlimit64 rlim{};
     if (getrlimit64(resource, &rlim) != 0) {
-      rpcsx_android.error("failed to get rlimit for %d", resource);
+      emucorec_android.error("failed to get rlimit for %d", resource);
       return;
     }
 
     rlim.rlim_cur = std::min<std::size_t>(rlim.rlim_max, limit);
-    rpcsx_android.notice("rlimit[%d] = %u (requested %u, max %u)", resource,
+    emucorec_android.notice("rlimit[%d] = %u (requested %u, max %u)", resource,
                         rlim.rlim_cur, limit, rlim.rlim_max);
 
     if (setrlimit64(resource, &rlim) != 0) {
-      rpcsx_android.error("failed to set rlimit for %d", resource);
+      emucorec_android.error("failed to set rlimit for %d", resource);
       return;
     }
   };
@@ -2876,7 +2541,7 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
   // Migrate configurations written by older Android builds which exposed the
   // desktop OpenGL enum even though no GL renderer was linked.
   if (g_cfg.video.renderer == video_renderer::opengl) {
-    rpcsx_android.warning(
+    emucorec_android.warning(
         "OpenGL was selected in the saved config but this Android build has no GLES backend; using Vulkan");
     g_cfg.video.renderer.set(video_renderer::vulkan);
     Emulator::SaveSettings(g_cfg.to_string(), "");
@@ -2910,7 +2575,7 @@ extern "C" bool _rpcsx_initialize(std::string_view rootDir,
 
   g_cfg.core.llvm_cpu.from_string("");
 
-  rpcsx_android.warning("LLVM JIT target: '%s'",
+  emucorec_android.warning("LLVM JIT target: '%s'",
                         g_cfg.core.llvm_cpu.to_string().empty()
                             ? "<host-detected>"
                             : g_cfg.core.llvm_cpu.to_string());
@@ -2962,27 +2627,15 @@ extern "C" jint JNI_GetCreatedJavaVMs(JavaVM **vmBuf, jsize bufLen,
   return JNI_OK;
 }
 
-extern "C" bool _rpcsx_processCompilationQueue(JNIEnv *env) {
+extern "C" bool emucorec_processCompilationQueue(JNIEnv *env) {
   emucorec_capture_java_vm(env);
   g_compilationQueue.process(env);
   return true;
 }
 
-extern "C" bool _rpcsx_startMainThreadProcessor(JNIEnv *env) {
+extern "C" bool emucorec_startMainThreadProcessor(JNIEnv *env) {
   emucorec_capture_java_vm(env);
   g_mainThreadProcessor.process(env);
-  return true;
-}
-
-extern "C" bool _rpcsx_collectGameInfo(JNIEnv *env, std::string_view rootDir,
-                                       long progressId) {
-
-  if (std::filesystem::is_regular_file(g_cfg_vfs.get_dev_flash() +
-                                       "/vsh/module/vsh.self")) {
-    sendVshBootable(env, progressId);
-  }
-
-  collectGameInfo(env, progressId, {std::string(rootDir)});
   return true;
 }
 
@@ -3001,14 +2654,14 @@ extern "C" bool _rpcsx_collectGameInfo(JNIEnv *env, std::string_view rootDir,
 // An Emu.IsStopped() check alone is not enough. It is a plain read, the state reaches
 // stopped before g_fxo teardown has finished, and a boot or kill can start right after it.
 // Held so a probe cannot be inside vfs::mount while this resets g_fxo underneath it.
-extern "C" void _rpcsx_shutdown() {
+extern "C" void emucorec_shutdown() {
   if (save_states::defer_stop()) return;
   std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
   if (save_states::defer_stop()) return;
   Emu.Kill();
 }
 
-extern "C" int _rpcsx_boot(std::string_view path_) {
+extern "C" int emucorec_boot(std::string_view path_) {
   if (save_states::busy()) return static_cast<int>(game_boot_result::still_running);
   // Taken FIRST, before the Kill below, and held across the whole boot.
   //
@@ -3019,7 +2672,7 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   // boot cycles, with the join thread logging "Thread [Emulation Join Thread] is too
   // sleepy" against itself.
   //
-  // This used to Kill() before taking the lock, so a Close (which calls _rpcsx_kill) and
+  // This used to Kill() before taking the lock, so a Close (which calls emucorec_kill) and
   // the boot that followed it each started their own teardown and deadlocked. The pile-up
   // is what left the emulator never reaching stopped, and every later boot then failed and
   // bounced the user back to the library.
@@ -3038,7 +2691,7 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   // because a real teardown joins the RSX and SPU threads and flushes caches.
   // A timeout leaves the old VM alone and reports still_running to the caller.
   if (!Emu.IsStopped(true)) {
-    rpcsx_android.notice("boot: previous VM still running, stopping it first");
+    emucorec_android.notice("boot: previous VM still running, stopping it first");
     Emu.Kill();
 
     for (int waited = 0; !Emu.IsStopped(true) && waited < 10000; waited += 20) {
@@ -3046,7 +2699,7 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
     }
 
     if (!Emu.IsStopped(true)) {
-      rpcsx_android.error("boot: previous VM did not stop in time");
+      emucorec_android.error("boot: previous VM did not stop in time");
       return static_cast<int>(game_boot_result::still_running);
     }
   }
@@ -3059,7 +2712,7 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
 
   // Folder-format games boot through their EBOOT, not the directory.
   //
-  // A PKG install and a JB folder dump both land as a directory, and RPCSX's own UI
+  // A PKG install and a JB folder dump both land as a directory, and the library
   // boots them by the bootable path the installer reported -- which is the EBOOT.BIN,
   // never the folder. Handing BootGame the directory instead came up as a permanent
   // black screen on an installed title. locateEbootPath handles both layouts
@@ -3067,7 +2720,7 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   // fall through to the original behaviour rather than failing the boot outright.
   if (fs::is_dir(path)) {
     if (auto eboot = locateEbootPath(path); !eboot.empty() && fs::is_file(eboot)) {
-      rpcsx_android.notice("boot: resolved directory '%s' to '%s'", path, eboot);
+      emucorec_android.notice("boot: resolved directory '%s' to '%s'", path, eboot);
       path = eboot;
     }
   }
@@ -3075,28 +2728,28 @@ extern "C" int _rpcsx_boot(std::string_view path_) {
   return static_cast<int>(Emu.BootGame(path, "", false, cfg_mode::custom));
 }
 
-extern "C" int _rpcsx_getState() {
+extern "C" int emucorec_getState() {
   return static_cast<int>(Emu.GetStatus(false));
 }
-extern "C" void _rpcsx_kill() {
+extern "C" void emucorec_kill() {
   if (save_states::defer_stop()) return;
   std::lock_guard vfs_lock(g_emu_lifecycle_mutex);
   if (save_states::defer_stop()) return;
   Emu.Kill();
 }
-extern "C" void _rpcsx_resume() { Emu.Resume(); }
+extern "C" void emucorec_resume() { Emu.Resume(); }
 
-// The counterpart to _rpcsx_resume, which had none. Rpcs3Bridge.pause() set a bool and returned,
+// The counterpart to emucorec_resume, which had none. Rpcs3Bridge.pause() set a bool and returned,
 // on the belief that "RPCS3 has no explicit pause entry point" -- but Emu.Pause() is right here,
-// and _rpcsx_surfaceEvent has always called it on surface loss. That is why BACKGROUNDING the app
+// and emucorec_surfaceEvent has always called it on surface loss. That is why BACKGROUNDING the app
 // was the only thing that actually paused, while the in-game pause menu left the emulator running
 // underneath it, and why pause/resume were asymmetric: resume() reached the core, pause() did not.
-extern "C" void _rpcsx_pause() {
+extern "C" void emucorec_pause() {
   // Restoration owns the VM until its run callback or deferred stop completes.
   if (!save_states::busy()) Emu.Pause();
 }
 
-extern "C" void _rpcsx_openHomeMenu() {
+extern "C" void emucorec_openHomeMenu() {
   if (save_states::busy()) return;
   std::lock_guard lock(g_emu_lifecycle_mutex);
   if (save_states::busy()) return;
@@ -3105,91 +2758,8 @@ extern "C" void _rpcsx_openHomeMenu() {
   }
 }
 
-extern "C" std::string _rpcsx_getTitleId() { return Emu.GetTitleID(); }
+extern "C" std::string emucorec_getTitleId() { return Emu.GetTitleID(); }
 
-
-// The RUNNING game's trophy set, e.g. "NPWR05636_00" -- or "" when no game is
-// running, or the game has not created a trophy context yet (many only do so once
-// you reach a menu), or it has no trophies at all.
-//
-// This is the SAME value RPCS3's own home menu reads to decide whether to offer its
-// Trophies item and which set to hand the overlay
-// (overlay_home_menu_main_menu.cpp); sceNpTrophyCreateContext writes it. The
-// frontend needs it because trophy folders under dev_hdd0/home/<user>/trophy are
-// named by NPWR comm id, NOT by title id, and there is no general way to derive one
-// from the other on disk: a disc game's TROPDIR lives inside the ISO, so a
-// title-id -> NPWR mapping only exists for installed titles.
-extern "C" std::string _rpcsx_getCurrentTrophyName() {
-  // try_get, not get: get<> CONSTRUCTS the object when it is absent, which would
-  // both allocate outside emulation and hand back an empty name that looks the same
-  // as "no trophies". try_get returns null until the fixed-object is initialised.
-  if (auto *current = g_fxo->try_get<current_trophy_name>()) {
-    std::lock_guard lock(current->mtx);
-    return current->name;
-  }
-
-  return {};
-}
-
-// ---------------------------------------------------------------------------
-// Save states
-//
-// RPCS3's model is NOT PCSX2's numbered slots. Saving tears the VM down and
-// writes a .SAVESTAT.zst; states are then addressed as a rolling history where
-// index 1 is the MOST RECENT, 2 the one before it, and so on (how many are kept
-// is Savestate@@"Maximum SaveState Files"). So "slot 3" here means "the third
-// most recent state", not "the state I put in slot 3" -- the UI has to say so,
-// because silently renumbering a user's saves is worse than the constraint.
-//
-// The save recipe below is lifted from RPCS3's own home menu
-// (overlay_home_menu_savestate.cpp): outside suspend mode it arms a restart in
-// after_kill_callback and holds the window open, so the game resumes from the
-// state it just wrote instead of exiting to the library.
-// ---------------------------------------------------------------------------
-
-extern "C" bool _rpcsx_saveState() {
-  std::lock_guard lock(g_emu_lifecycle_mutex);
-  if (save_states::busy()) return false;
-  if (!Emu.IsRunning() && !Emu.IsPaused()) {
-    rpcsx_android.error("saveState: no game is running");
-    return false;
-  }
-
-  Emu.CallFromMainThread([]() {
-    std::lock_guard lock(g_emu_lifecycle_mutex);
-    if (save_states::busy()) return;
-    if (!g_cfg.savestate.suspend_emu.get()) {
-      // Come straight back up from the state we are about to write. Without
-      // this, saving drops the user to the library, which reads as a crash.
-      Emu.after_kill_callback = []() { Emu.Restart(true, false); };
-      Emu.SetContinuousMode(true);
-    }
-
-    Emu.Kill(false, true);
-  });
-
-  return true;
-}
-
-// index is 1-based and 1 == most recent, matching boot_current_game_savestate.
-extern "C" bool _rpcsx_loadState(unsigned int index) {
-  std::lock_guard lock(g_emu_lifecycle_mutex);
-  if (save_states::busy()) return false;
-  if (index == 0) {
-    index = 1;
-  }
-
-  // testing=true only probes for existence, so a missing state is reported here
-  // rather than tearing down a running game and failing to boot afterwards.
-  if (!boot_current_game_savestate(true, index)) {
-    rpcsx_android.error("loadState: no savestate at index %u", index);
-    return false;
-  }
-
-  Emu.CallFromMainThread(
-      [index]() { boot_current_game_savestate(false, index); });
-  return true;
-}
 
 // ---------------------------------------------------------------------------
 // Patches / graphics mods
@@ -3237,17 +2807,17 @@ static std::string json_quote(std::string_view v) {
  * hardcoded in the download URL, which is right until upstream bumps the
  * constant and every download starts failing to parse.
  */
-extern "C" std::string _rpcsx_patchEngineVersion() {
+extern "C" std::string emucorec_patchEngineVersion() {
   return patch_engine_version;
 }
 
-extern "C" int _rpcsx_patchesImport(std::string_view content) {
+extern "C" int emucorec_patchesImport(std::string_view content) {
   patch_engine::patch_map patches;
   std::stringstream log;
 
   if (!patch_engine::load(patches, "<downloaded>", std::string(content), true,
                           &log)) {
-    rpcsx_android.error("patchesImport: parse failed: %s", log.str());
+    emucorec_android.error("patchesImport: parse failed: %s", log.str());
     return -1;
   }
 
@@ -3256,11 +2826,11 @@ extern "C" int _rpcsx_patchesImport(std::string_view content) {
   if (!patch_engine::import_patches(patches, patch_engine::get_patches_path() +
                                                  "patch.yml",
                                     count, total, &log)) {
-    rpcsx_android.error("patchesImport: write failed: %s", log.str());
+    emucorec_android.error("patchesImport: write failed: %s", log.str());
     return -1;
   }
 
-  rpcsx_android.success("patchesImport: %u of %u patches", count, total);
+  emucorec_android.success("patchesImport: %u of %u patches", count, total);
   return static_cast<int>(count);
 }
 
@@ -3306,7 +2876,7 @@ static std::string read_sfo_game_info(const std::string &root,
   return sfo_game_info_json(psf, haveIcon);
 }
 
-extern "C" std::string _rpcsx_probeDiscInfo(std::string_view isoPath,
+extern "C" std::string emucorec_probeDiscInfo(std::string_view isoPath,
                                             std::string_view iconOut) {
   if (isoPath.empty()) return "{}";
   const std::string path(isoPath);
@@ -3325,12 +2895,12 @@ extern "C" std::string _rpcsx_probeDiscInfo(std::string_view isoPath,
         copy_game_icon(fs::file{archive.open("PS3_GAME/ICON0.PNG")}, iconOut);
     return sfo_game_info_json(psf, haveIcon);
   } catch (const std::exception &e) {
-    rpcsx_android.error("probeDiscInfo('%s') failed: %s", path, e.what());
+    emucorec_android.error("probeDiscInfo('%s') failed: %s", path, e.what());
     return "{}";
   }
 }
 
-extern "C" std::string _rpcsx_patchesList(std::string_view serial) {
+extern "C" std::string emucorec_patchesList(std::string_view serial) {
   patch_engine::patch_map db;
   std::stringstream log;
   patch_engine::load(db, patch_engine::get_patches_path() + "patch.yml", {},
@@ -3415,7 +2985,7 @@ extern "C" std::string _rpcsx_patchesList(std::string_view serial) {
 }
 
 /** Enable or disable one patch and persist patch_config.yml. */
-extern "C" bool _rpcsx_patchSetEnabled(std::string_view hash,
+extern "C" bool emucorec_patchSetEnabled(std::string_view hash,
                                        std::string_view description,
                                        std::string_view serial,
                                        std::string_view appVersion,
@@ -3429,13 +2999,13 @@ extern "C" bool _rpcsx_patchSetEnabled(std::string_view hash,
 
   auto h = db.find(std::string(hash));
   if (h == db.end()) {
-    rpcsx_android.error("patchSetEnabled: unknown hash %s", hash);
+    emucorec_android.error("patchSetEnabled: unknown hash %s", hash);
     return false;
   }
 
   auto p = h->second.patch_info_map.find(std::string(description));
   if (p == h->second.patch_info_map.end()) {
-    rpcsx_android.error("patchSetEnabled: unknown patch %s", description);
+    emucorec_android.error("patchSetEnabled: unknown patch %s", description);
     return false;
   }
 
@@ -3487,7 +3057,7 @@ extern "C" bool _rpcsx_patchSetEnabled(std::string_view hash,
   }
 
   if (!matched) {
-    rpcsx_android.error("patchSetEnabled: target not found for %s / %s / %s",
+    emucorec_android.error("patchSetEnabled: target not found for %s / %s / %s",
                         description, serial, appVersion);
     return false;
   }
@@ -3503,20 +3073,12 @@ extern "C" bool _rpcsx_patchSetEnabled(std::string_view hash,
   return true;
 }
 
-extern "C" bool _rpcsx_hasState(unsigned int index) {
-  if (index == 0) {
-    index = 1;
-  }
-
-  return boot_current_game_savestate(true, index);
-}
-
 // The surface's real size, straight from SurfaceHolder.Callback::surfaceChanged.
 //
 // Called before the matching surfaceEvent so the renderer never sees a live window it has
 // no size for. Zero is ignored rather than stored: a torn-down surface reports 0x0 and
 // clearing the size would only make the renderer fall back to guessing again.
-extern "C" void _rpcsx_surfaceSizeChanged(int width, int height) {
+extern "C" void emucorec_surfaceSizeChanged(int width, int height) {
   if (width <= 0 || height <= 0) {
     return;
   }
@@ -3525,12 +3087,12 @@ extern "C" void _rpcsx_surfaceSizeChanged(int width, int height) {
                      static_cast<u32>(height);
 
   if (g_native_window_size.exchange(packed) != packed) {
-    rpcsx_android.notice("surface size now %dx%d", width, height);
+    emucorec_android.notice("surface size now %dx%d", width, height);
   }
 }
 
-extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
-  rpcsx_android.warning("surface event %p, %d", surface, event);
+extern "C" bool emucorec_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
+  emucorec_android.warning("surface event %p, %d", surface, event);
 
   if (event == 2) {
     {
@@ -3548,7 +3110,7 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
     // there is no pad thread, and simply navigating away from the surface (e.g.
     // opening Setup from the library) killed the process.
     //
-    // _rpcsx_openHomeMenu already uses the relaxed form; this call site was
+    // emucorec_openHomeMenu already uses the relaxed form; this call site was
     // missed.
     // surfaceDestroyed runs on the Android UI thread, and both open_home_menu() and
     // Emu.Pause() can block for many seconds during a first-boot bulk PPU precompile (the
@@ -3589,7 +3151,7 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
     auto newWindow = ANativeWindow_fromSurface(env, surface);
 
     if (newWindow == nullptr) {
-      rpcsx_android.fatal("returned native window is null, surface %p",
+      emucorec_android.fatal("returned native window is null, surface %p",
                           surface);
       return false;
     }
@@ -3607,7 +3169,7 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
     // swapchain for nothing on every rotation.
     if (prevWindow != newWindow) {
       g_native_window_epoch.fetch_add(1);
-      rpcsx_android.notice("native window replaced (%p -> %p), swapchain will be rebuilt",
+      emucorec_android.notice("native window replaced (%p -> %p), swapchain will be rebuilt",
                            prevWindow, newWindow);
     }
     }
@@ -3621,9 +3183,9 @@ extern "C" bool _rpcsx_surfaceEvent(JNIEnv *env, jobject surface, jint event) {
   return true;
 }
 
-extern "C" bool _rpcsx_usbDeviceEvent(int fd, int vendorId, int productId,
+extern "C" bool emucorec_usbDeviceEvent(int fd, int vendorId, int productId,
                                       int event) {
-  rpcsx_android.warning(
+  emucorec_android.warning(
       "usb device event %d fd: %d, vendorId: %d, productId: %d", event, fd,
       vendorId, productId);
 
@@ -3699,7 +3261,7 @@ extern "C" bool _rpcsx_usbDeviceEvent(int fd, int vendorId, int productId,
     // the pad log showed (Pad 0 Virtual, Pads 1-6 Null).
     //
     // The app is the input source for them either way: it reads Android input
-    // events itself and pushes whole-pad snapshots through _rpcsx_overlayPadData,
+    // events itself and pushes whole-pad snapshots through emucorec_overlayPadData,
     // so a core-side HID handler is not wanted here.
     bool extra_ports_changed = false;
     for (usz i = 1; i < g_cfg_input.player.size(); i++) {
@@ -3719,7 +3281,7 @@ extern "C" bool _rpcsx_usbDeviceEvent(int fd, int vendorId, int productId,
     }
 
     if (selectedHandler != g_cfg_input.player1.handler.get()) {
-      rpcsx_android.warning("install %s pad handler", selectedHandler);
+      emucorec_android.warning("install %s pad handler", selectedHandler);
 
       g_cfg_input.player1.handler.set(selectedHandler);
 
@@ -3767,7 +3329,7 @@ static bool runStoppedInstall(JNIEnv *env, jlong progressId,
     Emu.Init();
     return install();
   } catch (const std::exception &error) {
-    rpcsx_android.error("Installation failed: %s", error.what());
+    emucorec_android.error("Installation failed: %s", error.what());
     Progress(env, progressId).failure("Installation failed");
     return false;
   }
@@ -3780,13 +3342,13 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
   AtExit atExit{[&] { pup.file().release_handle(); }};
 
   if (static_cast<pup_error>(pup) == pup_error::hash_mismatch) {
-    rpcsx_android.fatal("installFw: invalid PUP");
+    emucorec_android.fatal("installFw: invalid PUP");
     progress.failure("Selected file is not firmware update file");
     return false;
   }
 
   if (static_cast<pup_error>(pup) != pup_error::ok) {
-    rpcsx_android.fatal("installFw: invalid PUP");
+    emucorec_android.fatal("installFw: invalid PUP");
     progress.failure("Firmware update file is broken");
     return false;
   }
@@ -3796,7 +3358,7 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
   const usz update_files_size = update_files_f ? update_files_f.size() : 0;
 
   if (!update_files_size) {
-    rpcsx_android.fatal("installFw: invalid PUP");
+    emucorec_android.fatal("installFw: invalid PUP");
     progress.failure("Firmware update file is broken");
     return false;
   }
@@ -3812,7 +3374,7 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
                          update_filenames.end());
 
   if (update_filenames.empty()) {
-    rpcsx_android.fatal("installFw: invalid PUP");
+    emucorec_android.fatal("installFw: invalid PUP");
     progress.failure("Firmware update file is broken");
     return false;
   }
@@ -3829,12 +3391,10 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
   }
 
   if (version_string.empty()) {
-    rpcsx_android.fatal("installFw: invalid PUP");
+    emucorec_android.fatal("installFw: invalid PUP");
     progress.failure("Firmware update file is broken");
     return false;
   }
-
-  sendVshBootable(env, progressId);
 
   jlong processed = 0;
   for (const auto &update_filename : update_filenames) {
@@ -3856,7 +3416,7 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
     auto dev_flash_tar_f = self_dec.MakeFile();
 
     if (dev_flash_tar_f.size() < 3) {
-      rpcsx_android.error(
+      emucorec_android.error(
           "Firmware installation failed: Firmware could not be decompressed");
 
       progress.failure("Firmware update file could not be decompressed");
@@ -3867,7 +3427,7 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
 
     if (!dev_flash_tar.extract()) {
 
-      rpcsx_android.error("Error while installing firmware: TAR contents are "
+      emucorec_android.error("Error while installing firmware: TAR contents are "
                           "invalid. (package=%s)",
                           update_filename);
 
@@ -3884,8 +3444,15 @@ static bool installPup(JNIEnv *env, fs::file &&pup_f, jlong progressId) {
 
   sendFirmwareInstalled(env, utils::get_firmware_version());
 
-  g_compilationQueue.push(progress,
-                          g_cfg_vfs.get_dev_flash() + "/vsh/module/vsh.self");
+  // The install is DONE once the PUP contents are on disk. Building the VSH
+  // PPU cache is a background optimization for the first system-menu boot, not
+  // part of installing: it used to share this install's progress id, so the
+  // onboarding dialog sat on a finished extraction for minutes while vsh.self
+  // compiled. It now runs detached, and FirmwareState only flips to Compiled
+  // when onFirmwareCompiled arrives.
+  progress.success(0);
+  g_compilationQueue.pushDetached(g_cfg_vfs.get_dev_flash() +
+                                  "/vsh/module/vsh.self");
   return true;
 }
 
@@ -3922,12 +3489,6 @@ static bool installPkg(JNIEnv *env, std::vector<fs::file> &&files,
     result = package_reader::extract_data(readers, bootable_paths, false);
     return result.error == package_install_result::error_type::no_error;
   });
-
-  for (auto &reader : readers) {
-    if (auto gameInfo = fetchGameInfo(reader.get_psf())) {
-      sendGameInfo(env, progressId, {{*gameInfo}});
-    }
-  }
 
   const jlong maxProgress = 10000;
 
@@ -3967,9 +3528,6 @@ static bool installPkg(JNIEnv *env, std::vector<fs::file> &&files,
     return false;
   }
 
-  auto paths = std::vector(bootable_paths.begin(), bootable_paths.end());
-  collectGameInfo(env, -1, paths);
-
   // Deliberately NOT queued for precompilation.
   //
   // CompilationQueue::impl does Emu.SetState(running), g_fxo->init<>() of the
@@ -3989,7 +3547,7 @@ static bool installPkg(JNIEnv *env, std::vector<fs::file> &&files,
   return true;
 }
 
-extern "C" void _rpcsx_displayRefreshRateChanged(double refreshRate) {
+extern "C" void emucorec_displayRefreshRateChanged(double refreshRate) {
   if (!std::isfinite(refreshRate) || refreshRate < 20.0 || refreshRate > 1000.0) {
     return;
   }
@@ -4046,13 +3604,6 @@ static bool installEdat(JNIEnv *env, fs::file &&file, jlong progressId,
     return false;
   }
 
-  auto root = std::string(rootPath);
-
-  if (root.empty()) {
-    root = rpcs3::utils::get_hdd0_dir() + "game";
-  }
-
-  collectGameInfo(env, progressId, {std::move(root)});
   return true;
 }
 
@@ -4102,7 +3653,6 @@ static bool installRap(JNIEnv *env, fs::file &&file, jlong progressId,
     return false;
   }
 
-  collectGameInfo(env, -1, {std::string(rootPath)});
   g_compilationQueue.push(progress, std::move(ebootPath));
   return true;
 }
@@ -4191,7 +3741,7 @@ public:
         continue;
       }
       if (out.size() >= 100000) {
-        rpcsx_android.warning("iso: refusing directory with too many records");
+        emucorec_android.warning("iso: refusing directory with too many records");
         return false;
       }
       out.emplace_back(std::move(entry));
@@ -4307,10 +3857,6 @@ static bool installIso(JNIEnv *env, fs::file &&file, jlong progressId) {
     return false;
   }
 
-  if (auto gameInfo = fetchGameInfo(sfo)) {
-    sendGameInfo(env, progressId, {{*gameInfo}});
-  }
-
   std::filesystem::path destinationPath =
       fs::get_config_dir() + "games/" + std::string(titleId);
 
@@ -4374,7 +3920,7 @@ static bool installIso(JNIEnv *env, fs::file &&file, jlong progressId) {
     }
   }
 
-  rpcsx_android.notice("installIso: %s: %zu dirs, %zu files, %llu bytes",
+  emucorec_android.notice("installIso: %s: %zu dirs, %zu files, %llu bytes",
                        titleId, dirs.size(), files.size(), totalBytes);
 
   std::error_code ec;
@@ -4436,38 +3982,16 @@ static bool installIso(JNIEnv *env, fs::file &&file, jlong progressId) {
   return true;
 }
 
-extern "C" bool _rpcsx_installFw(JNIEnv *env, int fd, long progressId) {
+extern "C" bool emucorec_installFw(JNIEnv *env, int fd, long progressId) {
   return runStoppedInstall(env, progressId, [&] {
     return installPup(env, fs::file::from_native_handle(fd), progressId);
   });
 }
 
-extern "C" bool _rpcsx_isInstallableFile(jint fd) {
-  auto file = fs::file::from_native_handle(fd);
-  AtExit atExit{[&] { file.release_handle(); }};
-
-  auto type = getFileType(file);
-  file.seek(0);
-  return type != FileType::Unknown &&
-         type != FileType::Rap; // FIXME: implement rap preinstallation
-}
-
-extern "C" jstring _rpcsx_getDirInstallPath(JNIEnv *env, jint fd) {
-  auto file = fs::file::from_native_handle(fd);
-  AtExit atExit{[&] { file.release_handle(); }};
-
-  auto psf = psf::load_object(file, "");
-  if (auto gameInfo = fetchGameInfo(psf)) {
-    return wrap(env, gameInfo->path);
-  }
-
-  return nullptr;
-}
-
 // Install a set of PKG parts as one package. All parts must be PKGs, in order.
-// Single-file installs keep going through _rpcsx_install, which also handles
+// Single-file installs keep going through emucorec_install, which also handles
 // PUP/EDAT/ISO by sniffing the file type.
-extern "C" bool _rpcsx_installSplitPkg(JNIEnv *env, const int *fds, int count,
+extern "C" bool emucorec_installSplitPkg(JNIEnv *env, const int *fds, int count,
                                        long progressId) {
   return runStoppedInstall(env, progressId, [&] {
     if (fds == nullptr || count <= 0) {
@@ -4505,7 +4029,7 @@ extern "C" bool _rpcsx_installSplitPkg(JNIEnv *env, const int *fds, int count,
 // Delete an installed title's directory (dev_hdd0/game/<TITLEID> and its
 // matching save-data-free content). Path comes from the app, which only offers
 // this for games it found under the emulator's own game directories.
-extern "C" bool _rpcsx_uninstallGame(std::string_view path) {
+extern "C" bool emucorec_uninstallGame(std::string_view path) {
   if (path.empty()) {
     return false;
   }
@@ -4517,7 +4041,7 @@ extern "C" bool _rpcsx_uninstallGame(std::string_view path) {
   const std::string hdd0 = rpcs3::utils::get_hdd0_dir();
   const std::string games = hdd0 + "game/";
   if (!dir.starts_with(games)) {
-    rpcsx_android.error("uninstallGame: refusing path outside %s: %s", games,
+    emucorec_android.error("uninstallGame: refusing path outside %s: %s", games,
                         dir);
     return false;
   }
@@ -4526,11 +4050,11 @@ extern "C" bool _rpcsx_uninstallGame(std::string_view path) {
     return false;
   }
 
-  rpcsx_android.notice("uninstallGame: removing %s", dir);
+  emucorec_android.notice("uninstallGame: removing %s", dir);
   return fs::remove_all(dir);
 }
 
-extern "C" bool _rpcsx_install(JNIEnv *env, int fd, long progressId) {
+extern "C" bool emucorec_install(JNIEnv *env, int fd, long progressId) {
   return runStoppedInstall(env, progressId, [&] {
     auto file = fs::file::from_native_handle(fd);
     AtExit atExit{[&] { file.release_handle(); }};
@@ -4569,7 +4093,7 @@ extern "C" bool _rpcsx_install(JNIEnv *env, int fd, long progressId) {
   });
 }
 
-extern "C" bool _rpcsx_installKey(JNIEnv *env, int fd, long progressId,
+extern "C" bool emucorec_installKey(JNIEnv *env, int fd, long progressId,
                                   std::string_view gamePath) {
   return runStoppedInstall(env, progressId, [&] {
     auto file = fs::file::from_native_handle(fd);
@@ -4591,7 +4115,7 @@ extern "C" bool _rpcsx_installKey(JNIEnv *env, int fd, long progressId,
   });
 }
 
-extern "C" std::string _rpcsx_systemInfo() {
+extern "C" std::string emucorec_systemInfo() {
   std::string result;
 
   // LLVM CPU reports the same resolution path the JIT actually uses (configured
@@ -4655,11 +4179,11 @@ static cfg::_base *find_cfg_node(cfg::_base *root, std::string_view path) {
   return root;
 }
 
-extern "C" void _rpcsx_loginUser(std::string_view userId) {
+extern "C" void emucorec_loginUser(std::string_view userId) {
   Emu.SetUsr(std::string(userId));
 }
 
-extern "C" std::string _rpcsx_getUser() { return Emu.GetUsr(); }
+extern "C" std::string emucorec_getUser() { return Emu.GetUsr(); }
 
 // ---------------------------------------------------------------------------
 // Settings bridge.
@@ -4679,8 +4203,9 @@ extern "C" std::string _rpcsx_getUser() { return Emu.GetUsr(); }
 //              "min": "..", "max": ".." // numerics only
 //            }
 //
-// RPCSX did this by adding to_json/from_json virtuals to Utilities/Config.h and
-// pulling in nlohmann. We keep the core clean instead: the only upstream
+// The original port did this by adding to_json/from_json virtuals to
+// Utilities/Config.h and pulling in nlohmann. We keep the core clean instead:
+// the only upstream
 // addition is min_to_string()/max_to_string() on cfg::_base, because _int/uint/
 // _float carry Min/Max as static constexpr TEMPLATE parameters that a _base*
 // cannot otherwise reach -- without them every numeric renders as a text box
@@ -4791,7 +4316,7 @@ static void emit_cfg_json(const cfg::_base *node, std::string &out) {
   out += '}';
 }
 
-extern "C" std::string _rpcsx_settingsGet(std::string_view path) {
+extern "C" std::string emucorec_settingsGet(std::string_view path) {
   auto root = find_cfg_node(&g_cfg, path);
 
   if (root == nullptr) {
@@ -4825,9 +4350,9 @@ extern void set_app_info(std::string version, std::string build, std::string dev
 static std::atomic<int> g_settings_batch_depth{0};
 static std::atomic<bool> g_settings_batch_dirty{false};
 
-extern "C" void _rpcsx_settingsBeginBatch() { g_settings_batch_depth.fetch_add(1); }
+extern "C" void emucorec_settingsBeginBatch() { g_settings_batch_depth.fetch_add(1); }
 
-extern "C" void _rpcsx_settingsEndBatch() {
+extern "C" void emucorec_settingsEndBatch() {
   // Nested/unbalanced calls must not drop the save; only the outermost end flushes.
   if (g_settings_batch_depth.fetch_sub(1) != 1) {
     return;
@@ -4838,12 +4363,12 @@ extern "C" void _rpcsx_settingsEndBatch() {
 }
 
 
-extern "C" bool _rpcsx_settingsSet(std::string_view path,
+extern "C" bool emucorec_settingsSet(std::string_view path,
                                    std::string_view valueString) {
   auto root = find_cfg_node(&g_cfg, path);
 
   if (root == nullptr) {
-    rpcsx_android.error("settingsSet: node %s not found", path);
+    emucorec_android.error("settingsSet: node %s not found", path);
     return false;
   }
 
@@ -4874,14 +4399,14 @@ extern "C" bool _rpcsx_settingsSet(std::string_view path,
 
 #ifndef RSX_GLES
   if (root == &g_cfg.video.renderer && decoded == "OpenGL") {
-    rpcsx_android.error(
+    emucorec_android.error(
         "settingsSet: OpenGL is unavailable because this Android build has no GLES backend");
     return false;
   }
 #endif
 
   if (!root->from_string(decoded, !Emu.IsStopped())) {
-    rpcsx_android.error("settingsSet: node %s does not accept value '%s'", path,
+    emucorec_android.error("settingsSet: node %s does not accept value '%s'", path,
                         decoded);
     return false;
   }
@@ -4931,46 +4456,17 @@ extern "C" bool _rpcsx_settingsSet(std::string_view path,
   return true;
 }
 
-extern "C" std::string _rpcsx_getVersion() {
+extern "C" std::string emucorec_getVersion() {
   return rpcs3::get_version().to_string();
 }
 
 // Identity strings for the performance overlay header (app version, build and
 // device name). Called by the app once the core is loaded.
-extern "C" void _rpcsx_setAppInfo(std::string_view version,
+extern "C" void emucorec_setAppInfo(std::string_view version,
                                   std::string_view build,
                                   std::string_view device) {
   rsx::overlays::set_app_info(std::string(version), std::string(build),
                               std::string(device));
-}
-
-// Custom Vulkan driver (adrenotools).
-//
-// SPLIT OF RESPONSIBILITY: the JNI glue (native-lib.cpp) is what calls
-// adrenotools_open_libvulkan and hands us the resulting dlopen handle. That
-// keeps adrenotools -- which is Adreno/Qualcomm specific -- out of the emulator
-// core entirely. All we do is point the Vulkan dispatch table at it.
-//
-// That table only exists because upstream RPCS3 calls Vulkan through direct
-// linked symbols; see rpcs3/Emu/RSX/VK/vk_android_loader.h.
-//
-// Returns the PREVIOUS handle so the caller can dlclose it. Passing nullptr
-// reverts to the system driver.
-// Lets the UI glue put a driver problem where bug reports will carry it.
-//
-// The glue can only reach logcat, which nobody attaches to an issue, and the reason a
-// custom driver was refused is exactly what a report needs. Routed through the emulator
-// log channel so it lands in RPCSX.log beside the driver identity it explains.
-extern "C" void _rpcsx_reportDriverProblem(std::string message) {
-  rpcsx_android.error("%s", message);
-}
-
-extern "C" void *_rpcsx_setCustomDriver(void *driverHandle) {
-  // EmuCoreC: modern RPCS3's Vulkan backend has no vk::android driver slot --
-  // custom drivers are installed transparently through the adrenotools hook in
-  // the JNI glue, so there is nothing to register here. The handle is kept so
-  // callers can still release it.
-  return nullptr;
 }
 
 #pragma GCC diagnostic pop

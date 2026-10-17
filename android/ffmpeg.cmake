@@ -5,14 +5,17 @@
 # Android and expects the Android build to supply it. But line ~378 then does
 # `add_library(3rdparty::ffmpeg ALIAS 3rdparty_ffmpeg)` UNGUARDED, so the target
 # must already exist by the time 3rdparty/ is processed. Hence this file is
-# include()d from the root CMakeLists *before* add_subdirectory(3rdparty).
+# include()d from core/CMakeLists.txt *before* add_subdirectory(3rdparty).
 #
 # The RPCS3 submodule only carries headers/vcpkg triplets and the
 # RPCS3-Android/ffmpeg-android prebuilts are stuck at 5.1, which is too old for
 # the FFmpeg 6+ APIs RPCS3 master uses (avcodec_get_supported_config etc.), so
 # the matching 8.1.1 release is built from source for aarch64 Android.
+#
+# CMAKE_SOURCE_DIR is core/; the prebuilt FFmpeg and this glue live at the
+# repository root, one level up.
 
-set(FFMPEG_ANDROID_ROOT "${CMAKE_SOURCE_DIR}/app/build/ffmpeg-android")
+set(FFMPEG_ANDROID_ROOT "${CMAKE_SOURCE_DIR}/../app/build/ffmpeg-android")
 
 if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64")
     set(FFMPEG_ANDROID_ARCH "arm64-v8a")

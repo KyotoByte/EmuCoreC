@@ -11,7 +11,7 @@ class AndroidNativeBackendContractTest {
     @Test
     fun androidCubebUsesTheStableOpenSlBackend() {
         val source = repositoryRoot()
-            .resolve("rpcs3/Emu/Audio/Cubeb/CubebBackend.cpp")
+            .resolve("core/rpcs3/Emu/Audio/Cubeb/CubebBackend.cpp")
             .readText()
 
         val androidSelection = source.substringAfter("#ifdef __ANDROID__")
@@ -25,7 +25,7 @@ class AndroidNativeBackendContractTest {
     @Test
     fun androidRsxCopiesResolveProtectedGuestPagesBeforeMemcpy() {
         val source = repositoryRoot()
-            .resolve("rpcs3/Emu/RSX/RSXOffload.cpp")
+            .resolve("core/rpcs3/Emu/RSX/RSXOffload.cpp")
             .readText()
 
         assertTrue("Android guest reads need a normal-context protection resolver", "prepare_guest_read" in source)
@@ -44,7 +44,7 @@ class AndroidNativeBackendContractTest {
     @Test
     fun androidVulkanTextureFallbackKeepsFastTransfersAndPreparesCpuReads() {
         val source = repositoryRoot()
-            .resolve("rpcs3/Emu/RSX/VK/VKTexture.cpp")
+            .resolve("core/rpcs3/Emu/RSX/VK/VKTexture.cpp")
             .readText()
 
         val androidFallback = source.substringAfter("#ifdef __ANDROID__", source)
@@ -60,7 +60,7 @@ class AndroidNativeBackendContractTest {
         val workingDirectory = Path.of(System.getProperty("user.dir"))
         return sequenceOf(workingDirectory, workingDirectory.parent)
             .filterNotNull()
-            .firstOrNull { Files.isDirectory(it.resolve("rpcs3/Emu")) }
+            .firstOrNull { Files.isDirectory(it.resolve("core/rpcs3/Emu")) }
             ?: error("Unable to locate repository root from $workingDirectory")
     }
 }

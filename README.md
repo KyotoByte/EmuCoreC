@@ -8,7 +8,7 @@
 EmuCoreC is a PlayStation 3 emulator application for Android. It combines a focused mobile interface with a core built on the latest RPCS3 emulator: a clean game library and catalog, one-tap installers, firmware download, trophies, save-data tools, per-game profiles, and the full RPCS3 settings tree — all local, no accounts required.
 
 > [!NOTE]
-> This repository is a fork of [RPCS3/rpcs3](https://github.com/RPCS3/rpcs3). The emulator core is the upstream fork content kept at the repository root (`rpcs3/`, `Utilities/`, `3rdparty/`); `android/` contains the EmuCoreC Android adaptation (JNI glue, input, build glue); everything under `app/` is the EmuCoreC Android application.
+> This repository is a fork of [RPCS3/rpcs3](https://github.com/RPCS3/rpcs3). The emulator core lives under `core/` — the upstream fork content (`rpcs3/`, `Utilities/`, `3rdparty/`, `bin/`, `buildfiles/`, ...) with `core/CMakeLists.txt` as the CMake project root. `android/` at the repository root contains the EmuCoreC Android adaptation (JNI glue, input, build glue); everything under `app/` is the EmuCoreC Android application.
 
 > [!WARNING]
 > EmuCoreC is experimental. Compatibility and performance vary by game, SoC, GPU driver, and Android version. The current build targets `arm64-v8a` only.
@@ -78,10 +78,10 @@ git submodule update --init --recursive
 
 ### Core builds
 
-The core is built from the root CMake project (the `android/` subdirectory is added behind `if(ANDROID)`, target `rpcsx-android`) automatically before every app build. The `:app:buildRpcsxCore` Gradle task configures with the NDK toolchain via `android/configure-core.cmd` (mirroring `android/configure.sh`), compiles the core, strips the result, and stages it at:
+The core is built from the `core/` CMake project (the `android/` glue at the repository root is added back in from `core/CMakeLists.txt` behind `if(ANDROID)`, target `emucorec-core`) automatically before every app build. The `:app:buildEmuCorecCore` Gradle task configures with the NDK toolchain via `android/configure-core.cmd` (mirroring `android/configure.sh`), compiles the core, strips the result, and stages it at:
 
 ```text
-app/src/main/jniLibs/arm64-v8a/librpcsx-core.so
+app/src/main/jniLibs/arm64-v8a/libemucorec-core.so
 ```
 
 If the core sources are not present, Gradle skips the local build and uses the staged library as-is.
@@ -114,10 +114,10 @@ The content picker accepts direct PS3 files and complete ZIP/RAR volume sets. Ar
 ## Project structure
 
 - `app/src/main/java/com/sbro/emucorec` — EmuCoreC Android application and UI
-- `app/src/main/java/net/rpcsx` — JNI-facing core API models (the `_rpcsx_*` C API is the glue contract)
-- `app/src/main/cpp` — JNI bridge and libadrenotools sources
+- `app/src/main/java/com/sbro/emucorec/core/Ps3Core.kt` — the bridge API into the core (JNI contract: `Ps3Core` methods and the `Ps3CoreCallbacks` call-ins)
+- `app/src/main/cpp` — JNI glue: loads `libemucorec-core.so` and forwards to its `emucorec_*` entry points
 - `android/` — the EmuCoreC Android adaptation of the RPCS3 core (glue, input, build)
-- `rpcs3/`, `Utilities/`, `3rdparty/` — the RPCS3 emulator core (upstream fork content)
+- `core/` — the RPCS3 emulator core (upstream fork content; `core/CMakeLists.txt` is the CMake project root)
 
 ## Notes
 

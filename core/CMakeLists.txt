@@ -113,8 +113,11 @@ endif()
 # EmuCoreC: upstream skips its FFMPEG block on Android (3rdparty/CMakeLists.txt
 # `if(NOT ANDROID)`) but still aliases 3rdparty::ffmpeg -> 3rdparty_ffmpeg
 # unguarded, so the target must exist before 3rdparty/ is processed.
+#
+# core/ is the CMake project root; the Android glue lives at the repository
+# root (android/), one level up, and is added back in at the bottom.
 if(ANDROID)
-    include(${CMAKE_CURRENT_SOURCE_DIR}/android/ffmpeg.cmake)
+    include(${CMAKE_CURRENT_SOURCE_DIR}/../android/ffmpeg.cmake)
 endif()
 
 add_subdirectory(3rdparty)
@@ -151,10 +154,12 @@ if(BUILD_RPCS3_TESTS)
 endif()
 add_subdirectory(rpcs3)
 
-# EmuCoreC: the Android JNI shared library. Kept behind ANDROID so desktop
-# builds are unaffected.
+# EmuCoreC: the Android JNI shared library, at <repo>/android (one level above
+# this project root). Kept behind ANDROID so desktop builds are unaffected.
+# The explicit binary dir keeps its artifacts under <build>/android, which is
+# where the Gradle build task expects libemucorec-core.so.
 if(ANDROID)
-    add_subdirectory(android)
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/../android" "${CMAKE_BINARY_DIR}/android")
 endif()
 
 set_directory_properties(PROPERTIES VS_STARTUP_PROJECT rpcs3)

@@ -51,7 +51,7 @@ class SettingsPersistenceContractTest {
         assertTrue("Global settings must be applied before game settings", overrides.indexOf("resolvedBase.forEach") < overrides.indexOf("game.forEach"))
         assertTrue("Native settings must be included in backup format 3", ".put(\"nativeCore\"" in backup && "BACKUP_FORMAT_VERSION = 3" in backup)
         assertTrue("Native settings must be restored from backup", "Ps3CoreSettingOverrides.restoreJson" in backup)
-        assertTrue("Overrides must be applied before boot", runtime.indexOf("applyForGame(context, titleId)") < runtime.indexOf("RPCSX.boot(path)"))
+        assertTrue("Overrides must be applied before boot", runtime.indexOf("applyForGame(context, titleId)") < runtime.indexOf("Ps3Core.boot(path)"))
         assertTrue("Settings UI must come from the live core tree", "settingsGet(\"\")" in panel)
         assertTrue("Settings UI must write through JNI", "settingsSet(setting.path" in panel)
     }
