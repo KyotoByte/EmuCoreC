@@ -464,13 +464,14 @@ private fun SaveDataCard(
                                 .fillMaxWidth()
                                 .aspectRatio(COVER_ART_ASPECT_RATIO)
                             if (!save.coverUrl.isNullOrBlank()) {
-                                UrlImage(
-                                    imageUrl = save.coverUrl,
-                                    contentDescription = save.title,
-                                    fallbackLabel = save.title,
-                                    fallbackPath = save.iconPath,
-                                    modifier = artworkModifier
-                                )
+                UrlImage(
+                    imageUrl = save.coverUrl,
+                    contentDescription = save.title,
+                    fallbackLabel = save.title,
+                    fallbackPath = save.iconPath,
+                    modifier = artworkModifier,
+                    decodeEdgePx = 256,
+                )
                             } else {
                                 LocalImage(
                                     path = save.iconPath,

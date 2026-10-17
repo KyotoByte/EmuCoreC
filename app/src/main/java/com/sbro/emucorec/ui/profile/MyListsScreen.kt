@@ -610,12 +610,13 @@ private fun ProfileGameCardMenuDialog(
                             shape = neonShape(16.dp),
                             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.55f)
                         ) {
-                            UrlImage(
-                                imageUrl = game.catalog.coverUrl,
-                                contentDescription = game.catalog.name,
-                                fallbackLabel = game.catalog.name,
-                                modifier = Modifier.fillMaxSize()
-                            )
+                UrlImage(
+                    imageUrl = game.catalog.coverUrl,
+                    contentDescription = game.catalog.name,
+                    fallbackLabel = game.catalog.name,
+                    modifier = Modifier.fillMaxSize(),
+                    decodeEdgePx = 640,
+                )
                         }
                         Spacer(modifier = Modifier.width(12.dp))
                         Column(modifier = Modifier.weight(1f)) {

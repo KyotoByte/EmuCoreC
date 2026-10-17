@@ -309,13 +309,14 @@ private fun GameSelectorCard(
                     .fillMaxWidth()
                     .aspectRatio(COVER_ART_ASPECT_RATIO)
                 if (!game.coverUrl.isNullOrBlank()) {
-                    UrlImage(
-                        imageUrl = game.coverUrl,
-                        contentDescription = game.title,
-                        fallbackLabel = game.title,
-                        fallbackPath = game.iconPath,
-                        modifier = artworkModifier
-                    )
+                UrlImage(
+                    imageUrl = game.coverUrl,
+                    contentDescription = game.title,
+                    fallbackLabel = game.title,
+                    fallbackPath = game.iconPath,
+                    modifier = artworkModifier,
+                    decodeEdgePx = 256,
+                )
                 } else {
                     LocalImage(
                         path = game.iconPath,

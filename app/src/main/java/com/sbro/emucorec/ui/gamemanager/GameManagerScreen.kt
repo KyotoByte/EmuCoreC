@@ -412,13 +412,14 @@ private fun GamePicker(
                                 .fillMaxWidth()
                                 .aspectRatio(COVER_ART_ASPECT_RATIO)
                             if (!game.catalogCoverUrl.isNullOrBlank()) {
-                                UrlImage(
-                                    imageUrl = game.catalogCoverUrl,
-                                    contentDescription = game.title,
-                                    fallbackLabel = game.title,
-                                    fallbackPath = game.iconPath,
-                                    modifier = artworkModifier
-                                )
+                UrlImage(
+                    imageUrl = game.catalogCoverUrl,
+                    contentDescription = game.title,
+                    fallbackLabel = game.title,
+                    fallbackPath = game.iconPath,
+                    modifier = artworkModifier,
+                    decodeEdgePx = 256,
+                )
                             } else {
                                 LocalImage(
                                     path = game.iconPath,

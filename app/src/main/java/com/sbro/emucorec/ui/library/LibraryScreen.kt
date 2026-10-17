@@ -361,7 +361,8 @@ fun LibraryScreen(
                                 coverUrl = game.catalogCoverUrl,
                                 title = game.title,
                                 modifier = Modifier.width(66.dp),
-                                artworkAspectRatio = COVER_ART_ASPECT_RATIO
+                                artworkAspectRatio = COVER_ART_ASPECT_RATIO,
+                                decodeEdgePx = 256,
                             )
                             Column(
                                 modifier = Modifier.weight(1f),
@@ -733,6 +734,7 @@ private fun LibraryGameArtwork(
     artworkAspectRatio: Float = COVER_ART_ASPECT_RATIO,
     shape: Shape = neonShape(18.dp),
     border: BorderStroke? = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)),
+    decodeEdgePx: Int = 640,
 ) {
     Surface(
         modifier = modifier,
@@ -749,7 +751,8 @@ private fun LibraryGameArtwork(
                 contentDescription = title,
                 fallbackLabel = title,
                 fallbackPath = localPath,
-                modifier = imageModifier
+                modifier = imageModifier,
+                decodeEdgePx = decodeEdgePx,
             )
         } else {
             LocalImage(

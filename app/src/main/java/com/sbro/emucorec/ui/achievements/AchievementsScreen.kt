@@ -289,13 +289,14 @@ private fun TrophySetHeader(
                     .fillMaxWidth()
                     .aspectRatio(COVER_ART_ASPECT_RATIO)
                 if (!set.coverUrl.isNullOrBlank()) {
-                    UrlImage(
-                        imageUrl = set.coverUrl,
-                        contentDescription = set.gameTitle,
-                        fallbackLabel = set.gameTitle,
-                        fallbackPath = set.gameIconPath,
-                        modifier = artworkModifier
-                    )
+                UrlImage(
+                    imageUrl = set.coverUrl,
+                    contentDescription = set.gameTitle,
+                    fallbackLabel = set.gameTitle,
+                    fallbackPath = set.gameIconPath,
+                    modifier = artworkModifier,
+                    decodeEdgePx = 256,
+                )
                 } else {
                     LocalImage(
                         path = set.gameIconPath,

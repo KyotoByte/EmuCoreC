@@ -25,12 +25,14 @@ import java.net.URL
 import java.security.MessageDigest
 
 /**
- * Longest edge a downloaded image is decoded at. The largest consumer is the
- * detail hero, well under this bound; decoding an IGDB original (often
- * 1000-1500px) at full size would multiply the memory cache for no visible
- * gain and slow scrolling.
+ * Default longest edge a downloaded image is decoded at. Call sites that know
+ * their layout size pass a tighter bound: decoding a 1000+px IGDB original for
+ * a 150dp tile evicts most of the memory cache, and every mode switch or scroll
+ * then re-decodes from disk -- visible as tiles that are empty and then pop in.
+ * Decoding at the size the tile actually renders keeps the cache holding whole
+ * screens and looks identical.
  */
-private const val MAX_DECODED_EDGE_PX = 1024
+private const val DEFAULT_DECODED_EDGE_PX = 1024
 
 @Composable
 fun UrlImage(
@@ -39,17 +41,20 @@ fun UrlImage(
     fallbackLabel: String,
     modifier: Modifier = Modifier,
     fallbackPath: String? = null,
-    pinInMemory: Boolean = false
+    pinInMemory: Boolean = false,
+    decodeEdgePx: Int = DEFAULT_DECODED_EDGE_PX
 ) {
     val context = LocalContext.current
-    // Start from whatever is already decoded (the max-quality variant, since
-    // that is what the producer stores) so tiles do not flash placeholders.
-    val initial = imageUrl?.let { UrlBitmapMemoryCache.get(igdbMaximumQualityUrl(it)) }
+    val decodeEdge = decodeEdgePx.coerceAtLeast(64)
+    // Start from whatever is already decoded at this render size so tiles do
+    // not flash placeholders.
+    val initial = imageUrl?.let { UrlBitmapMemoryCache.get(memoryCacheKey(igdbMaximumQualityUrl(it), decodeEdge)) }
     val bitmapState = produceState<Bitmap?>(
         initialValue = initial,
         imageUrl,
         fallbackPath,
-        context
+        context,
+        decodeEdge
     ) {
         val loadedBitmap = withContext(Dispatchers.IO) {
             // IGDB images are served as transforms of one original upload, so
@@ -64,13 +69,14 @@ fun UrlImage(
             }
 
             for (candidate in candidates) {
-                UrlBitmapMemoryCache.get(candidate)?.let { return@withContext it }
+                val cacheKey = memoryCacheKey(candidate, decodeEdge)
+                UrlBitmapMemoryCache.get(cacheKey)?.let { return@withContext it }
 
                 val cachedFile = UrlImageDiskCache.getCachedFile(context, candidate)
                 if (cachedFile != null) {
-                    val diskBitmap = decodeBounded(cachedFile.absolutePath)
+                    val diskBitmap = decodeBounded(cachedFile.absolutePath, decodeEdge)
                     if (diskBitmap != null) {
-                        UrlBitmapMemoryCache.put(candidate, diskBitmap, pinned = pinInMemory)
+                        UrlBitmapMemoryCache.put(cacheKey, diskBitmap, pinned = pinInMemory)
                         return@withContext diskBitmap
                     }
                 }
@@ -81,7 +87,7 @@ fun UrlImage(
                     } else {
                         val downloaded = UrlImageDiskCache.downloadToCache(context, candidate)
                         if (downloaded != null) {
-                            decodeBounded(downloaded.absolutePath)
+                            decodeBounded(downloaded.absolutePath, decodeEdge)
                         } else {
                             URL(candidate).openStream().use(::decodeBounded)
                         }
@@ -89,14 +95,14 @@ fun UrlImage(
                 }.getOrNull()
 
                 if (fetched != null) {
-                    UrlBitmapMemoryCache.put(candidate, fetched, pinned = pinInMemory)
+                    UrlBitmapMemoryCache.put(cacheKey, fetched, pinned = pinInMemory)
                     return@withContext fetched
                 }
             }
 
             // Local file fallback if no remote tier could be loaded
             if (!fallbackPath.isNullOrBlank()) {
-                decodeBounded(fallbackPath)
+                decodeBounded(fallbackPath, decodeEdge)
             } else {
                 null
             }
@@ -125,14 +131,14 @@ fun UrlImage(
     }
 }
 
-private fun decodeBounded(path: String): Bitmap? {
+private fun decodeBounded(path: String, maxEdgePx: Int): Bitmap? {
     val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
     BitmapFactory.decodeFile(path, bounds)
     if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return null
 
     var sample = 1
-    while (bounds.outWidth / (sample * 2) >= MAX_DECODED_EDGE_PX ||
-        bounds.outHeight / (sample * 2) >= MAX_DECODED_EDGE_PX
+    while (bounds.outWidth / (sample * 2) >= maxEdgePx ||
+        bounds.outHeight / (sample * 2) >= maxEdgePx
     ) {
         sample *= 2
     }
@@ -142,6 +148,10 @@ private fun decodeBounded(path: String): Bitmap? {
 
 private fun decodeBounded(stream: InputStream): Bitmap? =
     runCatching { BitmapFactory.decodeStream(stream) }.getOrNull()
+
+/** One decoded bitmap per (URL, render size): a tile and the detail hero must
+ * not evict each other's entries. */
+private fun memoryCacheKey(url: String, decodeEdgePx: Int) = "$url|$decodeEdgePx"
 
 object UrlImageDiskCache {
     private const val CACHE_DIR_NAME = "image_cache"

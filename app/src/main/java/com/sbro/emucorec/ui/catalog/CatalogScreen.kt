@@ -573,7 +573,8 @@ private fun CatalogGameCard(
                     imageUrl = game.coverUrl,
                     contentDescription = game.name,
                     fallbackLabel = game.name,
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    decodeEdgePx = 640,
                 )
                 game.compatibility?.let { compatibility ->
                     CompatibilityBadge(
