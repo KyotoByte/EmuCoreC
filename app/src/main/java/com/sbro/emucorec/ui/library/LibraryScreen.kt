@@ -68,6 +68,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalWindowInfo
@@ -508,10 +509,17 @@ fun LibraryScreen(
                 ) {
                     rowItems.forEach { game ->
                         val selectGameClick = rememberDebouncedClick { onLaunchGame(game.titleId, game.installPath) }
-                        val shape = neonShape(24.dp)
+                        // The card IS the cover: full-bleed artwork, no inner
+                        // frame and no title block under it. The title still
+                        // lives in the detail screen and the accessibility
+                        // description.
+                        val shape = neonShape(20.dp)
                         var menuExpanded by remember(game.titleId) { mutableStateOf(false) }
                         Box(modifier = Modifier.weight(1f)) {
-                            Surface(
+                            LibraryGameArtwork(
+                                localPath = game.iconPath,
+                                coverUrl = game.catalogCoverUrl,
+                                title = game.title,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clip(shape)
@@ -519,40 +527,9 @@ fun LibraryScreen(
                                         onClick = selectGameClick,
                                         onLongClick = { menuExpanded = true }
                                     ),
+                                artworkAspectRatio = 3f / 4f,
                                 shape = shape,
-                                color = MaterialTheme.colorScheme.surface,
-                                tonalElevation = 3.dp,
-                                shadowElevation = 8.dp,
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.58f))
-                            ) {
-                                Column(
-                                    modifier = Modifier.padding(12.dp),
-                                    verticalArrangement = Arrangement.spacedBy(10.dp)
-                                ) {
-                                    LibraryGameArtwork(
-                                        localPath = game.iconPath,
-                                        coverUrl = game.catalogCoverUrl,
-                                        title = game.title,
-                                        modifier = Modifier.fillMaxWidth(),
-                                        artworkAspectRatio = 3f / 4f
-                                    )
-                                    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                                        Box(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(42.dp),
-                                            contentAlignment = Alignment.BottomStart
-                                        ) {
-                                        Text(
-                                            text = game.title,
-                                            style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
-                                            maxLines = 2,
-                                            overflow = TextOverflow.Ellipsis
-                                        )
-                                        }
-                                    }
-                                }
-                            }
+                            )
                             DropdownMenu(
                                 expanded = menuExpanded,
                                 onDismissRequest = { menuExpanded = false }
@@ -751,11 +728,12 @@ private fun LibraryGameArtwork(
     coverUrl: String?,
     title: String,
     modifier: Modifier = Modifier,
-    artworkAspectRatio: Float = 3f / 4f
+    artworkAspectRatio: Float = 3f / 4f,
+    shape: Shape = neonShape(18.dp),
 ) {
     Surface(
         modifier = modifier,
-        shape = neonShape(18.dp),
+        shape = shape,
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
     ) {
