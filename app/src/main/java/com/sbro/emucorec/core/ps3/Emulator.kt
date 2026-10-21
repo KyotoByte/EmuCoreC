@@ -36,6 +36,7 @@ import com.sbro.emucorec.core.Ps3CoreConfigRepository
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
 import com.sbro.emucorec.core.Ps3Runtime
 import com.sbro.emucorec.core.input.InputDeviceClassifier
+import com.sbro.emucorec.core.input.KeyboardMouseManager
 import com.sbro.emucorec.core.ps3.overlay.InputOverlay
 import com.sbro.emucorec.data.AppPreferences
 import com.sbro.emucorec.data.InstalledGameRepository
@@ -114,10 +115,20 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         root.addView(createComposeOverlay(), matchParentLayoutParams())
         setContentView(root)
 
+        KeyboardMouseManager.ensureInitialized(this)
+        KeyboardMouseManager.attachSink(inputOverlay)
+        KeyboardMouseManager.setPointerCaptureListener { enabled ->
+            runOnUiThread { updatePointerCapture(enabled) }
+        }
+        window.decorView.setOnCapturedPointerListener { _, event ->
+            KeyboardMouseManager.handleCapturedPointerEvent(event)
+        }
+
         inputManager = getSystemService(InputManager::class.java)
         inputManager?.registerInputDeviceListener(this, null)
         refreshPhysicalGamepadState()
         refreshGamepadRuntimeInputSettings()
+        refreshKeyboardMouseRuntimeSettings()
         val preferences = AppPreferences(this)
         if (preferences.keepScreenOn) {
             window.addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -145,6 +156,7 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         bootSucceeded = false
         playTimeAccumulatedMs = 0L
         refreshGamepadRuntimeInputSettings()
+        refreshKeyboardMouseRuntimeSettings()
         onEmulationSurfaceReady()
     }
 
@@ -154,6 +166,11 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         lifecyclePaused = false
         if (!menuPaused) Ps3Runtime.resume()
         refreshPhysicalGamepadState()
+        refreshGamepadRuntimeInputSettings()
+        refreshKeyboardMouseRuntimeSettings()
+        KeyboardMouseManager.setEmulationInputEnabled(true)
+        KeyboardMouseManager.refreshConnectionState()
+        KeyboardMouseManager.refreshPointerCapture()
         hideSystemBars()
         onEmulationSurfaceReady()
         if (bootSucceeded) startPlayTimeSessionIfNeeded()
@@ -164,6 +181,10 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         DiscordIntegration.setPaused(true)
         finishPlayTimeSessionIfNeeded(accumulate = true)
         Ps3Runtime.pause()
+        KeyboardMouseManager.cancelBindingCapture()
+        KeyboardMouseManager.releaseAll()
+        KeyboardMouseManager.setEmulationInputEnabled(false)
+        updatePointerCapture(false)
         super.onPause()
     }
 
@@ -172,6 +193,11 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         DiscordIntegration.clearGame()
         inputManager?.unregisterInputDeviceListener(this)
         inputManager = null
+        KeyboardMouseManager.releaseAll()
+        KeyboardMouseManager.setEmulationInputEnabled(false)
+        KeyboardMouseManager.setPointerCaptureListener(null)
+        KeyboardMouseManager.detachSink(inputOverlay)
+        window.decorView.setOnCapturedPointerListener(null)
         inputOverlay.dispose()
         bootThread?.interrupt()
         if (isFinishing) Ps3Runtime.stop() else Ps3Runtime.detachSurface()
@@ -222,7 +248,37 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) hideSystemBars()
+        if (hasFocus) {
+            hideSystemBars()
+            KeyboardMouseManager.refreshConnectionState()
+            KeyboardMouseManager.refreshPointerCapture()
+        } else {
+            KeyboardMouseManager.releaseAll()
+            updatePointerCapture(false)
+        }
+    }
+
+    private fun updatePointerCapture(enabled: Boolean) {
+        val decorView = window.decorView
+        if (enabled && hasWindowFocus()) {
+            decorView.isFocusable = true
+            decorView.isFocusableInTouchMode = true
+            if (!decorView.hasFocus()) decorView.requestFocus()
+            if (!decorView.hasPointerCapture()) {
+                decorView.post {
+                    if (!isFinishing && hasWindowFocus() && !decorView.hasPointerCapture()) {
+                        decorView.requestPointerCapture()
+                    }
+                }
+            }
+        } else {
+            if (decorView.hasPointerCapture()) {
+                decorView.releasePointerCapture()
+            }
+            decorView.isFocusable = false
+            decorView.isFocusableInTouchMode = false
+            decorView.clearFocus()
+        }
     }
 
     fun onEmulationSurfaceReady() {
@@ -314,6 +370,7 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
         if (gameId.isBlank()) return
         _currentGameId = gameId
         refreshGamepadRuntimeInputSettings()
+        refreshKeyboardMouseRuntimeSettings()
         if (bootSucceeded && !lifecyclePaused) startPlayTimeSessionIfNeeded()
     }
 
@@ -386,11 +443,36 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
     }
 
     override fun dispatchKeyEvent(event: KeyEvent): Boolean {
+        if (KeyboardMouseManager.handleKeyBindingCapture(event)) return true
+        if (KeyboardMouseManager.handleKeyEvent(event)) return true
         if (event.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
             if (overlayBackHandler?.invoke() == true) return true
         }
         return super.dispatchKeyEvent(event)
     }
+
+    override fun dispatchTouchEvent(event: MotionEvent): Boolean {
+        if (KeyboardMouseManager.handleMouseBindingCapture(event)) return true
+        if (isMouseEvent(event) && KeyboardMouseManager.handleMouseButtonEvent(event)) {
+            return true
+        }
+        return super.dispatchTouchEvent(event)
+    }
+
+    override fun dispatchGenericMotionEvent(event: MotionEvent): Boolean {
+        if (KeyboardMouseManager.handleMouseBindingCapture(event)) return true
+        if (isMouseEvent(event)) {
+            val handled = KeyboardMouseManager.handleMouseButtonEvent(event) ||
+                KeyboardMouseManager.handleMouseWheelEvent(event) ||
+                KeyboardMouseManager.handleMouseMotionEvent(event)
+            if (handled) return true
+        }
+        return super.dispatchGenericMotionEvent(event)
+    }
+
+    private fun isMouseEvent(event: MotionEvent): Boolean =
+        event.isFromSource(InputDevice.SOURCE_MOUSE) ||
+            event.isFromSource(InputDevice.SOURCE_MOUSE_RELATIVE)
 
     // Physical gamepad input, delivered at the Activity level:
     // Activity-level onKeyDown/onKeyUp with a persistent pad state pushed on
@@ -493,6 +575,16 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
             Ps3CoreConfigRepository(this).load()
         }
         updateGamepadRuntimeInputSettings(config)
+    }
+
+    private fun refreshKeyboardMouseRuntimeSettings() {
+        val gameId = currentGameIdOrIntent()
+        val override = if (gameId.isNotBlank()) {
+            Ps3GameSettingsRepository(this).loadProfile(gameId).keyboardMouse
+        } else {
+            null
+        }
+        KeyboardMouseManager.setPerGameOverride(override)
     }
 
     private fun startPlayTimeSessionIfNeeded() {

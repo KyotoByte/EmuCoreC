@@ -125,6 +125,7 @@ fun SettingsTabContent(
                 onOpenTouchControlsEditor = onOpenTouchControlsEditor
             )
             Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Controls, scope = Ps3CoreSettingsScope.Global)
+            GlobalKeyboardMouseSettingsSection()
         }
         SettingsTab.Storage -> {
             StorageTab(

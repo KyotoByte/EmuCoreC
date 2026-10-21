@@ -2,11 +2,15 @@ package com.sbro.emucorec.core
 
 import android.content.Context
 import androidx.core.content.edit
+import com.sbro.emucorec.data.KeyboardMouseSettings
+import com.sbro.emucorec.data.KeyboardMouseSettingsCodec
 import org.json.JSONObject
 
 data class Ps3GameSettingsProfile(
     val config: Ps3CoreConfig,
     val customDriverOverride: String?,
+    /** Null means this title inherits the global keyboard/mouse configuration. */
+    val keyboardMouse: KeyboardMouseSettings? = null,
 )
 
 /** Per-title overrides for EmuCoreC-owned Android controls and custom GPU drivers. */
@@ -30,6 +34,7 @@ class Ps3GameSettingsRepository(context: Context) {
             Ps3GameSettingsProfile(
                 config = stored.copy(customDriverName = driverOverride ?: base.customDriverName).normalized(),
                 customDriverOverride = driverOverride,
+                keyboardMouse = KeyboardMouseSettingsCodec.decode(root.optJSONObject("keyboardMouse")),
             )
         }.getOrDefault(Ps3GameSettingsProfile(base, null))
     }
@@ -37,19 +42,61 @@ class Ps3GameSettingsRepository(context: Context) {
     fun save(titleId: String, config: Ps3CoreConfig) = savePreservingDriverOverride(titleId, config)
 
     fun savePreservingDriverOverride(titleId: String, config: Ps3CoreConfig) {
-        val override = loadProfile(titleId).customDriverOverride
-        saveProfile(titleId, config, override)
+        val profile = loadProfile(titleId)
+        saveProfile(titleId, config, profile.customDriverOverride, profile.keyboardMouse)
     }
 
+    /** Updates the core/overlay configuration while retaining the keyboard/mouse override. */
     fun saveProfile(titleId: String, config: Ps3CoreConfig, customDriverOverride: String?) {
+        val keyboardMouse = loadProfile(titleId).keyboardMouse
+        saveProfile(titleId, config, customDriverOverride, keyboardMouse)
+    }
+
+    fun saveProfile(
+        titleId: String,
+        config: Ps3CoreConfig,
+        customDriverOverride: String?,
+        keyboardMouse: KeyboardMouseSettings?,
+    ) {
         if (titleId.isBlank()) return
         val base = globalRepository.ensureDefaultsPersisted()
         val effective = config.copy(customDriverName = customDriverOverride ?: base.customDriverName).normalized()
+        if (keyboardMouse == null && customDriverOverride == null && effective == base) {
+            preferences.edit(commit = true) { remove(key(titleId)) }
+            return
+        }
         val root = JSONObject()
             .put("config", effective.toJsonObject())
             .put("hasDriverOverride", customDriverOverride != null)
             .put("driverOverride", customDriverOverride.orEmpty())
+        if (keyboardMouse != null) {
+            root.put("keyboardMouse", KeyboardMouseSettingsCodec.encode(keyboardMouse))
+        }
         preferences.edit(commit = true) { putString(key(titleId), root.toString()) }
+    }
+
+    /** Updates only the keyboard/mouse override, retaining the rest of the title profile. */
+    fun saveKeyboardMouse(titleId: String, settings: KeyboardMouseSettings?) {
+        if (titleId.isBlank()) return
+        if (settings == null) {
+            clearKeyboardMouse(titleId)
+            return
+        }
+        val profile = loadProfile(titleId)
+        saveProfile(titleId, profile.config, profile.customDriverOverride, settings)
+    }
+
+    fun clearKeyboardMouse(titleId: String) {
+        if (titleId.isBlank()) return
+        val profile = loadProfile(titleId)
+        val global = globalRepository.ensureDefaultsPersisted()
+        val keepsOtherOverrides = profile.customDriverOverride != null ||
+            profile.config != global
+        if (!keepsOtherOverrides) {
+            preferences.edit(commit = true) { remove(key(titleId)) }
+        } else {
+            saveProfile(titleId, profile.config, profile.customDriverOverride, null)
+        }
     }
 
     fun syncEffectiveDriverForLaunch(titleId: String) {

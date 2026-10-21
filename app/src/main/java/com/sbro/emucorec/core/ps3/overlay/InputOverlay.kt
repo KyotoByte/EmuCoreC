@@ -12,12 +12,14 @@ import com.sbro.emucorec.core.Digital2Flags
 import com.sbro.emucorec.core.Ps3Core
 import com.sbro.emucorec.core.Ps3CoreConfig
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
+import com.sbro.emucorec.core.input.KeyboardMouseBindings
+import com.sbro.emucorec.core.input.KeyboardMousePadSink
 import com.sbro.emucorec.core.ps3.Emulator
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
 /** Translates EmuCoreC's per-control overlay events to complete RPCS3 pad snapshots. */
-class InputOverlay(context: Context) {
+class InputOverlay(context: Context) : KeyboardMousePadSink {
     private val emulator = context as? Emulator
     private val repository = Ps3GameSettingsRepository(context)
     private var latestConfig = repository.loadEffective(emulator?.currentGameIdOrIntent().orEmpty())
@@ -39,6 +41,20 @@ class InputOverlay(context: Context) {
     private var leftY = STICK_CENTER
     private var rightX = STICK_CENTER
     private var rightY = STICK_CENTER
+
+    // Keyboard and mouse keep their own held state. The snapshot sent to RPCS3 is the union of
+    // these lanes and the legacy physical/touch lane, so one source releasing a button cannot
+    // clear the same button while another source still holds it.
+    private var mappedInputSeen = false
+    private var keyboardDigital1 = 0
+    private var keyboardDigital2 = 0
+    private var mouseDigital1 = 0
+    private var mouseDigital2 = 0
+    private val keyboardStickAxes = FloatArray(4)
+    private val mouseStickAxes = FloatArray(4)
+    private val mouseAimAxes = FloatArray(4)
+    private val keyboardActionCounts = mutableMapOf<String, Int>()
+    private val mouseActionCounts = mutableMapOf<String, Int>()
 
     var hasReceivedCoreState by mutableStateOf(false)
         private set
@@ -112,6 +128,7 @@ class InputOverlay(context: Context) {
         leftY = STICK_CENTER
         rightX = STICK_CENTER
         rightY = STICK_CENTER
+        clearKeyboardMouseStateLocked()
         if (attached) pushLocked()
         attached = false
     }
@@ -224,6 +241,176 @@ class InputOverlay(context: Context) {
         pushLocked()
     }
 
+    override fun onAction(source: Int, actionId: String, pressed: Boolean, intensity: Float) {
+        synchronized(lock) {
+            if (source != KeyboardMouseBindings.PAD_SOURCE_KEYBOARD &&
+                source != KeyboardMouseBindings.PAD_SOURCE_MOUSE
+            ) {
+                return
+            }
+            if (pressed) {
+                mappedInputSeen = true
+                syncControllerAttachment()
+            }
+            if (digitalFlagsForAction(actionId) != null) {
+                applyDigitalActionLocked(source, actionId, pressed)
+            } else {
+                applyStickActionLocked(source, actionId, pressed)
+            }
+            pushLocked()
+        }
+    }
+
+    override fun onMouseAim(stick: Int, x: Float, y: Float) {
+        synchronized(lock) {
+            val stickIndex = stick.coerceIn(0, 1)
+            val axisX = stickIndex * 2
+            val axisY = axisX + 1
+            if (x != 0f || y != 0f) {
+                mappedInputSeen = true
+                syncControllerAttachment()
+            }
+            mouseAimAxes[axisX] = x.coerceIn(-1f, 1f)
+            mouseAimAxes[axisY] = y.coerceIn(-1f, 1f)
+            pushLocked()
+        }
+    }
+
+    override fun releaseSource(source: Int) {
+        synchronized(lock) {
+            when (source) {
+                KeyboardMouseBindings.PAD_SOURCE_KEYBOARD -> {
+                    keyboardActionCounts.clear()
+                    recomputeDigitalFlagsLocked(source)
+                    recomputeStickAxesLocked(source, 0)
+                    recomputeStickAxesLocked(source, 1)
+                }
+                KeyboardMouseBindings.PAD_SOURCE_MOUSE -> {
+                    mouseActionCounts.clear()
+                    recomputeDigitalFlagsLocked(source)
+                    recomputeStickAxesLocked(source, 0)
+                    recomputeStickAxesLocked(source, 1)
+                    mouseAimAxes.fill(0f)
+                }
+                else -> return
+            }
+            pushLocked()
+        }
+    }
+
+    private fun applyDigitalActionLocked(source: Int, actionId: String, pressed: Boolean) {
+        updateActionCountLocked(source, actionId, pressed)
+        recomputeDigitalFlagsLocked(source)
+    }
+
+    private fun applyStickActionLocked(source: Int, actionId: String, pressed: Boolean) {
+        val mapping = stickAxisForAction(actionId) ?: return
+        updateActionCountLocked(source, actionId, pressed)
+        recomputeStickAxesLocked(source, mapping.first)
+    }
+
+    private fun updateActionCountLocked(source: Int, actionId: String, pressed: Boolean) {
+        val counts = if (source == KeyboardMouseBindings.PAD_SOURCE_KEYBOARD) {
+            keyboardActionCounts
+        } else {
+            mouseActionCounts
+        }
+        if (pressed) {
+            counts[actionId] = (counts[actionId] ?: 0) + 1
+        } else {
+            val remaining = (counts[actionId] ?: 1) - 1
+            if (remaining > 0) counts[actionId] = remaining else counts.remove(actionId)
+        }
+    }
+
+    private fun recomputeDigitalFlagsLocked(source: Int) {
+        val counts = if (source == KeyboardMouseBindings.PAD_SOURCE_KEYBOARD) {
+            keyboardActionCounts
+        } else {
+            mouseActionCounts
+        }
+        var d1 = 0
+        var d2 = 0
+        for (actionId in counts.keys) {
+            val flags = digitalFlagsForAction(actionId) ?: continue
+            d1 = d1 or flags.first
+            d2 = d2 or flags.second
+        }
+        if (source == KeyboardMouseBindings.PAD_SOURCE_KEYBOARD) {
+            keyboardDigital1 = d1
+            keyboardDigital2 = d2
+        } else {
+            mouseDigital1 = d1
+            mouseDigital2 = d2
+        }
+    }
+
+    private fun recomputeStickAxesLocked(source: Int, stickIndex: Int) {
+        val counts = if (source == KeyboardMouseBindings.PAD_SOURCE_KEYBOARD) {
+            keyboardActionCounts
+        } else {
+            mouseActionCounts
+        }
+        val axes = if (source == KeyboardMouseBindings.PAD_SOURCE_KEYBOARD) {
+            keyboardStickAxes
+        } else {
+            mouseStickAxes
+        }
+        val prefix = if (stickIndex == 0) "left_stick" else "right_stick"
+        val x = (if ("${prefix}_right" in counts) 1f else 0f) -
+            (if ("${prefix}_left" in counts) 1f else 0f)
+        val y = (if ("${prefix}_down" in counts) 1f else 0f) -
+            (if ("${prefix}_up" in counts) 1f else 0f)
+        axes[stickIndex * 2] = x
+        axes[stickIndex * 2 + 1] = y
+    }
+
+    private fun digitalFlagsForAction(actionId: String): Pair<Int, Int>? = when (actionId) {
+        "select" -> Digital1Flags.CELL_PAD_CTRL_SELECT.bit to 0
+        "l3" -> Digital1Flags.CELL_PAD_CTRL_L3.bit to 0
+        "r3" -> Digital1Flags.CELL_PAD_CTRL_R3.bit to 0
+        "guide" -> Digital1Flags.CELL_PAD_CTRL_PS.bit to 0
+        "start" -> Digital1Flags.CELL_PAD_CTRL_START.bit to 0
+        "dpad_up" -> Digital1Flags.CELL_PAD_CTRL_UP.bit to 0
+        "dpad_down" -> Digital1Flags.CELL_PAD_CTRL_DOWN.bit to 0
+        "dpad_left" -> Digital1Flags.CELL_PAD_CTRL_LEFT.bit to 0
+        "dpad_right" -> Digital1Flags.CELL_PAD_CTRL_RIGHT.bit to 0
+        "cross" -> 0 to Digital2Flags.CELL_PAD_CTRL_CROSS.bit
+        "circle" -> 0 to Digital2Flags.CELL_PAD_CTRL_CIRCLE.bit
+        "square" -> 0 to Digital2Flags.CELL_PAD_CTRL_SQUARE.bit
+        "triangle" -> 0 to Digital2Flags.CELL_PAD_CTRL_TRIANGLE.bit
+        "l1" -> 0 to Digital2Flags.CELL_PAD_CTRL_L1.bit
+        "r1" -> 0 to Digital2Flags.CELL_PAD_CTRL_R1.bit
+        "l2" -> 0 to Digital2Flags.CELL_PAD_CTRL_L2.bit
+        "r2" -> 0 to Digital2Flags.CELL_PAD_CTRL_R2.bit
+        else -> null
+    }
+
+    private fun stickAxisForAction(actionId: String): Pair<Int, Int>? = when (actionId) {
+        "left_stick_up" -> 0 to 1
+        "left_stick_down" -> 0 to 1
+        "left_stick_left" -> 0 to 0
+        "left_stick_right" -> 0 to 0
+        "right_stick_up" -> 1 to 1
+        "right_stick_down" -> 1 to 1
+        "right_stick_left" -> 1 to 0
+        "right_stick_right" -> 1 to 0
+        else -> null
+    }
+
+    private fun clearKeyboardMouseStateLocked() {
+        mappedInputSeen = false
+        keyboardDigital1 = 0
+        keyboardDigital2 = 0
+        mouseDigital1 = 0
+        mouseDigital2 = 0
+        keyboardActionCounts.clear()
+        mouseActionCounts.clear()
+        keyboardStickAxes.fill(0f)
+        mouseStickAxes.fill(0f)
+        mouseAimAxes.fill(0f)
+    }
+
     fun dispose() = detachController()
 
     private fun persistConfig(config: Ps3CoreConfig) {
@@ -235,7 +422,9 @@ class InputOverlay(context: Context) {
     }
 
     private fun syncControllerAttachment() {
-        if (physicalControllerPresent || physicalInputSeen || effectiveOverlayMask != 0) {
+        if (physicalControllerPresent || physicalInputSeen || mappedInputSeen ||
+            effectiveOverlayMask != 0
+        ) {
             attachController()
         } else {
             detachController()
@@ -246,10 +435,31 @@ class InputOverlay(context: Context) {
         return OVERLAY_MASK_BASIC or OVERLAY_MASK_L2R2
     }
 
+    private fun mergedAxis(legacyValue: Int, axis: Int): Int {
+        var deviation = legacyValue - STICK_CENTER
+        fun consider(value: Float) {
+            val candidate = (value.coerceIn(-1f, 1f) * STICK_CENTER).roundToInt()
+            if (abs(candidate) > abs(deviation)) deviation = candidate
+        }
+        consider(keyboardStickAxes[axis])
+        consider(mouseStickAxes[axis])
+        consider(mouseAimAxes[axis])
+        return (STICK_CENTER + deviation).coerceIn(0, 255)
+    }
+
     private fun pushLocked(): Boolean {
         if (!attached || !Ps3Core.initialized) return false
+        val mergedDigital1 = digital1 or keyboardDigital1 or mouseDigital1
+        val mergedDigital2 = digital2 or keyboardDigital2 or mouseDigital2
         val pushed = runCatching {
-            Ps3Core.instance.overlayPadData(digital1, digital2, leftX, leftY, rightX, rightY)
+            Ps3Core.instance.overlayPadData(
+                mergedDigital1,
+                mergedDigital2,
+                mergedAxis(leftX, 0),
+                mergedAxis(leftY, 1),
+                mergedAxis(rightX, 2),
+                mergedAxis(rightY, 3),
+            )
         }.getOrDefault(false)
         if (!pushed && !pushFailureLogged) {
             pushFailureLogged = true

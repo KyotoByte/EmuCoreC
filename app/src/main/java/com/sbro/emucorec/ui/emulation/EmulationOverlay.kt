@@ -102,6 +102,8 @@ import com.sbro.emucorec.core.AndroidTouchHaptics
 import com.sbro.emucorec.core.AndroidTouchHaptics.ButtonPhase
 import com.sbro.emucorec.core.Ps3CoreConfig
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
+import com.sbro.emucorec.core.input.KeyboardMouseBindings
+import com.sbro.emucorec.core.input.KeyboardMouseManager
 import com.sbro.emucorec.core.NativeSaveStateBackend
 import com.sbro.emucorec.core.SaveStateController
 import com.sbro.emucorec.core.SaveStateRepository
@@ -119,12 +121,15 @@ import com.sbro.emucorec.core.EmulatorState
 import com.sbro.emucorec.core.Ps3Core
 import com.sbro.emucorec.core.ps3.Emulator
 import com.sbro.emucorec.core.ps3.overlay.InputOverlay
+import com.sbro.emucorec.data.AppPreferences
 import com.sbro.emucorec.data.InstalledGameRepository
 import com.sbro.emucorec.data.CustomizationPreferences
+import com.sbro.emucorec.data.KeyboardMouseSettings
 import com.sbro.emucorec.data.TouchControlPressEffect
 import com.sbro.emucorec.data.TouchControlVisualStyle
 import com.sbro.emucorec.ui.common.VectorAnalogStick
 import com.sbro.emucorec.ui.common.VectorOverlayButton
+import com.sbro.emucorec.ui.settings.KeyboardMouseSettingsDialog
 import kotlin.math.abs
 import kotlin.math.roundToInt
 import com.sbro.emucorec.ui.theme.neon.LocalNeonTheme
@@ -164,6 +169,14 @@ fun EmulationOverlayHost(
     var saveSlotsLoaded by remember(gameId) { mutableStateOf(false) }
     var launchingSaveState by remember(activity) { mutableStateOf(activity.isSaveStateLaunch()) }
     var selectedSaveSlot by remember(gameId) { mutableIntStateOf(0) }
+    var showKeyboardMouseSettings by remember { mutableStateOf(false) }
+    var keyboardMouseOverride by remember(activity, gameId) {
+        mutableStateOf(
+            repository.loadProfile(gameId).keyboardMouse
+        )
+    }
+    val globalKeyboardMouseSettings by KeyboardMouseManager.globalSettings.collectAsState()
+    val keyboardMousePreferences = remember(activity) { AppPreferences(activity) }
     val saveStateScope = rememberCoroutineScope()
     val saveStates = remember(activity, gameId) { SaveStateController(NativeSaveStateBackend()) }
     val saveRepository = remember(activity) { SaveStateRepository(activity) }
@@ -218,6 +231,38 @@ fun EmulationOverlayHost(
         // (savePreservingDriverOverride guards against blank IDs internally).
         repository.savePreservingDriverOverride(gameId, config)
         activity.updateGamepadRuntimeInputSettings(config)
+    }
+
+    fun persistKeyboardMouse(settings: KeyboardMouseSettings?) {
+        if (gameId.isBlank()) {
+            if (settings != null) {
+                keyboardMousePreferences.setKeyboardMouseSettings(settings)
+            }
+            keyboardMouseOverride = null
+            KeyboardMouseManager.setPerGameOverride(null)
+            return
+        }
+        if (settings == null) {
+            repository.clearKeyboardMouse(gameId)
+        } else {
+            repository.saveKeyboardMouse(gameId, settings)
+        }
+        keyboardMouseOverride = settings
+        KeyboardMouseManager.setPerGameOverride(settings)
+    }
+
+    LaunchedEffect(keyboardMouseOverride) {
+        KeyboardMouseManager.setPerGameOverride(keyboardMouseOverride)
+    }
+
+    LaunchedEffect(menuOpen, controlsEditMode) {
+        KeyboardMouseManager.setPointerCaptureSuppressed(menuOpen || controlsEditMode)
+    }
+
+    DisposableEffect(activity) {
+        onDispose {
+            KeyboardMouseManager.setPointerCaptureSuppressed(false)
+        }
     }
 
     DisposableEffect(config) {
@@ -355,6 +400,25 @@ fun EmulationOverlayHost(
         else pendingSaveRequest = request
     }
 
+    val quickActionHandler by rememberUpdatedState<(String) -> Unit> { actionId ->
+        when (actionId) {
+            KeyboardMouseBindings.ACTION_QUICK_SAVE ->
+                requestSaveAction(SaveAction.Save, SaveStateRepository.QUICK_SLOT)
+            KeyboardMouseBindings.ACTION_QUICK_LOAD ->
+                requestSaveAction(SaveAction.Load, SaveStateRepository.QUICK_SLOT)
+        }
+    }
+
+    LaunchedEffect(KeyboardMouseManager) {
+        KeyboardMouseManager.quickActions.collect { actionId ->
+            quickActionHandler(actionId)
+        }
+    }
+
+    LaunchedEffect(effectivePaused) {
+        KeyboardMouseManager.setEmulationInputEnabled(!effectivePaused)
+    }
+
     LaunchedEffect(touchControlsActive) {
         overlayBridge.setTouchControlsActive(touchControlsActive)
     }
@@ -398,6 +462,9 @@ fun EmulationOverlayHost(
                 true
             } else if (exitDialogVisible) {
                 exitDialogVisible = false
+                true
+            } else if (showKeyboardMouseSettings) {
+                showKeyboardMouseSettings = false
                 true
             } else if (controlsEditMode) {
                 controlsEditMode = false
@@ -522,7 +589,8 @@ fun EmulationOverlayHost(
             onGamepadInvertLeftX = { enabled -> persistConfig { it.copy(gamepadInvertLeftX = enabled) } },
             onGamepadInvertLeftY = { enabled -> persistConfig { it.copy(gamepadInvertLeftY = enabled) } },
             onGamepadInvertRightX = { enabled -> persistConfig { it.copy(gamepadInvertRightX = enabled) } },
-            onGamepadInvertRightY = { enabled -> persistConfig { it.copy(gamepadInvertRightY = enabled) } }
+            onGamepadInvertRightY = { enabled -> persistConfig { it.copy(gamepadInvertRightY = enabled) } },
+            onOpenKeyboardMouseSettings = { showKeyboardMouseSettings = true }
         )
 
         AnimatedVisibility(visible = menuOpen, enter = fadeIn(tween(220)), exit = fadeOut(tween(180))) {
@@ -634,6 +702,19 @@ fun EmulationOverlayHost(
             scrimAlpha = if (launchingSaveState) 1f else 0.78f,
             messageRes = R.string.emulation_savestate_startup_loading,
         )
+
+        if (showKeyboardMouseSettings) {
+            KeyboardMouseSettingsDialog(
+                settings = keyboardMouseOverride ?: globalKeyboardMouseSettings,
+                onSettingsChange = { settings -> persistKeyboardMouse(settings) },
+                onUseGlobal = if (keyboardMouseOverride != null) {
+                    { persistKeyboardMouse(null) }
+                } else {
+                    null
+                },
+                onDismiss = { showKeyboardMouseSettings = false }
+            )
+        }
 
         if (exitDialogVisible) {
             AlertDialog(

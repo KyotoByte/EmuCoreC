@@ -5,6 +5,7 @@ import android.net.Uri
 import com.sbro.emucorec.data.AppFont
 import com.sbro.emucorec.data.AppPreferences
 import com.sbro.emucorec.data.CustomizationPreferences
+import com.sbro.emucorec.data.KeyboardMouseSettingsCodec
 import org.json.JSONObject
 import java.io.File
 
@@ -29,6 +30,7 @@ class SettingsBackupRepository(
                     .putNullable("skippedUpdateTag", preferences.skippedUpdateTag),
             )
             .put("androidControls", coreConfigRepository.ensureDefaultsPersisted().toJsonObject())
+            .put("keyboardMouse", KeyboardMouseSettingsCodec.encode(preferences.keyboardMouseSettings))
             .put("nativeCore", Ps3CoreSettingOverrides.exportJson(context))
             .put(
                 "customization",
@@ -64,10 +66,15 @@ class SettingsBackupRepository(
         applyCore: Boolean = true,
         applyCustomization: Boolean = true,
     ): Ps3CoreConfig {
-        if (applyApp) root.optJSONObject("app")?.let { app ->
-            preferences.themeMode = app.optEnum("themeMode", preferences.themeMode)
-            preferences.appLanguage = app.optEnum("appLanguage", preferences.appLanguage)
-            preferences.applyAppLanguage()
+        if (applyApp) {
+            root.optJSONObject("app")?.let { app ->
+                preferences.themeMode = app.optEnum("themeMode", preferences.themeMode)
+                preferences.appLanguage = app.optEnum("appLanguage", preferences.appLanguage)
+                preferences.applyAppLanguage()
+            }
+            KeyboardMouseSettingsCodec.decode(root.optJSONObject("keyboardMouse"))?.let {
+                preferences.setKeyboardMouseSettings(it)
+            }
         }
 
         if (applyCustomization) root.optJSONObject("customization")?.let { customization ->

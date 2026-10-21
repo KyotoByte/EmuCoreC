@@ -66,6 +66,7 @@ import com.sbro.emucorec.R
 import com.sbro.emucorec.core.GpuDriverCompatibility
 import com.sbro.emucorec.core.InstalledGpuDriver
 import com.sbro.emucorec.core.Ps3CoreConfig
+import com.sbro.emucorec.core.input.KeyboardMouseManager
 import com.sbro.emucorec.data.InstalledPs3Game
 import com.sbro.emucorec.ui.common.LocalImage
 import com.sbro.emucorec.ui.common.UrlImage
@@ -75,6 +76,7 @@ import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.common.SectionCard
 import com.sbro.emucorec.ui.common.SettingHelpButton
+import com.sbro.emucorec.ui.settings.PerGameKeyboardMouseSettingsSection
 import com.sbro.emucorec.ui.settings.Ps3CoreSettingsCategory
 import com.sbro.emucorec.ui.settings.Ps3CoreSettingsSection
 import com.sbro.emucorec.ui.settings.Ps3CoreSettingsScope
@@ -98,6 +100,7 @@ fun GameManagerScreen(
     viewModel: GameManagerViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val globalKeyboardMouseSettings by KeyboardMouseManager.globalSettings.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
     val resumeTitleId by rememberUpdatedState(initialTitleId ?: uiState.selectedTitleId)
     val topInset = WindowInsets.statusBarsIgnoringVisibility.asPaddingValues().calculateTopPadding()
@@ -216,6 +219,11 @@ fun GameManagerScreen(
                             onOpenTouchControlsEditor = {
                                 onOpenTouchControlsEditor(uiState.selectedTitleId)
                             }
+                        )
+                        PerGameKeyboardMouseSettingsSection(
+                            override = uiState.keyboardMouse,
+                            globalSettings = globalKeyboardMouseSettings,
+                            onOverrideChange = viewModel::updateKeyboardMouse
                         )
                         GameCoreSettings(Ps3CoreSettingsCategory.Controls, uiState.selectedTitleId, viewModel::refreshCustomProfileFlag)
                     }

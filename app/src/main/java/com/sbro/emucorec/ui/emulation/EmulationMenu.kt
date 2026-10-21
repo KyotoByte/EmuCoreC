@@ -51,6 +51,7 @@ import androidx.compose.material.icons.automirrored.rounded.ExitToApp
 import androidx.compose.material.icons.automirrored.rounded.VolumeUp
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Keyboard
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.EmojiEvents
 import androidx.compose.material.icons.rounded.GraphicEq
@@ -671,6 +672,18 @@ private fun formatPlayDuration(durationMs: Long): String {
 @Composable
 private fun ControlsTab(config: Ps3CoreConfig, callbacks: EmulationMenuCallbacks) {
     val context = LocalContext.current
+    MenuSection(
+        title = stringResource(R.string.settings_keyboard_mouse_section),
+        subtitle = stringResource(R.string.settings_keyboard_mouse_game_desc),
+        badge = MenuBadge.Live
+    ) {
+        MenuActionRow(
+            icon = Icons.Rounded.Keyboard,
+            title = stringResource(R.string.settings_keyboard_mouse_section),
+            subtitle = stringResource(R.string.settings_keyboard_mapping_desc),
+            onClick = callbacks.onOpenKeyboardMouseSettings
+        )
+    }
     MenuSection(
         title = stringResource(R.string.emulation_menu_section_touch),
         subtitle = stringResource(R.string.emulation_menu_section_touch_desc),
@@ -1667,6 +1680,7 @@ data class EmulationMenuCallbacks(
     val onGamepadInvertLeftY: (Boolean) -> Unit,
     val onGamepadInvertRightX: (Boolean) -> Unit,
     val onGamepadInvertRightY: (Boolean) -> Unit,
+    val onOpenKeyboardMouseSettings: () -> Unit = {},
     val onSaveStateSlotSelected: (Int) -> Unit = {},
     val onSaveStateSave: (Int) -> Unit = {},
     val onSaveStateLoad: (Int) -> Unit = {},

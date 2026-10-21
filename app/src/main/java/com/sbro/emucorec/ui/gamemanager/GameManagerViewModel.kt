@@ -13,6 +13,7 @@ import com.sbro.emucorec.core.Ps3CoreSettingOverrides
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
 import com.sbro.emucorec.data.InstalledGameRepository
 import com.sbro.emucorec.data.InstalledPs3Game
+import com.sbro.emucorec.data.KeyboardMouseSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -30,6 +31,7 @@ data class GameManagerUiState(
     val defaults: Ps3CoreConfig = Ps3CoreConfig(),
     val installedGpuDrivers: List<InstalledGpuDriver> = emptyList(),
     val customDriverOverride: String? = null,
+    val keyboardMouse: KeyboardMouseSettings? = null,
     val hasCustomProfile: Boolean = false,
     val isLoading: Boolean = true,
     val hasLoadedOnce: Boolean = false
@@ -58,7 +60,8 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
                         is ProfileWriteRequest.Save -> perGameRepository.saveProfile(
                             request.titleId,
                             request.config,
-                            request.customDriverOverride
+                            request.customDriverOverride,
+                            request.keyboardMouse
                         )
                         is ProfileWriteRequest.Reset -> perGameRepository.reset(request.titleId)
                     }
@@ -104,6 +107,7 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
                 defaults = defaults,
                 installedGpuDrivers = installedGpuDrivers,
                 customDriverOverride = profile?.customDriverOverride,
+                keyboardMouse = profile?.keyboardMouse,
                 hasCustomProfile = selected?.let { titleId ->
                     perGameRepository.hasCustomConfig(titleId) ||
                         Ps3CoreSettingOverrides.gameOverrideCount(context, titleId) > 0
@@ -123,11 +127,32 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
         val titleId = _uiState.value.selectedTitleId ?: return
         val updated = transform(_uiState.value.config)
         val driverOverride = _uiState.value.customDriverOverride
+        val keyboardMouse = _uiState.value.keyboardMouse
         _uiState.value = _uiState.value.copy(
             config = updated,
             hasCustomProfile = true
         )
-        enqueueProfileWrite(ProfileWriteRequest.Save(titleId, updated, driverOverride))
+        enqueueProfileWrite(ProfileWriteRequest.Save(titleId, updated, driverOverride, keyboardMouse))
+    }
+
+    fun updateKeyboardMouse(settings: KeyboardMouseSettings?) {
+        val titleId = _uiState.value.selectedTitleId ?: return
+        val state = _uiState.value
+        val hasCoreOverride = state.config != state.defaults ||
+            state.customDriverOverride != null ||
+            Ps3CoreSettingOverrides.gameOverrideCount(getApplication(), titleId) > 0
+        _uiState.value = state.copy(
+            keyboardMouse = settings,
+            hasCustomProfile = settings != null || hasCoreOverride
+        )
+        enqueueProfileWrite(
+            ProfileWriteRequest.Save(
+                titleId,
+                state.config,
+                state.customDriverOverride,
+                settings
+            )
+        )
     }
 
     fun selectCustomDriverOverride(driverName: String?) {
@@ -139,7 +164,14 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
             customDriverOverride = driverName,
             hasCustomProfile = true
         )
-        enqueueProfileWrite(ProfileWriteRequest.Save(titleId, updated, driverName))
+        enqueueProfileWrite(
+            ProfileWriteRequest.Save(
+                titleId,
+                updated,
+                driverName,
+                _uiState.value.keyboardMouse
+            )
+        )
     }
 
     fun refreshCustomProfileFlag() {
@@ -157,6 +189,7 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
         _uiState.value = _uiState.value.copy(
             config = defaults,
             customDriverOverride = null,
+            keyboardMouse = null,
             hasCustomProfile = false
         )
         Ps3CoreSettingOverrides.clearGame(getApplication(), titleId)
@@ -172,7 +205,8 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
                     is ProfileWriteRequest.Save -> perGameRepository.saveProfile(
                         request.titleId,
                         request.config,
-                        request.customDriverOverride
+                        request.customDriverOverride,
+                        request.keyboardMouse
                     )
                     is ProfileWriteRequest.Reset -> perGameRepository.reset(request.titleId)
                 }
@@ -193,7 +227,8 @@ class GameManagerViewModel(application: Application) : AndroidViewModel(applicat
         data class Save(
             override val titleId: String,
             val config: Ps3CoreConfig,
-            val customDriverOverride: String?
+            val customDriverOverride: String?,
+            val keyboardMouse: KeyboardMouseSettings?
         ) : ProfileWriteRequest
 
         data class Reset(override val titleId: String) : ProfileWriteRequest
