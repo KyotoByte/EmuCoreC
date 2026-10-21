@@ -2,6 +2,7 @@ package com.sbro.emucorec
 
 import android.app.Application
 import com.sbro.emucorec.core.BackupSessionGate
+import com.sbro.emucorec.core.DeviceGpuInfoProvider
 import com.sbro.emucorec.core.EmulatorStorage
 import com.sbro.emucorec.core.NativeLibraryLoader
 import com.sbro.emucorec.core.PlayTimeRepository
@@ -31,6 +32,9 @@ class EmuCoreCApp : Application() {
         Thread({
             runCatching { EmulatorStorage.prepareRuntime(this) }
         }, "EmuCoreC-PrepareRuntime").apply { isDaemon = true; start() }
+        Thread({
+            runCatching { runBlocking { DeviceGpuInfoProvider.preload(this@EmuCoreCApp) } }
+        }, "EmuCoreC-GpuProfile").apply { isDaemon = true; start() }
         runCatching { PlayTimeRepository(this).finishOpenSessions() }
         DiscordIntegration.initialize(this)
         ProfilePlayTimeSyncer.syncPendingAsync(this)

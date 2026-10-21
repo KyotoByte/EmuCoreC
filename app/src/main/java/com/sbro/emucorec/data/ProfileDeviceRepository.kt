@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.sbro.emucorec.BuildConfig
+import com.sbro.emucorec.core.DeviceGpuInfoProvider
 import com.sbro.emucorec.core.GpuHardwareProfiles
 import com.sbro.emucorec.core.MobileSocNameMapper
 import kotlinx.coroutines.channels.awaitClose
@@ -30,6 +31,7 @@ data class PlayerDevice(
     val model: String,
     val soc: String,
     val gpuFamily: String,
+    val gpuModel: String,
     val ramMb: Long,
     val androidVersion: String,
     val appVersion: String,
@@ -43,6 +45,7 @@ data class PublicPlayerDevice(
     val displayName: String,
     val soc: String,
     val gpuFamily: String,
+    val gpuModel: String,
     val ramMb: Long,
     val androidVersion: String,
     val appVersion: String,
@@ -85,6 +88,7 @@ object ProfileDeviceInfoProvider {
             GpuHardwareProfiles.POWERVR -> "PowerVR"
             else -> "Mali"
         }
+        val gpuModel = DeviceGpuInfoProvider.get(appContext).model?.displayName.orEmpty().take(40)
         return PlayerDevice(
             deviceId = deviceId,
             displayName = displayName,
@@ -94,6 +98,7 @@ object ProfileDeviceInfoProvider {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) Build.SOC_MODEL.orEmpty() else Build.HARDWARE.orEmpty()
             }.take(160),
             gpuFamily = gpuFamily,
+            gpuModel = gpuModel,
             ramMb = ramMb,
             androidVersion = "Android ${Build.VERSION.RELEASE.orEmpty()} (API ${Build.VERSION.SDK_INT})".take(40),
             appVersion = BuildConfig.VERSION_NAME.take(40),
@@ -232,6 +237,7 @@ class ProfileDeviceRepository(context: Context) {
         "model" to model,
         "soc" to soc,
         "gpuFamily" to gpuFamily,
+        "gpuModel" to gpuModel,
         "ramMb" to ramMb,
         "androidVersion" to androidVersion,
         "appVersion" to appVersion,
@@ -247,6 +253,7 @@ class ProfileDeviceRepository(context: Context) {
         "displayName" to displayName,
         "soc" to soc,
         "gpuFamily" to gpuFamily,
+        "gpuModel" to gpuModel,
         "ramMb" to ramMb,
         "androidVersion" to androidVersion,
         "appVersion" to appVersion,
@@ -262,6 +269,7 @@ class ProfileDeviceRepository(context: Context) {
             model = getString("model").orEmpty(),
             soc = getString("soc").orEmpty(),
             gpuFamily = getString("gpuFamily").orEmpty(),
+            gpuModel = getString("gpuModel").orEmpty(),
             ramMb = getLong("ramMb") ?: 0L,
             androidVersion = getString("androidVersion").orEmpty(),
             appVersion = getString("appVersion").orEmpty(),

@@ -1558,7 +1558,7 @@ private fun ProfileDevicesDialog(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Text(
-                        text = "${stringResource(R.string.profile_device_gpu)}: ${device.gpuFamily.ifBlank { "—" }}",
+                        text = "${stringResource(R.string.profile_device_gpu)}: ${device.gpuModel.ifBlank { device.gpuFamily }.ifBlank { "—" }}",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -1732,7 +1732,7 @@ private fun PublicDeviceDialog(device: PublicPlayerDevice, onDismiss: () -> Unit
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         Text(
-            text = "${stringResource(R.string.profile_device_gpu)}: ${device.gpuFamily.ifBlank { "—" }}",
+            text = "${stringResource(R.string.profile_device_gpu)}: ${device.gpuModel.ifBlank { device.gpuFamily }.ifBlank { "—" }}",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

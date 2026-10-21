@@ -78,11 +78,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sbro.emucorec.R
 import com.sbro.emucorec.core.AdrenoFamily
+import com.sbro.emucorec.core.DeviceGpuInfoProvider
 import com.sbro.emucorec.core.GpuDriverMatch
 import com.sbro.emucorec.core.GpuDriverRecommendations
 import com.sbro.emucorec.core.InstalledGpuDriver
+import com.sbro.emucorec.core.MobileSocNameMapper
 import com.sbro.emucorec.core.RemoteGpuDriver
 import com.sbro.emucorec.core.SnapdragonGpuProfile
+import com.sbro.emucorec.core.SocGpuCatalog
 import com.sbro.emucorec.core.Ps3CoreConfig
 import com.sbro.emucorec.core.Ps3GameSettingsRepository
 import com.sbro.emucorec.ui.common.ScreenTopBar
@@ -122,7 +125,15 @@ fun GpuDriverScreen(
     var variantFilter by rememberSaveable { mutableStateOf(GPU_DRIVER_FILTER_ALL) }
     var sourceFilter by rememberSaveable { mutableStateOf(GPU_DRIVER_FILTER_ALL) }
     var expandedDriverId by rememberSaveable { mutableStateOf<String?>(null) }
-    val deviceProfile = remember { GpuDriverRecommendations.currentDeviceProfile() }
+    val socName = remember { MobileSocNameMapper.currentDeviceName() }
+    val initialDeviceGpu = remember(context) { DeviceGpuInfoProvider.get(context) }
+    val deviceGpuSnapshot by DeviceGpuInfoProvider.snapshot.collectAsState()
+    val deviceGpu = deviceGpuSnapshot ?: initialDeviceGpu
+    val deviceProfile = remember(socName, deviceGpu) {
+        GpuDriverRecommendations.profileForGpu(socName, deviceGpu.model)
+    }
+    val detectedGpuName = deviceGpu.model?.displayName?.takeIf { it.isNotBlank() }
+    val deviceGpuName = SocGpuCatalog.forSoc(socName)?.displayName ?: detectedGpuName
     val remoteDrivers = uiState.remoteGpuDrivers.filter { driver ->
         driver.matchesSearch(searchQuery) &&
             (variantFilter == GPU_DRIVER_FILTER_ALL || driver.variant.equals(variantFilter, ignoreCase = true)) &&
@@ -249,7 +260,7 @@ fun GpuDriverScreen(
         }
         deviceProfile?.let { profile ->
             item {
-                DeviceCompatibilityCard(profile = profile)
+                DeviceCompatibilityCard(profile = profile, gpuName = deviceGpuName ?: profile.adrenoName)
             }
         }
         if (uiState.installedGpuDrivers.isNotEmpty()) {
@@ -829,7 +840,7 @@ private fun RemoteDriverRow(
 }
 
 @Composable
-private fun DeviceCompatibilityCard(profile: SnapdragonGpuProfile) {
+private fun DeviceCompatibilityCard(profile: SnapdragonGpuProfile, gpuName: String) {
     Surface(
         modifier = Modifier.fillMaxWidth(),
         shape = neonShape(18.dp),
@@ -843,7 +854,7 @@ private fun DeviceCompatibilityCard(profile: SnapdragonGpuProfile) {
                 text = stringResource(
                     R.string.settings_gpu_driver_detected_device,
                     profile.socName,
-                    profile.adrenoName
+                    gpuName
                 ),
                 style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.Bold),
                 color = MaterialTheme.colorScheme.onPrimaryContainer
