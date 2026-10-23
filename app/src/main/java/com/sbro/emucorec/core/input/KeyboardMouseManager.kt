@@ -93,8 +93,10 @@ object KeyboardMouseManager {
         KeyEvent.KEYCODE_POWER
     )
 
-    private val GAMEPAD_SOURCES =
-        InputDevice.SOURCE_GAMEPAD or InputDevice.SOURCE_JOYSTICK or InputDevice.SOURCE_DPAD
+    private fun hasGamepadSource(sources: Int): Boolean =
+        (sources and InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD ||
+            (sources and InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK ||
+            (sources and InputDevice.SOURCE_DPAD) == InputDevice.SOURCE_DPAD
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
@@ -654,7 +656,7 @@ object KeyboardMouseManager {
         if (device.keyboardType == InputDevice.KEYBOARD_TYPE_NONE) return false
         val sources = device.sources
         if ((sources and InputDevice.SOURCE_KEYBOARD) == 0) return false
-        if ((sources and GAMEPAD_SOURCES) != 0) return false
+        if (hasGamepadSource(sources)) return false
         if (isSystemControlDevice(device)) return false
         val name = device.name.lowercase()
         if (FINGERPRINT_UINPUT_TOKENS.any { name.contains(it) }) return false
@@ -759,9 +761,9 @@ object KeyboardMouseManager {
             isFromSource(InputDevice.SOURCE_MOUSE_RELATIVE)
 
     private fun isGamepadKeyEvent(event: KeyEvent): Boolean {
-        if ((event.source and GAMEPAD_SOURCES) != 0) return true
+        if (hasGamepadSource(event.source)) return true
         val device = event.device ?: return false
-        return (device.sources and GAMEPAD_SOURCES) != 0 &&
+        return hasGamepadSource(device.sources) &&
             InputDeviceClassifier.isPhysicalGameController(device.id)
     }
 
