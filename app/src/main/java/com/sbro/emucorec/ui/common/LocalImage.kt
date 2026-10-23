@@ -10,12 +10,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 
 @Composable
@@ -30,9 +33,13 @@ fun LocalImage(
     // on the main thread and janked scrolling. Decode once, off the main
     // thread, downsampled to what a tile can actually show, and keep the result
     // in a small LRU so scrolling back does not decode again.
-    val bitmap by produceState<Bitmap?>(initialValue = LocalBitmapCache.get(path), path) {
-        if (value == null) {
-            value = withContext(Dispatchers.IO) { LocalBitmapCache.load(path) }
+    val bitmap by key(path) {
+        produceState<Bitmap?>(initialValue = LocalBitmapCache.get(path)) {
+            if (value == null) {
+                value = localImageLoads.withPermit {
+                    withContext(Dispatchers.IO) { LocalBitmapCache.load(path) }
+                }
+            }
         }
     }
 
@@ -56,6 +63,8 @@ fun LocalImage(
     }
 }
 
+private val localImageLoads = Semaphore(4)
+
 private object LocalBitmapCache {
     /** Longest edge a decoded tile icon is kept at; larger originals add nothing. */
     private const val MAX_DECODED_EDGE_PX = 512
@@ -66,20 +75,18 @@ private object LocalBitmapCache {
         }
     }
 
-    @Synchronized
-    fun get(path: String?): Bitmap? = path?.let(cache::get)
+    private val images = DecodingImageCache(
+        read = cache::get,
+        write = { path, bitmap -> cache.put(path, bitmap) },
+        evict = cache::evictAll,
+        decode = ::decodeDownsampled
+    )
 
-    @Synchronized
-    fun load(path: String?): Bitmap? {
-        if (path.isNullOrBlank()) return null
-        cache.get(path)?.let { return it }
-        val decoded = runCatching { decodeDownsampled(path) }.getOrNull() ?: return null
-        cache.put(path, decoded)
-        return decoded
-    }
+    fun get(path: String?): Bitmap? = images.get(path)
 
-    @Synchronized
-    fun clear() = cache.evictAll()
+    fun load(path: String?): Bitmap? = images.load(path)
+
+    fun clear() = images.clear()
 
     private fun decodeDownsampled(path: String): Bitmap? {
         val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
