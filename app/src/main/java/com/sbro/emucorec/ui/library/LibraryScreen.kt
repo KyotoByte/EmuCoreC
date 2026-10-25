@@ -31,6 +31,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ViewList
 import androidx.compose.material.icons.rounded.Close
@@ -90,6 +91,7 @@ import com.sbro.emucorec.ui.common.ScreenTopBarSurface
 import com.sbro.emucorec.ui.common.EmuCoreLoadingAnimation
 import com.sbro.emucorec.ui.common.rememberDebouncedClick
 import com.sbro.emucorec.ui.common.COVER_ART_ASPECT_RATIO
+import com.sbro.emucorec.ui.common.igdbCoverUrl
 import com.sbro.emucorec.ui.common.rememberDelayedLoading
 import com.sbro.emucorec.ui.theme.CardContentPadding
 import com.sbro.emucorec.ui.theme.LocalCustomizationSettings
@@ -165,6 +167,32 @@ fun LibraryScreen(
             customization.coverSizePercent
         )
     }
+    val libraryState = rememberLazyListState()
+    val coverRequests = remember(uiState.items) {
+        uiState.items.mapNotNull { game ->
+            val url = game.catalogCoverUrl?.takeIf { it.isNotBlank() }?.let(::igdbCoverUrl)
+            val key = url ?: game.iconPath?.takeIf { it.isNotBlank() }
+            key?.let { it to LibraryArtworkRequest(url, game.iconPath) }
+        }.toMap()
+    }
+    val coverWindow = remember(uiState.items, layoutMode, gridColumns) {
+        val columns = if (layoutMode == LibraryLayoutMode.LIST) 1 else gridColumns.coerceAtLeast(1)
+        HomeCoverPrefetchWindow(uiState.items.chunked(columns).map { row ->
+            HomeCoverPrefetchRow(row.first().titleId, row.map { game ->
+                game.catalogCoverUrl?.takeIf { it.isNotBlank() }?.let(::igdbCoverUrl)
+                    ?: game.iconPath?.takeIf { it.isNotBlank() }
+            })
+        })
+    }
+    val coverDecodeEdge = if (layoutMode == LibraryLayoutMode.LIST) 256 else 640
+    val prefetchLoad: suspend (String) -> Unit = remember(context, coverRequests, coverDecodeEdge) {
+        { key ->
+            coverRequests[key]?.let { request ->
+                prefetchLibraryArtwork(context.applicationContext, request, coverDecodeEdge)
+            }
+        }
+    }
+    HomeCoverPrefetch(libraryState, coverWindow, !uiState.isLoading || uiState.hasLoadedOnce, prefetchLoad)
     val openCatalogBySerial: (String) -> Unit = { titleId ->
         coroutineScope.launch {
             val match = withContext(Dispatchers.IO) { catalogRepository.findBySerial(titleId) }
@@ -195,6 +223,7 @@ fun LibraryScreen(
         }
         val showLoading = rememberDelayedLoading(uiState.isLoading && !uiState.hasLoadedOnce)
         LazyColumn(
+            state = libraryState,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = ScreenHorizontalPadding),

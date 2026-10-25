@@ -17,6 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withLock
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -60,57 +64,9 @@ fun UrlImage(
         context,
         decodeEdge
     ) {
-        val loadedBitmap = withContext(Dispatchers.IO) {
-            if (canonicalUrl != null) {
-                val cachedInMemory = UrlBitmapMemoryCache.get(canonicalUrl)
-                if (cachedInMemory != null && isLargeEnough(cachedInMemory, decodeEdge)) {
-                    // Already displayed via initialValue; nothing to do.
-                    return@withContext cachedInMemory
-                }
-
-                val cachedFile = UrlImageDiskCache.getCachedFile(context, canonicalUrl)
-                if (cachedFile != null) {
-                    val diskBitmap = decodeBounded(cachedFile.absolutePath, decodeEdge)
-                    if (diskBitmap != null) {
-                        UrlBitmapMemoryCache.put(canonicalUrl, diskBitmap, pinned = pinInMemory)
-                        return@withContext diskBitmap
-                    }
-                }
-
-                val fetched = runCatching {
-                    if (canonicalUrl.startsWith("content://") || canonicalUrl.startsWith("file://")) {
-                        context.contentResolver.openInputStream(Uri.parse(canonicalUrl))
-                            ?.use { stream -> decodeBounded(stream) }
-                    } else {
-                        val downloaded = UrlImageDiskCache.downloadToCache(context, canonicalUrl)
-                        if (downloaded != null) {
-                            decodeBounded(downloaded.absolutePath, decodeEdge)
-                        } else {
-                            URL(canonicalUrl).openStream().use { stream -> decodeBounded(stream) }
-                        }
-                    }
-                }.getOrNull()
-
-                if (fetched != null) {
-                    UrlBitmapMemoryCache.put(canonicalUrl, fetched, pinned = pinInMemory)
-                    return@withContext fetched
-                }
-
-                // The remote cover could not be loaded: keep showing the
-                // smaller decode we already have instead of downgrading to the
-                // local icon.
-                if (cachedInMemory != null) {
-                    return@withContext cachedInMemory
-                }
-            }
-
-            // Local file fallback if the remote cover could not be loaded
-            if (!fallbackPath.isNullOrBlank()) {
-                decodeBounded(fallbackPath, decodeEdge)
-            } else {
-                null
-            }
-        }
+        val loadedBitmap = loadUrlImageBitmap(
+            context, canonicalUrl, fallbackPath, decodeEdge, pinInMemory
+        )
         value = loadedBitmap
     }
     val bitmap = bitmapState.value
@@ -135,6 +91,86 @@ fun UrlImage(
     }
 }
 
+
+private val urlImageLoads = Semaphore(4)
+// Bounded locks coalesce a prefetched URL with a card that reaches the viewport.
+private val urlImageLocks = Array(32) { Mutex() }
+
+internal suspend fun loadUrlImageBitmap(
+    context: Context,
+    imageUrl: String?,
+    fallbackPath: String?,
+    decodeEdgePx: Int,
+    pinInMemory: Boolean = false
+): Bitmap? {
+    val canonicalUrl = imageUrl?.takeIf { it.isNotBlank() }?.let(::igdbCoverUrl)
+    val decodeEdge = decodeEdgePx.coerceAtLeast(64)
+    val key = canonicalUrl ?: fallbackPath ?: return null
+    return urlImageLocks[(key.hashCode() and Int.MAX_VALUE) % urlImageLocks.size].withLock {
+        urlImageLoads.withPermit {
+            withContext(Dispatchers.IO) {
+            if (canonicalUrl != null) {
+                val cachedInMemory = UrlBitmapMemoryCache.get(canonicalUrl)
+                if (cachedInMemory != null && isLargeEnough(cachedInMemory, decodeEdge)) {
+                    // Already displayed via initialValue; nothing to do.
+                    return@withContext cachedInMemory
+                }
+
+                val cachedFile = UrlImageDiskCache.getCachedFile(context, canonicalUrl)
+                if (cachedFile != null) {
+                    val diskBitmap = decodeBounded(cachedFile.absolutePath, decodeEdge)
+                    if (diskBitmap != null) {
+                        UrlBitmapMemoryCache.put(canonicalUrl, diskBitmap, pinned = pinInMemory)
+                        return@withContext diskBitmap
+                    }
+                }
+
+                val fetched = runCatching {
+                    if (canonicalUrl.startsWith("content://") || canonicalUrl.startsWith("file://")) {
+                        decodeBounded(decodeEdge) {
+                            context.contentResolver.openInputStream(Uri.parse(canonicalUrl))
+                        }
+                    } else {
+                        val downloaded = UrlImageDiskCache.downloadToCache(context, canonicalUrl)
+                        if (downloaded != null) {
+                            decodeBounded(downloaded.absolutePath, decodeEdge)
+                        } else {
+                            // A failed cache/download must not fall back to an
+                            // unbounded full-resolution stream allocation.
+                            null
+                        }
+                    }
+                }.getOrNull()
+
+                if (fetched != null) {
+                    UrlBitmapMemoryCache.put(canonicalUrl, fetched, pinned = pinInMemory)
+                    return@withContext fetched
+                }
+
+                // The remote cover could not be loaded: keep showing the
+                // smaller decode we already have instead of downgrading to the
+                // local icon.
+                if (cachedInMemory != null) {
+                    return@withContext cachedInMemory
+                }
+            }
+
+            // Local file fallback if the remote cover could not be loaded
+            if (!fallbackPath.isNullOrBlank()) {
+                val fallbackKey = "local:$fallbackPath"
+                val cachedFallback = UrlBitmapMemoryCache.get(fallbackKey)
+                if (cachedFallback != null && isLargeEnough(cachedFallback, decodeEdge)) cachedFallback
+                else decodeBounded(fallbackPath, decodeEdge)?.also {
+                    UrlBitmapMemoryCache.put(fallbackKey, it)
+                }
+            } else {
+                null
+            }
+            }
+        }
+    }
+}
+
 private fun decodeBounded(path: String, maxEdgePx: Int): Bitmap? {
     val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
     BitmapFactory.decodeFile(path, bounds)
@@ -150,8 +186,22 @@ private fun decodeBounded(path: String, maxEdgePx: Int): Bitmap? {
     return BitmapFactory.decodeFile(path, BitmapFactory.Options().apply { inSampleSize = sample })
 }
 
-private fun decodeBounded(stream: InputStream): Bitmap? =
-    runCatching { BitmapFactory.decodeStream(stream) }.getOrNull()
+private fun decodeBounded(maxEdgePx: Int, openStream: () -> InputStream?): Bitmap? =
+    runCatching {
+        // Providers need not support seek/reset: open fresh streams for bounds
+        // and pixels, just as the file-backed decoder does in its two passes.
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        openStream()?.use { BitmapFactory.decodeStream(it, null, bounds) }
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return@runCatching null
+        var sample = 1
+        while (bounds.outWidth / (sample * 2) >= maxEdgePx ||
+            bounds.outHeight / (sample * 2) >= maxEdgePx
+        ) {
+            sample *= 2
+        }
+        val options = BitmapFactory.Options().apply { inSampleSize = sample }
+        openStream()?.use { BitmapFactory.decodeStream(it, null, options) }
+    }.getOrNull()
 
 /** True when the decoded bitmap is at least as large as this render needs. */
 private fun isLargeEnough(bitmap: Bitmap, decodeEdgePx: Int): Boolean =

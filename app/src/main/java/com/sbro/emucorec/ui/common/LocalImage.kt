@@ -65,6 +65,14 @@ fun LocalImage(
 
 private val localImageLoads = Semaphore(4)
 
+/** Share the displayed icon cache and its 512-pixel decode bound. */
+internal suspend fun preloadLocalImage(path: String) {
+    if (LocalBitmapCache.get(path) != null) return
+    localImageLoads.withPermit {
+        withContext(Dispatchers.IO) { LocalBitmapCache.load(path) }
+    }
+}
+
 private object LocalBitmapCache {
     /** Longest edge a decoded tile icon is kept at; larger originals add nothing. */
     private const val MAX_DECODED_EDGE_PX = 512
