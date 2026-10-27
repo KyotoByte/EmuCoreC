@@ -10,7 +10,13 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-: "${ANDROID_HOME:=$HOME/Library/Android/sdk}"
+: "${ANDROID_HOME:=${ANDROID_SDK_ROOT:-}}"
+if [ -z "$ANDROID_HOME" ]; then
+  case "$(uname -s)" in
+    Darwin*) ANDROID_HOME="$HOME/Library/Android/sdk" ;;
+    *)       ANDROID_HOME="$HOME/Android/Sdk" ;;
+  esac
+fi
 # NDK 29 (clang 21), NOT NDK 28.2 (clang 19.0.1).
 # Upstream's stated floor is clang-19 and 28.2 sits exactly on it, but clang
 # 19.0.1 mis-analyses fmt::throw_exception -- that is a CTAD struct whose
@@ -22,7 +28,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 # compiler was not. rpcsx-ui-android pins the NDK 29 line for the same reason.
 : "${NDK_VERSION:=29.0.14206865}"
 : "${CMAKE_VERSION:=3.30.5}"
-: "${ANDROID_API:=33}"          # keep in step with emucorec-ui minSdk
+: "${ANDROID_API:=29}"          # keep in step with app minSdk (29) and configure-core.cmd
 : "${BUILD_DIR:=$ROOT/build-android}"
 
 NDK="$ANDROID_HOME/ndk/$NDK_VERSION"
@@ -56,7 +62,17 @@ exec "$CM/cmake" -S "$ROOT/core" -B "$BUILD_DIR" -G Ninja \
   -DWITH_LLVM=ON \
   -DBUILD_LLVM=ON \
   -DSTATIC_LINK_LLVM=ON \
-  `# LTO off for bring-up: large link RAM/disk cost, no benefit while iterating` \
-  -DUSE_LTO=OFF \
+  `# KyotoByte: LTO back ON (upstream RPCS3's default; CMake IPO = ThinLTO with` \
+  `# clang) for rpcs3_emu + emucorec-core. EMUCOREC_LTO=OFF restores the old setup.` \
+  -DUSE_LTO="${EMUCOREC_LTO:-ON}" \
+  `# KyotoByte: no debug info in Release objects. The .so is stripped anyway, so the` \
+  `# shipped binary is identical; the build tree shrinks by ~1 GB (NDK adds -g).` \
+  "-DCMAKE_C_FLAGS_RELEASE=-O3 -DNDEBUG -g0" \
+  "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -DNDEBUG -g0" \
   -DASMJIT_NO_SHM_OPEN=ON \
+  `# same LLVM cross settings as configure-core.cmd (official Windows build)` \
+  -DLLVM_ENABLE_LIBCXX=ON \
+  -DLLVM_HOST_TRIPLE=aarch64-linux-android \
+  -DPython3_EXECUTABLE="$(command -v python3)" \
+  "-DCROSS_TOOLCHAIN_FLAGS_NATIVE=-DCMAKE_C_COMPILER=${HOST_CC:-cc};-DCMAKE_CXX_COMPILER=${HOST_CXX:-c++};-DCMAKE_ASM_COMPILER=${HOST_CC:-cc}" \
   "$@"

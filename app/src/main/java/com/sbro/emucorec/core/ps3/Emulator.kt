@@ -658,7 +658,7 @@ class Emulator : AppCompatActivity(), InputManager.InputDeviceListener {
     @Keep
     fun requestInstallUpdate() {
         runCatching {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/sashkinbro/EmuCoreC/releases")))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/KyotoByte/EmuCoreC/releases")))
         }
     }
 

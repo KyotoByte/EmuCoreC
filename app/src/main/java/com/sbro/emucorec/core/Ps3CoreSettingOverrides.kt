@@ -71,6 +71,19 @@ object Ps3CoreSettingOverrides {
             .apply()
     }
 
+    /** Drop one global override (KyotoByte presets: back to the original default). */
+    fun clearGlobal(context: Context, path: String) {
+        val prefs = prefs(context)
+        val global = read(prefs.getString(KEY_GLOBAL, null)).toMutableMap()
+        val baseline = read(prefs.getString(KEY_BASELINE, null)).toMutableMap()
+        global.remove(path)
+        baseline.remove(path)
+        prefs.edit()
+            .putString(KEY_GLOBAL, encode(global))
+            .putString(KEY_BASELINE, encode(baseline))
+            .apply()
+    }
+
     fun recordGame(
         context: Context,
         titleId: String,

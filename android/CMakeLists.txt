@@ -110,6 +110,29 @@ target_link_libraries(emucorec-core
 )
 
 # ---------------------------------------------------------------------------
+# KyotoByte Edition: release link optimisations
+# ---------------------------------------------------------------------------
+# - LTO: when USE_LTO is on (upstream RPCS3's default) rpcs3_emu is compiled as
+#   ThinLTO bitcode by CMake's IPO support; give the glue the same treatment so
+#   calls from the JNI layer into the core can be inlined across the boundary,
+#   and run the post-link LTO pipeline at O3 like the compile (lld's default is O2).
+# - --gc-sections drops unreferenced functions/data (the NDK already compiles
+#   with -ffunction-sections -fdata-sections), --icf=safe folds identical
+#   read-only code, -O2 optimises the string tables. Exported emucorec_* and
+#   JNI entry points are dynamic symbols and are always kept.
+option(EMUCOREC_LINK_OPTIMIZE "Release link optimisations (gc-sections, ICF)" ON)
+if(USE_LTO)
+    set_target_properties(emucorec-core PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+    target_link_options(emucorec-core PRIVATE "$<$<CONFIG:Release>:-Wl,--lto-O3>")
+endif()
+if(EMUCOREC_LINK_OPTIMIZE)
+    target_link_options(emucorec-core PRIVATE
+        "$<$<CONFIG:Release>:-Wl,--gc-sections>"
+        "$<$<CONFIG:Release>:-Wl,--icf=safe>"
+        "$<$<CONFIG:Release>:-Wl,-O2>")
+endif()
+
+# ---------------------------------------------------------------------------
 # Profile-guided optimisation
 # ---------------------------------------------------------------------------
 #

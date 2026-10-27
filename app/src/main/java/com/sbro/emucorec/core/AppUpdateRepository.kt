@@ -250,6 +250,6 @@ class AppUpdateRepository(private val context: Context) {
         private const val CACHE_KEY_HISTORY = "release_history"
         private const val CACHE_TTL_MILLIS = 15 * 60 * 1000L
         private const val GITHUB_JSON_ACCEPT = "application/vnd.github+json,application/json,*/*"
-        private const val RELEASES_URL = "https://api.github.com/repos/sashkinbro/EmuCoreC/releases?per_page=100"
+        private const val RELEASES_URL = "https://api.github.com/repos/KyotoByte/EmuCoreC/releases?per_page=100"
     }
 }

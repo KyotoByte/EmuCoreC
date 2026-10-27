@@ -1,3 +1,47 @@
+# EmuCoreC — KyotoByte Edition
+
+> **Unofficial fork** of [sashkinbro/EmuCoreC](https://github.com/sashkinbro/EmuCoreC) by **KyotoByte**.
+> EmuCoreC is originally by **sashkinbro**; its emulator core is **RPCS3** by the RPCS3 team.
+> All original credits, the GPL-2.0 license and THIRD_PARTY_NOTICES are kept unchanged.
+> Please report problems with this edition here, not to the original authors.
+>
+> Package id `io.github.kyotobyte.emucorec`, so it installs **beside** the original app.
+> Everything below marked *untested on device* was built and checked on a PC only.
+
+### What this edition changes
+
+| Area | Change | Why |
+|---|---|---|
+| Build | Builds on **Linux/macOS** too (`android/build-core.sh`, Gradle tasks no longer hard-code Git Bash / MinGW / `cmd`) | the original scripts only worked on Windows |
+| Native core | **LTO back on** for `rpcs3_emu` + `emucorec-core` (upstream RPCS3's own default; CMake IPO = ThinLTO), post-link LTO at O3 | cross-file inlining in the hot RSX/SPU runtime code; untested on device |
+| Native core | Linker `--gc-sections --icf=safe -O2` | smaller library, less to load |
+| Native core | Release objects built with `-g0` | the .so is stripped anyway; ~1 GB smaller build tree |
+| FFmpeg | AArch64 **NEON assembly enabled** (was `--disable-asm`, plain C) | faster video / cutscene decoding, scaling, resampling; untested on device |
+| App | **Emulation preset**: *Accurate (original)* / *Performance* (Settings → Graphics) | one tap to speed-first values; see below |
+| App | Own app name / package id, update checker points at this fork | side-by-side install, no update prompts for the other app |
+
+**Performance preset** (global overrides, per-game profiles still win; *untested on device*):
+SPU Block Size `Mega`, SPU XFloat Accuracy `Relaxed`, SPU loop detection `on`, Resolution Scale `75%`,
+Shader Precision `Low`, Multithreaded RSX `on`, Relaxed ZCULL Sync `on`, Accurate ZCULL stats `off`.
+*Accurate* puts every one of these back to the original EmuCoreC / RPCS3 default.
+If a game glitches with Performance, switch that game (or everything) back to Accurate.
+
+No game, ROM or key downloads are added. The only download is the official Sony firmware, as in the original.
+
+### Build on Linux
+
+```bash
+export ANDROID_HOME=$HOME/Android/Sdk   # needs ndk;29.0.14206865 and cmake;3.30.5
+git submodule update --init --recursive --depth 1
+android/build-core.sh                   # FFmpeg + LLVM + RPCS3 -> app/src/main/jniLibs
+./gradlew :app:assembleRelease
+```
+
+Optional release signing: put `kyotobyte.signing.storeFile`, `.storePassword`, `.keyAlias`, `.keyPassword`
+in `local.properties` (never commit keys).
+
+---
+
 # EmuCoreC
 
 [![License: GPL-2.0](https://img.shields.io/badge/License-GPL--2.0-blue.svg)](LICENSE)

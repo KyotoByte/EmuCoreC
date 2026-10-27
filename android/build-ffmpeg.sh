@@ -11,21 +11,38 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 VERSION=8.1.1
 API=29
-LOCAL="${LOCALAPPDATA//\\//}"
-NDK="${NDK_DIR:-$LOCAL/Android/Sdk/ndk/29.0.14206865}"
+JOBS="${FFMPEG_JOBS:-8}"
 SRC_DIR="${FFMPEG_SRC_DIR:-$ROOT/app/build/ffmpeg-src}"
 OUT_DIR="${FFMPEG_OUT_DIR:-$ROOT/app/build/ffmpeg-android}"
-MAKE="${FFMPEG_MAKE:-$LOCAL/mingw/mingw64/bin/mingw32-make.exe}"
-JOBS="${FFMPEG_JOBS:-8}"
 
-TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/windows-x86_64"
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*)
+    # Windows (Git Bash): NDK under %LOCALAPPDATA%, MinGW binutils and make.
+    LOCAL="${LOCALAPPDATA//\\//}"
+    NDK="${NDK_DIR:-$LOCAL/Android/Sdk/ndk/29.0.14206865}"
+    MAKE="${FFMPEG_MAKE:-$LOCAL/mingw/mingw64/bin/mingw32-make.exe}"
+    TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/windows-x86_64"
+    AR="$LOCAL/mingw/mingw64/bin/ar"
+    RANLIB="$LOCAL/mingw/mingw64/bin/ranlib"
+    NM="$LOCAL/mingw/mingw64/bin/nm"
+    HOST_CC="$LOCAL/mingw/mingw64/bin/gcc"
+    ;;
+  *)
+    # Linux / macOS: NDK from ANDROID_HOME, the NDK's own llvm binutils.
+    : "${ANDROID_HOME:=${ANDROID_SDK_ROOT:-$HOME/Android/Sdk}}"
+    NDK="${NDK_DIR:-$ANDROID_HOME/ndk/29.0.14206865}"
+    MAKE="${FFMPEG_MAKE:-make}"
+    case "$(uname -s)" in Darwin*) HOST_TAG=darwin-x86_64 ;; *) HOST_TAG=linux-x86_64 ;; esac
+    TOOLCHAIN="$NDK/toolchains/llvm/prebuilt/$HOST_TAG"
+    AR="$TOOLCHAIN/bin/llvm-ar"
+    RANLIB="$TOOLCHAIN/bin/llvm-ranlib"
+    NM="$TOOLCHAIN/bin/llvm-nm"
+    HOST_CC="${HOST_CC:-cc}"
+    ;;
+esac
 CC="$TOOLCHAIN/bin/clang"
-AR="$LOCAL/mingw/mingw64/bin/ar"
-RANLIB="$LOCAL/mingw/mingw64/bin/ranlib"
-NM="$LOCAL/mingw/mingw64/bin/nm"
 STRIP="$TOOLCHAIN/bin/llvm-strip"
 SYSROOT="$TOOLCHAIN/sysroot"
-HOST_CC="$LOCAL/mingw/mingw64/bin/gcc"
 
 # Download and unpack the source once.
 if [ ! -f "$SRC_DIR/FFmpeg-n$VERSION/configure" ]; then
@@ -49,10 +66,15 @@ mkdir -p "$OUT_DIR"
   --target-os=android \
   --arch=aarch64 \
   --enable-cross-compile \
-  --extra-cflags="--target=aarch64-linux-android$API --sysroot=$SYSROOT -O3 -fPIC" \
+  `# -fvisibility=hidden: the NEON asm addresses FFmpeg's tables PC-relative, which` \
+  `# only links into libemucorec-core.so if those symbols are not exported.` \
+  --extra-cflags="--target=aarch64-linux-android$API --sysroot=$SYSROOT -O3 -fPIC -fvisibility=hidden" \
   --extra-ldflags="--target=aarch64-linux-android$API --sysroot=$SYSROOT" \
   --enable-static --disable-shared --enable-pic \
-  --disable-asm \
+  `# KyotoByte: FFmpeg's hand-written AArch64 NEON code ON (it was --disable-asm,` \
+  `# i.e. plain C for every decoder: PS3 videos/cutscenes (MPEG-2/H.264/ATRAC),` \
+  `# scaling and resampling). Set FFMPEG_ASM=0 for the old plain-C build.` \
+  $( [ "${FFMPEG_ASM:-1}" = "1" ] && echo "--enable-asm --enable-neon --enable-inline-asm" || echo "--disable-asm" ) \
   --disable-programs --disable-doc --disable-debug \
   --disable-avdevice --disable-avfilter \
   --disable-network --disable-autodetect

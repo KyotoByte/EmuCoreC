@@ -46,6 +46,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -65,6 +66,7 @@ import androidx.compose.ui.window.DialogProperties
 import android.view.InputDevice
 import android.widget.Toast
 import com.sbro.emucorec.R
+import com.sbro.emucorec.core.Ps3CorePerformancePresets
 import com.sbro.emucorec.core.AndroidGyroscopeInput
 import com.sbro.emucorec.core.GpuDriverCompatibility
 import com.sbro.emucorec.core.InstalledGpuDriver
@@ -83,6 +85,8 @@ private val SettingsSectionContentPadding = 14.dp
 private val SettingsSectionRowPadding = ScreenHorizontalPadding
 private val SettingsCardInnerPadding = 14.dp
 private const val EmuCoreRepositoryUrl = "https://github.com/sashkinbro/EmuCoreC"
+// KyotoByte Edition fork (this build).
+private const val KyotoByteForkUrl = "https://github.com/KyotoByte/EmuCoreC"
 private const val EmuCoreWebsiteUrl = "https://emucorec.web.app"
 private const val EmuCoreSupportUrl = "https://www.patreon.com/c/emucore/membership"
 private const val SashkinAppsPlayStoreUrl = "https://play.google.com/store/apps/dev?id=7136622298887775989"
@@ -105,15 +109,21 @@ fun SettingsTabContent(
     when (selectedTab) {
         SettingsTab.General -> {
             GeneralTab(uiState, viewModel, onOpenLanguageSettings)
-            Ps3CoreSettingsSection(
-                category = Ps3CoreSettingsCategory.General,
-                scope = Ps3CoreSettingsScope.Global,
-            )
+            key(Ps3CorePerformancePresets.revision.intValue) {
+                Ps3CoreSettingsSection(
+                    category = Ps3CoreSettingsCategory.General,
+                    scope = Ps3CoreSettingsScope.Global,
+                )
+            }
         }
         SettingsTab.Customization -> CustomizationTab(uiState.customization, viewModel)
         SettingsTab.Graphics -> {
+            // KyotoByte Edition: one-tap Accurate / Performance preset.
+            PerformancePresetSection()
             GraphicsTab(uiState, defaults, viewModel, onOpenGpuDriverSettings)
-            Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Graphics, scope = Ps3CoreSettingsScope.Global)
+            key(Ps3CorePerformancePresets.revision.intValue) {
+                Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Graphics, scope = Ps3CoreSettingsScope.Global)
+            }
         }
         SettingsTab.Overlay -> Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Overlay, scope = Ps3CoreSettingsScope.Global)
         SettingsTab.Audio -> Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Audio, scope = Ps3CoreSettingsScope.Global)
@@ -140,7 +150,9 @@ fun SettingsTabContent(
             Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Storage, scope = Ps3CoreSettingsScope.Global)
         }
         SettingsTab.Network -> Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Network, scope = Ps3CoreSettingsScope.Global)
-        SettingsTab.Advanced -> Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Advanced, scope = Ps3CoreSettingsScope.Global)
+        SettingsTab.Advanced -> key(Ps3CorePerformancePresets.revision.intValue) {
+            Ps3CoreSettingsSection(Ps3CoreSettingsCategory.Advanced, scope = Ps3CoreSettingsScope.Global)
+        }
         SettingsTab.About -> AboutTab()
         SettingsTab.Updates -> AppUpdateTab(
             state = uiState.appUpdate,
@@ -944,6 +956,25 @@ private fun AboutTab() {
     val versionName = packageInfo?.versionName ?: "1.0.0"
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        // KyotoByte Edition: fork notice. All original credits below are kept.
+        SectionCard(
+            title = stringResource(R.string.kb_about_title),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(SettingsSectionContentPadding)
+        ) {
+            Text(
+                text = stringResource(R.string.kb_about_body),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(horizontal = SettingsSectionRowPadding)
+            )
+            LinkItem(
+                icon = Icons.Rounded.Code,
+                title = stringResource(R.string.kb_about_fork),
+                subtitle = KyotoByteForkUrl,
+                onClick = { uriHandler.openUri(KyotoByteForkUrl) }
+            )
+        }
+
         SectionCard(
             title = stringResource(R.string.settings_about_title),
             contentPadding = androidx.compose.foundation.layout.PaddingValues(SettingsSectionContentPadding)

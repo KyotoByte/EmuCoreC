@@ -47,6 +47,16 @@ val cmakeExe  = if (org.gradle.internal.os.OperatingSystem.current().isWindows)
                     "$cmakeDir/cmake.exe" else "$cmakeDir/cmake"
 val ninjaExe  = if (org.gradle.internal.os.OperatingSystem.current().isWindows)
                     "$cmakeDir/ninja.exe" else "$cmakeDir/ninja"
+val isWindowsHost = org.gradle.internal.os.OperatingSystem.current().isWindows
+// NDK prebuilt host tag (llvm-strip etc.) for the machine running Gradle.
+val ndkHostTag = when {
+    isWindowsHost -> "windows-x86_64"
+    org.gradle.internal.os.OperatingSystem.current().isMacOsX -> "darwin-x86_64"
+    else -> "linux-x86_64"
+}
+// Extra CMake args for the core, e.g. -Pemucorec.coreCmakeArgs="-DFOO=ON -DBAR=OFF".
+val extraCoreCmakeArgs: List<String> = (findProperty("emucorec.coreCmakeArgs") as String?)
+    ?.split(" ")?.map(String::trim)?.filter(String::isNotEmpty) ?: emptyList()
 
 val localBuildProperties = Properties().apply {
     rootProject.layout.projectDirectory.file("local.properties").asFile
@@ -114,7 +124,14 @@ val buildFfmpeg by tasks.registering(Exec::class) {
     description = "Build FFmpeg 8.1.1 for Android (aarch64)"
     group = "build"
     workingDir = rootProject.layout.projectDirectory.asFile
-    commandLine("C:/Program Files/Git/bin/bash.exe", "android/build-ffmpeg.sh")
+    if (isWindowsHost) {
+        commandLine("C:/Program Files/Git/bin/bash.exe", "android/build-ffmpeg.sh")
+    } else {
+        // Linux / macOS: same script, NDK taken from the SDK Gradle uses.
+        environment("ANDROID_HOME", androidSdkRoot)
+        environment("NDK_DIR", ndkDir)
+        commandLine("bash", "android/build-ffmpeg.sh")
+    }
     onlyIf {
         if (File(ffmpegOutDir, "lib/libavcodec.a").exists()) {
             logger.lifecycle("FFmpeg already built at $ffmpegOutDir; skipping.")
@@ -149,15 +166,25 @@ val configureEmuCorecCore by tasks.registering(Exec::class) {
     // environment does not survive into cmake's nested FetchContent processes,
     // where `git submodule update` needs the Git for Windows bin dirs.
     workingDir = buildDir2
-    val configureArgs = mutableListOf(
-        "cmd", "/c",
-        "$repoRoot/android/configure-core.cmd",
-        cmakeExe,
-        ninjaExe,
-        ndkDir,
-        buildDir2.absolutePath
-    )
+    val configureArgs = if (isWindowsHost) {
+        mutableListOf(
+            "cmd", "/c",
+            "$repoRoot/android/configure-core.cmd",
+            cmakeExe,
+            ninjaExe,
+            ndkDir,
+            buildDir2.absolutePath
+        )
+    } else {
+        // Linux / macOS: android/configure.sh carries the same CMake flags.
+        environment("ANDROID_HOME", androidSdkRoot)
+        environment("NDK_VERSION", ndkVersion)
+        environment("CMAKE_VERSION", cmakeVersion)
+        environment("BUILD_DIR", buildDir2.absolutePath)
+        mutableListOf("bash", "$repoRoot/android/configure.sh")
+    }
     discordSdkDirectory?.let { configureArgs += "-DDISCORD_SDK_DIR=${it.invariantSeparatorsPath}" }
+    configureArgs += extraCoreCmakeArgs
     commandLine(configureArgs)
 }
 
@@ -166,8 +193,10 @@ val buildEmuCorecCore by tasks.registering(Exec::class) {
     group = "build"
     dependsOn(configureEmuCorecCore)
 
-    val mingwBin = "${System.getenv("LOCALAPPDATA")?.replace("\\", "/")}/mingw/mingw64/bin"
-    environment("PATH", "$mingwBin;${System.getenv("PATH")}")
+    if (isWindowsHost) {
+        val mingwBin = "${System.getenv("LOCALAPPDATA")?.replace("\\", "/")}/mingw/mingw64/bin"
+        environment("PATH", "$mingwBin;${System.getenv("PATH")}")
+    }
 
     workingDir = buildDir2
     val ninjaTargets = mutableListOf("-C", buildDir2.absolutePath, "emucorec-core")
@@ -181,7 +210,7 @@ val buildEmuCorecCore by tasks.registering(Exec::class) {
         }
         // Strip like the official builds, shrinking the unstripped artifact with
         // static LLVM to the release size.
-        val stripExe = "$ndkDir/toolchains/llvm/prebuilt/windows-x86_64/bin/llvm-strip"
+        val stripExe = "$ndkDir/toolchains/llvm/prebuilt/$ndkHostTag/bin/llvm-strip"
             .let { if (org.gradle.internal.os.OperatingSystem.current().isWindows) "$it.exe" else it }
         val stripped = File(buildDir2, "libemucorec-core-stripped.so")
         val strip = ProcessBuilder(stripExe, "-o", stripped.absolutePath, builtSo.absolutePath)
@@ -211,11 +240,13 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sbro.emucorec"
+        // KyotoByte Edition: own package id so it installs beside the original
+        // EmuCoreC (com.sbro.emucorec). The Kotlin namespace stays unchanged.
+        applicationId = "io.github.kyotobyte.emucorec"
         minSdk = 29
         targetSdk = 37
         versionCode = 21
-        versionName = "0.0.7"
+        versionName = "0.0.7-kb1"
 
         buildConfigField("String", "FEEDBACK_ENDPOINT", buildConfigString(feedbackEndpoint))
         buildConfigField("String", "FEEDBACK_API_KEY", buildConfigString(feedbackApiKey))
@@ -238,11 +269,28 @@ android {
         }
     }
 
+    // Optional release signing, read from local.properties (never committed):
+    //   kyotobyte.signing.storeFile=/abs/path/release.jks
+    //   kyotobyte.signing.storePassword=...  kyotobyte.signing.keyAlias=...  kyotobyte.signing.keyPassword=...
+    // Without them the release APK stays unsigned, as before.
+    val kbStoreFile = localBuildProperties.getProperty("kyotobyte.signing.storeFile")
+    if (kbStoreFile != null && File(kbStoreFile).isFile) {
+        signingConfigs {
+            create("kyotobyteRelease") {
+                storeFile = File(kbStoreFile)
+                storePassword = localBuildProperties.getProperty("kyotobyte.signing.storePassword")
+                keyAlias = localBuildProperties.getProperty("kyotobyte.signing.keyAlias")
+                keyPassword = localBuildProperties.getProperty("kyotobyte.signing.keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             isJniDebuggable = true
         }
         release {
+            signingConfigs.findByName("kyotobyteRelease")?.let { signingConfig = it }
             isMinifyEnabled = true
             isShrinkResources = true
             isJniDebuggable = false

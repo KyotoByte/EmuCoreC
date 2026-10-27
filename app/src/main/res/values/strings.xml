@@ -626,7 +626,7 @@
     <string name="settings_gpu_driver_compatibility_a6xx">Adreno 6xx: Snapdragon 845/855/865/888 and many Snapdragon 6/7 series</string>
     <string name="settings_gpu_driver_compatibility_a7xx">Adreno 7xx: Snapdragon 8 Gen 1/2/3, 8s Gen 3, 7 Gen 3/4, 7+ Gen 2/3, and 6 Gen 1/3</string>
     <string name="settings_gpu_driver_compatibility_a8xx">Adreno 8xx: Snapdragon 8 Elite Extreme Gen 6, 8 Elite Gen 6, 8 Gen 6, 8 Elite Gen 5, 8 Gen 5, 8s Gen 4, 7s Gen 3/4, and 6 Gen 4</string>
-    <string name="app_name_emucorec">EmuCoreC</string>
+    <string name="app_name_emucorec">EmuCoreC KyotoByte</string>
     <string name="home_title">PlayStation 3</string>
     <string name="home_subtitle">PS3 emulator for Android</string>
     <string name="home_installed_count">Installed games: %1$d</string>
@@ -2017,4 +2017,16 @@ This setting is only applied when SPU Decoder is set to Dynamic or LLVM.</string
     <string name="settings_gamepad_action_right_stick_down">Right Stick Down</string>
     <string name="settings_gamepad_action_right_stick_left">Right Stick Left</string>
     <string name="settings_gamepad_action_right_stick_right">Right Stick Right</string>
+    <!-- KyotoByte Edition -->
+    <string name="kb_preset_title" tools:ignore="MissingTranslation">Emulation preset (KyotoByte)</string>
+    <string name="kb_preset_description" tools:ignore="MissingTranslation">One tap to switch between the original settings and a speed-first set for phones. Per-game profiles still override this.</string>
+    <string name="kb_preset_accurate" tools:ignore="MissingTranslation">Accurate (original)</string>
+    <string name="kb_preset_performance" tools:ignore="MissingTranslation">Performance</string>
+    <string name="kb_preset_accurate_help" tools:ignore="MissingTranslation">Original EmuCoreC / RPCS3 defaults. Most compatible.</string>
+    <string name="kb_preset_performance_help" tools:ignore="MissingTranslation">SPU block size Mega, relaxed SPU float accuracy, SPU loop detection, 75% resolution, low shader precision, multithreaded RSX, relaxed ZCULL. Faster on most games but less accurate; if a game breaks, switch back to Accurate. Untested on device.</string>
+    <string name="kb_preset_applied" tools:ignore="MissingTranslation">Preset applied</string>
+    <string name="kb_preset_partial" tools:ignore="MissingTranslation">Preset applied, but some settings were rejected by the core</string>
+    <string name="kb_about_title" tools:ignore="MissingTranslation">EmuCoreC KyotoByte Edition</string>
+    <string name="kb_about_body" tools:ignore="MissingTranslation">An unofficial fork by KyotoByte with build optimizations and a Performance preset. Originally by sashkinbro (EmuCoreC) and the RPCS3 team. Licensed under GPL-2.0; all original credits are kept below. Please report bugs of this edition to the fork, not to the original authors.</string>
+    <string name="kb_about_fork" tools:ignore="MissingTranslation">KyotoByte fork source code</string>
 </resources>
